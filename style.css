@@ -113,6 +113,12 @@ body{
     padding-top:10%
   }
 
+  .txt4 {  
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
  }
  
  /*Desktop*/
