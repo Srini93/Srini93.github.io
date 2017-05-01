@@ -66,6 +66,10 @@ table {
   font-family:'MyWebFont2';
   src:url('fonts/maison-neue-bold.ttf'); 
 }
+@font-face{
+  font-family:'MyWebFont3';
+  src:url('fonts/maisonneue-medium.ttf'); 
+}
 
 *  {
   -webkit-overflow-scrolling: touch;
@@ -284,6 +288,15 @@ li a {
 
 .desk-menu li a {
     padding: 50px 25px;
+    transition: all 0.2s;
+}
+
+.desk-menu:hover li a {
+   opacity: 0.5;
+}
+
+.desk-menu li a:hover {
+   opacity: 1;
 }
 
 section {
@@ -304,12 +317,11 @@ section {
   margin: 1rem;
   box-sizing: border-box;
   position: relative;
+  transition: all 0.2s;
 }
 .sample:hover {
-    box-shadow: 0 40px 40px rgba(0,0,0,.16);
+    box-shadow: 0 40px 40px rgba(0,0,0);
     transform: translate(0,-20px);
-    transition: all 0.2s;
-
 }
 
 header img,header section{
@@ -401,7 +413,7 @@ header {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: rgba(0,0,0,0.9);
+  background-color:#000000;
   color: white;
   text-align: center }
 .hamburgler-active .hamburgler-menu {
@@ -411,6 +423,7 @@ header {
   display: block;
   transition: all 0.4s ease;    float: none;
     text-align: center;
+    font-family:"MyWebFont1";
     font-size: 140%;
 
   padding: 10%;
