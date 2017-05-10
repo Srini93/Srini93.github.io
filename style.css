@@ -320,8 +320,9 @@ section {
   transition: all 0.2s;
 }
 .sample:hover {
-    box-shadow: 0 40px 40px rgba(0,0,0);
+   box-shadow: 0 40px 40px rgba(0,0,0,.16);
     transform: translate(0,-20px);
+    transition-delay: 0s !important;
 }
 
 header img,header section{
