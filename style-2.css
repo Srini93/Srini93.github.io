@@ -45,6 +45,10 @@ img{
     width: 80%;
     max-width: 90%;
   }
+.img1{
+     width: 90%;
+     max-width: 90%;
+  }
   .button {
     background-color: #1769ff;
     border: none;
@@ -197,7 +201,7 @@ body{
  	padding-top: 5%;
 	font-family: "MyWebFont";
 	color:#212121;
-	font-size: 200%;
+	font-size: 160%;
  	}
 
 .txt4{
@@ -269,7 +273,7 @@ ul {
 }
 
 
-li {
+li{
     float: right;
      display: inline-block;
 }
@@ -279,6 +283,11 @@ li a {
     color: black;
     text-align: center;
     text-decoration: none;
+}
+
+li.b {
+  float: none;
+     display: inline-block;
 }
 
 .desk-menu li a {
@@ -457,7 +466,7 @@ header {
   }
   h1 {
     font-family: "MyWebFont2";
-    font-size: 250%;
+    font-size: 150%;
     padding-top: 1em;
 }
 header section h2 {
@@ -493,7 +502,7 @@ header section h2 {
   padding-top: 5%;
   font-family: "MyWebFont";
   color:#212121;
-  font-size: 300%;
+  font-size: 200%;
   }
  .txt6{
   position: relative;
