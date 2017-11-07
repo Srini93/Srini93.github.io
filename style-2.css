@@ -1,0 +1,555 @@
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+html,body
+{
+    width: 100%;
+    min-height: 100%;
+    margin: 0px;
+    padding: 0px;
+    overflow-x: hidden; 
+}
+hr{
+    border: 0;
+    height: 1px;
+    background: #e6e6e6;
+  }
+.frame{
+    max-width: 1440px;
+    width: 100%;
+    margin: 0px auto;
+}
+img{
+    width: 80%;
+    max-width: 90%;
+  }
+  .button {
+    background-color: #1769ff;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 4px;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+  display: block;
+}
+body {
+  line-height: 1;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+@font-face {
+  font-family:'MyWebFont';
+  src:url('fonts/CircularStd.ttf'); 
+}
+@font-face{
+  font-family:'MyWebFont1';
+  src:url('fonts/maison-neue-light.ttf'); 
+}
+@font-face{
+  font-family:'MyWebFont2';
+  src:url('fonts/maison-neue-bold.ttf'); 
+}
+@font-face{
+  font-family:'MyWebFont3';
+  src:url('fonts/maisonneue-medium.ttf'); 
+}
+
+*  {
+  -webkit-overflow-scrolling: touch;
+}
+
+body{
+  margin: 0;
+  /*height: 2000px;*/
+  overflow-x: hidden;
+}
+.socialicons{
+  text-align:center; 
+ }
+
+.header {
+  position:absolute;
+  width:100%;
+  height:auto;
+  z-index: -1;
+ }
+ .works{
+  position:absolute;width:100%;height:100%;
+  background-size: contain!important
+ }
+   .mypic{
+    width: 50%;
+    min-width: 700px;
+    align-self: center;
+  }
+ 
+/*Media queries */
+ /*Mobile*/
+ @media (min-width:300px){}
+
+/*tablets*/
+ @media (min-width:768px){}
+
+ @media(min-width: 769px){
+  .hamburgler-icon-wrapper, .hamburgler-menu{
+    display: none;
+  }
+
+  .selected-works-padding {
+    padding-left:5%;
+    padding-top:10%
+  }
+
+  .txt4 {  
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+ }
+ 
+ /*Desktop*/
+ @media (min-width:1280px) {
+
+  .mypic{
+    width: 50%;
+    min-width: 700px;
+    align-self: center;
+  }
+
+
+ .txt1{
+ 	position: absolute;
+	font-family: "MyWebFont";
+	color:#fff;
+	text-align: center;
+	top: 20vmax;
+	left: 33%;
+	font-size: 400%;
+ 	}
+ .txt2{
+ 	position: absolute;
+	font-family:"MyWebFont1";
+	color:#fff;
+	text-align: center;
+	top: 30vmax;
+	left: 24%;
+	font-size: 160%;
+    line-height:180%
+ 	}
+ }
+  .h1{
+  position: relative;
+  padding-left:5%;
+  padding-top: 5%;
+  font-family: "MyWebFont";
+  color:#212121;
+  font-size: 300%;
+  }
+
+  .txt3{
+ 	position: relative;
+ 	padding-left:5%;
+ 	padding-top: 5%;
+	font-family: "MyWebFont";
+	color:#212121;
+	font-size: 200%;
+ 	}
+
+.txt4{
+ 	position: relative;
+	font-family: "MyWebFont1";
+	color:#000;
+  font-weight: 50%;
+	padding-left: 5%;
+  padding-top: 2%;
+	text-align: left;
+	line-height: 200%;
+ 	}
+ 
+.txt5{
+ 	position: relative;
+	font-family: "MyWebFont1";
+	color:#000;
+    font-weight: 150%;
+	padding-top: 3%;
+	padding-left: 5%;
+	text-align: left;
+	line-height: 150%;
+ 	}
+ .txt6{
+ 	position: relative;
+ 	padding-top: 4%;
+ 	text-align: center;
+  font-family: "MyWebFont";
+	color:#fff;
+	font-size: 400%;
+ 	}
+ 	.txt7{
+ 	position: relative;
+	font-family: "MyWebFont1";
+	color:#fff;
+    font-size: 200%;
+	padding-top: 3%;
+	padding-left: 5%;
+	text-align: Centre;
+	line-height: 150%;
+ 	}
+  .txt8{
+ 	position: relative;
+	font-family: "MyWebFont2";
+	color:#000;
+  font-size: 100%;
+	padding-top: 4%;
+	padding-left: 5%;
+	text-align: Centre;
+	line-height: 150%;
+ 	}
+
+* { 
+box-sizing:border-box
+}
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: none;
+    font-family: "MyWebFont1";
+    font-size: 13px;
+    z-index: 8888;
+    position: relative;
+    display: block;
+}
+
+
+li {
+    float: right;
+     display: inline-block;
+}
+
+li a {
+    display: block;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+}
+
+.desk-menu li a {
+    padding: 30px 25px;
+    transition: all 0.2s;
+}
+
+.desk-menu:hover li a {
+   opacity: 0.5;
+}
+
+.desk-menu li a:hover {
+   opacity: 1;
+}
+
+section {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 1280px;
+  box-sizing: border-box;
+}
+
+.sample{
+  width: calc(33.33% - 2rem);
+  background: #ddd;
+  border-radius:4px;
+  padding-bottom:  calc(33.33% - 2rem);
+  box-shadow: 0 20px 20px rgba(0,0,0,.08);
+  margin: 1rem;
+  box-sizing: border-box;
+  position: relative;
+  transition: all 0.2s;
+}
+.sample:hover {
+   box-shadow: 0 40px 40px rgba(0,0,0,.16);
+    transform: translate(0,-20px);
+    transition-delay: 0s !important;
+}
+
+header img,header section{
+  max-width:100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+header section { 
+  z-index:1;
+  color:#fff; 
+  height: 100%;
+  width:100%;
+    
+  display: flex;
+  flex-direction:column;
+  justify-content: center;
+  align-items: center;
+}
+h1{
+  font-family: "MyWebFont2";
+  font-size: 300%
+
+}
+
+header section h2 {
+  text-align:center;
+  font-family: "MyWebFont1";
+  font-size: 200%;
+  line-height: 160%;
+  padding-top: 3rem;
+}
+
+header {
+  position: relative;
+  font-family: "MyWebFont2";
+  font-size: 100%
+}
+
+@media screen and (max-width: 601px) {
+  ul{
+    display: none;
+  }
+  header{
+    
+    padding-bottom: 20%;
+  }
+  
+
+}
+
+/* Hamburger menu starts here */
+ .hamburgler-icon-wrapper {
+  z-index: 11;
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  height: 26px;
+  width: 26px;
+  cursor: pointer }
+
+.hamburgler-icon, .hamburgler-icon:before, .hamburgler-icon:after {
+  content: '';
+  position: absolute;
+  border-radius: 1em;
+  height: 2px;
+  width: 24px;
+  padding-right: 10%;
+  background: #000;
+  transition: all 0.2s ease }
+.hamburgler-icon        { top: 0.75em  }
+.hamburgler-icon:before { top: -0.55em }
+.hamburgler-icon:after  { top: 0.55em  }
+.hamburgler-active { overflow:hidden;max-height: 100vh }
+.hamburgler-active .hamburgler-icon { background: transparent; transform: rotate(-135deg) }
+.hamburgler-active .hamburgler-icon:before, .hamburgler-active .hamburgler-icon:after { top: 0 }
+.hamburgler-active .hamburgler-icon:before { transform: rotate(90deg) }
+.hamburgler-active .hamburgler-icon, .hamburgler-active .hamburgler-icon:before, .hamburgler-active .hamburgler-icon:after {
+  background: white }
+
+.hamburgler-menu {
+  transition: all 0.4s ease; 
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color:#000;
+  color: white;
+  text-align: center }
+.hamburgler-active .hamburgler-menu {
+  opacity: 1;z-index: 9;
+  pointer-events: initial; }
+.hamburgler-menu-list {
+  display: block;
+  transition: all 0.4s ease;    float: none;
+    text-align: center;
+    font-family:"MyWebFont1";
+    font-size: 140%;
+
+  padding: 10%;
+  list-style-type: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.2) }
+.hamburgler-active .hamburgler-menu-list {
+  transform: translate(-50%, -50%) scale(1) }
+.hamburgler-menu-list li {
+  line-height: 2;    float: none;
+    display: block;
+    margin:1rem 0;
+    text-align: center;
+
+}
+/* Hamburger menu ends here */
+
+
+.social-links > a {
+   transition: all .2s
+}
+
+.social-links:hover > a {
+   opacity: 0.25;
+}
+
+.social-links:hover > a:hover {
+   opacity: 1; 
+}
+
+@media only screen and (min-width: 320px) and (max-width: 768px){
+  ul{
+    display: none;
+  }
+  h1 {
+    font-family: "MyWebFont2";
+    font-size: 250%;
+    padding-top: 1em;
+}
+header section h2 {
+ 
+    font-size: 111%;
+   
+}
+.socialicons{
+  text-align:center; 
+  padding-top:10%;
+}
+  .txt4{
+  position: relative;
+  font-family: "MyWebFont1";
+  color:#000;
+  font-weight: 50%;
+  padding-left: 5%;
+  padding-top: 10%;
+  text-align: left;
+  font-size: 100%;
+  }
+.txt3 {
+    position: relative;
+    padding-left: 5%;
+    padding-top: 10%;
+    font-family: "MyWebFont";
+    color: #000;
+    font-size: 200%;
+}
+ .h1{
+  position: relative;
+  padding-left:5%;
+  padding-top: 5%;
+  font-family: "MyWebFont";
+  color:#212121;
+  font-size: 300%;
+  }
+ .txt6{
+  position: relative;
+  padding-top: 6%;
+  text-align: center;
+  font-family: "MyWebFont";
+  color:#fff;
+  font-size: 250%;
+  }
+    .txt8{
+  position: relative;
+  font-family: "MyWebFont2";
+  color:#000;
+  font-size: 100%;
+  padding-top: 8%;
+  padding-left: 5%;
+  text-align: Centre;
+  line-height: 150%;
+  }
+}
+
+
+@media screen and (max-width: 1000px) {
+  .wrapper {
+    padding: 4rem 0 0 0 !important;
+  }
+}
+
+.btn-group {
+    padding: 2rem 5%;
+    font-size: 0;
+}
+
+.btn-group button {
+    min-width: calc(30% - 0.5rem);
+    margin:0;
+}
+
+.btn-group button:last-child {
+   margin-left: 1rem;
+}
+
+@media screen and (max-width: 800px) {
+  li a {
+    color: #fff;
+  }
+  
+  .btn-group button {
+    min-width: 100%;
+    margin:0;
+}
+
+.btn-group button:last-child {
+   margin-top: 1rem;
+   margin-left:0;
+}  
+}
+
+  
