@@ -525,7 +525,7 @@ header section h2 {
 }
 
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1440px) {
   .wrapper {
     padding: 4rem 0 0 0 !important;
   }
