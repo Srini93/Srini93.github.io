@@ -81,7 +81,7 @@ body{
   overflow-x: hidden;
 }
 .statusbar-overlay {
-    background: #000;
+    background: black;
 }
 .socialicons{
   text-align:center; 
