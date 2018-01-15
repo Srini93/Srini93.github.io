@@ -74,6 +74,9 @@ table {
 *  {
   -webkit-overflow-scrolling: touch;
 }
+.statusbar-overlay {
+    background: #000;
+}
 
 body{
   margin: 0;
