@@ -74,14 +74,14 @@ table {
 *  {
   -webkit-overflow-scrolling: touch;
 }
-.statusbar-overlay {
-    background: #000;
-}
 
 body{
   margin: 0;
   /*height: 2000px;*/
   overflow-x: hidden;
+}
+.statusbar-overlay {
+    background: #000;
 }
 .socialicons{
   text-align:center; 
