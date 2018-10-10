@@ -35,7 +35,7 @@
         
       </ul>
     </div>
-   
+    
     <!-- Header -->
     <header>
       <div id="hamburgler" class="hamburgler-icon-wrapper">
@@ -45,21 +45,32 @@
         <img src="images/img3.jpg" alt="">
         
       </div>
-    </div>
-     
-     
-    <ul class="desk-menu">
+      <style>
+      .logo {
+      float: left;
+      position: relative;
+      padding: 2rem;
+      width: 280px;
+      }
+      @media screen and (min-width: 480px) {
+      .logo {
+      width: 500px;
+      padding: 2rem 8rem;
+      }
+      }
+      </style>
+      
+    <ul class="desk-menu" style="padding-right:3%">
       <li><a class="contact" href="#contact">CONTACT</a></li>
       <li><a href="#Selectedworks">WORKS</a></li>
       <li><a href="#about">ABOUT ME</a></li>
     </ul>
     <section>
-   <section>
       <h1>Hey ! I'm Srini</h1>
-      <h2>A digital product designer who solves complex problems <br> which has an impact on people.</h2>
-      <div style="position: absolute;" class="seemorepos">
+      <h2>A digital product designer who solves complex problems <br> with simple and intuitive interfaces.</h2>
+      <div style="position: absolute; bottom: 3rem">
         <style>
-        ß.see-more {
+        .see-more {
         position: relative;
         display: inline-block;
         transition: all 0.2s;
@@ -70,11 +81,12 @@
         transform: scale(1.1) scaleX(1.15);
         }
         </style>
-          <a href="#about" class="see-more" aria-label="See more" >
-          <svg width="27" height="15" xmlns="http://www.w3.org/2000/svg"><path d="M25.86 1.14a.479.479 0 0 0-.679 0l-11.68 11.7L1.818 1.14a.479.479 0 1 0-.678.68l12.02 12.04a.479.479 0 0 0 .678 0L25.86 1.82a.48.48 0 0 0 0-.68z" fill="#FFF" fill-rule="nonzero" stroke="#FFF" stroke-width="1.5" /></svg>
+        <a href="#about" class="see-more" aria-label="See more" >
+          <svg width="27" height="15" xmlns="http://www.w3.org/2000/svg"><path d="M25.86 1.14a.479.479 0 0 0-.679 0l-11.68 11.7L1.818 1.14a.479.479 0 1 0-.678.68l12.02 12.04a.479.479 0 0 0 .678 0L25.86 1.82a.48.48 0 0 0 0-.68z" fill="#FFF" fill-rule="nonzero" stroke="#FFF" stroke-width="1.5" opacity=".9"/></svg>
         </a>
       </div>
     </section>
+    
   </header>
   
   
@@ -87,13 +99,13 @@
       <div style="flex: 3;">
         <p>I’m a product designer who solves complex problems to build simple and delightful digital products. I have a strong passion for creating products that delight the user with their easily usable interfaces and visual aesthetics. Being a tech-savvy, I am enthusiastic to learn cutting edge technologies.</p>
         <br>
-        Photography, coffee and travel are the other things on which I while away my time other than work.
+        Photography, music and travel are the other things on which I while away my time other than work.
         <br>
         <br>
-        <span><a href="about.html" style="color: #36bc77; font-size: 90%; top: 5%; font-weight: 600; letter-spacing: 1.5px; text-decoration: none; font-family: 'MyWebFont"> MORE ABOUT ME&nbsp→</a></span>
+        <span><a href="about.html" style="color: #36bc77; font-size: 90%; top: 5%; font-weight: 600; letter-spacing: 1.5px; text-decoration: none"> READ MORE &nbsp→</a></span>
       </div>
       <img src="images/My pic.png" class="mypic" data-aos="fade-left">
-      </div>
+      
     </div>
     <!-- Selected Works -->
     <div id="Selectedworks" >
@@ -125,7 +137,7 @@
             <p style="
               font-family:MyWebFont1;
               line-height: 1.5;
-              color: #545454;
+              color: #797979;
             "> View, edit spreadsheets on mobile platforms.</p>
           </div>
         </a>
@@ -149,7 +161,7 @@
           <p style="
             font-family:MyWebFont1;
             line-height: 1.5;
-            color: #545454;
+            color: #797979;
           "> Organize your normal tasks and priorities. </p>
         </div>
       </a>
@@ -174,7 +186,7 @@
         <p style="
           font-family:MyWebFont1;
           line-height: 1.5;
-          color: #545454;
+          color: #797979;
         "> Measure your driving accurancy from your wrist. </p>
       </div></a>
       
@@ -198,7 +210,7 @@
         <p style="
           font-family:MyWebFont1;
           line-height: 1.5;
-          color: #545454;
+          color: #797979;
         "> Find centers and book appointments for your vehicles services.</p>
       </div></a></a>
       
@@ -222,7 +234,7 @@
         <p style="
           font-family:MyWebFont1;
           line-height: 1.5;
-          color: #545454;
+          color: #797979;
         "> Windows phone concept of a real estate app to buy, rent houses. </p>
       </div></a></a>
       
@@ -289,6 +301,12 @@
 <a style="" href="mailto:tcsreeni93@gmail.com"><p style="padding-left:5%; font-size: 120%;letter-spacing: 0.1em;font-family:mywebfont1; color:#fff; text-decoration: underline;
 ">tcsreeni93@gmail.com</p></a>
 </div>
+
+<div id="contact" style="background:#000">
+    <p class="footertxt" style="max-width: 600px"> Designed and Handcoded in Chicago with <span style="color:#00ff97;"><span class="semibold">♥</span></span> by Srini  © 2018 </p>
+    <div>
+
+
 <script
 src="https://code.jquery.com/jquery-3.2.1.min.js"
 integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
@@ -300,15 +318,13 @@ AOS.init({
 duration: 1200,
 })
 // Smooth scroll links
-
-
 $('a[href^="#"]').on("click", function(){
 var id = $(this).attr("href");
 
 $('html, body').animate({
 scrollTop:$(id).offset().top
 }, 500);
-
+return false;
 });
 //Hamburger Menu and Esc events
 $('#hamburgler').on('click', checkNav);

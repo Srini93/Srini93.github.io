@@ -60,7 +60,7 @@ table {
 }
 @font-face{
   font-family:'MyWebFont1';
-  src:url('fonts/circular-book.ttf'); 
+  src:url('fonts/MaisonNeue-Book.ttf'); 
 }
 @font-face{
   font-family:'MyWebFont2';
@@ -104,7 +104,7 @@ body{
  }
    .mypic{
     width: 50%;
-    min-width: 700px;
+    min-width: 500px;
     align-self: center;
   }
   @media screen and (-webkit-min-device-pixel-ratio:0) and (min-width:400px) {
@@ -112,7 +112,29 @@ body{
         white-space: nowrap;
     }
 }
- 
+ ::-moz-selection { /* Code for Firefox */
+    color: White;
+    background: #000;
+}
+
+::selection {
+    color: white;
+    background: #000;
+}
+
+ .button {
+    background-color: #1769ff;
+    border: none;
+    color: white;
+    padding: 13px 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 13px;
+    margin: 2px 1px;
+    cursor: pointer;
+    border-radius: 4px;
+}
 /*Media queries */
  /*Mobile*/
  @media (min-width:300px){}
@@ -152,7 +174,7 @@ body{
 
   .mypic{
     width: 50%;
-    min-width: 700px;
+    min-width: 500px;
     align-self: center;
   }
 
@@ -192,19 +214,33 @@ body{
  	padding-top: 8%;
 	font-family: "MyWebFont";
 	color:#000;
-	font-size: 310%;
+	font-size: 250%;
  	}
 
 .txt4{
  	position: relative;
 	font-family: "MyWebFont1";
-	color:#000;
+	color:#444;
+  font-size: 95%;
   font-weight: 50%;
 	padding-left: 5%;
   padding-top: 3%;
 	text-align: left;
 	line-height: 200%;
  	}
+
+ .footertxt{
+  position: relative;
+  font-family: "MyWebFont1";
+  color:#ffffff9c;
+  font-weight: 50%;
+  padding-left: 5%;
+  padding-top%;
+  padding-bottom: 3%;
+  text-align: left;
+  max-width: 500px;
+  line-height: 200%;
+  }
  
 .txt5{
  	position: relative;
@@ -377,14 +413,14 @@ header section {
 }
 h1{
   font-family: "MyWebFont";
-  font-size: 300%
+  font-size: 280%
 
 }
 
 header section h2 {
   text-align:center;
   font-family: "MyWebFont1";
-  font-size: 200%;
+  font-size: 150%;
   line-height: 160%;
   padding-top: 3rem;
 }
@@ -395,7 +431,21 @@ header {
   font-family: "MyWebFont2";
   font-size: 100%
 }
+.video-container {
+position: relative;
+padding-bottom: 56.25%;
+padding-top: 30px; height: 0; overflow: hidden;
+}
 
+.video-container iframe,
+.video-container object,
+.video-container embed {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+}
 @media screen and (max-width: 601px) {
 
   ul{
@@ -504,6 +554,20 @@ header {
   }
 
 @media only screen and (min-width: 320px) and (max-width: 768px){
+   .footertxt{
+  position: relative;
+  font-family: "MyWebFont1";
+  color:#ffffff9c;
+  font-weight: 50%;
+  size:  80%;
+  padding-left: 5%;
+  padding-top: 3%;
+  padding-bottom: 5%;
+  text-align: left;
+  max-width: 300px;
+  line-height: 200%;
+  }
+  
    .social{
     display: flex;
     width: 100%;
@@ -532,7 +596,7 @@ header section h2 {
   .txt4{
   position: relative;
   font-family: "MyWebFont1";
-  color:#000;
+  color:#444444;
   font-weight: 50%;
   padding-left: 5%;
   padding-top: 10%;
@@ -580,6 +644,7 @@ header section h2 {
     align-self: center;
   }
 }
+
 
 @media screen and (max-width: 700px) {
   section {
