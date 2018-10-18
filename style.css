@@ -161,7 +161,7 @@ body{
  }
  
  /*Desktop*/
- @media (min-width:1280px) {
+ @media (min-width:1000px) {
 
   .social{
     display: flex;
