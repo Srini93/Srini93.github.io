@@ -64,6 +64,7 @@ img{
     border-radius: 4px;
     transition: box-shadow 0.1s ease-out;
 }
+
 .button:hover{
    box-shadow: 0 5px 45px 0 rgba(0,0,0,0.30);
 }
@@ -97,7 +98,7 @@ table {
 }
 @font-face{
   font-family:'MyWebFont1';
-  src:url('fonts/maison-neue-light.ttf'); 
+  src:url('fonts/MaisonNeue-Book.ttf'); 
 }
 @font-face{
   font-family:'MyWebFont2';
@@ -160,6 +161,14 @@ height: 100%;
  @media (min-width:768px){}
 
  @media(min-width: 769px){
+   .social{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    max-width: 300px;
+    margin: 2rem 3%;
+    padding: 1rem;
+  }
   .hamburgler-icon-wrapper, .hamburgler-menu{
     display: none;
   }
@@ -174,11 +183,39 @@ height: 100%;
     justify-content: space-between;
     flex-wrap: wrap;
   }
-
+ .foot{
+  position: relative;
+  padding-top: 4%;
+  padding-left: 4%;
+  font-family: "MyWebFont";
+  color:#000;
+  font-size: 250%;
+  line-height: 150%;
+  }
  }
  
  /*Desktop*/
  @media (min-width:1280px) {
+
+   .foot{
+  position: relative;
+  padding-top: 4%;
+  padding-left: 5%;
+  font-family: "MyWebFont";
+  color:#000;
+  font-size: 250%;
+  line-height: 150%;
+  }
+
+    .social{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    max-width: 300px;
+    margin: 2rem 4%;
+    padding: 1rem;
+  }
+
 
   .mypic{
     width: 30%;
@@ -389,6 +426,17 @@ header {
 }
 
 @media screen and (max-width: 601px) {
+
+    .foot{
+  position: relative;
+  padding-top: 4%;
+  padding-left: 5%;
+  font-family: "MyWebFont";
+  color:#000;
+  font-size: 250%;
+  line-height: 150%;
+  }
+
   ul{
     display: none;
   }
@@ -499,6 +547,16 @@ header section h2 {
   text-align:center; 
   padding-top:10%;
 }
+
+  .social{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    max-width: 300px;
+    margin: 2rem 2%;
+    padding: 1rem;
+  }
+
   .txt4{
   position: relative;
   font-family: "MyWebFont1";
@@ -541,6 +599,15 @@ header section h2 {
   padding-top: 8%;
   padding-left: 5%;
   text-align: Centre;
+  line-height: 150%;
+  }
+   .foot{
+  position: relative;
+  padding-top: 4%;
+  padding-left: 5%;
+  font-family: "MyWebFont";
+  color:#000;
+  font-size: 250%;
   line-height: 150%;
   }
 }
@@ -588,5 +655,15 @@ header section h2 {
    margin-left:0;
 }  
 }
+.social-links > a {
+   transition: all .2s
+}
 
+.social-links:hover > a {
+   opacity: 0.25;
+}
+
+.social-links:hover > a:hover {
+   opacity: 1; 
+}
   
