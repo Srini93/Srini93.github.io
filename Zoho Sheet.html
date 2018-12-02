@@ -1,0 +1,1256 @@
+<html><head>
+<title>Zoho Sheet | Spreadsheet Software</title>
+<link rel="icon" type="favi.png" href="favi.png"> 
+<meta name="theme-color" content="#000000">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+
+<!-- MWeb app -->
+<meta name="full-screen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Srinivasan">
+
+<!-- MWeb app ends -->
+
+<!-- Mobile icons -->
+<!-- iOS -->
+<link href="/images/Appicons/iOS/120.png" rel="apple-touch-icon">
+<link href="/images/Appicons/iOS/152.png" rel="apple-touch-icon" sizes="152x152">
+<link href="/images/Appicons/iOS/167.png" rel="apple-touch-icon" sizes="167x167">
+<link href="/images/Appicons/iOS/180.png" rel="apple-touch-icon" sizes="180x180">
+<!-- android -->
+<link href="/images/Appicons/android/192.png" rel="icon" sizes="192x192">
+<link href="/images/Appicons/android/128.png" rel="icon" sizes="128x128">
+<!-- Mobile icons ends here -->
+
+<link rel="stylesheet" href="style-2.css">
+
+
+</head> 
+<style>
+.Container {
+   max-width: 980px;
+  margin: 1rem;
+}
+
+
+
+.bg-blue{
+  background: rgb(0, 189, 203);
+}
+
+.bg-sky {
+  background: rgb(0, 166, 250);
+}
+
+.bg-violet {
+  background:rgb(125, 50, 205);
+}
+
+.Cards {
+  color: #fff;
+    display: grid;
+    grid-template: "cell cell cell";
+    grid-gap: 2rem;
+    align-items: stretch;
+    grid-template-columns: repeat( 3, minmax(320px, 1fr) );
+    padding:0 5rem;
+}
+
+@media screen and (max-width: 1000px) {
+  .Cards {
+    padding: 0 2rem;
+    grid-template:
+      "cell"
+      "cell"
+      "cell";
+  }
+}
+
+
+.Card {
+  padding: 1rem;
+  border-radius: 6px;
+
+}
+
+.Card h1 {
+  margin-bottom: 0.5rem;
+}
+
+.Card small {
+  color: hsla(0, 0%, 100%, .75);
+}
+
+.Card p { color: inherit; }
+  .hamburgler-icon { top:0; }
+  .hamburgler-icon, .hamburgler-icon:before, .hamburgler-icon:after {
+    background: #000;
+  }
+  header {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    min-height: 65px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  #logo svg {
+
+    width: 120px;
+  }
+
+@media only screen and (min-width:770px){
+    header {
+      justify-content: space-between;
+      padding-left:5%;
+    }
+ }
+ @media only screen and (min-width: 400px){
+   header {
+      justify-content: space-between;
+      padding-left:5%;
+    }
+
+ }
+</style>
+
+<body data-aos-easing="ease" data-aos-duration="1200" data-aos-delay="0">
+
+
+
+<div class="hamburgler-menu">
+  <ul class="hamburgler-menu-list">
+  <li><a href="index.html#Selectedworks">WORKS</a></li>
+  <li><a href="About.html">ABOUT</a></li>
+           
+    <li><a class="contact" href="index.html#contact">RESUME</a></li>
+         
+        
+  </ul>
+</div>
+ 
+
+<!-- Header -->
+   <header>
+
+   <a href="index.html"><div id="logo" style="">  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 25" ><g fill="#000" fill-rule="evenodd"><path d="M83 11h27v2H83zM15.224 5.88l-3.472 1.064c-.196-1.092-1.092-2.8-3.612-2.8-1.876 0-3.108 1.204-3.108 2.52 0 1.092.7 1.96 2.156 2.24l2.772.532c3.612.7 5.544 3.052 5.544 5.852 0 3.052-2.548 6.132-7.168 6.132-5.264 0-7.588-3.388-7.896-6.216l3.584-.952c.168 1.96 1.54 3.724 4.34 3.724 2.072 0 3.22-1.036 3.22-2.436 0-1.148-.868-2.044-2.408-2.352l-2.772-.56C3.24 11.984 1.196 9.94 1.196 6.944 1.196 3.416 4.36.728 8.112.728c4.816 0 6.664 2.912 7.112 5.152zM28.58 21l-3.892-7.644h-2.016V21H18.78V1.148h7.756c3.864 0 6.328 2.66 6.328 6.104 0 2.772-1.624 4.872-4.228 5.628L32.892 21H28.58zm-5.908-10.976h3.136c1.96 0 3.108-1.12 3.108-2.744 0-1.68-1.148-2.772-3.108-2.772h-3.136v5.516zM40.2 21h-3.92V1.148h3.92V21zm21.476 0h-4.06L48.6 6.916V21h-3.864V1.148h4.816l8.26 13.132V1.148h3.864V21zm8.456 0h-3.92V1.148h3.92V21z"></path></g></svg></div></a>
+
+    <div id="hamburgler" class="hamburgler-icon-wrapper">
+      <span class="hamburgler-icon"></span>
+    </div>
+      
+      
+        <ul class="desk-menu">
+        
+           <li><a class="contact" href="index.html#contact">RESUME</a></li>
+
+        <li><a href="About.html">ABOUT</a></li>
+        <li><a href="index.html#Selectedworks">WORKS</a></li>
+        </ul>
+        
+    </header>
+   <hr>
+
+<div class="frame">
+<div id="about" style="/* height:30%; */background:#FFF;">
+       
+    <p class="h1">
+Zoho Sheet - An app to view, edit 
+ <br>spreadsheets on your mobile
+</p>
+    <img class="img1" src="images/case2/head.png"  style="margin: 5%" >
+    <div class="txt4">
+     
+     </div>
+</div>
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5%;
+">
+  <div style="
+    flex: 3 0 600px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">About the project</p>
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3;">
+       Zoho Sheet is an online spreadsheet application that lets you create, share, collaborate and publish spreadsheets on the go. Given the role of product designer, I was responsible for designing for its mobile products.
+The application was designed to cater in the platforms of iOS and Android and to accommodate various form factors in each platform. The application is designed with native guidelines and components to comfort the users with a familiar interface and navigation.
+    </div>
+</div>
+
+  <div style="flex: 3 0 450px;padding-left: 8rem;padding-top: 1rem;" class="wrapper">
+    <h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 120%;
+">My Role</h2>
+    <p style="
+    font-family: &quot;MyWebFont1&quot;;
+    padding: 0.75rem 0;
+    font-size: 18px;
+    margin-bottom: 1.5rem;
+">Principal Product Designer</p>
+    <h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 20px;
+">Timeline</h2>
+    <p style="
+    font-family: &quot;MyWebFont1&quot;;
+    padding: 0.5rem 0;
+    font-size: 18px;
+">Jan 2016 - May 2017
+
+</p>
+  <h2 style="
+    padding-top: 7%;
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 20px;
+">Platform</h2>
+    <p style="
+    font-family: &quot;MyWebFont1&quot;;
+    padding: 0.5rem 0;
+    font-size: 18px;
+">iOS & Android
+
+</p>
+  </div>
+</div>
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 5%;
+">
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">The business need for the application</p>
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3;line-height:4rem">
+           1.To design the Zoho Sheet web product on mobile platforms.<br>
+           2.The web app users demanded a mobile application ASAP. <br>
+           3.Ship the product sooner to onboard thousands of web users to the mobile product.<br>
+           4.Design an application which is simple and usable across all the platforms for the users.</p>
+    </div>
+</div>
+</div>
+<div class="Container">
+  <p class="txt3">
+    Designing the Agile way 
+  </p>
+  <p class="txt4">
+    The product was meant to reach the users as soon as possible since this was the first version of the product and the evolving mobile world demanded a need for it. Hence, the agile methodology was defined to bring out the product quickly. Each step of the process was very quick and at its best pace contributing to the development of the product. The agile methodology process is as shown below
+<br>
+
+  </p>
+  </div>
+<div align="center">
+<img src="images/case2/Process.png"  style="max-width:800px; padding-top:5%" >
+</div>
+
+<div class="Container">
+  <p class="txt3">
+    Learning about mobile users
+  </p>
+  <p class="txt4">
+    It was important to know about mobile users before designing the product as the users in this category are much more different than desktop users. They want to get tasks done as quickly as possible and used it whenever they don't have access to their desktop or web application. Users need to accomplish their goals quickly and efficiently. Some qualities learned about mobile users are below.
+<br>
+
+  </p>
+  </div>
+
+  <div align="center">
+<img src="images/case2/mobileusers.png"  style=" max-width:1000px; padding-top:5%" >
+</div>
+
+
+<div class="Container">
+  <p class="txt3">
+    Categorising and inquiring users for valuable insights
+  </p>
+  <p class="txt4">
+   Initially, we identified and talked to some spreadsheet users and categorized them into three classes and aked the question of what would be the most used features by them on daily basis in a mobile spreadsheet software to each category. The users were primarily web users and also who were using alternate mobile spreadsheet software currently. These answers were the base to start designing features for version one.
+<br>
+
+  </p>
+  </div>
+
+
+
+  
+  <!-- Research -->
+  <section class="Cards" >
+    <div class="Card bg-blue">
+      <p class="txt3" style="padding-left: 0; padding-top: 2%">
+        1. Beginner
+      </p>
+      <p class="txt4" style="font-size: 85%; line-height: 1.2; padding-left: 0">
+        Uses spreadsheet atleast once in 10 days 
+      </p>
+      
+      <p class="txt4" style="line-height: 1.4; padding-top: 5%; padding-left: 0; font-size: 90%">
+          Most users wanted to view the shared spreadsheet or use basic formatting options in the application. They wanted the maximum real-estate in the application to view the spreadsheet and share the same with collaborators and export it in a readable format(i.e)PDF.
+    
+
+      </p>
+    </div>
+
+    <div class="Card bg-sky">
+      <p class="txt3" style="padding-left: 0; padding-top: 2%;">
+        2.Mid-Level
+      </p>
+      <p class="txt4" style="font-size: 80%; line-height: 1.2; padding-left: 0; font-size: 90%; opacity: 0.8">
+        Uses spreadsheet atleast once in 3 days 
+      </p>
+      
+      <p class="txt4" style="line-height: 1.4; padding-top: 5%; padding-left: 0; font-size: 90%">
+                   Users in this category used to view, edit or share spreadsheets when they were away from their computers. Most of the users frequently viewed the existing spreadsheets created from their personal computers and preferred to have options such as alignment, text colour, cell colour and some minor functions & formulas. 
+      </p>
+
+    </div>
+      
+        <div class="Card bg-violet">
+      <p class="txt3" style="padding-left: 0; padding-top: 2%;">
+       3. Power Users
+      </p>
+      <p class="txt4" style="line-height: 1.4; padding-left: 0; font-size: 85%; opacity: 0.8">
+        User spreadsheets everyday
+      </p>
+      
+      <p class="txt4" style="line-height: 1.4; padding-top: 5%; padding-left: 0; font-size: 90%">
+           These people were the major target audience and the important user group who does everything from their mobile. This user group were power users whose everyday work depends on a spreadsheet. They wished to have at least basic formatting, sharing, collaboration and formulas & visualizations to apply to their data.
+      </p>
+    </div>
+
+  </section>
+</div>
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 5%;
+    padding-left: 5%
+">
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">Key Features identified</p>
+<div style="
+    flex: 3 0 400px;
+">
+ 
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3;line-height:4rem">
+           1.View, edit spreadsheets on the go. <br>
+           2.Collaborate in relatime and share your spreadsheets with team or other users.<br>
+           3.Formatting and calculation options to generate complex data.<br>
+           
+    </div>
+</div>
+
+</div>
+
+</div>
+
+<h2 class="txt3">User-Flow Diagram</h2>
+   <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3; padding-left:5%">
+           Designing for the user experience began from sketching out a typical user journey based on the accomplishment of specific tasks within the app. Once the user journey had been established, the team began to unpack the design flow for general and specific use cases. </p>
+    </div>
+
+<div style="max-width: 3000px">
+<img src="images/case2/User Flow.png"  style="margin-left: 10%;" >
+</div>
+
+
+
+<h2 class="txt3">Conceptualization and Sketching</h2>
+   <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3; padding-left:5%">
+           After finding out the basic requirements of the user, the key features were identified and ideated. Sketching helped us as we followed an agile method to quickly get an idea of how the product is going to shape and give a rough idea of the concepts.</p>
+    </div>
+
+
+<img src="images/case2/wire.png"  style="margin-left: 10%; max-width:1440px;" >
+
+<h2 class="txt3">Low-Fi Prototypes</h2>
+   <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3; padding-left:5%">
+           The Low fidelity prototypes helped us take the sketches to a next level but a step before the high-fidelity mockups. Simple prototypes were of great use in identifying components for framing the design system and also to get an initial feedback from the team before we stepped into concentrating on the visual design which required a mamonth effort.</p>
+    </div>
+
+
+<img src="images/case2/lo-fi.png"  style="margin-left: 10%; max-width:1440px;" >
+
+   <p class="txt3" style="
+    padding-left: 5%;
+">Read the detailed product design process</p>
+<a style="text-decoration: none;"href="https://medium.com/@pixelfabricator/designing-my-first-platform-agnostic-saas-product-7b258cd2f17e" target="_blank">
+<div style=" width:800px; margin:0 auto; border-radius: 3px; background-color: #02B875;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3); margin-top: 5%; margin-bottom: 5%; width:80%;">
+   
+<h2 class="txt3" style="text-align:center; color:white">Designing my first platform agnostic SaaS product.</h2>
+   <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3; padding-left:5%; color: white; text-align:center; padding-bottom:5%">
+           "The inside process and takeaways from designing the first version of Zoho Sheet — a SaaS based spreadsheet application on mobile platforms."</p>
+    </div>
+</div>
+</a>
+
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 2%;
+    padding-left: 5%
+">
+  <div style="
+    flex: 3 0 400px;
+">
+    
+<div style="
+    flex: 3 0 400px;
+">
+ 
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     
+    </div>
+</div>
+
+</div>
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 3%;
+">
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">Framing a design system for multiple platforms</p>
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3;">
+           A design system was created for each operating system incorporating the set of visual elements like colour, typography and UI components. These components were, in turn, converted as symbols in sketch to use the elements throughout the application. This not just helped me in design but also allowed developers to reuse components increasing code efficiency.</p>
+    </div>
+</div>
+</div>
+</div>
+<img src="images/case2/style.png"  style="margin-left: 10%; max-width:1440px" >
+<img src="images/case2/Designsystem.png"  style="margin-left: 10%; max-width:1440px" >
+
+
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 5%;
+    padding-left: 5%
+">
+  <div style="
+    flex: 3 0 400px;
+">
+
+     <p class="txt3" style="
+    padding: 0; margin-top: 2%
+">High Fidelity Prototype </p>
+  </div>
+</div>
+
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case2/View.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">View Spreadsheets</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">The primary function of the application that most users expected was to view spreadsheets when they are on the go and also that was the first basic feature we built and laid the foundation to the product.
+  </div>
+</div>
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case2/Format.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">Format/Edit Spreadsheets</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">Almost every user from the inquiry expected the basic editing functionalities to a spreadsheet application like text style, colours, merge cells etc and we made sure that these are the next layer we are going to build over the foundation that we laid.
+  </div>
+</div>
+
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case2/Share.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">Collaboration & Sharing</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">Collaboration and sharing is the most important feature that every document application should have which allows users to quickly share the spreadsheet with their team members or other users when they are on the go. This allows them to review and make quick changes if any and instantly share it. Also, live collaboration allows the user to co-author a document efficiently with ease.
+  </div>
+
+
+</div>
+<!--
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 5%;
+    padding-left: 5%
+">
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">Diving deeper into details </p>
+  </div>
+</div>
+
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case2/Functionbar.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">Designing the function bar</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">The function bar is the one on which the user inputs data, formulas etc. There were many iterations of the fuction bar as this is one of the primary component and where the 90% of the users land when there is a need to input data. The fuction bar was kept at the bottom for the comfort of the the users eyes and also increase reachablity for the user. Also, the user need not juggle his eyes top and bottom to have a look at the function bar and the keyboard.
+  </div>
+</div>
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case2/keyboard.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">A secondary custom keyboard</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">A custom keyboard was required in order to make the data input efficient and easy. We spoke to spreadsheet users of all types from power users to naive users. We finally zeroed 20 symbols as the most wanted symbols and iterated  multiple sets of keyboards for both the iPhone and iPad using them. Two variants were made as prototypes and tested with users of the above mentioned categories. A/B testing both the keyboard proved to be servinf the purpose but not in an efficient way. 
+  </div>
+</div>
+
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case2/smartbar.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">The  smartbar -  a smart solution</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">The concept of custom keyboard was not completely efficient as the user has to toggle back and forth for the normal keypad and the custom keyboard. Hence we reiterated to a better solution which we called the smartbar which can intellignetly double as a formula suggestion bar and the scrollable symbols bar. This also allowed the user to use the default keyboard and symbols at teh same time.
+  </div>
+</div>
+</div>
+-->
+
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10%;
+    padding-left: 5%;
+ 
+">
+
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">Challenges of designing some important components</p>
+
+ <p class="txt3" style="
+    margin-top: 0.5%; padding-left: 0%; font-size: 160%
+">The function bar</p>
+
+
+
+
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3 0 400px;">The function bar is the one on which the user inputs data, formulas etc. There were many iterations of the function bar as this is one of the primary component and where the 90% of the users land when there is a need to input data. The function bar was kept at the bottom for the comfort of the user's eyes and also increase reachability for the user. Also, the user need not juggle his eyes top and bottom to have a look at the function bar and the keyboard.
+       </p>
+        
+    </div>
+ </div>
+</div>
+
+<p class="txt3" style="
+    margin-top: 0.5%;
+">Analysing the competitors</p>
+
+<div class="txt4" style="
+    padding-left: 5%;
+">
+ If you are a spreadsheet user then this might be the most important component you will use. Most of the applications had the function bar at the top same as the desktop applications. But this solution was not efficient as the user needs to juggle his eyes back and forth for the input and the function bar. 
+       </p>
+
+</div>
+
+
+<img src="images/case2/Keyboards.png"  style="margin-left: 10%; max-width:1440px; padding-top:5%" >
+
+<p class="txt3" style="
+    margin-top: 0.5%;
+">Solution</p>
+
+<div class="txt4" style="
+    padding-left: 5%; max-width: 1000px
+">
+The thought process was to place the function bar in a not disturbing place when the user is viewing, but also to be in the right place when the user wants to input data and also to be close to all the input actions like the keyboard, confirmation button etc.  The solution was to show the function bar at the top which they can enable or disable in the menu when viewing and bring it to the bottom when editing which makes it easier for the eyes to view and hands to get all the inputs easily.
+
+       </p>
+
+
+</div>
+<div align="center">
+<img src="images/case2/Fx.gif"  style=" max-width:650px; padding-top:5%" >
+</div>
+
+<!-- Custom Keypad -->
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10%;
+    padding-left: 5%;
+ 
+">
+
+  <div style="
+    flex: 3 0 400px;
+">
+  
+
+ <p class="txt3" style="
+    margin-top: 0.5%; padding-left: 0%
+">Designing a  custom keypad</p>
+
+
+
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3 0 400px;">A custom keyboard was required in order to make the data input efficient and easy. We spoke to spreadsheet users of all types from power users to novice users. We finally zeroed 20 symbols as the most wanted symbols and iterated multiple sets of keyboards for both the iPhone and iPad using them. Two variants were made as prototypes and tested with users of the above-mentioned categories. A/B testing both the keyboard proved to be serving the purpose but not in an efficient way. 
+       </p>
+        
+    </div>
+ </div>
+</div>
+
+<p class="txt3" style="
+    margin-top: 0.5%;
+">Iterating multiple solutions</p>
+
+<div class="txt4" style="
+    padding-left: 5%;
+">
+     <p style="flex: 3 0 400px;">We worked hard on it and started exploring the solutions for multiple platforms, formfactors and orientations. The whole process consumed atleast a month to zero in on the solution which would be suitable. The developers did have a tough time to develop a few solutions roughly for us to get an idea. We even did an internal testing of how the users were able to acheive thier goals quickly. But we figured out that the users were concious when switching keyboards and was not naturally comfortable doing the same. Hence we thought of an alternate solution to this.
+       </p>
+        
+    </div>
+
+<img src="images/case2/Custom Keypad.png"  style="margin-left: 10%; max-width:1440px; padding-top:5%" >
+
+<p class="txt3" style="
+    margin-top: 0.5%;
+">Solution</p>
+
+<div class="txt4" style="
+    padding-left: 5%;
+">
+     <p style="flex: 3 0 400px;">Although we iterated multiple solutions for the custom keypad, the users always felt that there was an extra step to use the custom keypad which made them deviate away from their goal. Hence we came up with an idea called smart bar where the sheet tab converts into a custom symbol set and formula suggestions contextually. This naturally allowed the users to enter symbols with easy without the need to switch keypads often.
+       </p>
+        
+    </div>
+</div>
+<img src="images/case2/bar.png"  style="margin-left: 10%; max-width:1440px; padding-top:5%" >
+
+<p class="txt3" style="
+    padding-bottom: ; font-size: 200%
+">Leveraging the power of native platforms</p>
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 5%;
+    padding-left: 5%;
+ 
+">
+
+  <div style="
+    flex: 3 0 400px;
+">
+
+     <p class="txt3" style="
+    padding: 0;
+">iOS application</p>
+
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3 0 400px;">The iOS applications followed the Human Interface Guidelines and the components were based out of the native components to comfort the user with the familiar elements of the platform. Also, this helped the developers to quickly develop the application since they were available already and required a minimum effort yet and an efficient one.  The application was also integrated with all the native add-ons.
+
+   </p>
+    </div>
+ </div>
+</div>
+
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case2/iMESSAGE.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">Send documents via iMessage</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">Zoho Sheet was the first application to allow users to send spreadsheets via iMessage. Users can send documents to other iOS users through this. The users will be able to view the spreadsheet sent to them even if they don't have an application through HTML rendering.
+  </div>
+</div>
+
+
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case2/3d touch.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">Widgets | 3D Touch</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">The widgets provisioned users to access the most used spreadsheet without having the need to open the application everytime which reduces an extra step for users who are constantly accessing the same spreadsheets every day. The 3D Touch functionality also provides users to quickly create a new spreadsheet or access their favourite spreadsheet at ease.
+  </div>
+</div>
+
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case2/Splitview.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">Splitview on iPad</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">The Split view enabled users to bring documents, images, text directly into the spreadsheet by just dragging and dropping elements minimizing the need for the user to switch between application to bring in elements they need inside the spreadsheet.
+  </div>
+</div>
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 5%;
+    padding-left: 5%;
+ 
+">
+
+  <div style="
+    flex: 3 0 400px;
+">
+
+     <p class="txt3" style="
+    padding: 0;
+">Android application</p>
+
+     <div class="txt4" style="
+    padding-left: 0;
+">The application was designed adhering to the material design guidelines with bold colours and typography & imagery with native components. Few components were custom designed to accommodate the needs of an interface or a feature still maintaining the coherency of the product.
+
+   </p>
+
+
+    </div>
+ </div>
+ </div>
+ <img src="images/case2/Android.png"  style="margin-left: 10%; max-width:1440px; padding-top:5%" >
+
+
+<!--Android Addons-->
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10%;
+    padding-left: %;
+ 
+">
+
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case2/Android1.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">Multi-window Support</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">The native multiwindow support provides the user an ability to simultaneously work on another application while working on Zoho Sheet. Also, when there are more than one spreadsheet open they are opened as separate activities facilitating the user to work on multiple spreadsheets at once. Thanks to the engineering team who helped in acheiving this. :)
+  </div>
+</div>
+
+
+<div style="
+    padding-top: 15%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case2/Android2.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">Quick Actions & Homescreen widgets</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">The widgets provisioned users to access the most used spreadsheet without having the need to open the application everytime which reduces an extra step for users who are constantly accessing the same spreadsheets every day. The 3D Touch functionality also provides users to quickly create a new spreadsheet or access their favourite spreadsheet at ease.
+  </div>
+</div>
+</div>
+
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  
+
+  <div style="
+    flex: 3 0 400px; padding-top: 5%
+">
+     <p class="txt3" style="
+    padding: 0;
+">Evaluating interfaces and usablity</p>
+
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3 0 400px;">
+      The people whom we involved in evaluating the solutions involved people both new spreadsheet users and power users who were regularly using spreadsheets in their day to day tasks. Each user was given the same task sheet with different variants of the user interface to carry out A/B testing and multivariate testing in order to determine the finest one in terms of usability and functionality.</p>
+    </div>
+ </div>
+</div>
+
+<img src="images/case2/ab.png"  style="margin-left: 10%; max-width:1440px; padding-top:5%" >
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10%;
+    padding-left: 5%;
+ 
+">
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">Product Launch video</p>
+
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     
+</div>
+
+
+
+
+<iframe src="//youtube.com/embed/JsoeU1jjdAU?autoplay=0&amp;controls=0&amp;color=ffffff&amp;showinfo=0&amp;rel=0" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" 
+  style="width: 80%; height: 90%;margin: 4rem auto;display: block"></iframe>
+
+   <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">The Impact</p>
+
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3 0 400px;">
+      Zoho Sheet's iOS version was launched in May 2016 and the Android version on December 2017 that onboard multiple web product user into the mobile product. Receiving an almost a 90% liking from the people who have used the product, it was a big impact competing with the tech giant. Also, the app was a part of the Zoho One suite comprising of the major products from the company. Here are some reviews found on the respective platform stores</p>                                                                                                                                      
+    </div>
+ </div>
+</div>
+</div>
+<img src="images/case2/impact.png"  style="margin-left: 10%; max-width:1440px; padding-top:5%" >
+
+
+<div style="flex: 1" class="btn-group" >
+
+ <a href="https://www.google.co.in/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwir-uai8rHXAhVMuY8KHadPCu8QFggnMAA&url=https%3A%2F%2Fitunes.apple.com%2Fin%2Fapp%2Fonline-spreadsheets-zoho-sheet%2Fid1081348290%3Fmt%3D8&usg=AOvVaw1LWo9TFG9YC7P1BDDSySZf" target="_blank"> <button style="background-color:#000" class="button" >Download on App Store</button></a>
+ 
+ <a href="https://www.google.co.in/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=8&ved=0ahUKEwir-uai8rHXAhVMuY8KHadPCu8QFggyMAI&url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.zoho.sheet.android%26hl%3Den&usg=AOvVaw2u8EJ4hyt8HzZTbeYhDd0g" target="_blank"> <button style="background-color: #000" class="button">Download on Playstore</button></a>
+</div>
+
+ <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding-left:5%;
+">Version 2</p>
+
+     <div class="txt4" style="
+    padding-left: 5%;
+">
+     <p style="flex: 3 0 400px;">
+      
+The version 2 of Zoho Sheet involved a lot of feature additions which could transform the way spreadsheets would work on mobile platforms and  a small visual overhaul which supported the then latest iPhone X. Also, the application was integrated to support Apple Watch which  was used for quick comment replies and more. I could not disclose more as a lot of features has not been built yet. To know more drop in a mail.</p>                                                                                                                                      
+    </div>
+<img src="images/case2/version 2.png"  style="margin-left: 10%; max-width:1440px; padding-top:5%" >
+</div>
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 5%;
+    padding-top: 5%;
+">
+  <div style="
+    
+">
+     <p class="txt3" style="
+    padding: 0;
+">Key takeways & Reflection</p>
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex:;line-height:4rem">
+           1.Had an opportunity to work as a the only product designer for a complex SaaS product.<br>
+           2.Experience designing for multiple platforms and multiple form factors.<br>
+           3.Understanding platform guidelines and deliverables.<br>
+           4.Knowing the inside happenings of an app development process.
+           5.It was heart warming to see thousands of people using and appreaciating the product.</p>
+    </div>
+</div>
+</div>
+
+<hr>
+
+<div id="contact" style="background:#fff;padding-bottom:5%">
+<p class="foot wrap">Like what you see??</br>
+View my <a style="color:#36BC77; text-decoration:none" ="" href="Resume_Srinivasan.pdf" target="_blank">résumé</a>, follow me 
+or contact me below</p>
+
+<div>
+<nav class="social-links social">
+
+    <a href="https://medium.com/@pixelfabricator" target="_blank">
+   
+<svg width="30px" height="30px" viewBox="0 0 26 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="icon-medium" fill-rule="nonzero" fill="#000">
+            <path d="M2.987323,4.07995296 C3.018623,3.77070331 2.900692,3.46504442 2.669773,3.25690769 L0.31755,0.423280423 L0.31755,0 L7.621202,0 L13.266537,12.3809523 L18.229728,0 L25.192308,0 L25.192308,0.423280423 L23.181157,2.3515579 C23.007774,2.48372071 22.921767,2.70093965 22.957696,2.91593181 L22.957696,17.0840683 C22.921767,17.2990604 23.007774,17.5162792 23.181157,17.6484421 L25.145263,19.5767196 L25.145263,20 L15.265927,20 L15.265927,19.5767196 L17.3006,17.601411 C17.500539,17.4015285 17.500539,17.3427396 17.500539,17.0370371 L17.500539,5.58495004 L11.843443,19.9529688 L11.07897,19.9529688 L4.492746,5.58495004 L4.492746,15.2145796 C4.437832,15.6194363 4.572292,16.0270385 4.85734,16.3198119 L7.503591,19.5296885 L7.503591,19.9529688 L0,19.9529688 L0,19.5296885 L2.646251,16.3198119 C2.929223,16.0265531 3.055843,15.6162471 2.987323,15.2145796 L2.987323,4.07995296 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>
+  </a>
+
+  <a href="https://twitter.com/pixelfabricator" target="_blank">
+  <svg viewBox="0 0 16 16" fill="#000" height="30" width="30" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M16 3.038c-.59.26-1.22.437-1.885.517.677-.407 1.198-1.05 1.443-1.816-.634.37-1.337.64-2.085.79-.598-.64-1.45-1.04-2.396-1.04-1.812 0-3.282 1.47-3.282 3.28 0 .26.03.51.085.75-2.728-.13-5.147-1.44-6.766-3.42C.83 2.58.67 3.14.67 3.75c0 1.14.58 2.143 1.46 2.732-.538-.017-1.045-.165-1.487-.41v.04c0 1.59 1.13 2.918 2.633 3.22-.276.074-.566.114-.865.114-.21 0-.41-.02-.61-.058.42 1.304 1.63 2.253 3.07 2.28-1.12.88-2.54 1.404-4.07 1.404-.26 0-.52-.015-.78-.045 1.46.93 3.18 1.474 5.04 1.474 6.04 0 9.34-5 9.34-9.33 0-.14 0-.28-.01-.42.64-.46 1.2-1.04 1.64-1.7z" fill-rule="nonzero"></path></svg>
+  </a>
+
+   <a href="https://dribbble.com/Pixelfabricator" target="_blank">
+  <svg viewBox="0 0 16 16" fill="#000" height="30" width="30"  xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M8 16c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm6.747-6.905c-.234-.074-2.115-.635-4.257-.292.894 2.456 1.258 4.456 1.328 4.872 1.533-1.037 2.624-2.68 2.93-4.58zM10.67 14.3c-.102-.6-.5-2.688-1.46-5.18l-.044.014C5.312 10.477 3.93 13.15 3.806 13.4c1.158.905 2.614 1.444 4.194 1.444.947 0 1.85-.194 2.67-.543zm-7.747-1.72c.155-.266 2.03-3.37 5.555-4.51.09-.03.18-.056.27-.08-.173-.39-.36-.778-.555-1.16-3.413 1.02-6.723.977-7.023.97l-.003.208c0 1.755.665 3.358 1.756 4.57zM1.31 6.61c.307.005 3.122.017 6.318-.832-1.132-2.012-2.353-3.705-2.533-3.952-1.912.902-3.34 2.664-3.784 4.785zM6.4 1.368c.188.253 1.43 1.943 2.548 4 2.43-.91 3.46-2.293 3.582-2.468C11.323 1.827 9.736 1.176 8 1.176c-.55 0-1.087.066-1.6.19zm6.89 2.322c-.145.194-1.29 1.662-3.816 2.694.16.325.31.656.453.99.05.117.1.235.147.352 2.274-.286 4.533.172 4.758.22-.015-1.613-.59-3.094-1.543-4.257z"></path></svg>
+  </a>
+
+  <a href="https://www.instagram.com/pixelfabricator/" target="_blank">
+<svg viewBox="0 0 16 16"  fill="#000" height="30" width="30" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M8 0C5.827 0 5.555.01 4.702.048 3.85.088 3.27.222 2.76.42c-.526.204-.973.478-1.417.923-.445.444-.72.89-.923 1.417-.198.51-.333 1.09-.372 1.942C.008 5.555 0 5.827 0 8s.01 2.445.048 3.298c.04.852.174 1.433.372 1.942.204.526.478.973.923 1.417.444.445.89.72 1.417.923.51.198 1.09.333 1.942.372.853.04 1.125.048 3.298.048s2.445-.01 3.298-.048c.852-.04 1.433-.174 1.942-.372.526-.204.973-.478 1.417-.923.445-.444.72-.89.923-1.417.198-.51.333-1.09.372-1.942.04-.853.048-1.125.048-3.298s-.01-2.445-.048-3.298c-.04-.852-.174-1.433-.372-1.942-.204-.526-.478-.973-.923-1.417-.444-.445-.89-.72-1.417-.923-.51-.198-1.09-.333-1.942-.372C10.445.008 10.173 0 8 0zm0 1.44c2.136 0 2.39.01 3.233.048.78.036 1.203.166 1.485.276.374.145.64.318.92.598.28.28.453.546.598.92.11.282.24.705.276 1.485.038.844.047 1.097.047 3.233s-.01 2.39-.05 3.233c-.04.78-.17 1.203-.28 1.485-.15.374-.32.64-.6.92-.28.28-.55.453-.92.598-.28.11-.71.24-1.49.276-.85.038-1.1.047-3.24.047s-2.39-.01-3.24-.05c-.78-.04-1.21-.17-1.49-.28-.38-.15-.64-.32-.92-.6-.28-.28-.46-.55-.6-.92-.11-.28-.24-.71-.28-1.49-.03-.84-.04-1.1-.04-3.23s.01-2.39.04-3.24c.04-.78.17-1.21.28-1.49.14-.38.32-.64.6-.92.28-.28.54-.46.92-.6.28-.11.7-.24 1.48-.28.85-.03 1.1-.04 3.24-.04zm0 2.452c-2.27 0-4.108 1.84-4.108 4.108 0 2.27 1.84 4.108 4.108 4.108 2.27 0 4.108-1.84 4.108-4.108 0-2.27-1.84-4.108-4.108-4.108zm0 6.775c-1.473 0-2.667-1.194-2.667-2.667 0-1.473 1.194-2.667 2.667-2.667 1.473 0 2.667 1.194 2.667 2.667 0 1.473-1.194 2.667-2.667 2.667zm5.23-6.937c0 .53-.43.96-.96.96s-.96-.43-.96-.96.43-.96.96-.96.96.43.96.96z"></path></svg>    
+  </a>
+  <a href="https://www.linkedin.com/in/tcsrini/" target="_blank">
+  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><desc>  Created with Sketch.</desc><g fill="none"><g fill="#000"><path d="M0.8 9.6L6.6 9.6 6.6 30 0.8 30 0.8 9.6ZM3.5 7.1L3.5 7.1C1.4 7.1 0 5.5 0 3.5 0 1.5 1.4 0 3.6 0 5.7 0 7.1 1.5 7.1 3.5 7.1 5.5 5.7 7.1 3.5 7.1L3.5 7.1ZM30 30L23.4 30 23.4 19.5C23.4 16.7 22.3 14.8 20.1 14.8 18.3 14.8 17.3 16.1 16.9 17.3 16.7 17.7 16.7 18.4 16.7 19L16.7 30 10.2 30C10.2 30 10.3 11.3 10.2 9.6L16.7 9.6 16.7 12.8C17.1 11.4 19.2 9.4 22.6 9.4 26.7 9.4 30 12.4 30 18.7L30 30 30 30Z"/></g></g></svg>
+  </a>
+  
+  
+  
+</nav>
+</div>
+<a style="text-decoration: none; color: #000; text-decoration: underline;" href="mailto:tcsreeni93@gmail.com;"><p style="padding-left:4%; font-size: 120%;letter-spacing: 0.1em;font-family:mywebfont1; color:#000; 
+ ">tcsreeni93@gmail.com</a> 
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://rawgit.com/michalsnik/aos/master/dist/aos.js"></script>
+<script>
+
+  $(function(){
+
+AOS.init({
+  duration: 1200,
+})
+
+
+      // Smooth scroll links
+      $('.desk-menu a[href^="#"]').on("click", function(){
+          var id = $(this).attr("href");
+          
+          $('html, body').animate({
+              scrollTop:$(id).offset().top
+          }, 500);
+          return false;
+      });
+
+      //Hamburger Menu and Esc events
+      $('#hamburgler').on('click', checkNav);
+      $('.hamburgler-menu').on('click', 'a', closeNav);
+
+      $(window).on('keyup', ifEscClose);
+
+      function checkNav() {
+        $('body').toggleClass('hamburgler-active');
+      }
+
+      function closeNav(e) {
+         $('body').removeClass('hamburgler-active');
+      }
+
+      function ifEscClose(e){
+        if (e.keyCode == 27) closeNav()
+      }
+
+  });
+
+</script>
+
+
+</div></body></html>
