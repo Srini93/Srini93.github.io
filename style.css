@@ -60,15 +60,7 @@ table {
 }
 @font-face{
   font-family:'MyWebFont1';
-  src:url('fonts/MaisonNeue-Book.ttf'); 
-}
-@font-face{
-  font-family:'MyWebFont2';
-  src:url('fonts/maison-neue-bold.ttf'); 
-}
-@font-face{
-  font-family:'MyWebFont3';
-  src:url('fonts/HelveticaNeueMed.ttf'); 
+  src:url('fonts/CircularStd-Book.otf'); 
 }
 
 *  {
@@ -90,6 +82,11 @@ body{
   bottom: 6rem;
  }
 
+.frame{
+    max-width: 1280px;
+    width: 100%;
+    margin: 0px auto;
+}
 .header {
   position:absolute;
   width:100%;
@@ -333,7 +330,7 @@ ul {
     overflow: hidden;
     background-color: none;
     font-family: "MyWebFont1";
-    font-size: 13px;
+    font-size: 100%;
     z-index: 8888;
     position: relative;
     display: block;
@@ -413,14 +410,14 @@ header section {
 }
 h1{
   font-family: "MyWebFont";
-  font-size: 280%
+  font-size: 290%
 
 }
 
 header section h2 {
   text-align:center;
   font-family: "MyWebFont1";
-  font-size: 150%;
+  font-size: 160%;
   line-height: 160%;
   padding-top: 3rem;
 }
@@ -580,7 +577,7 @@ height: 100%;
     display: none;
   }
   h1 {
-    font-family: "MyWebFont2";
+    font-family: "MyWebFont";
     font-size: 250%;
     padding-top: 1em;
 }
@@ -609,7 +606,7 @@ header section h2 {
     padding-top: 10%;
     font-family: "MyWebFont";
     color: #000;
-    font-size: 300%;
+    font-size: 200%;
 }
  .txt6{
   position: relative;

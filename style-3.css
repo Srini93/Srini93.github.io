@@ -91,15 +91,15 @@ table {
 }
 @font-face{
   font-family:'MyWebFont1';
-  src:url('fonts/AirbnbCereal-Book.ttf'); 
+  src:url('fonts/lineto-circular-pro-book.ttf'); 
 }
 @font-face{
   font-family:'MyWebFont2';
-  src:url('fonts/maison-neue-bold.ttf'); 
+  src:url('fonts/CircularStd-Bold.ttf'); 
 }
 @font-face{
   font-family:'MyWebFont3';
-  src:url('fonts/maisonneue-medium.ttf'); 
+  src:url('fonts/CircularStd-Medium.otf'); 
 }
 
 *  {
@@ -292,7 +292,7 @@ ul {
     overflow: hidden;
     background-color: none;
     font-family: "MyWebFont1";
-    font-size: 13px;
+    font-size: 100%;
     z-index: 8888;
     position: relative;
     display: block;
@@ -552,6 +552,15 @@ header section h2 {
   line-height: 150%;
   }
 }
+.footertext{
+  position: relative;
+  padding-top: 4%;
+  padding-left: 5%;
+  font-family: "MyWebFont";
+  color:#000;
+  font-size: 250%;
+  line-height: 150%;
+  }
 
  .txt6{
   position: relative;
@@ -562,6 +571,8 @@ header section h2 {
   font-size: 250%;
   line-height: 150%;
   }
+}
+
 
 @media screen and (max-width: 1000px) {
   .wrapper {

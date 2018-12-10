@@ -98,16 +98,9 @@ table {
 }
 @font-face{
   font-family:'MyWebFont1';
-  src:url('fonts/MaisonNeue-Book.ttf'); 
+  src:url('fonts/CircularStd-Book.otf'); 
 }
-@font-face{
-  font-family:'MyWebFont2';
-  src:url('fonts/maison-neue-bold.ttf'); 
-}
-@font-face{
-  font-family:'MyWebFont3';
-  src:url('fonts/maisonneue-medium.ttf'); 
-}
+
 
 *  {
   -webkit-overflow-scrolling: touch;
@@ -265,12 +258,12 @@ height: 100%;
 .txt4{
  	position: relative;
 	font-family: "MyWebFont1";
-	color:#000;
-  font-weight: 50%;
+	color:#333;
+ 
 	padding-left: 5%;
   padding-top: 2%;
 	text-align: left;
-	line-height: 200%;
+	line-height: 190%;
  	}
  
 .txt5{
@@ -324,7 +317,7 @@ ul {
     overflow: hidden;
     background-color: none;
     font-family: "MyWebFont1";
-    font-size: 13px;
+    font-size: 16px;
     z-index: 8888;
     position: relative;
     display: block;
@@ -442,7 +435,7 @@ header {
   }
   header{
     
-    padding-bottom: 20%;
+    padding-bottom: 5%;
   }
   
 
@@ -452,7 +445,7 @@ header {
  .hamburgler-icon-wrapper {
   z-index: 11;
   position: absolute;
-  top: 2rem;
+  top: 2.6rem;
   right: 2rem;
   height: 26px;
   width: 26px;
@@ -558,12 +551,13 @@ header section h2 {
   }
 
   .txt4{
+    max-width: 360px;
   position: relative;
   font-family: "MyWebFont1";
   color:#000;
   font-weight: 50%;
   padding-left: 5%;
-  padding-top: 10%;
+  padding-top: 5%;
   text-align: left;
   font-size: 100%;
   }
