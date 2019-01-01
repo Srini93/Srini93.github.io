@@ -1,0 +1,609 @@
+<html>
+<head>
+<title>Holachef | Online food ordering</title>
+<link rel="icon" type="favi.png" href="favi.png"> 
+<meta name="theme-color" content="#000000">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+
+<!-- MWeb app -->
+<meta name="full-screen" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Srinivasan">
+
+<!-- MWeb app ends -->
+
+<!-- Mobile icons -->
+<!-- iOS -->
+<link href="/images/Appicons/iOS/120.png" rel="apple-touch-icon">
+<link href="/images/Appicons/iOS/152.png" rel="apple-touch-icon" sizes="152x152">
+<link href="/images/Appicons/iOS/167.png" rel="apple-touch-icon" sizes="167x167">
+<link href="/images/Appicons/iOS/180.png" rel="apple-touch-icon" sizes="180x180">
+<!-- android -->
+<link href="/images/Appicons/android/192.png" rel="icon" sizes="192x192">
+<link href="/images/Appicons/android/128.png" rel="icon" sizes="128x128">
+<!-- Mobile icons ends here -->
+
+<link rel="stylesheet" href="style-2.css">
+
+<style>
+  .hamburgler-icon { top:0; }
+  .hamburgler-icon, .hamburgler-icon:before, .hamburgler-icon:after {
+    background: #000;
+  }
+  header {
+    background: #fff;
+    display: flex;
+    align-items: center;
+    min-height: 65px;
+    justify-content: center;
+    padding: 0;
+  }
+
+  #logo svg {
+
+    width: 140px;
+  }
+
+@media only screen and (min-width:770px){
+    header {
+      justify-content: space-between;
+      padding-left:5%;
+    }
+ }
+ @media only screen and (min-width: 400px){
+   header {
+      justify-content: space-between;
+      padding-left:5%;
+    }
+
+ }
+</style>
+
+</head> 
+
+<body data-aos-easing="ease" data-aos-duration="1200" data-aos-delay="0">
+
+
+
+<div class="hamburgler-menu">
+  <ul class="hamburgler-menu-list">
+ <li><a href="index.html#Selectedworks">Works</a></li>
+  <li><a href="About.html">About</a></li>
+           
+    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
+         
+        
+  </ul>
+</div>
+
+
+ 
+
+<!-- Header -->
+   <header style="padding-top: 2%">
+
+
+<a href="index.html"><div id="logo" style="">  <svg width="393px" height="80px" viewBox="0 0 393 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" stroke="#22B16C">
+            <rect id="Rectangle" stroke-width="7.5" x="3.75" y="3.75" width="385.5" height="103.5" rx="15"></rect>
+            <path d="M70.6965087,62.7480469 L75.6799072,62.7480469 C75.9963134,65.2990723 78.5275634,66.9404297 82.1464599,66.9404297 C85.5082763,66.9404297 87.9406494,65.2199707 87.9406494,62.8271484 C87.9406494,60.7705078 86.3783935,59.564209 82.7199462,58.7138672 L79.0219482,57.8635254 C73.8407958,56.6967773 71.4084228,54.1259766 71.4084228,49.8742676 C71.4084228,44.6931152 75.6403564,41.2521973 82.0278076,41.2521973 C88.0197509,41.2521973 92.3505615,44.6931152 92.5878662,49.5974121 L87.7033447,49.5974121 C87.3473876,47.0859375 85.1325439,45.5039062 82.0080322,45.5039062 C78.7253173,45.5039062 76.5500244,47.0859375 76.5500244,49.5183105 C76.5500244,51.4365234 77.9936279,52.5637207 81.5334228,53.3745117 L84.8161376,54.1259766 C90.6103271,55.4311523 93.0427001,57.84375 93.0427001,62.1943359 C93.0427001,67.7512207 88.7514404,71.2119141 81.8300537,71.2119141 C75.2843994,71.2119141 70.9535888,67.9291992 70.6965087,62.7480469 Z M104.679614,46.1960449 L104.679614,55.7475586 L110.572681,55.7475586 C113.815845,55.7475586 115.674731,54.0073242 115.674731,50.9816895 C115.674731,48.0153809 113.697192,46.1960449 110.454028,46.1960449 L104.679614,46.1960449 Z M104.679614,59.8015137 L104.679614,70.5 L99.5775634,70.5 L99.5775634,41.9641113 L111.165942,41.9641113 C117.157886,41.9641113 120.91521,45.4050293 120.91521,50.8828125 C120.91521,54.6401367 118.937671,57.7844238 115.536304,59.010498 L121.765552,70.5 L115.931811,70.5 L110.335376,59.8015137 L104.679614,59.8015137 Z M132.987183,70.5 L127.885132,70.5 L127.885132,41.9641113 L132.987183,41.9641113 L132.987183,70.5 Z M145.751294,70.5 L140.827222,70.5 L140.827222,41.9641113 L145.256909,41.9641113 L159.257886,61.3637695 L159.594067,61.3637695 L159.594067,41.9641113 L164.498364,41.9641113 L164.498364,70.5 L160.088452,70.5 L146.087476,51.0805664 L145.751294,51.0805664 L145.751294,70.5 Z M177.460229,70.5 L172.358179,70.5 L172.358179,41.9641113 L177.460229,41.9641113 L177.460229,70.5 Z M199.02439,70.5 L193.151099,70.5 L183.184302,41.9641113 L188.820288,41.9641113 L195.998755,64.5476074 L196.334937,64.5476074 L203.454077,41.9641113 L208.89231,41.9641113 L199.02439,70.5 Z M230.45647,70.5 L228.043872,63.2028809 L217.54314,63.2028809 L215.090991,70.5 L209.929614,70.5 L220.054614,41.9641113 L225.789478,41.9641113 L235.934253,70.5 L230.45647,70.5 Z M222.64519,47.4023438 L218.729663,59.1687012 L226.857349,59.1687012 L222.981372,47.4023438 L222.64519,47.4023438 Z M240.333374,62.7480469 L245.316772,62.7480469 C245.633179,65.2990723 248.164429,66.9404297 251.783325,66.9404297 C255.145142,66.9404297 257.577515,65.2199707 257.577515,62.8271484 C257.577515,60.7705078 256.015259,59.564209 252.356812,58.7138672 L248.658814,57.8635254 C243.477661,56.6967773 241.045288,54.1259766 241.045288,49.8742676 C241.045288,44.6931152 245.277222,41.2521973 251.664673,41.2521973 C257.656616,41.2521973 261.987427,44.6931152 262.224731,49.5974121 L257.34021,49.5974121 C256.984253,47.0859375 254.769409,45.5039062 251.644897,45.5039062 C248.362183,45.5039062 246.18689,47.0859375 246.18689,49.5183105 C246.18689,51.4365234 247.630493,52.5637207 251.170288,53.3745117 L254.453003,54.1259766 C260.247192,55.4311523 262.679565,57.84375 262.679565,62.1943359 C262.679565,67.7512207 258.388306,71.2119141 251.466919,71.2119141 C244.921265,71.2119141 240.590454,67.9291992 240.333374,62.7480469 Z M287.625317,70.5 L285.21272,63.2028809 L274.711987,63.2028809 L272.259839,70.5 L267.098462,70.5 L277.223462,41.9641113 L282.958325,41.9641113 L293.103101,70.5 L287.625317,70.5 Z M279.814038,47.4023438 L275.898511,59.1687012 L284.026196,59.1687012 L280.15022,47.4023438 L279.814038,47.4023438 Z M303.73147,70.5 L298.807398,70.5 L298.807398,41.9641113 L303.237085,41.9641113 L317.238062,61.3637695 L317.574243,61.3637695 L317.574243,41.9641113 L322.47854,41.9641113 L322.47854,70.5 L318.068628,70.5 L304.067651,51.0805664 L303.73147,51.0805664 L303.73147,70.5 Z" id="SRINIVASAN" fill="#22B16C"></path>
+        </g>
+    </g>
+</svg></div></a>
+
+    <div id="hamburgler" class="hamburgler-icon-wrapper">
+      <span class="hamburgler-icon"></span>
+    </div>
+      
+      
+        <ul class="desk-menu">
+
+           <li><a class="contact" href="Resume_srinivasan.pdf" target="_blank">Résumé</a></li>
+           <li><a href="about.html">About</a></li>
+          <li><a href="index.html#Selectedworks">Works</a></li>
+        
+        
+    </header>
+  
+<!-- About me -->
+<div class="frame">
+<div id="about" style="/* height:30%; */;">
+       
+    <p class="h1">
+Holachef - Home made food delivered 
+ <br>from chefs
+</p>
+    <img class="img1" src="images/case4/Holachefcover.png"  style="margin: 5%;" >
+    <div class="txt4">
+     
+     </div>
+</div>
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5%;
+">
+  <div style="
+    flex: 3 0 600px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">About the project</p>
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3;">
+       Holachef is a food-tech startup which curates chefs around mumbai and delivers food cooked from them online. Everyday there is a change in menu and compostion of the cuisine. Being a product designer, I was responsible for designing multiple products that catered to the user and ones which also helped the process of the business easier.
+    </div>
+</div>
+
+  <div style="flex: 3 0 450px;padding-left: 8rem;padding-top: 1rem;" class="wrapper">
+    <h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 120%;
+">Project Type & Involvement</h2>
+    <p style="
+    font-family: &quot;MyWebFont1&quot;;
+    padding: 0.75rem 0;
+    font-size: 18px;
+    margin-bottom: 1.5rem;
+">Work in Holachef - Product Design</p>
+    <h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 20px;
+">Timeline</h2>
+    <p style="
+    font-family: &quot;MyWebFont1&quot;;
+    padding: 0.5rem 0;
+    font-size: 18px;
+">Jun 2015 - Dec 2015
+
+</p>
+  <h2 style="
+    padding-top: 7%;
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 20px;
+">Platforms</h2>
+    <p style="
+    font-family: &quot;MyWebFont1&quot;;
+    padding: 0.5rem 0;
+    font-size: 18px;
+">iOS, Android & Web
+
+</p>
+  </div>
+</div>
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 5%;
+">
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">Designing digital solutions </p>
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3;line-height:3rem">
+           <span style="line-height: 1.2rem">As a team we thought of multiple solutions to make the process and business easier. I was a part of building some of the <br> solutions that was contributing to run the business.<br></span>
+           1.The primary web & mobile products. <br>
+           2.An application for chefs.<br>
+           4.Mobile Application for the delivery executives.</p>
+    </div>
+</div>
+</div>
+
+
+<h2 class="txt3">Brainstorming & Ideating</h2>
+
+   <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3; padding-left:5%"> The brainstorming sessions with them team helped us define the solutions in the right path from ideating the products, features, doing a breif competitive analysis etc. We had a stormboard kind of place where we post everything right from ideas, inspirations and also start initial sketches for products from here.
+           </p>
+    </div>
+
+
+<img src="images/case4/Brainstorm.jpg"  style="margin-left: 10%; 
+    margin-top: 5%; max-width:1440px;" >
+
+   
+
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10%;
+    padding-left: 5%
+">
+
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 3 0 400px;
+">
+ <p class="txt3" style="padding-top:5%; padding-left:0; padding-bottom: 5%; font-size: 200%"
+
+">1)User Applications</p>
+
+     <p class="txt3" style="
+    padding: 0;
+
+">Web Application</p>
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3;">
+            As a part of revamping the primary website & mobile produ through which most of the business happens. The  goal was to make the website better both in terms of user Experience and visual design from the then existed products. We primarily revamped the following elements to make it better.<br>
+            <br>
+<span style="line-height: 3rem">
+ 1) Item card which added some more information for the user compared to the older version.<br>
+  2) A Filter to sort the food with more categories.<br>
+  3) The photographs and tyopgraphy to make it look better.<br>
+
+     </p></span>
+
+
+
+    </div>
+</div>
+
+</div>
+
+</div>
+
+<img src="images/case4/Website.png"  style="margin-left: 10%;
+    margin-top: 5%; max-width:1440px" >
+
+
+    <div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10%;
+    padding-left: 5%
+">
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">Mobile Application</p>
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3;">
+           <!--YET TO FILL--></p>
+
+    </div>
+</div>
+</div>
+</div>
+<img src="images/case4/app.png"  style="margin-left: 10%;
+    margin-top: 5%; max-width:1440px" >
+
+<iframe src="https://www.youtube.com/embed/8aZpkukeiM0" frameborder="0" webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true" 
+  style="width: 80%; height: 80%;margin: 4rem auto;display: block"></iframe>
+
+
+<div style="flex: 1" class="btn-group" >
+
+ <a href="https://www.google.co.in/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwir-uai8rHXAhVMuY8KHadPCu8QFggnMAA&url=https%3A%2F%2Fitunes.apple.com%2Fin%2Fapp%2Fonline-spreadsheets-zoho-sheet%2Fid1081348290%3Fmt%3D8&usg=AOvVaw1LWo9TFG9YC7P1BDDSySZf" target="_blank"> <button style="background-color:#111111" class="button" >Download on App Store</button></a>
+ 
+ <a href="https://www.google.co.in/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=8&ved=0ahUKEwir-uai8rHXAhVMuY8KHadPCu8QFggyMAI&url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.zoho.sheet.android%26hl%3Den&usg=AOvVaw2u8EJ4hyt8HzZTbeYhDd0g" target="_blank"> <button style="background-color: #111111" class="button">Download on Playstore</button></a>
+</div>
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10%;
+    padding-left: 5%;
+ 
+">
+
+<!-- chefapp-->
+
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">2) Chef App</p>
+
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3 0 400px; max-width: 1000px">The chef app was designed to effectively communicate between the chefs and the menu planners to effectively communicate about the requirements, planning etc. Also the chef app can avail holidays and communicate with the team through the application. The application minimised the need to place a phone call or an email each and everytime to communicate their plans to the team.
+
+       </p>
+    </div>
+ </div>
+</div>
+
+<img src="images/case4/Chef App 1.png"  style="margin-left: 10%; max-width:1440px; padding-top:5%" >
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10%;
+    padding-left: 5%;
+ 
+">
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0; font-size: 120%
+">Chef Profile</p>
+
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3 0 400px; max-width: 1000px">The profile pages gives insights on the reviews and rating each chef has received from the user. This helps the chefs to effectively evaluate themselves and change the items according to the customers need. Also the chefs can edit theie description that applies on the consumer website.
+       </p>
+    </div>
+ </div>
+</div>
+
+<img src="images/case4/Chef Profile.png"  style="margin-left: 10%; max-width:1440px; padding-top:5%" >
+
+<!-- chefapp-->
+
+
+
+
+<!-- Runnersapp-->
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10%;
+    padding-left: 5%;
+ 
+">
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0; font-size: 200%
+">3)Runners App - An app for delivery executives</p>
+
+<p class="txt3" style="
+    padding-top:5%; padding-left:0; padding-bottom:; font-size: 150%>
+">The Problem</p>
+
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3 0 400px; line-height: 3rem; padding-bottom: 5%">1)To design an app for the delivery person to effecrively deliver orders and do pickups from the chefs and food centres.<br>
+  2) Allow the delivery guys to stop and start their days trip at any point of time.<br>
+  3) Plan their holidays from the application.<br>
+  4) Get paid for the number of deliveries or pickup they had made for the day.<br>
+  5) Calculate the distance and their number of trips a day.
+
+
+    </div>
+
+    <p class="txt3" style="
+    padding: 0;
+">Constraints & Insights</p>
+
+  <p style="flex: 3 0 400px; line-height: 3rem; padding-bottom: 5%; padding-left:0" class="txt4">
+  1)The delivery guys were not tech savvy but has been using mobile phones which are most android based ones.<br>
+  2) Design a simple solution which can be handy and make them informed about their tasks.<br>
+  
+   </p>
+
+    <p class="txt3" style="
+    padding: 0;
+">Solution:</p>
+
+  <p style="flex: 3 0 400px; line-height: 3rem; padding-bottom:; padding-left:0" class="txt4">
+  1) An android application was designed to satisfy these needs.<br>
+  2) A low end device was given to the delivery executives.<br>
+3)Using the application , the application navigates the best way to do their pickups or deliveries, apply holidays, track their stats, end the day whenever they want and get paid for the same using the distance calculated.
+  
+   </p>
+
+     <p style="flex: 3 0 400px; line-height: 3rem; padding-bottom: %; padding-left:0" class="txt4">
+  
+  
+   </p>
+ </div>
+ 
+</div>
+
+
+
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case4/Runnerscard.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 400px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">A single task to focus on</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">A primary card interactive card was designed to keep the executive focused on a single task. The upcoming tasks were also listed but were not interactive. The card consisted of all the necessary information required for a task. Also, the primary action was a FAB that enables the navigation to the location. As soon as the task is marked completed or incomplete(only if the user is not available), the task is moved to the past and the next task comes up as the primary card. Tapping on the card also takes him to the detailed page of a task.
+</div>
+</div>
+
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case4/tasks.png" style="
+    width: 100%;
+">
+  </div>
+
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">Doubling as pickup and delivery person</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">The executive's task was not just deliveries but also  few pickups from the chefs too and also delivery the necessary containers needed for them. The details page gives the ability to call the person and also gives details on the items of the task.
+  </div>
+</div>
+
+
+<div style="
+    padding-top: 5%;
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-wrap: wrap;
+">
+  <div style="
+    flex: 2 0 400px;
+">
+  <img src="images/case4/past.png" style="
+    width: 100%;
+">
+  </div>
+  <div style="
+    flex: 1 0 360px;
+"><h2 style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 30px;
+    margin-bottom: 2rem;
+">Making the executives feel accomplished</h2>
+    <p style="
+    font-weight: 500;
+    font-family: &quot;MyWebFont1&quot;;
+    margin-bottom: 2rem;
+    line-height: 2;
+">After each closing day or when the executive manually closes his day, he gets the data on how many trips he has done, the total distance travelled, the pickups & deliveries. This gives them a sense of accomplishment and rewarding which motivates them to do better. This data are also made use to credit their salary on daily basis.
+  </div>
+</div>
+
+
+<!-- End of Runnersapp-->
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 5%;
+    padding-top: 5%;
+    padding-bottom: 5%;
+">
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0; font-size: 2rem
+">Conclusion & Takeaways </p>
+     <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3;line-height:4rem; max-width: 1000px">
+           <span style="line-height: 2rem;">Designing an end to end experience with all the necessary applications was a huge challenge  in a timebound project. Designing for multiple platforms and multiple form factors at once made me a fast paced person. Got to learn the importance of visual design and visual hierarchy and how it make the users more engaging. Although we ideated on multiple solutions, all we could build was a minimum viable product within the given time period and resources yet a userful one<br></span>
+
+          
+    </div>
+</div>
+</div>
+
+<div style="background:#000; height: 2%">
+ <p></p>
+</div>
+
+
+
+<!-- Scriptcode-->
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="https://rawgit.com/michalsnik/aos/master/dist/aos.js"></script>
+<script>
+
+  $(function(){
+
+AOS.init({
+  duration: 1200,
+})
+
+
+      // Smooth scroll links
+      $('.desk-menu a[href^="#"]').on("click", function(){
+          var id = $(this).attr("href");
+          
+          $('html, body').animate({
+              scrollTop:$(id).offset().top
+          }, 500);
+          return false;
+      });
+
+      //Hamburger Menu and Esc events
+      $('#hamburgler').on('click', checkNav);
+      $('.hamburgler-menu').on('click', 'a', closeNav);
+
+      $(window).on('keyup', ifEscClose);
+
+      function checkNav() {
+        $('body').toggleClass('hamburgler-active');
+      }
+
+      function closeNav(e) {
+         $('body').removeClass('hamburgler-active');
+      }
+
+      function ifEscClose(e){
+        if (e.keyCode == 27) closeNav()
+      }
+
+  });
+
+</script>
+
+
+</div></body></html>
