@@ -36,19 +36,24 @@
 
 
 .bg-blue{
-  background: rgb(0, 189, 203);
+  background: #fff;
+   border: 2px solid  #0dc98b;
 }
 
 .bg-sky {
-  background: rgb(0, 166, 250);
+   background: #fff;
+   border: 2px solid #785ef0;
+ 
 }
 
 .bg-violet {
-  background:rgb(125, 50, 205);
+    background: #fff;
+   border: 2px solid  #036aff;
+  
 }
 
 .Cards {
-  color: #fff;
+  color: #000;
     display: grid;
     grid-template: "cell cell cell";
     grid-gap: 2rem;
@@ -58,7 +63,7 @@
     margin-left: auto;
     margin-right: auto;
     width: 95%
-
+    padding-top:5%;
 }
 
 @media screen and (max-width: 1000px) {
@@ -353,16 +358,19 @@ Zoho Sheet - An app to view, edit
   Initially, we identified and talked to some spreadsheet users and categorized them into three classes and a few asked questions with regard to their usage on daily basis in a mobile spreadsheet software to each category. The users were primarily web users and also who were using alternate mobile spreadsheet software currently. These answers were the base to start designing features for version one.
 <br>
 
-<span style="font-size:16px; 
+<span style="font-size:18px; 
            font-weight: 400;
            line-height: 300%;
-           font-style: italic; 
+           font-style: italic;
+
+           
     margin-top:20px; 
     padding-left: 5%; 
     display:block;">
-  1)The common features they use?<br>
-  2)Features they wanted to use in a mobile spreadsheet app?<br>
-  3What are the tasks they do on daily basis in a  mobile spreadsheet?<br>
+  ‣The common features they use?<br>
+  ‣Features they wanted to use in a mobile spreadsheet app?<br>
+  ‣What are the tasks they do on daily basis in a  mobile spreadsheet?<br>
+  ‣Circumstances under which they use the mobile app?<br><br>
 
 
   </p>
@@ -378,16 +386,16 @@ Zoho Sheet - An app to view, edit
   </p>
   </div>
 
-  <section class="Cards" >
+  <section class="Cards" style="padding-top: 3%">
     <div class="Card bg-blue">
-      <p class="txt3" style="padding-left: 0; padding-top: 2%">
-        1. Beginners
+      <p class="txt3" style="padding-left: 0; padding-top: 2%; color: #0dc98b">
+        Beginners
       </p>
-      <p class="txt4" style="font-size: 85%; line-height: 1.2; padding-left: 0; opacity: 0.8">
+      <p class="txt4" style="font-size: 90%; line-height: 1.2; padding-left: 0; opacity: 0.6">
         Uses spreadsheet atleast once in 10 days 
       </p>
       
-      <p class="txt4" style="line-height: 1.4; padding-top: 5%; padding-left: 0; font-size: 90%">
+      <p class="txt4" style="line-height: 25px; padding-top: 5%; padding-left: 0; font-size: 90%">
           Most users wanted to view the shared spreadsheet or use basic formatting options in the application. They wanted the maximum real-estate in the application to view the spreadsheet and share the same with collaborators and export it in a readable format(i.e)PDF.
     
 
@@ -395,40 +403,79 @@ Zoho Sheet - An app to view, edit
     </div>
 
     <div class="Card bg-sky">
-      <p class="txt3" style="padding-left: 0; padding-top: 2%;">
-        2.Mid-Level
+      <p class="txt3" style="padding-left: 0; padding-top: 2%; color: #785ef0;">
+        Mid-Level
       </p>
-      <p class="txt4" style="font-size: 80%; line-height: 1.2; padding-left: 0; font-size: 90%; opacity: 0.8">
+      <p class="txt4" style="font-size: 80%; line-height: 1.2; padding-left: 0; font-size: 90%; opacity: 0.6">
         Uses spreadsheet atleast once in 3 days 
       </p>
       
-      <p class="txt4" style="line-height: 1.4; padding-top: 5%; padding-left: 0; font-size: 90%">
+      <p class="txt4" style="line-height: 25px; padding-top: 5%; padding-left: 0; font-size: 90%">
                    Users in this category used to view, edit or share spreadsheets when they were away from their computers. Most of the users frequently viewed the existing spreadsheets created from their personal computers and preferred to have options such as alignment, text colour, cell colour and some minor functions & formulas. 
       </p>
 
     </div>
       
         <div class="Card bg-violet">
-      <p class="txt3" style="padding-left: 0; padding-top: 2%;">
-       3. Power Users
+      <p class="txt3" style="padding-left: 0; padding-top: 2%; color:  #036aff">
+       Power Users
       </p>
-      <p class="txt4" style="line-height: 1.4; padding-left: 0; font-size: 85%; opacity: 0.8">
+      <p class="txt4" style="line-height: 1.4; padding-left: 0; font-size: 85%; opacity: 0.6">
         Uses spreadsheets everyday
       </p>
       
-      <p class="txt4" style="line-height: 1.4; padding-top: 5%; padding-left: 0; font-size: 90%">
+      <p class="txt4" style="line-height: 25px; padding-top: 5%; padding-left: 0; font-size: 95%">
            These people were the major target audience and the important user group who does everything from their mobile. This user group were power users whose everyday work depends on a spreadsheet. They wished to have at least basic formatting, sharing, collaboration and formulas & visualizations to apply to their data.
 
       </p>
     </div>
 
+
   </section>
+
+<div style="
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5%;
+    padding-top: 5%;
+">
+  <div style="
+    flex: 3 0 400px;
+">
+     <p class="txt3" style="
+    padding: 0;
+">Other Key Insights </p>
+     <div class="txt4" style="
+    padding-left: 0;
+">
+
+     <p style="flex: 3;">
+          <p style="padding-bottom: 2%">Not everytime a designer gets a golden opportunity to design an end to end product with a large consumer base. I cherish this opportunity which helped me in improving myself as a product designer impacting thousands of people and business. Here are few key takeaways in the process.<br></p>
+
+ <span style="line-height: 1.5; padding-top:10">
+<span style="font-weight: 1000; font-size: 18px; color: #19AF7A">Users want to accomplish things quickly-
+</span>Users want to complete a task or a function in the minmum number of steps and time. <br>
+<div>&nbsp;</div>
+
+<span style="font-weight: 800; font-size: 18px; color: #19AF7A">Prefer a lightweight experience-</span> No clutter and unwanted elements in the product where they can focus on what they wanted to acheive.
+<br>
+
+<div>&nbsp;</div>
+<span style="font-weight: 800; font-size: 18px; color: #19AF7A">Handhelds are used as an alternative-</span> Handhelds are used an alternative devices to desktops when using a spreadsheet.
+<br>
+
+
+</span></p>
+
+    </div>
+</div>
+</div>
 
 
 <div style="
     display: flex;
     flex-wrap: wrap;
-    padding-top: 8%;
+    padding-top: 5%;
     padding-left: 5%
 ">
   <div style="
@@ -465,6 +512,7 @@ Zoho Sheet - An app to view, edit
 <h2 class="txt3">Detailed Features</h2>
    <div class="txt4" style="
     padding-left: 0;
+    padding-top: 1%
 ">
      <p style="flex: 3; padding-left:5%">
          The research result clearly showed that the participants would want to have the basic features that helped us to nail the workflow for the product, phasing the strategy and a clear product feature roadmap. All the items below were validated and finalized based on our user needs, engineers and tech feasibility and the business vision. </p>
@@ -1235,7 +1283,7 @@ The thought process was to place the function bar in a not disturbing place when
 ">
      <p class="txt3" style="
     padding: 0;
-">The Impact and success metrics</p>
+">The Impact and acheiving success metrics</p>
 
      <div class="txt4" style="
     padding-left: 0;
