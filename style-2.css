@@ -98,7 +98,7 @@ table {
 }
 @font-face{
   font-family:'MyWebFont1';
-  src:url('fonts/CircularStd-Book.otf'); 
+  src:url('fonts/Inter-UI-Regular.ttf'); 
 }
 
 
@@ -259,11 +259,12 @@ height: 100%;
  	position: relative;
 	font-family: "MyWebFont1";
 	color:#333;
+  font-size:1.01rem;
  
 	padding-left: 5%;
   padding-top: 2%;
 	text-align: left;
-	line-height: 190%;
+	line-height: 2rem;
  	}
  
 .txt5{
