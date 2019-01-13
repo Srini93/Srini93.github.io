@@ -28,8 +28,41 @@
 
 </head> 
 <style>
+
+.header {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  background-color: #f1f1f1;
+}
+
+.header h2 {
+  text-align: center;
+}
+
+.progress-container {
+  width: 100%;
+  height: 4px;
+  background: #fff;
+}
+
+.progress-bar {
+  height: 5px;
+  background: #4caf50;
+  width: 100%;
+  position: fixed;
+  
+}
+
+.content {
+  padding: 100px 0;
+  margin: 50px auto 0 auto;
+  width: 80%;
+}
+
 .Container {
-   max-width: 980px;
+   max-width: 1000px;
   margin: 1rem;
 }
 
@@ -125,7 +158,15 @@
  }
 </style>
 
-<body data-aos-easing="ease" data-aos-duration="1200" data-aos-delay="0">
+<body>
+
+<div class="header">
+  <div class="progress-container">
+    <div class="progress-bar" id="myBar"></div>
+  </div>  
+</div>
+
+
 
 <div class="frame">
 
@@ -562,22 +603,7 @@ Other than the feature oriented insights there were few other common attributes 
 
 <img src="images/case2/lo-fi.png"  style="margin-left: 10%; max-width:1440px;" >
 
-   <p class="txt3" style="
-    padding-left: 5%;
-">Read the detailed product design process</p>
-<a style="text-decoration: none;"href="https://medium.com/@pixelfabricator/designing-my-first-platform-agnostic-saas-product-7b258cd2f17e" target="_blank">
-<div style=" width:800px; margin:0 auto; border-radius: 3px; background-color: #02B875;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3); margin-top: 5%; margin-bottom: 5%; width:80%;">
    
-<h2 class="txt3" style="text-align:center; color:white">Designing my first platform agnostic SaaS product.</h2>
-   <div class="txt4" style="
-    padding-left: 0;
-">
-     <p style="flex: 3; padding-left:0%; color: white; text-align:center; padding-bottom:5%">
-           "The inside process and takeaways from designing the first version of Zoho Sheet — a SaaS based spreadsheet application on mobile platforms."</p>
-    </div>
-</div>
-</a>
 
 
 <div style="
@@ -626,6 +652,22 @@ Other than the feature oriented insights there were few other common attributes 
 <img src="images/case2/style.png"  style="margin-left: 10%; max-width:1440px" >
 <img src="images/case2/Designsystem.png"  style="margin-left: 10%; max-width:1440px" >
 
+<p class="txt3" style="
+    padding-left: 5%;
+">Read the detailed product design process</p>
+<a style="text-decoration: none;"href="https://medium.com/@pixelfabricator/designing-my-first-platform-agnostic-saas-product-7b258cd2f17e" target="_blank">
+<div style=" width:800px; margin:0 auto; border-radius: 3px; background-color: #02B875;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.3); margin-top: 5%; margin-bottom: 5%; width:80%;">
+   
+<h2 class="txt3" style="text-align:center; color:white; padding-left: 5%; padding-right: 5%">Designing my first platform agnostic SaaS product.</h2>
+   <div class="txt4" style="
+    padding-left: 0;
+">
+     <p style="flex: 3; padding-left:0%; color: white; text-align:center; padding-bottom:5%">
+           "The inside process and takeaways from designing the first version of Zoho Sheet — a SaaS based spreadsheet application on mobile platforms."</p>
+    </div>
+</div>
+</a>
 
 
 <div style="
@@ -640,7 +682,7 @@ Other than the feature oriented insights there were few other common attributes 
 
      <p class="txt3" style="
     padding: 0; margin-top: 2%; font-size: 200%
-">Skinning the product -  The final touch </p>
+">The Primary Features </p>
   </div>
 </div>
 
@@ -1018,7 +1060,7 @@ The thought process was to place the function bar in a not disturbing place when
 
 <p class="txt3" style="
     padding-bottom: ; font-size: 200%
-">Leveraging the power of native platforms</p>
+">Icing on the cake: Leveraging the power of native platforms</p>
 
 <div style="
     display: flex;
@@ -1474,7 +1516,22 @@ or contact me below</p>
 </div>
 
 
+
+
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+<script>
+// When the user scrolls the page, execute myFunction 
+window.onscroll = function() {myFunction()};
+
+function myFunction() {
+  var winScroll = window.scrollY;
+  var height = document.documentElement.clientHeight - 1000;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = scrolled + "%";
+}
+</script>
+
 
 <script type="text/javascript" src="https://rawgit.com/michalsnik/aos/master/dist/aos.js"></script>
 <script>

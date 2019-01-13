@@ -78,7 +78,29 @@ iframe {
     }
 
  }
+
+ .progress-container {
+  width: 100%;
+  height: 4px;
+  background: #fff;
+}
+
+.progress-bar {
+  height: 5px;
+  background: #702eff;
+  width: 100%;
+  position: fixed;
+  
+}
 </style>
+
+<div class="header" style="z-index: 1">
+ <div class="progress-container">
+    <div class="progress-bar" id="myBar"></div>
+  </div>  
+</div>
+<body style="z-index: -1">
+
 <div class="frame">
 <body data-aos-easing="ease" data-aos-duration="1200" data-aos-delay="0">
 
@@ -338,7 +360,7 @@ An Apple watch concept app to measure your driving accuracy and give a curated s
   <div style="
     flex: 2 0 400px;
 ">
-    <img src="images/case 3/tech.png" style="
+    <img src="images/case 3/tech.jpg" style="
     width: 100%;
 ">
   </div>
@@ -785,6 +807,18 @@ AOS.init({
 
   });
 
+</script>
+
+<script>
+// When the user scrolls the page, execute myFunction 
+window.onscroll = function() {myFunction()};
+
+function myFunction() {
+  var winScroll = window.scrollY;
+  var height = document.documentElement.clientHeight - 1000;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = scrolled + "%";
+}
 </script>
 
 

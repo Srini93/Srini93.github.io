@@ -58,12 +58,38 @@
     }
 
  }
+
+ .progress-container {
+  width: 100%;
+  height: 4px;
+  background: #fff;
+}
+
+.progress-bar {
+  height: 5px;
+  background: #ef6918;
+  width: 100%;
+  position: fixed;
+  
+}
+.Container {
+   max-width: 1000px;
+  margin: 1rem;
+}
+
+.content {
+  padding: 100px 0;
+  margin: 50px auto 0 auto;
+  width: 80%;
+}
 </style>
 
-</head> 
-
-<body data-aos-easing="ease" data-aos-duration="1200" data-aos-delay="0">
-
+<div class="header" style="z-index: 1">
+ <div class="progress-container">
+    <div class="progress-bar" id="myBar"></div>
+  </div>  
+</div>
+<body style="z-index: -1">
 
 
 <div class="hamburgler-menu">
@@ -79,9 +105,11 @@
 
 
  
+ 
 
 <!-- Header -->
    <header style="padding-top: 2%">
+
 
 
 <a href="index.html"><div id="logo" style="">  <svg width="393px" height="80px" viewBox="0 0 393 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -106,6 +134,8 @@
         
         
     </header>
+
+
   
 <!-- About me -->
 <div class="frame">
@@ -786,6 +816,11 @@ Chef’s dishes & impact </h2>
 
 <!-- End of Runnersapp-->
 
+<hr style="border: 0; margin-top: 5%;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));">
+
+
 <div style="
     display: flex;
     flex-wrap: wrap;
@@ -863,6 +898,18 @@ or contact me below</p>
 <!-- Scriptcode-->
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+
+<script>
+// When the user scrolls the page, execute myFunction 
+window.onscroll = function() {myFunction()};
+
+function myFunction() {
+  var winScroll = window.scrollY;
+  var height = document.documentElement.clientHeight - 1000;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = scrolled + "%";
+}
+</script>
 
 <script type="text/javascript" src="https://rawgit.com/michalsnik/aos/master/dist/aos.js"></script>
 <script>
