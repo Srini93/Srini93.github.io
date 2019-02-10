@@ -37,9 +37,9 @@ hr{
     background: #e6e6e6;
   }
 .frame{
-    max-width: 1280px;
+    max-width: 1300px;
     width: 100%;
-    margin: 0px auto;
+    margin: 2px auto;
 }
 img{
     width: 80%;
@@ -60,13 +60,13 @@ img{
     font-size: 16px;
     margin: 4px 2px;
     cursor: pointer;
-    box-shadow: 0 3px 10px 0 rgba(0,0,0,0.45);
+    box-shadow: 0 5px 15px 0 rgba(0,0,0,0.15);
     border-radius: 4px;
     transition: box-shadow 0.1s ease-out;
 }
 
 .button:hover{
-   box-shadow: 0 5px 45px 0 rgba(0,0,0,0.30);
+   opacity: 0.8;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -259,7 +259,7 @@ height: 100%;
  	position: relative;
 	font-family: "MyWebFont1";
 	color:#333;
-  font-size:1.01rem;
+  font-size:1rem;
  
 	padding-left: 5%;
   padding-top: 2%;
@@ -616,7 +616,7 @@ header section h2 {
 
 .btn-group {
     padding-left: 25%;
-    padding-top: 5%;
+    padding-top: 10%;
     padding-bottom: 5%;
     font-size: 0;
 }
