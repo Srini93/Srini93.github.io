@@ -25,9 +25,13 @@
 
 <link rel="stylesheet" href="style-2.css">
 
+ <script src="./jquery.js"></script>
+    <script src="./jquery.cycle2.js"></script>
 
 </head> 
 <style>
+
+
 @media only screen and (min-width:1000px){
    video {
   width: 90%;
@@ -48,7 +52,102 @@
   width: 70%;
   height: auto;
 }
+
+.external > * {
+                margin: 0 5px
+            }
+            
+            .external img {
+                width: 100%;
+                height: 80px;
+                object-fit: cover;
+                border-radius: 2px;
+            }
+            
+            .external {
+        display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr;
+          max-width: 800px;
+          margin: 1rem auto;
+            }
+            
+            .cycle-container {
+                position: relative;
+            }
+            
+            .cycle-slideshow {
+                margin: 4%;
+                position: relative;
+                display: block;
+                max-width: 1200px;
+            }
+
+            .cycle-slide {
+              max-width: 100%;
+            }
+            
+            .cycle-pager-active:after {
+                content: '';
+                position: absolute;
+                background: hsla(0, 0%, 56%, 0.5);
+                width: 100%;
+                height: 100%;
+                z-index: 5;
+                top: 0;
+                left: 0;
+            }
+            
+            .cycle-pager-active {
+                position: relative;
+                display: inline-block;
+            }
    
+.cycle-pager-active {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .cycle-slider-btn {
+            position: absolute;
+            color: rgba(255, 255, 255, .75);
+            z-index: 999;
+            top: 50%;
+            transform: translateY(-50%);
+            position: absolute;
+            fill: white;
+            z-index: 999;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, .15);
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: none;
+            transition: all 0.2s;
+        }
+        
+        .cycle-slider-btn:hover {
+            background: rgba(0, 0, 0, .5);
+        }
+        
+        .cycle-slider-previous-btn {
+            left: 5%;
+        }
+        
+        .cycle-slider-next-btn {
+            right: 5%;
+        }
+        
+        .cycle-slider-btn svg {
+            height: 24px;
+            width: 24px;
+            fill: currentColor;
+        }
+
 .header {
   position: fixed;
   top: 0;
@@ -844,7 +943,7 @@ Other than the feature oriented insights there were few other common attributes 
 ">
      <p class="txt3" style="
     padding: 0; 
-">Detailed view of a few screens</p>
+">Detailed view of some important features</p>
 
      <p class="txt3" style=" margin-top: 5%;
     padding: 0;
@@ -858,7 +957,40 @@ Other than the feature oriented insights there were few other common attributes 
  </div>
 </div>
 
-<img src="images/case2/iOS.png"  style="margin-left: 10%; max-width:1440px; padding-top:5%" >
+<div id="main">
+ <section class="cycle-container">
+            <div class="cycle-slideshow" data-cycle-timeout=0 data-cycle-prev="#prev" data-cycle-next="#next" data-cycle-pager="#adv-custom-pager" data-cycle-pager-template="<a href=#><img src='{{src}}' width=20 height=20></a>">
+                <button id="prev" aria-label="Previous slide" class="cycle-slider-btn cycle-slider-previous-btn">
+                    <svg aria-hidden="true" viewBox="0 0 24 24">
+                        <path d="M15.8 22l-9.6-9.4c-.3-.3-.3-.8 0-1.1l9.6-9.4c.3-.3.7-.3 1 0l1 1c.3.3.3.7 0 1l-7.6 7.4c-.3.3-.3.8 0 1.1l7.5 7.4c.3.3.3.7 0 1l-1 1c-.2.2-.6.2-.9 0z"></path>
+                    </svg>
+                </button>
+
+                <button id="next" aria-label="Next slide" class="cycle-slider-btn cycle-slider-next-btn">
+                    <svg aria-hidden="true" viewBox="0 0 24 24">
+                        <path d="M8.3 2l9.5 9.5c.3.3.3.7 0 1L8.3 22c-.3.2-.8.2-1.1 0l-1-1c-.2-.3-.2-.8 0-1.1l7.6-7.4c.2-.3.2-.7 0-1L6.3 4.1C6 3.8 6 3.3 6.3 3l1-1c.3-.2.7-.2 1 0z"></path>
+                    </svg>
+                </button>
+              <img style="width:100%" src="images/case2/slider1.png">
+            
+              <img style="width:100%" src="images/case2/slider3.png">
+               
+                 <img style="width:100%" src="images/case2/slider5.png">
+                   <img style="width:100%" src="images/case2/slider2.png">
+                   <img style="width:100%" src="images/case2/slider4.png">
+                  <img style="width:100%" src="images/case2/slider6.png">
+                  
+
+
+                 
+                
+         
+            </div>
+
+            <div id=adv-custom-pager class="center external"></div>
+        </section>
+    </div>
+
 
 
 <div style="
@@ -1353,7 +1485,7 @@ The version 2 of Zoho Sheet involved a lot of feature additions which could tran
 
 
 <div align="center" style="padding-top: 2rem;">
-<video class="video"  style="" controls loop>
+<video class="video"  style="" controls loop auto>
   <source src="images/comment.mp4" type="video/mp4">
   Your browser does not support HTML5 video.
 </video>
