@@ -435,9 +435,10 @@ header section {
 }
 
 .HeaderContent-description {
-  color: rgba(255,255,255, 0.6);
+  color: rgba(255, 255, 255, 0.93);
   font-family: "MyWebFont1";
-  margin-top: 2.5rem
+  font-size: 130%;
+  margin-top: 4.5rem;
 }
 
 .see-more {
