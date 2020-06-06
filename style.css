@@ -439,6 +439,7 @@ header section {
   font-family: "MyWebFont1";
   font-size: 130%;
   margin-top: 4.5rem;
+  line-height: 1.4em;
 }
 
 .see-more {
