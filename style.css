@@ -392,6 +392,36 @@ section {
     transition-delay: 0s !important;
 }
 
+
+  @media only screen and (min-width: 700px) and (max-width: 1024px){
+
+  }    .sample{
+  width: calc(40.33% - -2rem);
+  background: #ddd;
+  border-radius:4px;
+  padding-bottom:  calc(48.33% - 2rem);
+  box-shadow: 0 2px 2px rgba(0,0,0,0.06), 0 0 2px 1px rgba(0,0,0,0.03);
+  margin: 1rem;
+  box-sizing: border-box;
+  position: relative;
+  transition: all 0.2s;
+}
+
+
+  @media only screen and (min-width: 1000px) and (max-width: 3000px){
+    .sample{
+  width: calc(33.33% - 2rem);
+  background: #ddd;
+  border-radius:4px;
+  padding-bottom:  calc(33.33% - 2rem);
+  box-shadow: 0 2px 2px rgba(0,0,0,0.06), 0 0 2px 1px rgba(0,0,0,0.03);
+  margin: 1rem;
+  box-sizing: border-box;
+  position: relative;
+  transition: all 0.2s;
+}
+  }
+
 header img,header section{
   max-width:100%;
   position: absolute;
