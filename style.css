@@ -499,7 +499,7 @@ header {
   font-family: "MyWebFont2";
   font-size: 100%;
   background: #000;
-  min-height: 90vh;
+  min-height: 83vh;
   padding: 0 2rem 8rem;
   color: #fff;
   display: flex;
@@ -738,52 +738,5 @@ header section h2 {
   section > .sample {
     width: 100%;
     padding-bottom: calc(100% - 2rem);
-  }
-}
-
-
-.card-list-points li {
-  position: relative;
-  margin: 12px 0;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-gap: 12px;
-  width: 100%
-}
-
-.card-list-points li .card-check-icon {
-  height: 24px;
-  width: 24px;
-  --bg: #E8F0FE;
-  --stroke: #1A73E8;
-} 
-
-.card-list-points li .card-check-icon.blue {
-  --bg: #E8F0FE;
-  --stroke: #1A73E8;
-} 
-
-.card-list-points li .card-check-icon.green {
-  --bg: #ebf9f1;
-  --stroke: #3fb16f;
-} 
-
-.card-list-points li .card-check-icon.orange {
-  --bg: #feebe1;
-  --stroke: #fa6a23;
-} 
-
-@media screen and (min-width: 980px) {
-  .cards-layout {
-    display: flex;
-    flex-wrap: wrap;
-  }
-
-  .cards-layout-image {
-    flex: 2;
-  }
-
-  .cards-layout-content {
-    flex: 1;
   }
 }
