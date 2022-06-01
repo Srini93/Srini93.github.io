@@ -1,4 +1,4 @@
-
+x
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -754,7 +754,7 @@ header section h2 {
 .card-list-points li .card-check-icon {
   height: 24px;
   width: 24px;
-  --bg: #E8F0FE;
+  --bg: #f8fbff;
   --stroke: #1A73E8;
 } 
 
@@ -771,6 +771,11 @@ header section h2 {
 .card-list-points li .card-check-icon.orange {
   --bg: #feebe1;
   --stroke: #fa6a23;
+} 
+
+.card-list-points li .card-check-icon.Yellow {
+  --bg: #fff9f2;
+  --stroke: #fd9f17;
 } 
 
 @media screen and (min-width: 980px) {
