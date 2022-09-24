@@ -56,11 +56,11 @@ table {
 }
 @font-face {
   font-family:'MyWebFont';
-  src:url('fonts/CircularStd.ttf'); 
+  src:url('fonts/Product Sans Regular.ttf'); 
 }
 @font-face{
   font-family:'MyWebFont1';
-  src:url('fonts/CircularStd-Book.otf'); 
+  src:url('fonts/Product Sans Medium.ttf'); 
 }
 
 *  {
@@ -119,6 +119,28 @@ body{
     background: #000;
 }
 
+/* Wave Animation Code */
+.wave {
+  animation-name: wave-animation;  /* Refers to the name of your @keyframes element below */
+  animation-duration: 2.5s;        /* Change to speed up or slow down */
+  animation-iteration-count: infinite;  /* Never stop waving :) */
+  transform-origin: 70% 70%;       /* Pivot around the bottom-left palm */
+  display: inline-block;
+}
+
+@keyframes wave-animation {
+    0% { transform: rotate( 0.0deg) }
+   10% { transform: rotate(14.0deg) }  /* The following five values can be played with to make the waving more or less extreme */
+   20% { transform: rotate(-8.0deg) }
+   30% { transform: rotate(14.0deg) }
+   40% { transform: rotate(-4.0deg) }
+   50% { transform: rotate(10.0deg) }
+   60% { transform: rotate( 0.0deg) }  /* Reset for the last half to pause */
+  100% { transform: rotate( 0.0deg) }
+}
+
+/* Wave Animation Code */
+
  .button {
     background-color: #1769ff;
     border: none;
@@ -132,6 +154,9 @@ body{
     cursor: pointer;
     border-radius: 4px;
 }
+
+
+
 /*Media queries */
  /*Mobile*/
  @media (min-width:300px){}
@@ -216,10 +241,10 @@ body{
 
 .txt4{
  	position: relative;
-	font-family: "MyWebFont1";
+	font-family: "MyWebFont";
 	color:#444;
   font-size: 95%;
-  font-weight: 50%;
+
 	padding-left: 5%;
   padding-top: 3%;
 	text-align: left;
@@ -228,8 +253,8 @@ body{
 
  .footertxt{
   position: relative;
-  font-family: "MyWebFont1";
-  color:#ffffff9c;
+  font-family: "MyWebFont";
+  color:#8a748c;
   font-weight: 50%;
   padding-left: 5%;
   padding-top%;
@@ -254,7 +279,7 @@ body{
  	padding-top: 4%;
  	padding-left: 5%;
   font-family: "MyWebFont";
-	color:#fff;
+	color:#000;
 	font-size: 250%;
   line-height: 150%;
  	}
@@ -329,8 +354,8 @@ ul {
     padding: 0;
     overflow: hidden;
     background-color: none;
-    font-family: "MyWebFont1";
-    font-size: 100%;
+    font-family: "MyWebFont";
+    font-size: 125%;
     z-index: 8888;
     position: relative;
     display: flex;
@@ -348,7 +373,7 @@ li {
 
 li a {
     display: block;
-    color: White;
+    color: #000;
     text-align: center;
     text-decoration: none;
 }
@@ -456,7 +481,8 @@ header section {
 
 
 .HeaderContent a {
-  color: #36BC77;
+  color: #6b2fca;
+  font-family: "MyWebFont1" ;
   text-decoration: none;
 }
 
@@ -465,8 +491,8 @@ header section {
 }
 
 .HeaderContent-description {
-  color: rgba(255, 255, 255, 0.93);
-  font-family: "MyWebFont1";
+  color: #2a2a2a;
+  font-family: "MyWebFont";
   font-size: 130%;
   margin-top: 4.5rem;
   line-height: 1.4em;
@@ -498,10 +524,10 @@ header {
   position: relative;
   font-family: "MyWebFont2";
   font-size: 100%;
-  background: #000;
+  background: linear-gradient(104.05deg, rgba(204, 0, 255, 0.15) 0.31%, rgba(235, 73, 219, 0.066) 28.63%, rgba(122, 132, 221, 0.108) 60.87%, rgba(255, 255, 255, 0) 100%) ;
   min-height: 90vh;
   padding: 0 2rem 8rem;
-  color: #fff;
+  color: #000;
   display: flex;
   flex-direction: column;
 }
@@ -527,7 +553,7 @@ height: 100%;
     display: none;
   }
   header{
-    background: #000;
+    background: linear-gradient(104.05deg, rgba(204, 0, 255, 0.15) 0.31%, rgba(235, 73, 219, 0.066) 28.63%, rgba(122, 132, 221, 0.108) 60.87%, rgba(255, 255, 255, 0) 100%) ;
 
   }
   
@@ -551,7 +577,7 @@ height: 100%;
   height: 2px;
   width: 24px;
   padding-right: 10%;
-  background: #fff;
+  background: #000;
   transition: all 0.2s ease }
 .hamburgler-icon        { top: 0.75em  }
 .hamburgler-icon:before { top: -0.55em }
@@ -561,7 +587,7 @@ height: 100%;
 .hamburgler-active .hamburgler-icon:before, .hamburgler-active .hamburgler-icon:after { top: 0 }
 .hamburgler-active .hamburgler-icon:before { transform: rotate(90deg) }
 .hamburgler-active .hamburgler-icon, .hamburgler-active .hamburgler-icon:before, .hamburgler-active .hamburgler-icon:after {
-  background: white }
+  background: black }
 
 .hamburgler-menu {
   transition: all 0.4s ease; 
@@ -572,7 +598,7 @@ height: 100%;
   right: 0;
   bottom: 0;
   left: 0;
-  background-color:#000000;
+  background-color: #fff;
   color: white;
   text-align: center }
 .hamburgler-active .hamburgler-menu {
@@ -582,7 +608,7 @@ height: 100%;
   display: block;
   transition: all 0.4s ease;    float: none;
     text-align: center;
-    font-family:"MyWebFont1";
+    font-family:"MyWebFont";
     font-size: 140%;
 
   padding: 10%;
@@ -631,8 +657,8 @@ height: 100%;
 @media only screen and (min-width: 320px) and (max-width: 768px){
    .footertxt{
   position: relative;
-  font-family: "MyWebFont1";
-  color:#ffffff9c;
+  font-family: "MyWebFont";
+  color:#8a748c;
   font-weight: 50%;
   size:  80%;
   padding-left: 5%;
@@ -646,10 +672,10 @@ height: 100%;
   position: relative;
   font-family: "MyWebFont2";
   font-size: 100%;
-  background: #000;
+  background: linear-gradient(104.05deg, rgba(204, 0, 255, 0.15) 0.31%, rgba(235, 73, 219, 0.066) 28.63%, rgba(122, 132, 221, 0.108) 60.87%, rgba(255, 255, 255, 0) 100%);
   min-height: 40vh;
   padding: 0 2rem 8rem;
-  color: #fff;
+  color: #000;
   display: flex;
   flex-direction: column;
 }
@@ -701,7 +727,7 @@ header section h2 {
   padding-top: 6%;
   padding-left: 5%;
   font-family: "MyWebFont";
-  color:#fff;
+  color:#000;
   font-size: 200%;
   }
     .txt8{
@@ -754,28 +780,28 @@ header section h2 {
 .card-list-points li .card-check-icon {
   height: 24px;
   width: 24px;
-  --bg: #f8fbff;
-  --stroke: #1A73E8;
+  --bg: ;
+  --stroke: #7f7f7f;
 } 
 
 .card-list-points li .card-check-icon.blue {
-  --bg: #E8F0FE;
-  --stroke: #1A73E8;
+  --bg: ;
+  --stroke: #7f7f7f;
 } 
 
 .card-list-points li .card-check-icon.green {
-  --bg: #ebf9f1;
-  --stroke: #3fb16f;
+  --bg: 
+  --stroke: 
 } 
 
 .card-list-points li .card-check-icon.orange {
-  --bg: #feebe1;
-  --stroke: #fa6a23;
+  --bg: ;
+  --stroke: #7f7f7f;
 } 
 
 .card-list-points li .card-check-icon.Yellow {
-  --bg: #fff9f2;
-  --stroke: #fd9f17;
+  --bg: ;
+  --stroke: #7f7f7f;
 } 
 
 @media screen and (min-width: 980px) {

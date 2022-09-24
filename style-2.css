@@ -94,11 +94,11 @@ table {
 }
 @font-face {
   font-family:'MyWebFont';
-  src:url('fonts/CircularStd.ttf'); 
+  src:url('fonts/Product Sans Regular.ttf'); 
 }
 @font-face{
   font-family:'MyWebFont1';
-  src:url('fonts/Inter-UI-Regular.ttf'); 
+  src:url('fonts/Product Sans Medium.ttf'); 
 }
 
 
@@ -241,7 +241,7 @@ height: 100%;
   position: relative;
   padding-left:5%;
   padding-top: 5%;
-  font-family: "MyWebFont";
+  font-family: "MyWebFont1";
   color:#212121;
   font-size: 300%;
   }
@@ -257,7 +257,7 @@ height: 100%;
 
 .txt4{
  	position: relative;
-	font-family: "MyWebFont1";
+	font-family: "MyWebFont";
 	color:#333;
   font-size:1rem;
  
@@ -400,7 +400,7 @@ header section {
   align-items: center;
 }
 h1{
-  font-family: "MyWebFont2";
+  font-family: "MyWebFont1";
   font-size: 300%
 
 }
@@ -528,7 +528,7 @@ header {
     display: none;
   }
   h1 {
-    font-family: "MyWebFont2";
+    font-family: "MyWebFont1";
     font-size: 150%;
     padding-top: 1em;
 }
@@ -554,7 +554,7 @@ header section h2 {
   .txt4{
     max-width: 360px;
   position: relative;
-  font-family: "MyWebFont1";
+  font-family: "MyWebFont";
   color:#000;
   font-weight: 50%;
   padding-left: 5%;
@@ -574,7 +574,7 @@ header section h2 {
   position: relative;
   padding-left:5%;
   padding-top: 5%;
-  font-family: "MyWebFont";
+  font-family: "MyWebFont1";
   color:#212121;
   font-size: 200%;
   }

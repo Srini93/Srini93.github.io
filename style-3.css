@@ -87,19 +87,19 @@ table {
 }
 @font-face {
   font-family:'MyWebFont';
-  src:url('fonts/CircularStd.ttf'); 
+  src:url('fonts/Product Sans Regular.ttf'); 
 }
 @font-face{
   font-family:'MyWebFont1';
-  src:url('fonts/lineto-circular-pro-book.ttf'); 
+  src:url('fonts/Product Sans Regular.ttf'); 
 }
 @font-face{
   font-family:'MyWebFont2';
-  src:url('fonts/CircularStd-Bold.ttf'); 
+  src:url('fonts/Product Sans Medium.ttf');    /*bold*/
 }
 @font-face{
   font-family:'MyWebFont3';
-  src:url('fonts/CircularStd-Medium.otf'); 
+  src:url('fonts/Product Sans Regular.ttf'); 
 }
 
 *  {
