@@ -101,6 +101,10 @@ table {
   src:url('fonts/Product Sans Medium.ttf'); 
 }
 
+@font-face {
+  font-family:'MyWebFont2';
+  src:url('fonts/Product Sans Light.ttf'); 
+}
 
 *  {
   -webkit-overflow-scrolling: touch;
@@ -250,16 +254,16 @@ height: 100%;
  	position: relative;
  	padding-left:5%;
  	padding-top: 5%;
-	font-family: "MyWebFont";
+	font-family: "MyWebFont1";
 	color:#212121;
 	font-size: 160%;
  	}
 
 .txt4{
  	position: relative;
-	font-family: "MyWebFont";
-	color:#333;
-  font-size:1rem;
+	font-family: "MyWebFont2";
+	color:#000;
+  font-size:1.1rem;
  
 	padding-left: 5%;
   padding-top: 2%;
