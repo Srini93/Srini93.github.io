@@ -1,942 +1,297 @@
-<html>
-<head>
-<title>Norton 360 | Consumer Cyber Safety</title>
-<link rel="icon" type="favi.png" href="favi.png"> 
-<meta name="theme-color" content="#000000">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-
-<!-- MWeb app -->
-<meta name="full-screen" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Srinivasan">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-<!-- MWeb app ends -->
-
-<!-- Mobile icons -->
-<!-- iOS -->
-<link href="/images/Appicons/iOS/120.png" rel="apple-touch-icon">
-<link href="/images/Appicons/iOS/152.png" rel="apple-touch-icon" sizes="152x152">
-<link href="/images/Appicons/iOS/167.png" rel="apple-touch-icon" sizes="167x167">
-<link href="/images/Appicons/iOS/180.png" rel="apple-touch-icon" sizes="180x180">
-<!-- android -->
-<link href="/images/Appicons/android/192.png" rel="icon" sizes="192x192">
-<link href="/images/Appicons/android/128.png" rel="icon" sizes="128x128">
-<!-- Mobile icons ends here -->
-
-<link rel="stylesheet" href="style-2.css">
-
-<style>
-  .hamburgler-icon { top:0; }
-  .hamburgler-icon, .hamburgler-icon:before, .hamburgler-icon:after {
-    background: #000;
-  }
-  header {
-    background: #fff;
-    display: flex;
-    align-items: center;
-    min-height: 65px;
-    justify-content: center;
-    padding: 0;
-  }
-
-  #logo svg {
-
-    width: 140px;
-  }
-
-@media only screen and (min-width:770px){
-    header {
-      justify-content: space-between;
-      padding-left:5%;
-    }
- }
- @media only screen and (min-width: 400px){
-   header {
-      justify-content: space-between;
-      padding-left:5%;
-    }
-
- }
-
- .progress-container {
-  width: 100%;
-  height: 4px;
-  background: #fff;
-}
-
-.progress-bar {
-  height: 5px;
-  background: #007644;
- 
-  position: fixed;
-  
-}
-.Container {
-   max-width: 1000px;
-  margin: 1rem;
-}
-
-.content {
-  padding: 100px 0;
-  margin: 50px auto 0 auto;
-  width: 80%;
-}
-</style>
-
-<div class="header" style="z-index: 1">
- <div class="progress-container">
-    <div class="progress-bar" id="myBar"></div>
-  </div>  
-</div>
-<body style="z-index: -1">
-
-
-<div class="hamburgler-menu">
-  <ul class="hamburgler-menu-list">
- <li><a href="index.html#Selectedworks">Works</a></li>
-  <li><a href="About.html">About</a></li>
-           
-    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
-         
+﻿<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Password Protected Page</title>
+    <style>
+        html, body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+        #dialogText {
+            color: white;
+            background-color: #333333;
+        }
         
-  </ul>
-</div>
-
-
- 
- 
-
-<!-- Header -->
-   <header style="padding-top: 2%">
-
-
-
-<a href="index.html"><div id="logo" style="">  <svg width="393px" height="100px" viewBox="0 0 393 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-     <svg xmlns="http://www.w3.org/2000/svg" width="175" height="175" viewBox="0 0 512 512"><title>ionicons-v5-a</title><path d="M48,256c0,114.87,93.13,208,208,208s208-93.13,208-208S370.87,48,256,48,48,141.13,48,256Zm224-80.09L208.42,240H358v32H208.42L272,336.09,249.3,358.63,147.46,256,249.3,153.37Z"/></svg>
-       
-</svg></div></a>
-
-    <div id="hamburgler" class="hamburgler-icon-wrapper">
-      <span class="hamburgler-icon"></span>
+        #dialogWrap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: table;
+            background-color: #EEEEEE;
+        }
+        
+        #dialogWrapCell {
+            display: table-cell;
+            text-align: center;
+            vertical-align: middle;
+        }
+        
+        #mainDialog {
+            max-width: 400px;
+            margin: 5px;
+            border: solid #AAAAAA 1px;
+            border-radius: 10px;
+            box-shadow: 3px 3px 5px 3px #AAAAAA;
+            margin-left: auto;
+            margin-right: auto;
+            background-color: #FFFFFF;
+            overflow: hidden;
+            text-align: left;
+        }
+        #mainDialog > * {
+            padding: 10px 30px;
+        }
+        #passArea {
+            padding: 20px 30px;
+            background-color: white;
+        }
+        #passArea > * {
+            margin: 5px auto;
+        }
+        #pass {
+            width: 100%;
+            height: 40px;
+            font-size: 30px;
+        }
+        
+        #messageWrapper {
+            float: left;
+            vertical-align: middle;
+            line-height: 30px;
+        }
+        
+        .notifyText {
+            display: none;
+        }
+        
+        #invalidPass {
+            color: red;
+        }
+        
+        #success {
+            color: green;
+        }
+        
+        #submitPass {
+            font-size: 20px;
+            border-radius: 5px;
+            background-color: #E7E7E7;
+            border: solid gray 1px;
+            float: right;
+            cursor: pointer;
+        }
+        #contentFrame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #attribution {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            padding: 10px;
+            font-weight: bold;
+            font-size: 0.8em;
+        }
+        #attribution, #attribution a {
+            color: #999;
+        }
+        .error {
+            display: none;
+            color: red;
+        }
+    </style>
+  </head>
+  <body>
+    <iframe id="contentFrame" frameBorder="0" allowfullscreen></iframe>
+    <div id="dialogWrap">
+        <div id="dialogWrapCell">
+            <div id="mainDialog">
+                <div id="dialogText">This page is password protected.</div>
+                <div id="passArea">
+                    <p id="passwordPrompt">Password</p>
+                    <input id="pass" type="password" name="pass" autofocus>
+                    <div>
+                        <span id="messageWrapper">
+                            <span id="invalidPass" class="error">Sorry, please try again.</span>
+                            <span id="trycatcherror" class="error">Sorry, something went wrong.</span>
+                            <span id="success" class="notifyText">Success!</span>
+                            &nbsp;
+                        </span>
+                        <button id="submitPass" type="button">Submit</button>
+                        <div style="clear: both;"></div>
+                    </div>
+                </div>
+                <div id="securecontext" class="error">
+                    <p>
+                        Sorry, but password protection only works over a secure connection. Please load this page via HTTPS.
+                    </p>
+                </div>
+                <div id="nocrypto" class="error">
+                    <p>
+                        Your web browser appears to be outdated. Please visit this page using a modern browser.
+                    </p>
+                </div>
+            </div>
+        </div>
     </div>
-      
-      
-        <ul class="desk-menu">
-
-           <li><a class="contact" href="Resume_srinivasan.pdf" target="_blank">Résumé</a></li>
-           <li><a href="about.html">About</a></li>
-          <li><a href="index.html#Selectedworks">Works</a></li>
-        
-        
-    </header>
-
-
-  
-<!-- About me -->
-<div class="frame">
-<div id="about" style="/* height:30%; */;">
-       
-    <p class="h1">
-Norton 360 - Spam Protection and Design System for the Cyber Security Product
- <br>
-</p>
-    <img class="img1" src="images/NortonHeader.png"  style="margin: 5%;" >
-    <div class="txt4">
-     
-     </div>
-</div>
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-    padding: 5%;
-">
-  <div style="
-    flex: 3 0 600px;
-">
-     <p class="txt3" style="
-    padding: 0;
-">Introduction</p>
-     <div class="txt4" style="
-    padding-left: 0;
-">
-     <p style="flex: 3;">
-       Norton is a global leader in the consumer cyber safety space. In 2020, the company pivoted from a security only platform as it is popularly known for, into a multi-pillar cyber security platform. I was the primary product designer for the flagship offering from the company, Norton 360 on the iOS and iPad OS platforms. 
-
-    </div>
-</div>
-
-  <div style="flex: 3 0 450px;padding-left: 8rem;padding-top: 1rem;" class="wrapper">
-    <h2 style="
-    font-weight: 500;
-    font-family: &quot;MyWebFont&quot;;
-    font-size: 120%;
-">Project Type & Involvement</h2>
-    <p style="
-    font-family: &quot;MyWebFont1&quot;;
-    padding: 0.75rem 0;
-    font-size: 18px;
-    margin-bottom: 1.5rem;
-">Senior Product Designer</p>
-    <h2 style="
-    font-weight: 500;
-    font-family: &quot;MyWebFont&quot;;
-    font-size: 20px;
-">Timeline</h2>
-    <p style="
-    font-family: &quot;MyWebFont1&quot;;
-    padding: 0.5rem 0;
-    font-size: 18px;
-">Nov 2020 - Sep 2022
-
-</p>
-  <h2 style="
-    padding-top: 7%;
-    font-weight: 500;
-    font-family: &quot;MyWebFont&quot;;
-    font-size: 20px;
-">Platforms</h2>
-    <p style="
-    font-family: &quot;MyWebFont1&quot;;
-    padding: 0.5rem 0;
-    font-size: 18px;
-">iOS, iPad OS
-
-</p>
-  </div>
-</div>
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 5%;
-    padding-top: 5%
-">
-  <div style="
-    flex: 3 0 400px;
-">
-     <p class="txt3" style="
-    padding: 0;
-">How it all started?</p>
-     <div class="txt4" style="
-    padding-left: 0;
-">
-     <p style="flex: 3;line-height:  max-width: 900px">
-          In 2020, The organization’s business strategy pivoted from a security-only solution into an end-to-end consumer cyber safety product. The cyber safety risks evolved far beyond device/network risks which created a need for new additions for the modern world to protect users. Secondly, the product turned into an integration-centric product and also offered a white-labelled version of the product which required a robust design/engineering system to support the product. <br>
     
-           
-    </div>
-</div>
-</div>
+    <script>
+    (function() {
 
-<img src="images/case 5/NMS.png"  style="margin-left:auto; max-width:1440px; padding-top:5%; padding-bottom: 5%; margin-right: auto; display: block; max-width: 90%" >
+        var pl = "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";
+        
+        var submitPass = document.getElementById('submitPass');
+        var passEl = document.getElementById('pass');
+        var invalidPassEl = document.getElementById('invalidPass');
+        var trycatcherror = document.getElementById('trycatcherror');
+        var successEl = document.getElementById('success');
+        var contentFrame = document.getElementById('contentFrame');
+        
+        // Sanity checks
 
-<hr>
+        if (pl === "") {
+            submitPass.disabled = true;
+            passEl.disabled = true;
+            alert("This page is meant to be used with the encryption tool. It doesn't work standalone.");
+            return;
+        }
 
+        if (!isSecureContext) {
+            document.querySelector("#passArea").style.display = "none";
+            document.querySelector("#securecontext").style.display = "block";
+            return;
+        }
 
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-    padding-left: 5%;
-    padding-top: 5%;
-">
-  <div style="
-    flex: 3 0 400px;
-">
-<p class="txt3" style="
-    padding: 0; font-size: 1.2rem; padding-bottom: 2%
-"> PROJECT 1 </p>
-     <p class="txt3" style="
-    padding: 0;
-"> #1 Spam Protection Features </p>
-     <div class="txt4" style="
-    padding-left: 0;
-">
-     <p style="flex: 3;line-height:  max-width: 900px">
-         
-         
-        Phishing through Spam is a common technique used by hackers to loot confidential information in your devices (i.e. SSN; Credentials etc). After the Covid-19 breakout in 2020, people started relying on the web for every single need; which also opened doors for hackers to utilize this to deceive users and grab information. Being the product designer for the cyber security platform on the iOS and iPad OS platforms, I worked alongside XFN stakeholders to identify solutions to prevent users from falling prey to spam on the platform. We worked on two feature additions into solving this problem (i.e) SMS Security which helped in identifying spam text messages and Secure Calendar which helped in identifying and removing risky calendar invites. </p>
+        if (!crypto.subtle) {
+            document.querySelector("#passArea").style.display = "none";
+            document.querySelector("#nocrypto").style.display = "block";
+            return;
+        }
+        
+        function str2ab(str) {
+            var ustr = atob(str);
+            var buf = new ArrayBuffer(ustr.length);
+            var bufView = new Uint8Array(buf);
+            for (var i=0, strLen=ustr.length; i < strLen; i++) {
+                bufView[i] = ustr.charCodeAt(i);
+            }
+            return bufView;
+        }
 
-    
-   
-           
-    </div>
-</div>
-</div>
+        async function deriveKey(salt, password) {
+            const encoder = new TextEncoder()
+            const baseKey = await crypto.subtle.importKey(
+                'raw',
+                encoder.encode(password),
+                'PBKDF2',
+                false,
+                ['deriveKey'],
+            )
+            return await crypto.subtle.deriveKey(
+                { name: 'PBKDF2', salt, iterations: 100000, hash: 'SHA-256' },
+                baseKey,
+                { name: 'AES-GCM', length: 256 },
+                true,
+                ['decrypt'],
+            )
+        }
+        
+        async function doSubmit(evt) {
+            submitPass.disabled = true;
+            passEl.disabled = true;
 
-
-
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 3%;
-    padding-left: 5%
-">
-
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 3 0 400px;
-">
- <p class="txt3" style="padding-top:5%; padding-left:0; padding-bottom: 5%; font-size: 200%"
-
-">Secure Calendar </p>
-
-     <p class="txt3" style="
-    padding: 0;
-
-">The problem</p>
-     <div class="txt4" style="
-    padding-left: 0;
-">
-     <p style="flex: 3;">
- Hackers/ spammers utilize the default permissions to calendar from Safari, the default browser on iOS and iPad OS to add calendar invites containing malicious links compromising information on device. We found this as a potential opportunity for us to protect the users since there was no direct solution to the problem.
-            <br>
-  <img style="max-width:80%; margin-left: 10%; margin-top:5%;
-  " src="images/case 5/peoplesay.png" style="
-    width: 100%;
-">
-</div>
- 
-
-
-<a style="text-decoration: none;  target="_blank">
-<div style=" width:800px; margin:0 auto; border-radius: 3px; margin-top: 5%; margin-bottom: 5%; width:80%;">
-   
-<h2 class="txt3" style="text-align:center; color:black; padding-left: 5%; padding-right: 5%; font-size: 2rem ">How do we help users in detecting and eliminating malicious calendar invites?</h2>
-   <div class="txt4" style="
-    padding-left: 0;
-">
-     
-    </div>
-</div>
-</a>
-
-
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 3 0 400px; padding-top:5%;
-">
-
-
-     <p class="txt3" style="
-    padding: 0;
-
-">Research and Ideation</p>
-     <div class="txt4" style="
-    padding-left: 0;
-">
-
+            let iv, ciphertext, key;
             
-<span style="line-height: 2rem">
-From my initial research, no solutions in the market offered a solution to either detect or remove risky invites. We started with discovering the indirect solutions to the problem, mapping out the user journey and brainstorming ideas that solved the problem.
-
-
-     </p></span>
-  <img src="images/case 5/ideationsecure.png" style="
-    width: 100%;
-">
-
-    </div>
-</div>
-
-</div>
-
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 3 0 400px; padding-top:5%;
-">
-
-
-     <p class="txt3" style="
-    padding: 0;
-
-">Wireframing and Solutioning</p>
-     <div class="txt4" style="
-    padding-left: 0;
-">
-
-            
-<span style="line-height: 2rem">
-After brainstorming and down selecting the ideas with the engineering and product stakeholders, I started getting my hands dirty for extensive low fidelity explorations and ideas based on the feedbacks and thoughts from the previous step.
-
-     </p></span>
-  <img src="images/case 5/wireframes.png" style="
-    width: 100%;
-">
-
-    </div>
-</div>
-
-</div>
-
-
-
-
-
-
-    <div style="
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 10%;
-    padding-left: %
-">
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 3 0 400px;
-">
-     <p class="txt3" style="
-    padding: 0;
-"> Final Outcome</p>
-     <div class="txt4" style="
-    padding-left: 0;
-">
-     <p style="flex: 3;">
-           The feature helped users identiy and eliminate risky invites and unsubscribe to the resepctive calendar subscriptions which prevents spammers from adding invites from the same subscription/domain. Additionally, the system over time improves the accuracy of detecting risky invites.
-</p>
-
-    </div>
-</div>
-</div>
-</div>
-
-
-<div style="
-    padding-top: 5%;
-    padding-left: 5%;
-    padding-right: 5%;
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 2 0 480px;
-">
-  <img src="images/Frame 14.png" style="
-    width: 100%;
-">
-  </div>
-  <div style="
-    flex: 1 0 400px;
-"><h2 style="
-    font-weight: 500;
-    font-family: MyWebfont1;
-    font-size: 30px;
-    margin-bottom: 2rem;
-">Scenario 1: Educate and Onboard</h2>
-    <p style="
-    font-weight: 500;
-    font-family: MyWebFont2;
-    margin-bottom: 2rem;
-    line-height: 2;
-">As a first step of the user journey, it becomes necessary to educate the users about the feature and collect necessary permissions to run the feature. Since, the Calendar permissions were sensitive to collect from the users and this step is crucial to get the feature up and running.
-</div>
-</div>
-
-<div style="
-    padding-top: 5%;
-    padding-left: 5%;
-    padding-right: 5%;
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 2 0 480px;
-">
-  <img src="images/Frame 15.png" style="
-    width: 90%;
-">
-
-  </div>
-  <div style="
-    flex: 1 0 400px;
-"><h2 style="
-    font-weight: 500;
-    font-family: MyWebfont1;
-    font-size: 30px;
-    margin-bottom: 2rem;
-">Sceanrio 2: Detects Risky Invites</h2>
-    <p style="
-    font-weight: 500;
-    font-family: MyWebFont2;
-    margin-bottom: 2rem;
-    line-height: 2;
-">The user might have quite a number of invites lying in their Calendar, the application connects with the server to analyze and run a scan to detect malicious invites or returns a safe state if there are no malicious invites.
-</div>
-</div>
-
-
-<div style="
-    padding-top: 5%;
-    padding-left: 5%;
-    padding-right: 5%;
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 2 0 480px;
-">
-  <img src="images/case 5/3.png" style="
-    width: 100%;
-">
-  </div>
-  <div style="
-    flex: 1 0 400px;
-"><h2 style="
-    font-weight: 500;
-    font-family: MyWebfont1;
-    font-size: 30px;
-    margin-bottom: 2rem;
-">Scenario 3: Eliminate Risks</h2>
-    <p style="
-    font-weight: 500;
-    font-family: MyWebFont2;
-    margin-bottom: 2rem;
-    line-height: 2;
-">If there are risky invites found, the user will have an option to delete the found invites and its occurances in a single tap or review them individually and get rid of them. Deleting the invites also removes the subscription to the malicious calendars.
-</div>
-</div>
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 10%;
-    padding-left: 5%
-">
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 3 0 400px;
-">
-     <p class="txt3" style="
-    padding: 0;
-"> Impact </p>
-     <div class="txt4" style="
-    padding-left: 0; padding bottom: 5%
-">
-     <p style="flex: 3; padding-bottom: 5%">
-          The feature shipped in the end of 2021 and acted as a key differentiator in consumer cyber safety products. The  product had a successful setup rate of over ~80% and detected ~XX Million Malicious Invites. As next steps, we want to introduce a way to report false positives if any. This will help further improve the accuracy of detecting malicious invites.
-</p>
-
-    </div>
-</div>
-</div>
-</div>
-
-
-
-
-<hr style="border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0));">
-
-  
-<SECTION></SECTION>
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 5%;
-    padding-left: 5%;
- 
-">
-
-
-
-
-
-  <div style="
-    flex: 3 0 400px;
-">
-
-<p class="txt3" style="
-    padding: 0; font-size: 1.2rem; padding-bottom: 2%
-"> PROJECT 2 </p>
-
-     <p class="txt3" style="
-    padding: 0;
-">Design System </p>
-
-
-
-     <div class="txt4" style="
-    padding-left: 0;
-"><p style="flex: 3 0 400px; max-width: 1000px; line-height: 2rem">When I started working on the product from the scratch, beyond the feature additions, the product required a robust design system from both the design and engineering perspective. 
-
-The product’s business model is dependent on two revenue streams. Products sold as B2C business to consumers; B2B2C business focused on white labeling first party products for third party organizations. First party products did not have a single source of truth to design or build integrations. Secondly, the white labeled applications were built as a separate applications from scratch in an inefficient fashion resulting in poor Turn Around Time.
-
-       </p>
-    
-    </div>
- </div>
-
-<div style=" width:800px; margin:0 auto; border-radius: 3px; margin-top: 5%; margin-bottom: 5%; width:80%;">
-   
-<h2 class="txt3" style="text-align:center; color:black; padding-left: 5%; padding-right: 5%; font-size: 2rem ">How do we create a system to improve design and enginnering for first party and white label products</h2>
-   <div class="txt4" style="
-    padding-left: 0;
-">
-     
-    </div>
-</div>
-
-</div>
-
- <img class="img1" src="images/case 5/structure.png"  style="margin-left: 20%; width: 50%; justify-content:center;" >
-
-
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 5%;
-    padding-left: 5%;
- 
-">
-  <div style="
-    flex: 3 0 400px;
-">
-     <p class="txt3" style="
-    padding: 0; font-size: 140%
-">Research and Ideation</p>
-
-     <div class="txt4" style="
-    padding-left: 0;
-">
-     <p style="flex: 3 0 400px; max-width: 1000px; line-height: 2rem">As with any Design System, I started  by Audit the existing experience and Identifying elements and components that required standardization in collaboration with engineering. Over the aspects of a traditional design system ,  we also wanted to create a framework supporting white label applications and reusable plug and play SDKs to be reused with other first party or partner products.
-
-There was no dedicated design / engineering team for implementing this system. Hence, the strategy to design and implement this design system was to pair it along with a major organization wide brand refresh. 
-
-       </p>
-</div>
-
-<img class="img1" src="images/case 5/Audit.png"  style="margin: 5%;" >
-
-
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 10%;
-    padding-left: %
-">
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 3 0 400px;
-">
-     <p class="txt3" style="
-    padding: 0;
-"> Strategy and structure</p>
-     <div class="txt4" style="
-    padding-left: 0;
-">
-     <p style="flex: 3;">
-          The strategy was to establish a common structure of design elements with both design and engineering. The basics consisting of foundations elements, components and patterns consisting of reusable modules and frameworks consisting of reusable app SDK’s to be bundle with any application that necessitates it.
-
-</p>
-
-    </div>
-</div>
-</div>
-</div>
-
-<img class="img1" src="images/case 5/Systemstructure.png"  style="margin: 5%;" >
-
-
-    <div style="
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 5%;
-  
-">
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 3 0 400px;
-">
-     <p class="txt3" style="
-    padding: 0;
-"> Core Capabilities</p>
-     <div class="txt4" style="
-    padding-left: 0;
-">
-     <p style="flex: 3;">
-       
-</p>
-
-    </div>
-</div>
-</div>
-</div>
-
-<div style="
-    padding-top: 10%;
-    padding-left: 5%;
-    padding-right: 5%;
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 2 0 480px;
-">
-  <img src="images/case 5/Norton/Theming.png" style="
-    width: 100%;
-">
-  </div>
-  <div style="
-    flex: 1 0 400px;
-"><h2 style="
-    font-weight: 500;
-    font-family: MyWebfont1;
-    font-size: 30px;
-    margin-bottom: 2rem;
-">Theming</h2>
-    <p style="
-    font-weight: 500;
-    font-family: MyWebFont2;
-    margin-bottom: 2rem;
-    line-height: 2;
-">This capability allows designers and engineers to create derived components by modifying properties under the same semantic names. This helped use the same component for both first party and third party products in terms of design and code.
-</div>
-</div>
-
-<div style="
-    padding-top: 10%;
-    padding-left: 5%;
-    padding-right: 5%;
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 2 0 480px;
-">
-  <img src="images/case 5/Norton/Accessibility.png" style="
-    width: 90%;
-">
-
-  </div>
-  <div style="
-    flex: 1 0 400px;
-"><h2 style="
-    font-weight: 500;
-    font-family: MyWebfont1;
-    font-size: 30px;
-    margin-bottom: 2rem;
-">Accessibility</h2>
-    <p style="
-    font-weight: 500;
-    font-family: MyWebFont2;
-    margin-bottom: 2rem;
-    line-height: 2;
-">One of the core foundational aspects of the system is to help designers create accessible experiences for users with Visual and Motor disabilities. All the components in this system adheres to the minimum standard of AA compliance in WCAG/ADA compliance. 
-</div>
-</div>
-
-
-<div style="
-    padding-top: 10%;
-    padding-left: 5%;
-    padding-right: 5%;
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 2 0 480px;
-">
-  <img src="images/case 5/Norton/CodeXDesign.png" style="
-    width: 100%;
-">
-  </div>
-  <div style="
-    flex: 1 0 400px;
-"><h2 style="
-    font-weight: 500;
-    font-family: MyWebfont1;
-    font-size: 30px;
-    margin-bottom: 2rem;
-">Stack Mirroring</h2>
-    <p style="
-    font-weight: 500;
-    font-family: MyWebFont2;
-    margin-bottom: 2rem;
-    line-height: 2;
-">If there are risky invites found, the user will have an option to delete the found invites and its occurances in a single tap or review them individually and get rid of them. Deleting the invites also removes the subscription to the malicious calendars.
-</div>
-</div>
-
-<div style="
-    padding-top: 5%;
-    padding-left: 5%;
-    padding-right: 5%;
-    padding-bottom: 10%;
-    display: flex;
-    flex-wrap: wrap;
-">
-  <div style="
-    flex: 2 0 480px;
-">
-  <img src="images/case 5/Norton/Responsive.png" style="
-    width: 100%;
-">
-  </div>
-  <div style="
-    flex: 1 0 400px;
-"><h2 style="
-    font-weight: 500;
-    font-family: MyWebfont1;
-    font-size: 30px;
-    margin-bottom: 2rem;
-">Responsive</h2>
-    <p style="
-    font-weight: 500;
-    font-family: MyWebFont2;
-    margin-bottom: 2rem;
-    line-height: 2;
-">The responsive guidelines helps contributors and users of the system to scale components and patterns to larger form factors (i.e iPads running iPadOS). This was achieved by establishing scale factors for each component. This was key to help increase readability and scale the product using the same underlying framework. 
-</div>
-</div>
-
-<hr>
-
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-    padding-top: 10%;
-">
-  <div style="
-    flex: 3 0 400px;
-">
-     <p class="txt3" style="
-    padding: 0;
-"> Impact</p>
-     <div class="txt4" style="
-    padding-left: 0;
-">
-     <p style="flex: 3; padding-bottom: 5%">
-          In the summer of 2022, we launched the new refreshed version of Norton 360 which shipped with the newest version of the design system in terms of both design and code architectire. Beyond front end improvements, this resulted in major improvements to reductions in code bloating and improving the process of collaboration between design and engineering resulting in increased Turn Around Time. This system is also used for partner applications by theming and reusing framworks. You can find some previews of the design library we worked on below. 
-</p> 
-
-    </div>
-</div>
-</div>
-</div>
-</div>
-
-
-<img class="img1" src="images/case 5/Design System 1.png"  style="margin: 5%;" >
-
-
-<img class="img1" src="images/case 5/Design System 2.png"  style="margin: 5%;" >
-
-<img class="img1" src="images/case 5/Design System 3.png"  style="margin: 5%;" >
-
-
-
-
-
-
-<hr>
-
-
-
-<div id="contact" style="background:#fff;padding-bottom:5%">
-<p class="foot wrap">Like what you see??</br>
-View my <a style="color:#6b2fca; text-decoration:none" ="" href="Resume_Srinivasan.pdf" target="_blank">résumé</a>, Let get in touch 👇</p>
-
-<div>
-
- </div><a style="text-decoration: none; color:#000" href="mailto:tcsreeni93@gmail.com">
-        <p  
-          style="padding-left:5%; padding-top:2%; font-size: 150%;letter-spacing: 0.1em; font-family:mywebfont1;  text-decoration: none; "><a style="text-decoration: none; color: #000" href="mailto: tcsreeni93@gmail.com" >
-          Email 📩 </a> | <a target="_blank" href="https://www.linkedin.com/in/srinivasanchakkarapani/" style="text-decoration: none"><Span style="text-decoration: none; color: #000"> LinkedIn 💼 </Span> </p> </a>
-
-          
-</div>
-
-<!-- Scriptcode-->
-
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-
-<script>
-// When the user scrolls the page, execute myFunction 
-window.onscroll = function() {myFunction()};
-
-function myFunction() {
-  var winScroll = window.scrollY;
-  var height = document.documentElement.clientHeight - 1000;
-  var scrolled = (winScroll / height) * 100;
-  document.getElementById("myBar").style.width = scrolled + "%";
-}
-</script>
-
-<script type="text/javascript" src="https://rawgit.com/michalsnik/aos/master/dist/aos.js"></script>
-<script>
-
-  $(function(){
-
-AOS.init({
-  duration: 1200,
-})
-
-
-      // Smooth scroll links
-      $('.desk-menu a[href^="#"]').on("click", function(){
-          var id = $(this).attr("href");
-          
-          $('html, body').animate({
-              scrollTop:$(id).offset().top
-          }, 500);
-          return false;
-      });
-
-      //Hamburger Menu and Esc events
-      $('#hamburgler').on('click', checkNav);
-      $('.hamburgler-menu').on('click', 'a', closeNav);
-
-      $(window).on('keyup', ifEscClose);
-
-      function checkNav() {
-        $('body').toggleClass('hamburgler-active');
-      }
-
-      function closeNav(e) {
-         $('body').removeClass('hamburgler-active');
-      }
-
-      function ifEscClose(e){
-        if (e.keyCode == 27) closeNav()
-      }
-
-  });
-
-</script>
-
-
-</div></body></html>
+            try {
+                var unencodedPl = str2ab(pl);
+
+                const salt = unencodedPl.slice(0, 32)
+                iv = unencodedPl.slice(32, 32 + 16)
+                ciphertext = unencodedPl.slice(32 + 16)
+
+                key = await deriveKey(salt, passEl.value);
+            } catch (e) {
+                trycatcherror.style.display = "inline";
+                console.error(e);
+                return;
+            }
+
+            try {
+                const decryptedArray = new Uint8Array(
+                    await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ciphertext)
+                );
+
+                let decrypted = new TextDecoder().decode(decryptedArray);
+
+                if (decrypted === "") throw "No data returned";
+
+                const basestr = '<base href="." target="_top">';
+                const anchorfixstr = `
+                    <script>
+                        Array.from(document.links).forEach((anchor) => {
+                            const href = anchor.getAttribute("href");
+                            if (href.startsWith("#")) {
+                                anchor.addEventListener("click", function(e) {
+                                    e.preventDefault();
+                                    const targetId = this.getAttribute("href").substring(1);
+                                    const targetEl = document.getElementById(targetId);
+                                    targetEl.scrollIntoView();
+                                });
+                            }
+                        });
+                    <\/script>
+                `;
+                
+                // Set default iframe link targets to _top so all links break out of the iframe
+                if (decrypted.includes("<head>")) decrypted = decrypted.replace("<head>", "<head>" + basestr);
+                else if (decrypted.includes("<!DOCTYPE html>")) decrypted = decrypted.replace("<!DOCTYPE html>", "<!DOCTYPE html>" + basestr);
+                else decrypted = basestr + decrypted;
+
+                // Fix fragment links
+                if (decrypted.includes("</body>")) decrypted = decrypted.replace("</body>", anchorfixstr + '</body>');
+                else if (decrypted.includes("</html>")) decrypted = decrypted.replace("</html>", anchorfixstr + '</html>');
+                else decrypted = decrypted + anchorfixstr;
+                
+                contentFrame.srcdoc = decrypted;
+                
+                successEl.style.display = "inline";
+                setTimeout(function() {
+                    dialogWrap.style.display = "none";
+                }, 1000);
+            } catch (e) {
+                invalidPassEl.style.display = "inline";
+                passEl.value = "";
+                submitPass.disabled = false;
+                passEl.disabled = false;
+                console.error(e);
+                return;
+            }
+        }
+        
+        submitPass.onclick = doSubmit;
+        passEl.onkeypress = function(e){
+            if (!e) e = window.event;
+            var keyCode = e.keyCode || e.which;
+            invalidPassEl.style.display = "none";
+            if (keyCode == '13'){
+              // Enter pressed
+              doSubmit();
+              return false;
+            }
+        }
+    })();
+    </script>
+  </body>
+</html>
