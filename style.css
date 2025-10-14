@@ -481,7 +481,7 @@ header section {
 
 
 .HeaderContent a {
-  color: #6b2fca;
+  color: #3b65ef;
   font-family: "MyWebFont1" ;
   text-decoration: none;
 }
@@ -499,10 +499,11 @@ header section {
 }
 
 .see-more {
-  position: absolute;
-  bottom: 32px;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
+  display: block;
+  text-align: center;
+  margin-top: 3rem;
+  z-index: 10;
 }
 
 
@@ -524,7 +525,7 @@ header {
   position: relative;
   font-family: "MyWebFont2";
   font-size: 100%;
-  background: linear-gradient(104.05deg, rgba(204, 0, 255, 0.15) 0.31%, rgba(235, 73, 219, 0.066) 28.63%, rgba(122, 132, 221, 0.108) 60.87%, rgba(255, 255, 255, 0) 100%) ;
+  background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);
   min-height: 90vh;
   padding: 0 2rem 8rem;
   color: #000;
@@ -553,7 +554,7 @@ height: 100%;
     display: none;
   }
   header{
-    background: linear-gradient(104.05deg, rgba(204, 0, 255, 0.15) 0.31%, rgba(235, 73, 219, 0.066) 28.63%, rgba(122, 132, 221, 0.108) 60.87%, rgba(255, 255, 255, 0) 100%) ;
+    background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);
 
   }
   
@@ -672,7 +673,7 @@ height: 100%;
   position: relative;
   font-family: "MyWebFont2";
   font-size: 100%;
-  background: linear-gradient(104.05deg, rgba(204, 0, 255, 0.15) 0.31%, rgba(235, 73, 219, 0.066) 28.63%, rgba(122, 132, 221, 0.108) 60.87%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);
   min-height: 40vh;
   padding: 0 2rem 8rem;
   color: #000;
