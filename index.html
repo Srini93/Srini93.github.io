@@ -90,6 +90,43 @@
       transform: translateX(0);
     }
 
+    /* Ripple effect on hover */
+    .read-more-glass::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Continuous ripple animation on hover */
+    @keyframes ripple {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: 0.6;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        width: 300px;
+        height: 300px;
+        opacity: 0;
+      }
+    }
+
+    .read-more-glass:hover::after {
+      animation: ripple 1.2s ease-out infinite;
+    }
+
     .read-more-content {
       display: flex;
       align-items: center;
@@ -129,6 +166,15 @@
     header {
       position: relative;
       overflow: hidden;
+      min-height: 100vh;
+      height: 100vh;
+    }
+
+    @media screen and (max-width: 768px) {
+      header {
+        min-height: 90vh;
+        height: auto;
+      }
     }
 
     .water-effect-container {
@@ -201,7 +247,25 @@
     /* Add more spacing to see-more icon */
     .see-more {
       margin-top: 4rem !important;
+      position: relative;
+      overflow: hidden;
     }
+
+
+    /* Image hover effect for buttons */
+    .cards-layout-image:hover ~ .cards-layout-content .read-more-glass {
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transform: translateY(-2px);
+    }
+
+    .cards-layout-image:hover ~ .cards-layout-content .read-more-glass::before {
+      transform: translateX(0);
+    }
+
+    .cards-layout-image:hover ~ .cards-layout-content .read-more-glass::after {
+      animation: ripple 1.2s ease-out infinite;
+    }
+
   </style>
   <meta property="og:title" content="Srinivasan | Product Designer" />
   <meta property="og:image" content="images/richpreview.jpg" />
@@ -214,6 +278,7 @@
 </head>
 
 <body>
+
 
   <div style="display: none;">
 
@@ -340,7 +405,7 @@
         <div
          class="cards-layout"
           style=" padding-top: 5%; padding-left: 5%; padding-right: 5%; color: #0A2540;">
-          <div  class="cards-layout-image"> <img src="images/Norton.png" style=" width: 90%; border-radius: 4%; ">
+          <div  class="cards-layout-image work-image-container"> <a href="Norton.html" target="_blank"><img src="images/Norton.png" style=" width: 90%; border-radius: 4%; "></a>
           </div>
 
           <div style="margin: 24px"></div>
@@ -413,7 +478,7 @@ Designed a white label friendly design system scaling from design to code for fi
         <div
          class="cards-layout"
           style=" padding-top: 2%; padding-left: 5%; padding-right: 5%; color: #0A2540;">
-          <div  class="cards-layout-image"> <img src="images/Google1.png" style=" width: 90%; border-radius: 4%; ">
+          <div  class="cards-layout-image work-image-container"> <a href="http://srinivasan.design/Google.html" target="_blank"><img src="images/Google1.png" style=" width: 90%; border-radius: 4%; "></a>
           </div>
 
           <div style="margin: 24px"></div>
@@ -480,7 +545,7 @@ Designed a white label friendly design system scaling from design to code for fi
         <div
          class="cards-layout"
           style=" padding-top: 5%; padding-left: 5%; padding-right: 5%; color: #0A2540;">
-          <div  class="cards-layout-image"> <img src="images/sample.png" style=" width: 90%; border-radius: 4%; ">
+          <div  class="cards-layout-image work-image-container"> <a href="http://srinivasan.design/Zoho%20Sheet.html" target="_blank"><img src="images/sample.png" style=" width: 90%; border-radius: 4%; "></a>
           </div>
 
           <div style="margin: 24px"></div>
@@ -541,7 +606,7 @@ Designed a white label friendly design system scaling from design to code for fi
         <div
          class="cards-layout"
           style=" padding-top: 5%; padding-left: 5%; padding-right: 5%; color: #0A2540;">
-          <div  class="cards-layout-image"> <img src="images/holachef.png" style=" width: 90%; border-radius: 4%; ">
+          <div  class="cards-layout-image work-image-container"> <a href="http://srinivasan.design/Holachef.html" target="_blank"><img src="images/holachef.png" style=" width: 90%; border-radius: 4%; "></a>
           </div>
 
           <div style="margin: 24px"></div>
@@ -613,7 +678,7 @@ Holachef - Ecosystem of applications for a FoodTech startup.</h2>
           style="padding-left:5%; padding-top:2%; font-size: 120%;letter-spacing: 0.1em; font-family:mywebfont1;  text-decoration: none; "><a style="text-decoration: none; color: #000" href="mailto: tcsreeni93@gmail.com" >
           Email 📩 </a> | <a target="_blank" href="https://www.linkedin.com/in/srinivasanchakkarapani/" style="text-decoration: none"><Span style="text-decoration: none; color: #000"> LinkedIn 💼 </Span> </p> </a>
       
-      <div id="contact" style="background:">
+      <div id="contact" style="background: transparent;">
         <p class="footertxt" style="max-width: 600px; padding-top: 5%; color: #9e9e9e;"> Designed and Handcoded in San Francisco Bay with <span style="color:#ff2957;"><span class="semibold">♥</span></span> © <span id="current-year"></span> </p>
       </div>
     </div>
@@ -641,7 +706,6 @@ Holachef - Ecosystem of applications for a FoodTech startup.</h2>
       // Start animation when page loads
       setTimeout(animateElements, 500); // Start after 500ms
 
-      
       // Smooth scroll links
       $('a[href^="#"]').on("click", function () {
         var id = $(this).attr("href");
