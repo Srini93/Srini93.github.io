@@ -266,6 +266,134 @@
       animation: ripple 1.2s ease-out infinite;
     }
 
+    /* Archives Section Styles */
+    .archives-section {
+      padding: 4rem 5%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .archives-title {
+      font-family: "MyWebFont";
+      font-size: 200%;
+      color: #000;
+      margin-bottom: 3rem;
+      padding-left: 5%;
+    }
+
+    .archives-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      .archives-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .archive-item {
+      position: relative;
+      border-radius: 12px;
+      padding: 3rem 2.5rem;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .archive-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.05;
+      background-image: 
+        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px),
+        repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px);
+      pointer-events: none;
+    }
+
+    .archive-item-left {
+      background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+    }
+
+    .archive-item-right {
+      background: linear-gradient(135deg, #e3f2fd 0%, #e8f4f8 100%);
+    }
+
+    .archive-item-content {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+
+    .archive-item-type {
+      font-family: "MyWebFont";
+      font-size: 14px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .archive-item-title {
+      font-family: "MyWebFont";
+      font-size: 28px;
+      font-weight: 200;
+      color: #000;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .archive-item-description {
+      font-family: "MyWebFont";
+      font-size: 16px;
+      color: #444;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .archive-visual {
+      position: relative;
+      z-index: 1;
+      margin-top: 2rem;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .archive-visual img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .archive-phones {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .archive-phone {
+      width: 120px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .archive-laptop {
+      max-width: 100%;
+      height: auto;
+    }
+
   </style>
   <meta property="og:title" content="Srinivasan | Product Designer" />
   <meta property="og:image" content="images/richpreview.jpg" />
@@ -343,12 +471,11 @@
 
 <!-- Write your comments here -->
 
-<!-- AccuDrive Work Item - Hidden
 <div class="frame" style="max-width: 1400px">
         <div
          class="cards-layout"
           style=" padding-top: 5%; padding-left: 5%; padding-right: 5%; color: #0A2540;">
-          <div  class="cards-layout-image"> <img src="images/Accudrive.png" style=" width: 90%; border-radius: 4%; ">
+          <div  class="cards-layout-image work-image-container"> <img src="images/Intuit.png" style=" width: 90%; border-radius: 4%; ">
           </div>
 
           <div style="margin: 24px"></div>
@@ -357,7 +484,7 @@
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
             
-            AccuDrive - AI-powered fleet management platform</h2>
+            Intuit – Developer Platform & Generative AI Experiences</h2>
             <ul
              class="card-list-points"
               style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 105%; color: #343434; display: block">
@@ -366,7 +493,7 @@
                   <use xlink:href="#check" />
                 </svg>
                 <div>
-              Led product design for an AI-driven fleet management platform serving enterprise clients.
+              Led design for the API Platform, delivering 0→1 experiences for API Explorer, documentation, authentication, and sandbox tools used by 5K+ developers.
                
               </div>
               </li>
@@ -376,7 +503,7 @@
                   <use xlink:href="#check" />
                 </svg>
                 <div>
-                  Designed intuitive dashboards and mobile applications for fleet operators managing 1000+ vehicles.
+                  Designed and shipped Intuit Assist, the company's first GenAI-powered developer assistant, improving workflow efficiency by 30%+.
               </div>
               </li>
 
@@ -385,13 +512,18 @@
                   <use xlink:href="#check" />
                 </svg>
                 <div>
-                  Created comprehensive design system and component library for scalable product development.
+                  Scaled design systems by evolving a 50+ component library and driving alignment across design and engineering through the Intuit Design System (IDS).
               </div>
               </li>
             </ul>
- 
- <div style="font-size: 1.25rem; font-family: Mywebfont; ; font-weight: 800"> <a href="Accu drive.html" target="_blank" style="text-decoration:none; color: #2563eb;">Read More
-              &rarr; </a>
+
+  
+            <div>
+              <a class="read-more-glass" href="mailto:tcsreeni93@gmail.com">
+                <div class="read-more-content">
+                  <span class="read-more-text">Get in Touch</span>
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -399,7 +531,6 @@
       </div>
 
       <hr style="width:80%; margin-top: 4rem; margin-bottom: 3rem; border: 0px solid #f1f1f1; border-top-width: 1px;">
--->
 
 <div class="frame" style="max-width: 1400px">
         <div
