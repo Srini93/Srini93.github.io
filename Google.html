@@ -1,7 +1,8 @@
 <html><head>
 <title>Google| Design system for Ad Manager</title>
 <link rel="icon" type="favi.png" href="favi.png"> 
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#ffffff">
+<meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
 
 <!-- MWeb app -->
@@ -25,6 +26,16 @@
 
 <link rel="stylesheet" href="style-2.css">
 <style type="text/css">
+  /* Force Light Mode */
+  html {
+    color-scheme: light;
+    background: #fff;
+  }
+  
+  body {
+    background: #fff;
+    color: #000;
+  }
    header {
     background: #fff;
     display: flex;
@@ -52,6 +63,81 @@
     }
 
  }
+
+/* Back Button Glassmorphism Styles */
+.back-button-glass {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  min-height: 48px;
+  min-width: 120px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  color: #000 !important;
+  text-decoration: none !important;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-button-glass:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.back-button-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-out;
+}
+
+.back-button-glass:hover::before {
+  transform: translateX(0);
+}
+
+.back-button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.back-button-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-button-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: #000;
+  stroke-width: 1.5;
+}
+
+.back-button-text {
+  display: inline-block;
+  position: relative;
+  z-index: 10;
+  transition: color 0.3s ease;
+}
 </style>
 
 </head> 
@@ -62,11 +148,9 @@
 
 <div class="hamburgler-menu">
   <ul class="hamburgler-menu-list">
-             <li><a href="index.html#Selectedworks">Works</a></li>
-  <li><a href="about.html">About</a></li>
-           
+    <li><a href="about.html">About</a></li>
+    <li><a href="index.html#Selectedworks">Works</a></li>
     <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
-        
   </ul>
 </div>
  
@@ -74,17 +158,16 @@
 <!-- Header -->
    <header style="padding-top: 2%">
 
-   <a href="index.html"><div id="logo" style="">  <svg width="393px" height="80px" viewBox="0 0 393 111" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->
-    
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Group">
-            <rect id="Rectangle" stroke="#22B16C" stroke-width="7.5" x="3.75" y="3.75" width="385.5" height="103.5" rx="15"></rect>
-            <text id="SRINIVASAN" font-family="SFProText-Semibold, SF Pro Text" font-size="40.5" font-weight="500" fill="#22B16C">
-                <tspan x="72.081665" y="70.5">SRINIVASAN</tspan>
-            </text>
-        </g>
- </div></a>
+   <a class="back-button-glass" href="index.html">
+     <div class="back-button-content">
+       <div class="back-button-icon">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+           <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+         </svg>
+       </div>
+       <span class="back-button-text">Back</span>
+     </div>
+   </a>
 
     <div id="hamburgler" class="hamburgler-icon-wrapper">
       <span class="hamburgler-icon"></span>
@@ -92,10 +175,9 @@
       
       
         <ul class="desk-menu"">
+         <li><a href="index.html#Selectedworks">Works</a></li>
+         <li><a href="about.html">About</a></li>
          <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
-
-        <li><a href="About.html">About</a></li>
-        <li><a href="index.html#Selectedworks">Works</a></li>
         </ul>
         
     </header>
@@ -305,7 +387,7 @@ The design system was treated on par with a product by defining a similar proces
 
 <div id="contact" style="background:#fff;padding-bottom:5%">
 <p class="foot wrap">Like what you see??</br>
-View my <a style="color:#36BC77; text-decoration:none" ="" href="Resume_Srinivasan.pdf" target="_blank">résumé</a>, follow me 
+View my <a style="color:#3b65ef; text-decoration:none" href="Resume_Srinivasan.pdf" target="_blank">résumé</a>, follow me 
 or contact me below</p>
 
 <div>

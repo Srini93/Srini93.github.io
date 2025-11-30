@@ -3,14 +3,15 @@
 
 <head>
   <title>Srinivasan | Staff Product Designer</title>
-  <meta name="theme-color" content="#000">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light">
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
   <meta name="viewport"
     content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width, height=device-height, viewport-fit=cover">
   <meta name="full-screen" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" background="#000">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Srinivasan">
 
   <!-- App Icon -->
@@ -24,6 +25,21 @@
 <!-- App Icon Ends -->
 
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Force Light Mode */
+    html {
+      color-scheme: light;
+      background: #fff;
+    }
+    
+    body {
+      background: #fff;
+      color: #000;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     /* Progressive Animation Styles */
     .animate-progressive {
@@ -266,6 +282,36 @@
       animation: ripple 1.2s ease-out infinite;
     }
 
+    /* Project Date Styling */
+    .project-date {
+      font-family: "MyWebFont";
+      font-size: 14px;
+      color: #666;
+      margin-top: -1.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    /* Work Sans for bullet points */
+    .card-list-points {
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+
+    .card-list-points div {
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+
+    /* Align content to top of image */
+    .cards-layout {
+      align-items: flex-start !important;
+    }
+
+    .cards-layout-content {
+      padding-top: 0 !important;
+    }
+
+
     /* Archives Section Styles */
     .archives-section {
       padding: 4rem 5%;
@@ -394,6 +440,7 @@
       height: auto;
     }
 
+
   </style>
   <meta property="og:title" content="Srinivasan | Product Designer" />
   <meta property="og:image" content="images/richpreview.jpg" />
@@ -485,9 +532,10 @@
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
             
             Intuit – Developer Platform & Generative AI Experiences</h2>
+            <p class="project-date">Jan 2023 - Present</p>
             <ul
              class="card-list-points"
-              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 105%; color: #343434; display: block">
+              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: #343434; display: block">
               <li >
                 <svg class="card-check-icon blue">
                   <use xlink:href="#check" />
@@ -522,6 +570,11 @@
               <a class="read-more-glass" href="mailto:tcsreeni93@gmail.com">
                 <div class="read-more-content">
                   <span class="read-more-text">Get in Touch</span>
+                  <div class="read-more-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M7 7h8.586L5.293 17.293a1 1 0 1 0 1.414 1.414L17 8.414V17a1 1 0 1 0 2 0V7a1 1 0 0 0-1-1H7a1 1 0 0 0 0 2z"/>
+                    </svg>
+                  </div>
                 </div>
               </a>
             </div>
@@ -545,9 +598,10 @@
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
             Spam Protection features and design system for Norton 360 iOS</h2>
+            <p class="project-date">Nov 2020 - Dec 2022</p>
             <ul
              class="card-list-points"
-              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 105%; color: #343434; display: block">
+              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: #343434; display: block">
               <li > 
                 <svg class="card-check-icon Yellow">
                   <use xlink:href="#check" />
@@ -604,7 +658,9 @@ Designed a white label friendly design system scaling from design to code for fi
 
 
 
-
+      <div style="padding-left: 5%; padding-top: 3%; padding-bottom: 1%; color: #666; font-size: 14px; font-weight: 500; letter-spacing: 0.5px;">
+        Previous Work [2015-2019]
+      </div>
       <div class="frame" style="max-width: 1400px">
         <div
          class="cards-layout"
@@ -618,9 +674,10 @@ Designed a white label friendly design system scaling from design to code for fi
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
               Google  - Design System for Ad Manager</h2>
+            <p class="project-date">Jun 2019 - Sep 2019</p>
             <ul
              class="card-list-points"
-              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 105%; color: #343434; display: block">
+              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: #343434; display: block">
               <li > 
                 <svg class="card-check-icon">
                   <use xlink:href="#check" />
@@ -685,9 +742,10 @@ Designed a white label friendly design system scaling from design to code for fi
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
              Zoho - Mobile applications for Zoho Sheet</h2>
+            <p class="project-date">Dec 2015 - Jan 2018</p>
             <ul
              class="card-list-points"
-              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 105%; color: #343434; display: block">
+              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: #343434; display: block">
               <li >
                 <svg class="card-check-icon green">
                   <use xlink:href="#check" />
@@ -747,9 +805,10 @@ Designed a white label friendly design system scaling from design to code for fi
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
             
 Holachef - Ecosystem of applications for a FoodTech startup.</h2>
+            <p class="project-date">2015 - 2016</p>
             <ul
              class="card-list-points"
-              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 105%; color: #343434; display: block">
+              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: #343434; display: block">
               <li >
                 <svg class="card-check-icon orange">
                   <use xlink:href="#check" />
@@ -786,8 +845,6 @@ Holachef - Ecosystem of applications for a FoodTech startup.</h2>
         </div>
 
       </div>
-
-
 
     </div>
   </div>
