@@ -94,194 +94,11 @@
   width: 80%;
 }
 
-/* Case Studies Navigation Component - Magic Path Style */
-.case-studies-nav {
-  position: fixed;
-  left: 0;
-  top: 0;
-  width: 250px;
-  height: 100vh;
-  background: #fff;
-  z-index: 1000;
-  padding: 2rem 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  overflow-y: auto;
-  display: none;
-}
-
-.case-studies-nav-wrapper {
-  position: relative;
-  padding-left: 2rem;
-  height: 100%;
-}
-
-.case-studies-nav-line {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 1px;
-  background: #d1d5db;
-}
-
-.case-studies-indicator {
-  position: absolute;
-  left: -1px;
-  width: 4px;
-  height: 32px;
-  background: #ef4444;
-  transition: transform 0.5s ease-out;
-  transform: translateY(0);
-}
-
-.case-studies-nav-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-.case-studies-nav-item {
-  position: relative;
-}
-
-.case-studies-nav-button {
-  display: block;
-  text-align: left;
-  font-size: 1.25rem;
-  font-weight: 400;
-  color: #6b7280;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: color 0.3s ease;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-}
-
-.case-studies-nav-button:hover {
-  color: #ef4444;
-}
-
-.case-studies-nav-button.active {
-  color: #ef4444;
-}
-
 /* Main content layout adjustments */
-body {
-  margin-left: 0;
-}
-
-@media only screen and (min-width: 1000px) {
-  .case-studies-nav {
-    display: block;
-  }
-  
-  body {
-    margin-left: 250px;
-  }
-  
-  .main-content-wrapper {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-}
-
 .main-content-wrapper {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
-}
-
-/* Mobile responsiveness */
-@media (max-width: 999px) {
-  .case-studies-nav {
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-  }
-  
-  .case-studies-nav.open {
-    transform: translateX(0);
-  }
-  
-  body {
-    margin-left: 0;
-  }
-  
-  .main-content-wrapper {
-    padding: 0 1rem;
-  }
-  
-  .nav-toggle-mobile {
-    position: fixed;
-    top: 1.5rem;
-    left: 1.5rem;
-    z-index: 1001;
-    background: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: 8px;
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .nav-toggle-mobile:hover {
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-  }
-  
-  .nav-toggle-mobile span {
-    display: block;
-    width: 20px;
-    height: 2px;
-    background: #333;
-    position: relative;
-    transition: all 0.3s ease;
-  }
-  
-  .nav-toggle-mobile span:before,
-  .nav-toggle-mobile span:after {
-    content: '';
-    position: absolute;
-    width: 20px;
-    height: 2px;
-    background: #333;
-    transition: all 0.3s ease;
-  }
-  
-  .nav-toggle-mobile span:before {
-    top: -6px;
-  }
-  
-  .nav-toggle-mobile span:after {
-    top: 6px;
-  }
-  
-  .nav-toggle-mobile.active span {
-    background: transparent;
-  }
-  
-  .nav-toggle-mobile.active span:before {
-    transform: rotate(45deg);
-    top: 0;
-  }
-  
-  .nav-toggle-mobile.active span:after {
-    transform: rotate(-45deg);
-    top: 0;
-  }
-}
-
-@media (min-width: 1000px) {
-  .nav-toggle-mobile {
-    display: none;
-  }
 }
 
 /* Back Button Glassmorphism Styles */
@@ -367,35 +184,6 @@ body {
 </div>
 <body style="z-index: -1">
 
-<!-- Case Studies Navigation - Magic Path Component -->
-<nav class="case-studies-nav" id="caseStudiesNav">
-  <div class="case-studies-nav-wrapper">
-    <div class="case-studies-nav-line"></div>
-    <div class="case-studies-indicator" id="case-studies-indicator"></div>
-    <ul class="case-studies-nav-list">
-      <li class="case-studies-nav-item">
-        <button class="case-studies-nav-button" data-section="overview">Overview</button>
-      </li>
-      <li class="case-studies-nav-item">
-        <button class="case-studies-nav-button" data-section="objective">Objective</button>
-      </li>
-      <li class="case-studies-nav-item">
-        <button class="case-studies-nav-button active" data-section="solution">Solution Ideation</button>
-      </li>
-      <li class="case-studies-nav-item">
-        <button class="case-studies-nav-button" data-section="final-ui">Final UI</button>
-      </li>
-      <li class="case-studies-nav-item">
-        <button class="case-studies-nav-button" data-section="impact">Impact</button>
-      </li>
-    </ul>
-  </div>
-</nav>
-
-<!-- Mobile Navigation Toggle -->
-<div class="nav-toggle-mobile" id="navToggleMobile">
-  <span></span>
-</div>
 
 <div class="hamburgler-menu">
   <ul class="hamburgler-menu-list">
@@ -442,7 +230,7 @@ body {
   
 <!-- About me -->
 <div class="frame">
-<div id="overview" style="/* height:30%; */;">
+<div id="overview" style="/* height:30%; */">
        
     <p class="h1">
 Holachef - Home made food delivered 
@@ -458,9 +246,12 @@ Holachef - Home made food delivered
     display: flex;
     flex-wrap: wrap;
     padding: 5%;
+    gap: 4rem;
+    align-items: flex-start;
 " id="objective">
   <div style="
-    flex: 3 0 600px;
+    flex: 1 1 600px;
+    min-width: 0;
 ">
      <p class="txt3" style="
     padding: 0;
@@ -473,35 +264,38 @@ Holachef - Home made food delivered
     </div>
 </div>
 
-  <div style="flex: 3 0 450px;padding-left: 8rem;padding-top: 1rem;" class="wrapper">
+  <div style="flex: 0 1 400px;padding-top: 0;" class="wrapper">
     <h2 style="
     font-weight: 500;
     font-family: &quot;MyWebFont&quot;;
     font-size: 120%;
+    margin-bottom: 0.5rem;
 ">Project Type & Involvement</h2>
     <p style="
     font-family: &quot;MyWebFont1&quot;;
     padding: 0.75rem 0;
     font-size: 18px;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 ">Work in Holachef - Product Design</p>
     <h2 style="
     font-weight: 500;
     font-family: &quot;MyWebFont&quot;;
     font-size: 20px;
+    margin-bottom: 0.5rem;
 ">Timeline</h2>
     <p style="
     font-family: &quot;MyWebFont1&quot;;
     padding: 0.5rem 0;
     font-size: 18px;
+    margin-bottom: 2rem;
 ">Jun 2015 - Dec 2015
 
 </p>
   <h2 style="
-    padding-top: 7%;
     font-weight: 500;
     font-family: &quot;MyWebFont&quot;;
     font-size: 20px;
+    margin-bottom: 0.5rem;
 ">Platforms</h2>
     <p style="
     font-family: &quot;MyWebFont1&quot;;
@@ -528,7 +322,7 @@ Holachef - Home made food delivered
      <div class="txt4" style="
     padding-left: 0;
 ">
-     <p style="flex: 3;line-height:  max-width: 900px">
+     <p style="flex: 3; line-height: 1.8; max-width: 900px">
            As a team, we thought of multiple solutions to make the process and business easier. I was a part of building some of the solutions that were contributing to run the business. I was involved in helping to build the products that helped in digitizing and easing problems that existed in the company by collaborating with the product managers, design manager and researchers to gain a knowledge of the user and with a brand designer to design the product that enhanced the experience for the users.<br>
     
            
@@ -552,7 +346,7 @@ Holachef - Home made food delivered
      <div class="txt4" style="
     padding-left: 0;
 ">
-     <p style="flex: 3;line-height:  max-width: 900px">
+     <p style="flex: 3; line-height: 1.8; max-width: 900px">
           There were multiple needs and multiple stakeholders involved in the functioning of the business. Hence, We designed solutions for multiple stakeholders and their needs.  The ecosystem was designed in such a way that the products could integrate with each other and exchange data to provide meaningful solutions. The product ecosystem and the detailed product case studies which I was a part of are as follows.<br>
     
     <img src="images/case4/ecosystem.png"  style="margin-left: 10%; 
@@ -602,7 +396,7 @@ Holachef - Home made food delivered
 <div style="
     display: flex;
     flex-wrap: wrap;
-    padding-left: %;
+    padding-left: 5%;
 ">
   <div style="
     flex: 3 0 400px;
@@ -613,7 +407,7 @@ Holachef - Home made food delivered
      <div class="txt4" style="
     padding-left: 0;
 ">
-     <p style="flex: 3;line-height:  max-width: 900px">
+     <p style="flex: 3; line-height: 1.8; max-width: 900px">
            <span style="line-height: 2rem">By collaborating with a researcher and by talking to multiple users who were customers if the pre-existed application, the key opportunities were identified. The insights not just gave us an opportunity to improvise the experience but also helped us revamp the entire application for better clarity and to serve the users better.
 <br></span>
           
@@ -975,7 +769,7 @@ Chef's dishes & impact </h2>
 ">3)Runners App - An app for delivery executives</p>
 
 <p class="txt3" style="
-    padding-top:5%; padding-left:0; padding-bottom:; font-size: 150%
+    padding-top:5%; padding-left:0; padding-bottom: 0; font-size: 150%
 ">The Problem</p>
 
      <div class="txt4" style="
@@ -1004,14 +798,14 @@ Chef's dishes & impact </h2>
     padding: 0;
 ">Solution:</p>
 
-  <p style="flex: 3 0 400px; line-height: 3rem; padding-bottom:; padding-left:0" class="txt4">
+  <p style="flex: 3 0 400px; line-height: 3rem; padding-bottom: 0; padding-left:0" class="txt4">
   1) An Android application was designed to satisfy these needs.<br>
   2) A low-end device was given to the delivery executives.<br>
 3)Using the application, the application navigates the best way to do their pickups or deliveries, apply holidays, track their stats, end the day whenever they want and get paid for the same using the distance calculated.
   
    </p>
 
-     <p style="flex: 3 0 400px; line-height: 3rem; padding-bottom:; padding-left:0" class="txt4">
+     <p style="flex: 3 0 400px; line-height: 3rem; padding-bottom: 0; padding-left:0" class="txt4">
   
   
    </p>
@@ -1255,132 +1049,6 @@ AOS.init({
       });
 
 
-  });
-
-  // Left Navigation functionality
-  // Case Studies Navigation - Magic Path Component
-  (function() {
-    const navButtons = document.querySelectorAll('.case-studies-nav-button');
-    const indicator = document.getElementById('case-studies-indicator');
-    const sections = ['overview', 'objective', 'solution', 'final-ui', 'impact'];
-    let activeIndex = 2; // Default to "Solution Ideation"
-
-    function updateActiveState(index) {
-      navButtons.forEach((btn, i) => {
-        if (i === index) {
-          btn.classList.add('active');
-        } else {
-          btn.classList.remove('active');
-        }
-      });
-      
-      if (indicator) {
-        // Calculate position: each item has 2rem (32px) gap, starting at top
-        // Each button is approximately 32px tall, with 32px gap between items
-        const itemHeight = 64; // 32px text height + 32px gap
-        const topOffset = 0; // Start from top of nav
-        indicator.style.transform = `translateY(${index * itemHeight + topOffset}px)`;
-      }
-    }
-
-    navButtons.forEach((button, index) => {
-      button.addEventListener('click', function() {
-        const sectionId = this.getAttribute('data-section');
-        const targetElement = document.getElementById(sectionId);
-        
-        if (targetElement) {
-          targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-        
-        activeIndex = index;
-        updateActiveState(activeIndex);
-      });
-    });
-
-    // Update active state on scroll
-    function updateActiveOnScroll() {
-      const scrollPosition = window.scrollY + 200; // Offset for better detection
-      
-      sections.forEach((sectionId, index) => {
-        const section = document.getElementById(sectionId);
-        if (section) {
-          const sectionTop = section.offsetTop;
-          const sectionHeight = section.offsetHeight;
-          
-          if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-            activeIndex = index;
-            updateActiveState(activeIndex);
-          }
-        }
-      });
-    }
-
-    window.addEventListener('scroll', updateActiveOnScroll);
-    updateActiveState(activeIndex);
-  })();
-
-  const navToggleMobile = document.getElementById('navToggleMobile');
-  const caseStudiesNav = document.getElementById('caseStudiesNav');
-
-  // Mobile navigation toggle
-  if (navToggleMobile && caseStudiesNav) {
-    navToggleMobile.addEventListener('click', function() {
-      caseStudiesNav.classList.toggle('open');
-      navToggleMobile.classList.toggle('active');
-    });
-  }
-
-  // Legacy navigation links (if any remain)
-  const navMenuLinks = document.querySelectorAll('.nav-menu-link');
-  navMenuLinks.forEach(link => {
-    link.addEventListener('click', function(e) {
-      e.preventDefault();
-      const targetId = this.getAttribute('href').substring(1);
-      const targetElement = document.getElementById(targetId);
-      
-      if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
-        });
-      }
-      
-      // Close mobile nav after clicking
-      if (window.innerWidth <= 768) {
-        leftNavSidebar.classList.remove('open');
-        navToggleMobile.classList.remove('active');
-      }
-    });
-  });
-
-  // Update active navigation link based on scroll position
-  function updateActiveNavLink() {
-    const sections = document.querySelectorAll('[id]');
-    const scrollPos = window.scrollY + 100;
-
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
-      const sectionHeight = section.offsetHeight;
-      const sectionId = section.getAttribute('id');
-
-      if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-        navMenuLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href') === '#' + sectionId) {
-            link.classList.add('active');
-          }
-        });
-      }
-    });
-  }
-
-  // Throttled scroll listener
-  let scrollTimeout;
-  window.addEventListener('scroll', function() {
-    if (scrollTimeout) {
-      clearTimeout(scrollTimeout);
-    }
-    scrollTimeout = setTimeout(updateActiveNavLink, 10);
   });
 
 </script>
