@@ -352,7 +352,7 @@ ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    /* overflow: hidden; Removed to prevent button cropping */
     background-color: none;
     font-family: "MyWebFont";
     font-size: 125%;
@@ -525,7 +525,6 @@ header {
   position: relative;
   font-family: "MyWebFont2";
   font-size: 100%;
-  background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);
   min-height: 90vh;
   padding: 0 2rem 8rem;
   color: #000;
@@ -554,7 +553,6 @@ height: 100%;
     display: none;
   }
   header{
-    background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);
 
   }
   
@@ -673,7 +671,6 @@ height: 100%;
   position: relative;
   font-family: "MyWebFont2";
   font-size: 100%;
-  background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);
   min-height: 40vh;
   padding: 0 2rem 8rem;
   color: #000;
@@ -805,10 +802,27 @@ header section h2 {
   --stroke: #7f7f7f;
 } 
 
+/* Image zoom effect on hover */
+.cards-layout-image {
+  overflow: hidden;
+  border-radius: 4%;
+}
+
+.cards-layout-image img {
+  transition: transform 0.3s ease;
+  width: 90%;
+  border-radius: 4%;
+}
+
+.cards-layout-image:hover img {
+  transform: scale(1.05);
+}
+
 @media screen and (min-width: 980px) {
   .cards-layout {
     display: flex;
     flex-wrap: wrap;
+    align-items: flex-start;
   }
 
   .cards-layout-image {
@@ -817,5 +831,6 @@ header section h2 {
 
   .cards-layout-content {
     flex: 1;
+    padding-top: 0 !important;
   }
 }
