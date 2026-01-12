@@ -1,365 +1,1438 @@
 <!DOCTYPE HTML>
 <html>
-  <head>
-    <title>Srinivasan | Product Designer</title>
-    <meta name="theme-color" content="#000">
-    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
-    <meta name="viewport" content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width, height=device-height, viewport-fit=cover">
 
-    <!--SEO-->
+<head>
+  <title>Srinivasan | Staff Product Designer</title>
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="viewport"
+    content="initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no, width=device-width, height=device-height, viewport-fit=cover">
+  <meta name="full-screen" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Srinivasan">
 
-    <!-- MWeb app -->
-    <meta name="full-screen" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" background="#000">
-    <meta name="apple-mobile-web-app-title" content="Srinivasan">
-    <!-- MWeb app ends -->
+  <!-- App Icon -->
+  <link href="/images/Appicons/iOS/120.png" rel="apple-touch-icon" />
+  <link href="/images/Appicons/iOS/152.png" rel="apple-touch-icon" sizes="152x152" />
+  <link href="/images/Appicons/iOS/167.png" rel="apple-touch-icon" sizes="167x167" />
+  <link href="/images/Appicons/iOS/180.png" rel="apple-touch-icon" sizes="180x180" />
+  <link href="/images/Appicons/android/192.png" rel="icon" sizes="192x192" />
+  <link href="/images/Appicons/android/128.png" rel="icon" sizes="128x128" />
+  <link rel="icon" href="images/favi.png" type="image/png" sizes="16x16">
+<!-- App Icon Ends -->
 
-    <!-- Mobile icons -->
-    <!-- iOS -->
-    <link href="/images/Appicons/iOS/120.png" rel="apple-touch-icon" />
-    <link href="/images/Appicons/iOS/152.png" rel="apple-touch-icon" sizes="152x152" />
-    <link href="/images/Appicons/iOS/167.png" rel="apple-touch-icon" sizes="167x167" />
-    <link href="/images/Appicons/iOS/180.png" rel="apple-touch-icon" sizes="180x180" />
-    <!-- android -->
-    <link href="/images/Appicons/android/192.png" rel="icon" sizes="192x192" />
-    <link href="/images/Appicons/android/128.png" rel="icon" sizes="128x128" />
-    <!-- Mobile icons ends here -->
-    <link rel="icon" href="images/favi.png" type="image/png" sizes="16x16">
-    <link rel="stylesheet" href="style.css">
-
-     <meta property="og:title" content="Srinivasan | Product Designer" />
-    <meta property="og:image" content="images/richpreview.jpg" />
-    <meta name="description" content="A digital product designer who solves complex problems with simple &
-      intuitive interfaces" />
-    <meta property="og:description" content="A digital product designer who solves complex problems with <br>
-      simple and intuitive interfaces." />
-
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* Force Light Mode */
+    html {
+      color-scheme: light;
+      background: #fff;
+      scroll-behavior: smooth;
+    }
     
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-131508743-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    body {
+      background: #fff;
+      color: #000;
+    }
+  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* Floating Navigation - Liquid Glass Style */
+    .floating-nav-container {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      z-index: 1000;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
 
-  gtag('config', 'UA-131508743-1');
-</script>
+    .floating-nav-container.visible {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .floating-nav {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 24px;
+      
+      /* Liquid Glass Vue Styles */
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(9px);
+      -webkit-backdrop-filter: blur(9px);
+      background: rgba(255, 255, 255, 0.1); /* Added slight tint for visibility */
+      border-radius: 8px; /* Matching the Vue component's border-radius */
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .floating-nav-item {
+      color: #000;
+      text-decoration: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .floating-nav-item:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .floating-nav-btn {
+      background: #000;
+      color: #fff;
+      text-decoration: none;
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 8px 20px;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+      margin-left: 8px;
+      border: 2px solid transparent;
+    }
+
+    .floating-nav-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #000;
+      border-color: #000;
+    }
+
+    @media screen and (max-width: 768px) {
+      .floating-nav-container {
+        width: auto;
+        max-width: 90%;
+        bottom: 24px;
+      }
+      
+      .floating-nav {
+        padding: 10px 16px;
+      }
+    }
+
+    /* Progressive Animation Styles - CSS-only animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-progressive {
+      opacity: 0;
+      animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    /* Staggered delays for different elements */
+    .animate-progressive:nth-child(1) { animation-delay: 0.5s; }
+    .animate-progressive:nth-child(2) { animation-delay: 0.7s; }
+    .animate-progressive:nth-child(3) { animation-delay: 0.9s; }
+    .animate-progressive:nth-child(4) { animation-delay: 1.1s; }
+    .animate-progressive:nth-child(5) { animation-delay: 1.3s; }
+    .animate-progressive:nth-child(6) { animation-delay: 1.5s; }
+    
+    /* Fallback for .visible class if JS runs */
+    .animate-progressive.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* (removed) header role animation */
+
+    /* Modern Read More Button Styles - Glassmorphism */
+    .read-more-glass {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 32px;
+      min-height: 56px;
+      min-width: 160px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: 9999px;
+      color: #000 !important;
+      text-decoration: none !important;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1;
+      box-shadow: 
+        0 1px 2px 0 rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .read-more-glass:hover {
+      border-color: rgba(255, 255, 255, 0.5);
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
+    }
+
+    .read-more-glass::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-out;
+    }
+
+    .read-more-glass:hover::before {
+      transform: translateX(0);
+    }
+
+    /* Ripple effect on hover */
+    .read-more-glass::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    /* Continuous ripple animation on hover */
+    @keyframes ripple {
+      0% {
+        width: 0;
+        height: 0;
+        opacity: 0.6;
+      }
+      50% {
+        opacity: 0.3;
+      }
+      100% {
+        width: 300px;
+        height: 300px;
+        opacity: 0;
+      }
+    }
+
+    .read-more-glass:hover::after {
+      animation: ripple 1.2s ease-out infinite;
+    }
+
+    .read-more-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      position: relative;
+      z-index: 10;
+      overflow: hidden;
+      transform: translateZ(20px);
+    }
+
+    /* Coming Soon Button Styles */
+    .coming-soon-glass {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 32px;
+      min-height: 56px;
+      min-width: 180px;
+      background: rgba(0, 0, 0, 0.05);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 9999px;
+      color: #666 !important;
+      text-decoration: none !important;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1;
+      box-shadow: 
+        0 1px 2px 0 rgba(0, 0, 0, 0.05),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+      overflow: visible;
+      cursor: default;
+      pointer-events: auto;
+      white-space: nowrap;
+    }
+
+    .coming-soon-glass .read-more-content {
+      overflow: visible;
+    }
+
+    .coming-soon-glass .read-more-text {
+      white-space: nowrap;
+      overflow: visible;
+    }
+
+    .read-more-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .read-more-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke: #000;
+      stroke-width: 1.5;
+    }
+
+    .read-more-text {
+      display: inline-block;
+      position: relative;
+      z-index: 10;
+      transition: color 0.3s ease;
+    }
+
+    /* Footer Background Match */
+    #contact {
+      background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%) !important;
+    }
+
+    /* Unicorn Studio Water Effect Container */
+    header {
+      position: relative;
+      overflow: visible;
+      min-height: 75vh;
+      padding-bottom: 8rem;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);
+    }
+
+    header .water-effect-container {
+      overflow: hidden;
+    }
+
+    @media screen and (max-width: 1440px) {
+      header {
+        min-height: 70vh;
+        padding-bottom: 8rem;
+      }
+    }
+
+    @media screen and (max-width: 1024px) {
+      header {
+        min-height: 65vh;
+        padding-bottom: 6rem;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      header {
+        min-height: 85vh;
+        padding-bottom: 6rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      header {
+        min-height: 80vh;
+        padding-bottom: 5rem;
+      }
+    }
+
+    .water-effect-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+      filter: saturate(0.3) brightness(1.1);
+      animation: fadeInOut 4s ease-in-out forwards;
+    }
+    
+    @keyframes fadeInOut {
+      0% {
+        opacity: 0;
+      }
+      25% {
+        opacity: 0.35;
+      }
+      75% {
+        opacity: 0.35;
+      }
+      100% {
+        opacity: 0;
+      }
+    }
+    
+    .water-effect-container > div {
+      width: 100% !important;
+      height: 100% !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+    }
+    
+    .water-effect-container canvas {
+      width: 100% !important;
+      height: 100% !important;
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+    }
+
+    header .HeaderContent {
+      position: relative;
+      z-index: 10;
+      padding-top: 8vh;
+    }
+    
+    header .HeaderContent h1,
+    header .HeaderContent p,
+    header .HeaderContent .HeaderContent-description {
+      color: #000 !important;
+    }
+    
+    header .HeaderContent h1 a {
+      color: #3b65ef !important;
+    }
+    
+    header nav,
+    header .see-more {
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Fix hamburger menu background */
+    .hamburgler-active .hamburgler-menu {
+      background-color: #fff !important;
+      z-index: 9999 !important;
+    }
+
+    /* Ensure hamburger icon appears above menu */
+    .hamburgler-icon-wrapper {
+      z-index: 10000 !important;
+    }
+
+    /* Chevron down arrow at bottom of header - centered */
+    .see-more-wrapper {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-top: 3rem;
+    }
+
+    .see-more {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      width: 48px;
+      height: 48px;
+      padding: 0;
+      border-radius: 9999px;
+      
+      /* Liquid Glass Effect - enhanced */
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        rgba(255, 255, 255, 0.1) 50%,
+        rgba(255, 255, 255, 0.3) 100%
+      );
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+      
+      /* Apple iOS spring animation timing */
+      transition: 
+        width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        padding 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        gap 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.2s ease,
+        border-color 0.3s ease;
+      
+      opacity: 1 !important;
+      animation: bounce-slow 2.5s infinite ease-in-out !important;
+      text-decoration: none;
+      overflow: hidden;
+    }
+
+    .see-more:hover {
+      width: 185px;
+      gap: 10px;
+      padding: 0 24px;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.5) 0%,
+        rgba(255, 255, 255, 0.2) 50%,
+        rgba(255, 255, 255, 0.4) 100%
+      );
+      border-color: rgba(255, 255, 255, 0.7);
+      box-shadow: 
+        0 12px 40px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+      animation: none !important;
+      transform: scale(1.02);
+    }
+
+    .see-more:active {
+      transform: scale(0.97);
+    }
+
+    .see-more svg {
+      opacity: 1 !important;
+      flex-shrink: 0;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .see-more:hover svg {
+      transform: translateY(3px);
+    }
+
+    .see-more-text {
+      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: #000;
+      white-space: nowrap;
+      opacity: 0;
+      width: 0;
+      overflow: hidden;
+      transition: 
+        opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+        width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition-delay: 0s;
+    }
+
+    .see-more:hover .see-more-text {
+      opacity: 1;
+      width: auto;
+      transition-delay: 0.1s;
+    }
+
+    @keyframes bounce-slow {
+      0%, 100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      50% {
+        transform: translateY(8px);
+        opacity: 1;
+      }
+    }
 
 
-  </head>
-  <body>
+    /* Image hover effect for buttons */
+    .cards-layout-image:hover ~ .cards-layout-content .read-more-glass {
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      transform: translateY(-2px);
+    }
 
-    <div class="hamburgler-menu">
-      <ul class="hamburgler-menu-list">
-      <li><a href="about.html">About</a></li>
-       <li><a href="#Selectedworks">Works</a></li>
-        <li><a href="Resume_Srinivasan.pdf">Résumé</a></li>
-       
-        
-        
-      </ul>
+    .cards-layout-image:hover ~ .cards-layout-content .read-more-glass::before {
+      transform: translateX(0);
+    }
+
+    .cards-layout-image:hover ~ .cards-layout-content .read-more-glass::after {
+      animation: ripple 1.2s ease-out infinite;
+    }
+
+    /* Project Date Styling */
+    .project-date {
+      font-family: "MyWebFont";
+      font-size: 14px;
+      color: #666;
+      margin-top: -1.5rem;
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+    }
+
+    /* Work Sans for bullet points */
+    .card-list-points {
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+
+    .card-list-points div {
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+
+    /* Align content to top of image */
+    .cards-layout {
+      align-items: flex-start !important;
+    }
+
+    /* Fix Navigation Alignment */
+    .desk-menu {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: flex-end !important;
+      height: 100%;
+      padding-top: 40px !important;
+    }
+
+    .desk-menu li {
+      display: flex !important;
+      align-items: center !important;
+      float: none !important;
+      height: 100%;
+    }
+
+    .desk-menu li a:not(.get-in-touch-btn) {
+      display: flex !important;
+      align-items: center !important;
+      height: 100%;
+      padding: 0 25px !important;
+    }
+
+    .cards-layout-content {
+      padding-top: 0 !important;
+    }
+
+
+    /* Archives Section Styles */
+    .archives-section {
+      padding: 4rem 5%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .archives-title {
+      font-family: "MyWebFont";
+      font-size: 200%;
+      color: #000;
+      margin-bottom: 3rem;
+      padding-left: 5%;
+    }
+
+    .archives-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+
+    @media screen and (max-width: 768px) {
+      .archives-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .archive-item {
+      position: relative;
+      border-radius: 12px;
+      padding: 3rem 2.5rem;
+      min-height: 500px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .archive-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.05;
+      background-image: 
+        repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px),
+        repeating-linear-gradient(-45deg, transparent, transparent 10px, rgba(0,0,0,0.03) 10px, rgba(0,0,0,0.03) 20px);
+      pointer-events: none;
+    }
+
+    .archive-item-left {
+      background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+    }
+
+    .archive-item-right {
+      background: linear-gradient(135deg, #e3f2fd 0%, #e8f4f8 100%);
+    }
+
+    .archive-item-content {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+
+    .archive-item-type {
+      font-family: "MyWebFont";
+      font-size: 14px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .archive-item-title {
+      font-family: "MyWebFont";
+      font-size: 28px;
+      font-weight: 200;
+      color: #000;
+      margin-bottom: 1rem;
+      line-height: 1.3;
+    }
+
+    .archive-item-description {
+      font-family: "MyWebFont";
+      font-size: 16px;
+      color: #444;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .archive-visual {
+      position: relative;
+      z-index: 1;
+      margin-top: 2rem;
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .archive-visual img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    .archive-phones {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .archive-phone {
+      width: 120px;
+      height: auto;
+      border-radius: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .archive-laptop {
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* Apple-style Get in Touch Button - Glassmorphism (matching works section) */
+    .get-in-touch-btn {
+      position: relative;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      gap: 8px;
+      padding: 14px 28px !important;
+      min-height: auto !important;
+      min-width: auto !important;
+      
+      /* Glassmorphism Effect */
+      background: rgba(255, 255, 255, 0.1) !important;
+      backdrop-filter: blur(24px) !important;
+      -webkit-backdrop-filter: blur(24px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.3) !important;
+      box-shadow: 
+        0 4px 16px rgba(0, 0, 0, 0.08),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+      
+      color: #000 !important;
+      border-radius: 9999px !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      font-family: "MyWebFont", -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif !important;
+      text-decoration: none !important;
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      line-height: 1 !important;
+      letter-spacing: -0.01em !important;
+      margin-left: 8px !important;
+      vertical-align: middle !important;
+      opacity: 1 !important;
+      text-align: center !important;
+      overflow: hidden;
+    }
+
+    .get-in-touch-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: rgba(255, 255, 255, 0.05);
+      transform: translateX(-100%);
+      transition: transform 0.3s ease-out;
+    }
+
+    .get-in-touch-btn:hover::before {
+      transform: translateX(0);
+    }
+
+    .desk-menu:hover .get-in-touch-btn {
+      opacity: 1 !important;
+    }
+
+    .get-in-touch-btn:hover {
+      border-color: rgba(255, 255, 255, 0.5) !important;
+      transform: scale(1.03) !important;
+      opacity: 1 !important;
+      box-shadow: 
+        0 12px 32px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .get-in-touch-btn:active {
+      transform: scale(0.98) !important;
+    }
+
+    .hamburgler-menu-list .get-in-touch-btn {
+      margin: 0.5rem 0;
+      display: block;
+      text-align: center;
+      width: auto;
+    }
+
+    /* Three-column grid for Previous Work */
+    .previous-work-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 2rem;
+      margin: 0 auto 6rem auto;
+      padding: 0 5%;
+      max-width: 1400px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    @media screen and (max-width: 1024px) {
+      .previous-work-grid {
+        grid-template-columns: 1fr 1fr !important;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .previous-work-grid {
+        grid-template-columns: 1fr !important;
+      }
+      
+      /* Hide Desktop Menu on Mobile/Tablet */
+      .desk-menu {
+        display: none !important;
+      }
+      
+      /* Ensure Hamburger is visible */
+      .hamburgler-icon-wrapper {
+        display: block !important;
+      }
+    }
+
+    .previous-work-item {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .previous-work-item .cards-layout {
+      display: flex;
+      flex-direction: column;
+      padding: 0 !important;
+    }
+
+    .previous-work-item .cards-layout-image,
+    .previous-work-item .work-image-container {
+      height: 300px !important;
+      width: 100% !important;
+      min-height: 300px !important;
+      max-height: 300px !important;
+      overflow: hidden;
+      border-radius: 4%;
+      margin-bottom: 1rem;
+      flex-shrink: 0;
+      position: relative;
+      display: block;
+    }
+
+    .previous-work-item .cards-layout-image a,
+    .previous-work-item .work-image-container a {
+      display: block;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .previous-work-item .cards-layout-image img,
+    .previous-work-item .work-image-container img {
+      width: 100% !important;
+      height: 100% !important;
+      min-height: 300px !important;
+      max-height: 300px !important;
+      object-fit: cover !important;
+      object-position: center;
+      border-radius: 4%;
+      display: block;
+    }
+
+    .previous-work-item .cards-layout-content {
+      padding-top: 24px !important;
+      width: 100%;
+    }
+
+    .txt6, .footertxt {
+      padding-left: 0 !important;
+    }
+
+    .previous-work-item .cards-layout-content h2 {
+      font-size: 1.25rem !important; /* 20px equivalent */
+      margin-bottom: 0.5rem !important;
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .previous-work-item .cards-layout-content p {
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      font-size: 14px !important;
+      line-height: 1.5;
+      color: #666;
+      margin-top: 0.5rem;
+      width: 100%;
+      max-width: 100%;
+    }
+
+  </style>
+  <meta property="og:title" content="Srinivasan | Product Designer" />
+  <meta property="og:image" content="images/richpreview.jpg" />
+  <meta name="description"
+    content="Digital product designer focused on crafting and shipping superlative products that impact people at scale." />
+  <meta property="og:description"
+    content="A digital product designer who solves complex problems with <br>simple and intuitive interfaces." />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131508743-1"></script>
+  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'UA-131508743-1');</script>
+</head>
+
+<body>
+  
+  <!-- SVG Filter for Liquid Glass Effect -->
+  <svg width="0" height="0" style="position: absolute; pointer-events: none;">
+    <defs>
+      <filter id="liquid-prism-intense" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
+        <feTurbulence type="fractalNoise" baseFrequency="0.001 0.005" numOctaves="3" result="turbulence" />
+        <feDisplacementMap in="SourceGraphic" in2="turbulence" scale="20" xChannelSelector="R" yChannelSelector="G" />
+      </filter>
+    </defs>
+  </svg>
+
+  <div style="display: none;">
+    <!-- Floating Navigation -->
+    <div class="floating-nav-container">
+      <nav class="floating-nav">
+        <a href="#Selectedworks" class="floating-nav-item">Works</a>
+        <a href="about.html" class="floating-nav-item">About</a>
+        <a href="Resume_Srinivasan.pdf" class="floating-nav-item" target="_blank">Résumé</a>
+        <a href="mailto:tcsreeni93@gmail.com" class="floating-nav-btn">Get in Touch</a>
+      </nav>
+    </div>
+
+<svg xmlns="http://www.w3.org/2000/svg">
+<symbol  id="check" viewBox="0 0 30 30">
+  <defs/><g fill="none" fill-rule="evenodd"><circle cx="15" cy="15" r="15" fill="var(--bg)" fill-rule="nonzero"/><path stroke="var(--stroke)" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l3 3 6-6"/></g>
+</symbol>
+</svg>
+
+  </div>
+
+  <div class="hamburgler-menu">
+    <ul class="hamburgler-menu-list">
+    <li><a href="about.html">About</a></li>
+    <li><a href="index.html#Selectedworks">Works</a></li>
+    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
+    <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>
+  </ul>
+  </div>
+  <header style="background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);">
+    <!-- Unicorn Studio Water Effect -->
+    <div class="water-effect-container">
+      <div data-us-project="ty3N7ZPaIU7KlWixQFIc" style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"></div>
+      <script type="text/javascript">
+        !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornStudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+      </script>
     </div>
     
-    <!-- Header -->
-    <header>
-      <div id="hamburgler" class="hamburgler-icon-wrapper">
-        <span class="hamburgler-icon"></span>
-      </div>
-      <div id="headerimg">
-        
-        
-      </div>
-    
-      
-    <ul class="desk-menu" style="padding-right:3%">
-      
-       <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
-       <li><a href="about.html">About</a></li>
-       <li><a href="#Selectedworks">Works</a></li>
-     
-    </ul>
-    <section style="background-color: #000">
-      <h1>
-        Hey! I'm Srini 👋🏻</h1>
-      <h2 style="max-width: 850px; text-align: center;"> Digital product designer with 3 years of experience in crafting and shipping superlative products that impact people .</h2>
-
-      <h2 style="max-width: 850px; text-align: center; font-size: 95%; opacity: 0.8"> MS HCI at DePaul University | Previously UX Design Intern @ Google </h2>
-    
-      <div style="position: absolute; bottom: 15%">
-
-
-        <style>
-        .see-more {
-        position: relative;
-        display: inline-block;
-        transition: all 0.2s;
-        background: transparent;
-        }
-        .see-more:hover {
-        cursor: pointer;
-        transform: scale(1.1) scaleX(1.15);
-        }
- @media (max-width: 800px) { 
-       .see-more{
-         display: none !important; 
-         }       
-        }
-
-        </style>
-        <a href="#Selectedworks" class="see-more" aria-label="See more" >
-          <svg width="27" height="15" xmlns="http://www.w3.org/2000/svg"><path d="M25.86 1.14a.479.479 0 0 0-.679 0l-11.68 11.7L1.818 1.14a.479.479 0 1 0-.678.68l12.02 12.04a.479.479 0 0 0 .678 0L25.86 1.82a.48.48 0 0 0 0-.68z" fill="#FFF" fill-rule="nonzero" stroke="#FFF" stroke-width="2" opacity=".9"/></svg>
-        </a>
-      </div>
-    </section>
-    
-  </header>
-  
-  
-  <!-- About me -->
-  <div class="frame" style="max-width: 1300px">
-    <!-- Selected Works -->
-
-    
-
-    <div id="Selectedworks" >
-      <p class="txt3">Selected works</p>
-      <div style="padding-top:2%;padding-left:4%; padding-right: 4%">
-        <section>
-
-          <a href="google.html" class="sample"><div class="works" style="background:url(images/google1.png)"></div>
-      <div style="
-        z-index: 5;
-        position: absolute;
-        background: #fff;
-        bottom: 0;
-        width: 100%;
-        padding: 1.5rem;
-        border-bottom-right-radius: 4px;
-        border-bottom-left-radius: 4px;
-        ">
-        <h3 style="
-        font-family: MyWebFont;
-        margin-bottom: 6px;
-        color: #000;
-        font-size: 1.1rem;
-        ">Google Ad Manager</h3>
-        <p style="
-          font-family:MyWebFont1;
-          line-height: 1.5;
-          color: #797979;
-        "> Designed the first version of design system for the Ad Management platform.</p>
-      </div></a></a>
-          
-          <a href="Zoho Sheet.html"  class="sample"><div class="works" style="background:url(images/Sheet.png)"></div>
-          
-          <div style="
-            z-index: 5;
-            position: absolute;
-            background: #fff;
-            bottom: 0;
-            width: 100%;
-            padding: 1.5rem;
-            border-bottom-right-radius: 4px;
-            border-bottom-left-radius: 4px;
-            ">
-            <h3 style="
-            font-family: MyWebFont;
-            margin-bottom: 6px;
-            color: #000;
-            font-size: 1.1rem;
-            ">Zoho Sheet</h3>
-            <p style="
-              font-family:MyWebFont1;
-              line-height: 1.5;
-              color: #797979;
-            "> Designed the first version of mobile products for the spreadsheet software. </p>
-          </div>
-        </a>
-        <a href="Holachef.html" class="sample"><div class="works" style="background:url(images/Holachef.jpg)"></div>
-        <div style="
-          z-index: 5;
-          position: absolute;
-          background: #fff;
-          bottom: 0;
-          width: 100%;
-          padding: 1.5rem;
-          border-bottom-right-radius: 4px;
-          border-bottom-left-radius: 4px;
-          ">
-          <h3 style="
-          font-family: MyWebFont;
-          margin-bottom: 6px;
-          color: #000;
-          font-size: 1.1rem;
-          ">Holachef</h3>
-          <p style="
-            font-family:MyWebFont1;
-            line-height: 1.5;
-            color: #797979;
-          "> Designed digital solutions for the FoodTech company delivering food from chefs.</p>
+    <div id="hamburgler" class="hamburgler-icon-wrapper"> <span class="hamburgler-icon"></span> </div>
+    <nav>
+      <ul class="desk-menu">
+        <li><a href="index.html#Selectedworks">Works</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
+        <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>
+      </ul>
+    </nav>
+    <div class="frame" style="max-width: 1400px">
+      <div class="HeaderContent" style="margin-top: 10%">
+        <p class="animate-progressive" style='font-size: 250%; font-family: "MyWebFont"; margin-bottom: 0.75rem; color:#000'> Hello there <span class="wave">👋</span>, </p>
+        <h1 class="animate-progressive" style="white-space: inherit;line-height: 1.125; color:#000"> I'm <a href="http://srinivasan.design/about.html"
+            target="_blank" style="color:#3b65ef">Srini</a>, a full-spectrum product designer crafting intuitive AI-driven experiences and scalable design systems.
+        </h1>
+        <div class="animate-progressive HeaderContent-description" style="color:#000"> Staff Product Designer @ Intuit | Previously @ Norton, Google & Zoho </div>
+        <div class="see-more-wrapper animate-progressive">
+          <a href="#Selectedworks" class="see-more" aria-label="Scroll to work section">
+            <span class="see-more-text">Selected Works</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 9L12 15L18 9" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
         </div>
-      </a>
-      
-      <a href="Accu drive.html" class="sample"><div class="works" style="background:url(images/Accudrive.png)"></div>
-      <div style="
-        z-index: 5;
-        position: absolute;
-        background: #fff;
-        bottom: 0;
-        width: 100%;
-        padding: 1.5rem;
-        border-bottom-right-radius: 4px;
-        border-bottom-left-radius: 4px;
-        ">
-        <h3 style="
-        font-family: MyWebFont;
-        margin-bottom: 6px;
-        color: #000;
-        font-size: 1.05rem;
-        ">Accu Drive</h3>
-        <p style="
-          font-family:MyWebFont1;
-          line-height: 1.5;
-          color: #797979;
-        "> Concept app to measure your driving accurancy from your wrist. </p>
-      </div></a>
-      
-      <a href="Prioritize.html" class="sample"><div class="works" style="background:url(images/Prioritize.png)"></div>
-      <div style="
-        z-index: 5;
-        position: absolute;
-        background: #fff;
-        bottom: 0;
-        width: 100%;
-        padding: 1.5rem;
-        border-bottom-right-radius: 4px;
-        border-bottom-left-radius: 4px;
-        ">
-        <h3 style="
-        font-family: MyWebFont;
-        margin-bottom: 6px;
-        color: #000;
-        font-size: 1.1rem;
-        ">Prioritize</h3>
-        <p style="
-          font-family:MyWebFont1;
-          line-height: 1.5;
-          color: #797979;
-        "> An iOS application helping to organize normal tasks and priorities.</p>
-      </div></a></a>
-      
-      
-      
-      <a href="zeta.html" class="sample"><div class="works" style="background:url(images/zeta.jpg)"></div>
-      <div style="
-        z-index: 5;
-        position: absolute;
-        background: #fff;
-        bottom: 0;
-        width: 100%;
-        padding: 1.5rem;
-        border-bottom-right-radius: 4px;
-        border-bottom-left-radius: 4px;
-        ">
-        <h3 style="
-        font-family: MyWebFont;
-        margin-bottom: 6px;
-        color: #000;
-        font-size: 1.1rem;
-        ">Zeta</h3>
-        <p style="
-          font-family:MyWebFont1;
-          line-height: 1.5;
-          color: #797979;
-        "> Designed digital products to digitise employee tax savings & benefits.</p>
-      </div></a></a>
-    </section>
+      </div>
+    </div>
+  </header>
+
+
+  <div class="frame" style="max-width: 1400px">
+    <div id="Selectedworks">
+      <p class="txt3" style="font-size: 200%">Recent Work</p>
+      <div style="padding-top:2%;padding-left:4%; padding-right: 4%">
+        <section> </section>
+      </div>
+
+<!-- Write your comments here -->
+
+<div class="frame" style="max-width: 1400px">
+        <div
+         class="cards-layout"
+          style=" padding-top: 5%; padding-left: 5%; padding-right: 5%; color: #0A2540;">
+          <div  class="cards-layout-image work-image-container"> <img src="images/Intuit.png" style=" width: 90%; border-radius: 4%; ">
+          </div>
+
+          <div style="margin: 24px"></div>
+
+          <div  class="cards-layout-content" style="padding-top: 5%; min-width: 320px;">
+            <h2
+              style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
+            
+            Intuit Assist – GenAI-Powered Developer Assistant</h2>
+            <p class="project-date">June 2023 - Present</p>
+            <ul
+             class="card-list-points"
+              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: #343434; display: block">
+              <li >
+                <svg class="card-check-icon blue">
+                  <use xlink:href="#check" />
+                </svg>
+                <div>
+              Designed and launched the first version of Intuit Assist, a GenAI-powered assistant enabling summary generation, internal documentation authoring, and API discovery.
+               
+              </div>
+              </li>
+
+              <li >
+                <svg class="card-check-icon blue">
+                  <use xlink:href="#check" />
+                </svg>
+                <div>
+                  Led design of core Generative AI experiences across developer touchpoints, shaping how AI integrates into internal platforms and IDE workflows.
+              </div>
+              </li>
+
+              <li >
+                <svg class="card-check-icon blue">
+                  <use xlink:href="#check" />
+                </svg>
+                <div>
+                  Contributed to Intuit's GenUX framework, aligning AI-driven experiences with existing systems to ensure scalability and design cohesion.
+              </div>
+              </li>
+            </ul>
+
+  
+            <div style="padding-top: 60px;">
+              <span class="coming-soon-glass">
+                <div class="read-more-content">
+                  <span class="read-more-text">Coming Soon</span>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <hr style="width:80%; margin-top: 4rem; margin-bottom: 3rem; border: 0px solid #f1f1f1; border-top-width: 1px;">
+
+<div class="frame" style="max-width: 1400px">
+        <div
+         class="cards-layout"
+          style=" padding-top: 5%; padding-left: 5%; padding-right: 5%; color: #0A2540;">
+          <div  class="cards-layout-image work-image-container"> <img src="images/API.png" style=" width: 90%; border-radius: 4%; ">
+          </div>
+
+          <div style="margin: 24px"></div>
+
+          <div  class="cards-layout-content" style="padding-top: 5%; min-width: 320px;">
+            <h2
+              style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
+            
+            API Experiences – Developer Platform & Integration Tools</h2>
+            <p class="project-date">Jan 2023 - Present</p>
+            <ul
+             class="card-list-points"
+              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: #343434; display: block">
+              <li >
+                <svg class="card-check-icon blue">
+                  <use xlink:href="#check" />
+                </svg>
+                <div>
+              Designed end-to-end API Explorer experiences, enabling developers to discover, test, and integrate APIs with interactive documentation and real-time sandbox environments.
+               
+              </div>
+              </li>
+
+              <li >
+                <svg class="card-check-icon blue">
+                  <use xlink:href="#check" />
+                </svg>
+                <div>
+                  Created intuitive authentication flows and API key management interfaces, reducing developer onboarding time by 40% and improving security compliance.
+              </div>
+              </li>
+
+              <li >
+                <svg class="card-check-icon blue">
+                  <use xlink:href="#check" />
+                </svg>
+                <div>
+                  Built comprehensive API documentation experiences with code samples, interactive request/response examples, and multi-language SDK support for seamless developer integration.
+              </div>
+              </li>
+            </ul>
+
+  
+            <div style="padding-top: 60px;">
+              <span class="coming-soon-glass">
+                <div class="read-more-content">
+                  <span class="read-more-text">Coming Soon</span>
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <hr style="width:80%; margin-top: 4rem; margin-bottom: 3rem; border: 0px solid #f1f1f1; border-top-width: 1px;">
+
+<div class="frame" style="max-width: 1400px">
+        <div
+         class="cards-layout"
+          style=" padding-top: 5%; padding-left: 5%; padding-right: 5%; color: #0A2540;">
+          <div  class="cards-layout-image work-image-container"> <a href="Norton.html" target="_blank"><img src="images/Norton.png" style=" width: 90%; border-radius: 4%; "></a>
+          </div>
+
+          <div style="margin: 24px"></div>
+
+          <div  class="cards-layout-content" style="padding-top: 3%; min-width: 320px;">
+            <h2
+              style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
+            Spam Protection features and design system for Norton 360 iOS</h2>
+            <p class="project-date">Nov 2020 - Dec 2022</p>
+            <ul
+             class="card-list-points"
+              style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: #343434; display: block">
+              <li > 
+                <svg class="card-check-icon Yellow">
+                  <use xlink:href="#check" />
+                </svg>
+                <div>
+           Product Designer for Norton 360 v2 on the iOS & iPadOS platforms.
+              </li>
+                
+              <li >
+                <svg class="card-check-icon Yellow">
+                  <use xlink:href="#check" />
+                </svg>
+                <div>
+             Primary designer for new Spam Protection
+features shipping to ~XXXK users.
+                </div>
+                </li>
+
+              <li >
+                <svg class="card-check-icon Yellow">
+                  <use xlink:href="#check" />
+                </svg>
+                <div>
+Designed a white label friendly design system scaling from design to code for first party and partner products.
+              </div>
+              </li>
+            </ul>
+
+  
+            <div>
+              <a class="read-more-glass" href="Norton.html" target="_blank">
+                <div class="read-more-content">
+                  <span class="read-more-text">Read More</span>
+                  <div class="read-more-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M7 7h8.586L5.293 17.293a1 1 0 1 0 1.414 1.414L17 8.414V17a1 1 0 1 0 2 0V7a1 1 0 0 0-1-1H7a1 1 0 0 0 0 2z"/>
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr style="width:80%; margin-top: 4rem; margin-bottom: 3rem; border: 0px solid #f1f1f1; border-top-width: 1px;">
+
+
+      </div>
+
+
+     
+
+
+
+
+      <div style="padding-left: 5%; padding-top: 3%; padding-bottom: 2rem; color: #666; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;">
+        Previous Work [2015-2019]
+      </div>
+      <div class="previous-work-grid">
+        <div class="previous-work-item">
+          <div class="cards-layout">
+            <div class="cards-layout-image work-image-container">
+              <a href="http://srinivasan.design/Google.html" target="_blank">
+                <img src="images/Google1.png">
+              </a>
+            </div>
+            <div class="cards-layout-content">
+              <h2 style="font-weight: 200; font-family: 'MyWebFont'; margin-bottom: 0.5rem; line-height: 1.3;">
+                Design System for Google Ad Manager
+              </h2>
+              <p style="font-size: 14px !important; line-height: 1.5; color: #666; margin-top: 0.5rem;">
+                Built component library for Google Ad Manager.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="previous-work-item">
+          <div class="cards-layout">
+            <div class="cards-layout-image work-image-container">
+              <a href="http://srinivasan.design/Zoho%20Sheet.html" target="_blank">
+                <img src="images/sample.png">
+              </a>
+            </div>
+            <div class="cards-layout-content">
+              <h2 style="font-weight: 200; font-family: 'MyWebFont'; margin-bottom: 0.5rem; line-height: 1.3;">
+                Mobile applications for Zoho Sheet
+              </h2>
+              <p style="font-size: 14px !important; line-height: 1.5; color: #666; margin-top: 0.5rem;">
+                Designed and shipped Zoho Sheet for iOS and Android.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="previous-work-item">
+          <div class="cards-layout">
+            <div class="cards-layout-image work-image-container">
+              <a href="http://srinivasan.design/Holachef.html" target="_blank">
+                <img src="images/holachef.png">
+              </a>
+            </div>
+            <div class="cards-layout-content">
+              <h2 style="font-weight: 200; font-family: 'MyWebFont'; margin-bottom: 0.5rem; line-height: 1.3;">
+                Ecosystem of applications for Holachef.com
+              </h2>
+              <p style="font-size: 14px !important; line-height: 1.5; color: #666; margin-top: 0.5rem;">
+                Shipped mobile and web apps for FoodTech startup.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-  <p style="padding-bottom: 10%"></p>
-  </div>
-  </div>
+
+
 
   <!-- Footer -->
-  <div id="contact" style="background:#000">
-    <div style="padding-bottom: 2%" class="frame">
-    <p class="txt6 wrap">Like what you see??</br>
-      View my <a style="color:#36BC77; text-decoration:none" ="" href="Resume_Srinivasan.pdf" target="_blank">résumé</a>, follow me
-    or contact me below</p>
-    <div>
-      <nav class="social-links social">
-        <a href="https://medium.com/@pixelfabricator" target="_blank"> 
-          
-          <svg width="30px" height="30px" viewBox="0 0 26 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-            <!-- Generator: Sketch 46.2 (44496) - http://www.bohemiancoding.com/sketch -->
-            <defs></defs>
-            <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-              <g id="icon-medium" fill-rule="nonzero" fill="#FFFFFF">
-              <path d="M2.987323,4.07995296 C3.018623,3.77070331 2.900692,3.46504442 2.669773,3.25690769 L0.31755,0.423280423 L0.31755,0 L7.621202,0 L13.266537,12.3809523 L18.229728,0 L25.192308,0 L25.192308,0.423280423 L23.181157,2.3515579 C23.007774,2.48372071 22.921767,2.70093965 22.957696,2.91593181 L22.957696,17.0840683 C22.921767,17.2990604 23.007774,17.5162792 23.181157,17.6484421 L25.145263,19.5767196 L25.145263,20 L15.265927,20 L15.265927,19.5767196 L17.3006,17.601411 C17.500539,17.4015285 17.500539,17.3427396 17.500539,17.0370371 L17.500539,5.58495004 L11.843443,19.9529688 L11.07897,19.9529688 L4.492746,5.58495004 L4.492746,15.2145796 C4.437832,15.6194363 4.572292,16.0270385 4.85734,16.3198119 L7.503591,19.5296885 L7.503591,19.9529688 L0,19.9529688 L0,19.5296885 L2.646251,16.3198119 C2.929223,16.0265531 3.055843,15.6162471 2.987323,15.2145796 L2.987323,4.07995296 Z" id="Shape"></path>
-            </g>
-          </g>
-        </svg>
-      </a>
-      <a href="https://twitter.com/pixelfabricator" target="_blank">
-      <svg viewBox="0 0 16 16" fill="#fff" height="30" width="30" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M16 3.038c-.59.26-1.22.437-1.885.517.677-.407 1.198-1.05 1.443-1.816-.634.37-1.337.64-2.085.79-.598-.64-1.45-1.04-2.396-1.04-1.812 0-3.282 1.47-3.282 3.28 0 .26.03.51.085.75-2.728-.13-5.147-1.44-6.766-3.42C.83 2.58.67 3.14.67 3.75c0 1.14.58 2.143 1.46 2.732-.538-.017-1.045-.165-1.487-.41v.04c0 1.59 1.13 2.918 2.633 3.22-.276.074-.566.114-.865.114-.21 0-.41-.02-.61-.058.42 1.304 1.63 2.253 3.07 2.28-1.12.88-2.54 1.404-4.07 1.404-.26 0-.52-.015-.78-.045 1.46.93 3.18 1.474 5.04 1.474 6.04 0 9.34-5 9.34-9.33 0-.14 0-.28-.01-.42.64-.46 1.2-1.04 1.64-1.7z" fill-rule="nonzero"></path></svg>
-    </a>
-    <a href="https://dribbble.com/Pixelfabricator" target="_blank">
-    <svg viewBox="0 0 16 16" fill="#fff" height="30" width="30"  xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M8 16c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm6.747-6.905c-.234-.074-2.115-.635-4.257-.292.894 2.456 1.258 4.456 1.328 4.872 1.533-1.037 2.624-2.68 2.93-4.58zM10.67 14.3c-.102-.6-.5-2.688-1.46-5.18l-.044.014C5.312 10.477 3.93 13.15 3.806 13.4c1.158.905 2.614 1.444 4.194 1.444.947 0 1.85-.194 2.67-.543zm-7.747-1.72c.155-.266 2.03-3.37 5.555-4.51.09-.03.18-.056.27-.08-.173-.39-.36-.778-.555-1.16-3.413 1.02-6.723.977-7.023.97l-.003.208c0 1.755.665 3.358 1.756 4.57zM1.31 6.61c.307.005 3.122.017 6.318-.832-1.132-2.012-2.353-3.705-2.533-3.952-1.912.902-3.34 2.664-3.784 4.785zM6.4 1.368c.188.253 1.43 1.943 2.548 4 2.43-.91 3.46-2.293 3.582-2.468C11.323 1.827 9.736 1.176 8 1.176c-.55 0-1.087.066-1.6.19zm6.89 2.322c-.145.194-1.29 1.662-3.816 2.694.16.325.31.656.453.99.05.117.1.235.147.352 2.274-.286 4.533.172 4.758.22-.015-1.613-.59-3.094-1.543-4.257z"></path></svg>
-  </a>
-  <a href="https://www.instagram.com/pixelfabricator/" target="_blank">
-  <svg viewBox="0 0 16 16"  fill="#fff" height="30" width="30" xmlns="http://www.w3.org/2000/svg" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="1.414"><path d="M8 0C5.827 0 5.555.01 4.702.048 3.85.088 3.27.222 2.76.42c-.526.204-.973.478-1.417.923-.445.444-.72.89-.923 1.417-.198.51-.333 1.09-.372 1.942C.008 5.555 0 5.827 0 8s.01 2.445.048 3.298c.04.852.174 1.433.372 1.942.204.526.478.973.923 1.417.444.445.89.72 1.417.923.51.198 1.09.333 1.942.372.853.04 1.125.048 3.298.048s2.445-.01 3.298-.048c.852-.04 1.433-.174 1.942-.372.526-.204.973-.478 1.417-.923.445-.444.72-.89.923-1.417.198-.51.333-1.09.372-1.942.04-.853.048-1.125.048-3.298s-.01-2.445-.048-3.298c-.04-.852-.174-1.433-.372-1.942-.204-.526-.478-.973-.923-1.417-.444-.445-.89-.72-1.417-.923-.51-.198-1.09-.333-1.942-.372C10.445.008 10.173 0 8 0zm0 1.44c2.136 0 2.39.01 3.233.048.78.036 1.203.166 1.485.276.374.145.64.318.92.598.28.28.453.546.598.92.11.282.24.705.276 1.485.038.844.047 1.097.047 3.233s-.01 2.39-.05 3.233c-.04.78-.17 1.203-.28 1.485-.15.374-.32.64-.6.92-.28.28-.55.453-.92.598-.28.11-.71.24-1.49.276-.85.038-1.1.047-3.24.047s-2.39-.01-3.24-.05c-.78-.04-1.21-.17-1.49-.28-.38-.15-.64-.32-.92-.6-.28-.28-.46-.55-.6-.92-.11-.28-.24-.71-.28-1.49-.03-.84-.04-1.1-.04-3.23s.01-2.39.04-3.24c.04-.78.17-1.21.28-1.49.14-.38.32-.64.6-.92.28-.28.54-.46.92-.6.28-.11.7-.24 1.48-.28.85-.03 1.1-.04 3.24-.04zm0 2.452c-2.27 0-4.108 1.84-4.108 4.108 0 2.27 1.84 4.108 4.108 4.108 2.27 0 4.108-1.84 4.108-4.108 0-2.27-1.84-4.108-4.108-4.108zm0 6.775c-1.473 0-2.667-1.194-2.667-2.667 0-1.473 1.194-2.667 2.667-2.667 1.473 0 2.667 1.194 2.667 2.667 0 1.473-1.194 2.667-2.667 2.667zm5.23-6.937c0 .53-.43.96-.96.96s-.96-.43-.96-.96.43-.96.96-.96.96.43.96.96z"></path></svg>
-</a>
-<a href="https://www.linkedin.com/in/tcsrini/" target="_blank">
-  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 30 30"><desc>  Created with Sketch.</desc><g fill="none"><g fill="#FFF"><path d="M0.8 9.6L6.6 9.6 6.6 30 0.8 30 0.8 9.6ZM3.5 7.1L3.5 7.1C1.4 7.1 0 5.5 0 3.5 0 1.5 1.4 0 3.6 0 5.7 0 7.1 1.5 7.1 3.5 7.1 5.5 5.7 7.1 3.5 7.1L3.5 7.1ZM30 30L23.4 30 23.4 19.5C23.4 16.7 22.3 14.8 20.1 14.8 18.3 14.8 17.3 16.1 16.9 17.3 16.7 17.7 16.7 18.4 16.7 19L16.7 30 10.2 30C10.2 30 10.3 11.3 10.2 9.6L16.7 9.6 16.7 12.8C17.1 11.4 19.2 9.4 22.6 9.4 26.7 9.4 30 12.4 30 18.7L30 30 30 30Z"/></g></g></svg>
-</a>
-
-</nav>
-</div>
-<a style="" href="mailto:tcsreeni93@gmail.com"><p style="padding-left:5%; font-size: 120%;letter-spacing: 0.1em;font-family:mywebfont1; color:#fff; text-decoration: underline;
-">tcsreeni93@gmail.com</p></a>
+  <div id="contact" style="background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);">
+    <div style="padding-bottom: 2%; padding-top: 2%;" class="frame">
+      <p class="txt6 wrap" style="font-size: 200%">You made it! Curious to say hello?</br> View my <a
+          style="color:#3b65ef; text-decoration:none" href="Resume_Srinivasan.pdf" target="_blank">résumé</a>,
+        get in touch 👇</p>
+      <div>
+         
 
 
-<div id="contact" style="background:#000">
-    <p class="footertxt" style="max-width: 600px; padding-top: 5%"> Designed and Handcoded in Chicago with <span style="color:#00ff97;"><span class="semibold">♥</span></span> by Srini  © 2019 </p>
-    <div>
-</div>
+      </div><a style="text-decoration: none; color:#000" href="mailto:tcsreeni93@gmail.com">
+      <p  
+        style="padding-left:0; padding-top:2%; font-size: 120%;letter-spacing: 0.1em; font-family:mywebfont1;  text-decoration: none; "><a style="text-decoration: none; color: #000" href="mailto: tcsreeni93@gmail.com" >
+          Email 📩 </a> | <a target="_blank" href="https://www.linkedin.com/in/srinivasanchakkarapani/" style="text-decoration: none"><Span style="text-decoration: none; color: #000"> LinkedIn 💼 </Span> </p> </a>
+      
+      <div id="contact" style="background: transparent;">
+        <p class="footertxt" style="max-width: 600px; padding-top: 5%; color: #9e9e9e;"> Designed and Handcoded in San Francisco Bay with <span style="color:#ff2957;"><span class="semibold">♥</span></span> © <span id="current-year"></span> </p>
+      </div>
+    </div>
+  </div>
 
-<script
-src="https://code.jquery.com/jquery-3.2.1.min.js"
-integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://rawgit.com/michalsnik/aos/master/dist/aos.js" ></script>
-<script>
-$(function(){
-AOS.init({
-duration: 1200,
-})
-// Smooth scroll links
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="https://rawgit.com/michalsnik/aos/master/dist/aos.js"></script>
+  <script>$(function () {
 
+      // AOS library - wrapped in check since CDN may be unavailable
+      if (typeof AOS !== 'undefined') {
+        AOS.init({ duration: 1200 });
+      }
+      
+      // Set current year dynamically
+      document.getElementById('current-year').textContent = new Date().getFullYear();
+      
+      // Progressive Animation
+      function animateElements() {
+        const elements = document.querySelectorAll('.animate-progressive');
+        elements.forEach((element, index) => {
+          setTimeout(() => {
+            element.classList.add('visible');
+          }, index * 200); // 200ms delay between each element
+        });
+      }
 
-$('a[href^="#"]').on("click", function(){
-var id = $(this).attr("href");
+      
+      // Start animation when page loads
+      setTimeout(animateElements, 500); // Start after 500ms
+      // (removed) header role animation
 
-$('html, body').animate({
-scrollTop:$(id).offset().top
-}, 500);
+      // Smooth scroll links
+      $('a[href^="#"]').on("click", function () {
+        var id = $(this).attr("href");
+        $('html, body').animate({ scrollTop: $(id).offset().top }, 500);
+      });
 
-});
-//Hamburger Menu and Esc events
-$('#hamburgler').on('click', checkNav);
-$('.hamburgler-menu').on('click', 'a', closeNav);
-$(window).on('keyup', ifEscClose);
-function checkNav() {
-$('body').toggleClass('hamburgler-active');
-}
-function closeNav(e) {
-$('body').removeClass('hamburgler-active');
-}
-function ifEscClose(e){
-if (e.keyCode == 27) closeNav()
-}
-});
+      //Hamburger Menu and Esc events
+      $('#hamburgler').on('click', checkNav);
+      $('.hamburgler-menu').on('click', 'a', closeNav);
+      $(window).on('keyup', ifEscClose); function checkNav() {
+        $('body').toggleClass('hamburgler-active');
+      }
+      function closeNav(e) { $('body').removeClass('hamburgler-active'); }
+      function ifEscClose(e) { if (e.keyCode == 27) closeNav() }
+
+      // 3D Tilt Effect for Buttons
+      $('.read-more-glass').on('mousemove', function(e) {
+        const $this = $(this);
+        const width = $this.outerWidth();
+        const height = $this.outerHeight();
+        const offset = $this.offset();
+        
+        const x = e.pageX - offset.left;
+        const y = e.pageY - offset.top;
+        
+        // Calculate rotation (max 15 degrees)
+        const xRotation = ((y - height / 2) / height) * 15;
+        const yRotation = ((x - width / 2) / width) * 15;
+        
+        // Apply transform with inverted xRotation for natural tilt
+        $this.css({
+          'transition': 'transform 0.05s ease-out',
+          'transform': `perspective(1000px) scale(1.05) rotateX(${-xRotation}deg) rotateY(${yRotation}deg)`
+        });
+      });
+      
+      $('.read-more-glass').on('mouseleave', function() {
+        $(this).css({
+          'transition': 'transform 0.3s ease',
+          'transform': 'perspective(1000px) scale(1) rotateX(0) rotateY(0)'
+        });
+      });
+
+      // Floating Navigation Logic
+      const headerNav = document.querySelector('header nav');
+      const headerContent = document.querySelector('.HeaderContent');
+      const floatingNav = document.querySelector('.floating-nav-container');
+      
+      // Add scrolled background to nav when header content is not visible
+      if (headerNav && headerContent) {
+        const headerObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+              headerNav.classList.add('nav-scrolled');
+            } else {
+              headerNav.classList.remove('nav-scrolled');
+            }
+          });
+        }, {
+          threshold: 0,
+          rootMargin: "-80px 0px 0px 0px"
+        });
+
+        headerObserver.observe(headerContent);
+      }
+      
+      if (headerNav && floatingNav) {
+        // Observer to detect when header nav goes out of view
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) {
+              floatingNav.classList.add('visible');
+            } else {
+              floatingNav.classList.remove('visible');
+            }
+          });
+        }, {
+          threshold: 0,
+          rootMargin: "-100px 0px 0px 0px"
+        });
+
+        observer.observe(headerNav);
+      }
+
+    });
 </script>
+
 </body>
+
 </html>
