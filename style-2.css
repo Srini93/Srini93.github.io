@@ -175,15 +175,18 @@ table {
 @font-face {
   font-family: "MyWebFont";
   src: url("fonts/Product Sans Regular.ttf");
+  font-display: swap;
 }
 @font-face {
   font-family: "MyWebFont1";
   src: url("fonts/Product Sans Medium.ttf");
+  font-display: swap;
 }
 
 @font-face {
   font-family: "MyWebFont2";
   src: url("fonts/GeneralSans-Regular.ttf");
+  font-display: swap;
 }
 
 * {
@@ -384,7 +387,7 @@ body {
   font-size: 200%;
   padding-top: 3%;
   padding-left: 5%;
-  text-align: Centre;
+  text-align: center;
   line-height: 150%;
 }
 .txt8 {
@@ -394,7 +397,7 @@ body {
   font-size: 100%;
   padding-top: 4%;
   padding-left: 5%;
-  text-align: Centre;
+  text-align: center;
   line-height: 150%;
 }
 
@@ -706,7 +709,7 @@ header {
     font-size: 100%;
     padding-top: 8%;
     padding-left: 5%;
-    text-align: Centre;
+    text-align: center;
     line-height: 150%;
   }
   .foot {
