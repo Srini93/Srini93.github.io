@@ -1,9 +1,59 @@
-<html><head>
-<title>Srinivasan - About me</title>
-<link rel="icon" type="favi.png" href="favi.png"> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About Srinivasan | Staff Product Designer at Intuit</title>
+<link rel="icon" type="image/png" href="favi.png">
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover">
+
+<!-- SEO Meta Tags -->
+<meta name="description" content="Learn about Srinivasan, a Staff Product Designer at Intuit passionate about creating digital experiences that blend design, technology, and human insight.">
+<link rel="canonical" href="https://srinivasan.design/about.html">
+
+<!-- Open Graph Meta Tags -->
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://srinivasan.design/about.html">
+<meta property="og:title" content="About Srinivasan | Staff Product Designer">
+<meta property="og:description" content="Learn about Srinivasan, a Staff Product Designer at Intuit passionate about creating digital experiences that blend design, technology, and human insight.">
+<meta property="og:image" content="https://srinivasan.design/images/richpreview.jpg">
+
+<!-- Twitter Card Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@pixelfabricator">
+<meta name="twitter:title" content="About Srinivasan | Staff Product Designer">
+<meta name="twitter:description" content="Learn about Srinivasan, a Staff Product Designer at Intuit passionate about creating digital experiences that blend design, technology, and human insight.">
+<meta name="twitter:image" content="https://srinivasan.design/images/richpreview.jpg">
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Srinivasan",
+    "jobTitle": "Staff Product Designer",
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Intuit"
+    },
+    "alumniOf": [
+      {
+        "@type": "EducationalOrganization",
+        "name": "DePaul University"
+      },
+      {
+        "@type": "EducationalOrganization",
+        "name": "SASTRA University"
+      }
+    ],
+    "knowsAbout": ["Product Design", "UX Design", "AI", "Design Systems"],
+    "url": "https://srinivasan.design/about.html"
+  }
+}
+</script>
 
 <!-- MWeb app -->
 <meta name="full-screen" content="yes">
@@ -36,6 +86,29 @@
     background: #fff;
     color: #000;
   }
+
+  /* Focus styles for accessibility */
+  a:focus,
+  button:focus {
+    outline: 2px solid #3b65ef;
+    outline-offset: 2px;
+  }
+
+  /* Skip to main content link */
+  .skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: #000;
+    color: #fff;
+    padding: 8px 16px;
+    z-index: 10001;
+    text-decoration: none;
+  }
+
+  .skip-to-main:focus {
+    top: 0;
+  }
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -47,13 +120,16 @@
 
 
 
+<body>
 <!-- Header -->
-<div class="hamburgler-menu">
-  <ul class="hamburgler-menu-list">
-    <li><a href="about.html">About</a></li>
-    <li><a href="index.html#Selectedworks">Works</a></li>
-    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
-  </ul>
+<div class="hamburgler-menu" id="mobile-menu" role="dialog" aria-label="Mobile navigation menu" aria-hidden="true">
+  <nav aria-label="Mobile navigation">
+    <ul class="hamburgler-menu-list">
+      <li><a href="about.html">About</a></li>
+      <li><a href="index.html#Selectedworks">Works</a></li>
+      <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank" rel="noopener" aria-label="Resume (opens in new tab)">Résumé</a></li>
+    </ul>
+  </nav>
 </div>
  
 <!-- new styles -->
@@ -229,9 +305,9 @@ p, body {
      </div>
    </a>
 
-    <div id="hamburgler" class="hamburgler-icon-wrapper">
-      <span class="hamburgler-icon"></span>
-    </div>
+    <button id="hamburgler" class="hamburgler-icon-wrapper" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" type="button">
+      <span class="hamburgler-icon" aria-hidden="true"></span>
+    </button>
       
       
         <ul class="desk-menu">
@@ -247,8 +323,8 @@ p, body {
 <!-- About me -->
 <div class="frame">
 <div id="about" style="/* height:30%; */">
-       
-   <div id="about" style="/* height:30%; */backgroun;">
+
+   <div class="about-inner">
        
     <p class="txt3">Hello again! 👋</p>
     <div class="txt4" >
@@ -269,7 +345,7 @@ Feel free to contact me if you would like to get in touch.
 tcsreeni93@gmail.com </a></span>
 
       </p>
-      <img src="images/My pic 2.png" class="mypic" data-aos="fade-left">
+      <img src="images/My pic 2.png" class="mypic" data-aos="fade-left" alt="Srinivasan - Staff Product Designer" loading="lazy" width="500" height="500">
     
      </div>
 </div>
@@ -278,26 +354,24 @@ tcsreeni93@gmail.com </a></span>
 
 <p class="txt3">Education</p>
 
+<p class="txt8">Masters in Human Computer Interaction, DePaul University</p>
+<p class="txt9">Sep 2018 - Jun 2020</p>
 
+<p class="txt8">Bachelors in Computer Science, SASTRA University</p>
+<p class="txt9">June 2011 - May 2015</p>
 
-</p><p class="txt8">Masters in Human Computer Interaction, DePaul University<br>
-  <p class="txt9"> Sep 2018 - Jun 2020
+<p class="txt3">Experience</p>
 
-<p class="txt8">Bachelors in Computer Science, SASTRA Univertsity<br>
-  <p class="txt9" style="padding-bottom:">  June 2011 - May 2015</p>
+<p class="txt4">I have been a part of teams building products for the web and mobile platforms, my primary focus has always been on mobile platforms, from ideating to crafting visual experiences for the end user with effective User Experience.</p>
 
-   <p class="txt3">Experience</p>
+<p class="txt8">UX Design Intern, Google.</p>
+<p class="txt9">Jun 2019 - Sep 2019</p>
 
-   <p class="txt4">I have been a part of teams building products for the web and mobile platforms, my primary focus has always been on <br>mobile platforms, from ideating to crafting visual experiences for the end user with effective User Experience.
+<p class="txt8">Interaction Designer, Zeta India.</p>
+<p class="txt9">Feb 2018 - August 2018</p>
 
-      </p><p class="txt8">UX Design Intern, Google.<br></p>
-   <p class="txt9">Jun 2019 - Sep 2019</p>
-  
-   </p><p class="txt8">Interaction Designer, Zeta India.<br></p>
-   <p class="txt9">Feb 2018 - August 2018</p>
-
-<p class="txt8">Product Designer, Zoho Corporation.<br>
-  <p class="txt9"> Dec 2015 - Jan 2018</p>
+<p class="txt8">Product Designer, Zoho Corporation.</p>
+<p class="txt9">Dec 2015 - Jan 2018</p>
 
 <p class="txt8">Product Designer, Holachef.<br></p>
 <p class="txt9" style="padding-bottom: 5%"> Jun 2015 - Dec 2015</p>
@@ -352,9 +426,9 @@ or contact me below</p>
 </div>
 
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous" defer></script>
 
-<script type="text/javascript" src="https://rawgit.com/michalsnik/aos/master/dist/aos.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
 <script>
 
   $(function(){
