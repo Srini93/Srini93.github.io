@@ -1,3 +1,4 @@
+x
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -55,13 +56,11 @@ table {
 }
 @font-face {
   font-family:'MyWebFont';
-  src:url('fonts/Product Sans Regular.ttf');
-  font-display: swap;
+  src:url('fonts/Product Sans Regular.ttf'); 
 }
 @font-face{
   font-family:'MyWebFont1';
-  src:url('fonts/Product Sans Medium.ttf');
-  font-display: swap;
+  src:url('fonts/Product Sans Medium.ttf'); 
 }
 
 *  {
@@ -159,7 +158,11 @@ body{
 
 
 /*Media queries */
-/*Mobile and tablets handled in subsequent media queries*/
+ /*Mobile*/
+ @media (min-width:300px){}
+
+/*tablets*/
+ @media (min-width:768px){}
 
  @media(min-width: 769px){
   .hamburgler-icon-wrapper, .hamburgler-menu{
@@ -201,10 +204,10 @@ body{
     width: 100%;
     padding: 0;
     max-width: 900px;
-    margin: 0;
+    margin:
 }
 #colour{
-  background: #00FF00;
+  background: # #00FF00;
 }
 
  .txt1{
@@ -254,7 +257,7 @@ body{
   color:#8a748c;
   font-weight: 50%;
   padding-left: 5%;
-  padding-top: 0;
+  padding-top%;
   padding-bottom: 3%;
   text-align: left;
   max-width: 500px;
@@ -287,7 +290,7 @@ body{
     font-size: 200%;
 	padding-top: 3%;
 	padding-left: 5%;
-	text-align: center;
+	text-align: Centre;
 	line-height: 150%;
  	}
   .txt8{
@@ -297,7 +300,7 @@ body{
   font-size: 100%;
 	padding-top: 4%;
 	padding-left: 5%;
-	text-align: center;
+	text-align: Centre;
 	line-height: 150%;
  	}
 
@@ -732,7 +735,7 @@ header section h2 {
   font-size: 100%;
   padding-top: 8%;
   padding-left: 5%;
-  text-align: center;
+  text-align: Centre;
   line-height: 150%;
   }
 }
