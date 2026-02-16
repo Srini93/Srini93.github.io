@@ -110,6 +110,7 @@ body{
   margin: 0;
   /*height: 2000px;*/
   overflow-x: hidden;
+  background-color: #fff;
 }
 .socialicons{
   text-align:center; 

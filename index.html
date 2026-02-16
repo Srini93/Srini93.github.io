@@ -41,7 +41,71 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Departure+Mono:wght@400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* Logo Styles */
+    .logo-srini {
+      position: absolute;
+      z-index: 10001;
+      font-family: 'Press Start 2P', 'Courier New', 'Monaco', monospace;
+      font-size: 16px;
+      color: #666;
+      text-decoration: none;
+      letter-spacing: 2px;
+      cursor: pointer;
+      text-transform: uppercase;
+      line-height: 1.5;
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+
+    .logo-srini::after {
+      display: none;
+    }
+
+    /* Vertically center align with nav items, horizontally align with header text */
+    /* Nav has padding-top: 40px and nav items are vertically centered */
+    /* Nav items are approximately 48-56px tall, centered at ~64px from top (40px padding + half nav height) */
+    /* HeaderContent has padding: 0 4rem (64px) on screens >= 720px */
+    /* Header text is inside centered frame with max-width 1400px */
+    @media screen and (min-width: 1401px) {
+      .logo-srini {
+        top: 64px;
+        transform: translateY(-50%);
+        left: calc((100% - 1400px) / 2 + 4rem);
+      }
+    }
+
+    @media screen and (min-width: 720px) and (max-width: 1400px) {
+      .logo-srini {
+        top: 64px;
+        transform: translateY(-50%);
+        left: 4rem;
+      }
+    }
+
+    @media screen and (max-width: 719px) {
+      .logo-srini {
+        top: 64px;
+        transform: translateY(-50%);
+        left: 0;
+        padding-left: 1rem;
+      }
+    }
+
+
+    @media screen and (max-width: 768px) {
+      .logo-srini {
+        font-size: 12px;
+        top: 2rem;
+        left: 5%;
+        letter-spacing: 1px;
+        transform: none;
+      }
+    }
+
     /* Floating Navigation - Liquid Glass Style */
     .floating-nav-container {
       position: fixed;
@@ -78,13 +142,15 @@
     .floating-nav-item {
       color: #000;
       text-decoration: none;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
-      font-size: 14px;
-      font-weight: 500;
+      font-family: 'Space Mono', 'Courier New', 'Monaco', monospace;
+      font-size: 13px;
+      font-weight: 400;
       padding: 8px 16px;
       border-radius: 4px;
       transition: all 0.2s ease;
       white-space: nowrap;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
     .floating-nav-item:hover {
@@ -95,14 +161,16 @@
       background: #000;
       color: #fff;
       text-decoration: none;
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, sans-serif;
-      font-size: 14px;
-      font-weight: 600;
+      font-family: 'Space Mono', 'Courier New', 'Monaco', monospace;
+      font-size: 13px;
+      font-weight: 400;
       padding: 8px 20px;
       border-radius: 4px;
       transition: all 0.2s ease;
       margin-left: 8px;
       border: 2px solid transparent;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
     }
 
     .floating-nav-btn:hover {
@@ -277,7 +345,7 @@
       text-decoration: none !important;
       font-size: 16px;
       font-weight: 600;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-family: MyWebFont1;
       line-height: 1;
       box-shadow: 
         0 1px 2px 0 rgba(0, 0, 0, 0.05),
@@ -320,6 +388,46 @@
     /* Footer Background Match */
     #contact {
       background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%) !important;
+    }
+
+    /* Footer responsive */
+    #contact .frame {
+      box-sizing: border-box;
+    }
+
+    @media screen and (max-width: 768px) {
+      #contact .frame {
+        padding-top: 2.5rem !important;
+        padding-bottom: 2rem !important;
+      }
+
+      #contact .txt6 {
+        font-size: 150% !important;
+        line-height: 1.4 !important;
+        padding-left: 5% !important;
+        padding-right: 5% !important;
+      }
+
+      #contact .footer-links,
+      #contact p[style*="font-family"] {
+        font-size: 100% !important;
+        padding-left: 5% !important;
+        padding-right: 5% !important;
+      }
+
+      #contact .footertxt {
+        padding-left: 5% !important;
+        padding-right: 5% !important;
+        font-size: 12px !important;
+        line-height: 1.6 !important;
+        max-width: 100% !important;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      #contact .txt6 {
+        font-size: 130% !important;
+      }
     }
 
     /* Unicorn Studio Water Effect Container */
@@ -434,7 +542,7 @@
 
     /* Fix hamburger menu background */
     .hamburgler-active .hamburgler-menu {
-      background-color: #fff !important;
+      background-color: #fbfaf4 !important;
       z-index: 9999 !important;
     }
 
@@ -493,7 +601,7 @@
     }
 
     .see-more:hover {
-      width: 185px;
+      width: 220px;
       gap: 10px;
       padding: 0 24px;
       background: linear-gradient(
@@ -518,6 +626,10 @@
     .see-more svg {
       opacity: 1 !important;
       flex-shrink: 0;
+      display: block;
+      width: 20px;
+      height: 20px;
+      margin-top: -1px; /* Optical alignment adjustment */
       transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
@@ -526,15 +638,20 @@
     }
 
     .see-more-text {
-      font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: -0.01em;
+      font-family: 'Space Mono', 'Courier New', 'Monaco', monospace;
+      font-size: 12px;
+      font-weight: 400;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      line-height: 1;
       color: #000;
       white-space: nowrap;
       opacity: 0;
       width: 0;
       overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding-top: 1px; /* Compensate for font baseline */
       transition: 
         opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
         width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -591,6 +708,8 @@
 
     .card-list-points div {
       font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      padding-top: unset;
+      padding-bottom: unset;
     }
 
     /* Align content to top of image */
@@ -619,6 +738,18 @@
       align-items: center !important;
       height: 100%;
       padding: 0 25px !important;
+      font-family: 'Space Mono', 'Courier New', 'Monaco', monospace !important;
+      font-size: 14px !important;
+      letter-spacing: 0.5px !important;
+      text-transform: uppercase !important;
+    }
+
+    /* Hamburger menu links */
+    .hamburgler-menu-list li a {
+      font-family: 'Space Mono', 'Courier New', 'Monaco', monospace !important;
+      font-size: 16px !important;
+      letter-spacing: 0.5px !important;
+      text-transform: uppercase !important;
     }
 
     .cards-layout-content {
@@ -638,7 +769,7 @@
       font-size: 200%;
       color: #000;
       margin-bottom: 3rem;
-      padding-left: 5%;
+      padding-left: 0;
     }
 
     .archives-grid {
@@ -777,14 +908,15 @@
       
       color: #000 !important;
       border-radius: 9999px !important;
-      font-size: 14px !important;
-      font-weight: 600 !important;
-      font-family: "MyWebFont", -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif !important;
+      font-size: 13px !important;
+      font-weight: 400 !important;
+      font-family: 'Space Mono', 'Courier New', 'Monaco', monospace !important;
       text-decoration: none !important;
       transition: all 0.3s ease !important;
       cursor: pointer !important;
       line-height: 1 !important;
-      letter-spacing: -0.01em !important;
+      letter-spacing: 0.5px !important;
+      text-transform: uppercase !important;
       margin-left: 8px !important;
       vertical-align: middle !important;
       opacity: 1 !important;
@@ -919,7 +1051,7 @@
     }
 
     .txt6, .footertxt {
-      padding-left: 0 !important;
+      padding-left: 5% !important;
     }
 
     .previous-work-item .cards-layout-content h2 {
@@ -981,6 +1113,9 @@
 
   </div>
 
+  <!-- Logo -->
+  <a href="#" class="logo-srini" data-text="srini">srini</a>
+
   <div class="hamburgler-menu">
     <ul class="hamburgler-menu-list">
     <li><a href="about.html">About</a></li>
@@ -1030,7 +1165,7 @@
   <div class="frame" style="max-width: 1400px">
     <div id="Selectedworks">
       <p class="txt3" style="font-size: 200%">Recent Work</p>
-      <div style="padding-top:2%;padding-left:4%; padding-right: 4%">
+      <div style="padding-top:2%;padding-left:5%; padding-right: 5%">
         <section> </section>
       </div>
 
@@ -1084,7 +1219,7 @@
             </ul>
 
   
-            <div style="padding-top: 6rem;">
+            <div style="padding-top: 8rem;">
               <span class="coming-soon-glass">
                 <div class="read-more-content">
                   <span class="read-more-text">Coming Soon</span>
@@ -1146,7 +1281,7 @@
             </ul>
 
   
-            <div style="padding-top: 6rem;">
+            <div style="padding-top: 8rem;">
               <span class="coming-soon-glass">
                 <div class="read-more-content">
                   <span class="read-more-text">Coming Soon</span>
@@ -1299,22 +1434,16 @@ Designed a white label friendly design system scaling from design to code for fi
 
   <!-- Footer -->
   <div id="contact" style="background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);">
-    <div style="padding-bottom: 2%; padding-top: 2%;" class="frame">
-      <p class="txt6 wrap" style="font-size: 200%">You made it! Curious to say hello?</br> View my <a
+    <div class="frame" style="max-width: 1400px; padding-top: 4rem; padding-bottom: 3rem;">
+      <p class="txt6 wrap" style="font-size: 200%; line-height: 1.5;">You made it! Curious to say hello?<br> View my <a
           style="color:#3b65ef; text-decoration:none" href="Resume_Srinivasan.pdf" target="_blank">résumé</a>,
         get in touch 👇</p>
-      <div>
-         
-
-
-      </div><a style="text-decoration: none; color:#000" href="mailto:tcsreeni93@gmail.com">
-      <p  
-        style="padding-left:0; padding-top:2%; font-size: 120%;letter-spacing: 0.1em; font-family:mywebfont1;  text-decoration: none; "><a style="text-decoration: none; color: #000" href="mailto: tcsreeni93@gmail.com" >
-          Email 📩 </a> | <a target="_blank" href="https://www.linkedin.com/in/srinivasanchakkarapani/" style="text-decoration: none"><Span style="text-decoration: none; color: #000"> LinkedIn 💼 </Span> </p> </a>
-      
-      <div id="contact" style="background: transparent;">
-        <p class="footertxt" style="max-width: 600px; padding-top: 5%; color: #9e9e9e;"> Designed and Handcoded in San Francisco Bay with <span style="color:#ff2957;"><span class="semibold">♥</span></span> © <span id="current-year"></span> </p>
-      </div>
+      <p style="padding-left: 5%; padding-top: 2%; font-size: 120%; letter-spacing: 0.1em; font-family: 'Space Mono', 'Courier New', 'Monaco', monospace;">
+        <a style="text-decoration: none; color: #000" href="mailto:tcsreeni93@gmail.com">Email 📩</a>
+        &nbsp;|&nbsp;
+        <a target="_blank" href="https://www.linkedin.com/in/srinivasanchakkarapani/" style="text-decoration: none; color: #000">LinkedIn 💼</a>
+      </p>
+      <p class="footertxt" style="max-width: 600px; padding-top: 3rem; color: #9e9e9e;">Designed and Handcoded in San Francisco Bay with <span style="color:#ff2957;"><span class="semibold">♥</span></span> © <span id="current-year"></span></p>
     </div>
   </div>
 
@@ -1431,6 +1560,102 @@ Designed a white label friendly design system scaling from design to code for fi
       }
 
     });
+
+    // ── Text Scramble Decode Animation on Hover ──
+    (function () {
+      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*<>[]{}/\\|~^';
+      const TICK = 40;           // ms per scramble frame
+      const WARMUP = 12;         // full-scramble cycles before resolving
+      const MIN_EXTRA = 2;       // min extra scramble ticks before lock-in
+      const MAX_EXTRA = 5;       // max extra scramble ticks before lock-in
+
+      function randChar() {
+        return CHARS[Math.floor(Math.random() * CHARS.length)];
+      }
+
+      function shuffledIndices(len) {
+        // Build a roughly left-to-right order with ±2 shuffling
+        const indices = Array.from({ length: len }, (_, i) => i);
+        for (let i = 0; i < indices.length; i++) {
+          const jitter = Math.floor(Math.random() * 5) - 2; // -2 to +2
+          const j = Math.max(0, Math.min(indices.length - 1, i + jitter));
+          [indices[i], indices[j]] = [indices[j], indices[i]];
+        }
+        return indices;
+      }
+
+      function scrambleDecode(el) {
+        const finalText = (el.getAttribute('data-text') || el.textContent).trim();
+        const len = finalText.length;
+        const locked = new Array(len).fill(false);
+        const display = new Array(len);
+        let tick = 0;
+
+        // Pre-compute resolve order and per-char extra ticks
+        const order = shuffledIndices(len);
+        const extraTicks = order.map(() =>
+          MIN_EXTRA + Math.floor(Math.random() * (MAX_EXTRA - MIN_EXTRA + 1))
+        );
+
+        // Resolve schedule: after WARMUP, each char gets its own deadline
+        const resolveTick = [];
+        let cursor = WARMUP;
+        for (let i = 0; i < order.length; i++) {
+          cursor += extraTicks[i];
+          resolveTick.push(cursor);
+        }
+
+        const interval = setInterval(() => {
+          tick++;
+
+          // Check which chars to lock this tick
+          for (let i = 0; i < order.length; i++) {
+            if (!locked[order[i]] && tick >= resolveTick[i]) {
+              locked[order[i]] = true;
+            }
+          }
+
+          // Build display string
+          for (let c = 0; c < len; c++) {
+            if (finalText[c] === ' ') {
+              display[c] = ' ';
+            } else if (locked[c]) {
+              display[c] = finalText[c];
+            } else {
+              display[c] = randChar();
+            }
+          }
+
+          el.textContent = display.join('');
+
+          // All resolved → stop
+          if (locked.every(Boolean)) {
+            clearInterval(interval);
+            el.textContent = finalText;
+            el._scrambling = false;
+          }
+        }, TICK);
+
+        return interval;
+      }
+
+      document.querySelectorAll('.logo-srini').forEach(el => {
+        el._scrambling = false;
+        el._scrambleTimer = null;
+
+        // Auto-play on first load
+        el._scrambling = true;
+        el._scrambleTimer = scrambleDecode(el);
+
+        el.addEventListener('mouseenter', function () {
+          if (el._scrambling) return;
+          el._scrambling = true;
+          el._scrambleTimer = scrambleDecode(el);
+        });
+      });
+    })();
+
+
 </script>
 
 </body>
