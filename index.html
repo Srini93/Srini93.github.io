@@ -264,56 +264,6 @@
         0 0 0 1px rgba(255, 255, 255, 0.2);
     }
 
-    .read-more-glass::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      background: rgba(255, 255, 255, 0.05);
-      transform: translateX(-100%);
-      transition: transform 0.3s ease-out;
-    }
-
-    .read-more-glass:hover::before {
-      transform: translateX(0);
-    }
-
-    /* Ripple effect on hover */
-    .read-more-glass::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: translate(-50%, -50%);
-      opacity: 0;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    /* Continuous ripple animation on hover */
-    @keyframes ripple {
-      0% {
-        width: 0;
-        height: 0;
-        opacity: 0.6;
-      }
-      50% {
-        opacity: 0.3;
-      }
-      100% {
-        width: 300px;
-        height: 300px;
-        opacity: 0;
-      }
-    }
-
-    .read-more-glass:hover::after {
-      animation: ripple 1.2s ease-out infinite;
-    }
 
     .read-more-content {
       display: flex;
@@ -682,13 +632,6 @@
       transform: translateY(-2px);
     }
 
-    .cards-layout-image:hover ~ .cards-layout-content .read-more-glass::before {
-      transform: translateX(0);
-    }
-
-    .cards-layout-image:hover ~ .cards-layout-content .read-more-glass::after {
-      animation: ripple 1.2s ease-out infinite;
-    }
 
     /* Project Date Styling */
     .project-date {
@@ -1080,6 +1023,8 @@
     content="A digital product designer who solves complex problems with <br>simple and intuitive interfaces." />
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131508743-1"></script>
   <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'UA-131508743-1');</script>
+  <script src="https://cdn.amplitude.com/script/4cdba9bcfab0ed83708e9b2b558d9bac.js"></script>
+  <script>window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));window.amplitude.init('4cdba9bcfab0ed83708e9b2b558d9bac', {"fetchRemoteConfig":true,"autocapture":{"attribution":true,"fileDownloads":true,"formInteractions":true,"pageViews":true,"sessions":true,"elementInteractions":true,"networkTracking":true,"webVitals":true,"frustrationInteractions":{"thrashedCursor":true,"errorClicks":true,"deadClicks":true,"rageClicks":true}}});</script>
 </head>
 
 <body>
