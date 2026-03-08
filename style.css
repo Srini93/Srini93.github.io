@@ -496,6 +496,7 @@ header section {
   color: #2a2a2a;
   font-family: "MyWebFont";
   font-size: 130%;
+  font-weight: 200;
   margin-top: 4.5rem;
   line-height: 1.4em;
 }
