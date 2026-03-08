@@ -115,7 +115,7 @@ The sidebar element at `#chatbot-sidebar` has two data attributes:
 
 The iframe URL is constructed as: `{chatbot-src}?api={encoded-api-url}`
 
-The chatbot React app reads the `?api=` parameter from `window.location.search` and uses it as the base URL for API calls. If no `?api=` parameter is present, it falls back to `http://127.0.0.1:8888` (local development).
+The chatbot React app reads the `?api=` parameter from `window.location.search` and uses it as the base URL for API calls. If no `?api=` parameter is present, it falls back to `https://srinilm.onrender.com` (the deployed backend).
 
 The parent page listens for `postMessage` events — if the iframe sends `'srini-chat-close'`, the sidebar closes.
 
@@ -249,6 +249,8 @@ Serve the portfolio site with any static server. The `data-chat-api` attribute i
 <div id="chatbot-sidebar" data-chatbot-src="./chatbot/" data-chat-api="http://127.0.0.1:9000"></div>
 ```
 
+For production, this is set to `https://srinilm.onrender.com`.
+
 ---
 
 ## Knowledge Base Management
@@ -261,6 +263,38 @@ To update the chatbot's knowledge:
 4. Restart the server
 
 The knowledge base currently has 20 entries covering: bio, philosophy, skills, tools, education, Intuit (3 entries), Norton, Google, Zoho, Holachef, Zeta, Tegus, personal info, Intuit Assist, API Explorer, LinkedIn summary, certifications, mentorship, volunteering, and honors/awards.
+
+---
+
+## Reliability
+
+The chatbot frontend includes several reliability measures to handle real-world deployment conditions:
+
+### Cold Start Handling (Render Free Tier)
+
+Render's free tier spins down services after inactivity. On the first visit, the chatbot sends a background `GET /health` ping to wake the backend before the user sends their first message. The first chat request uses a 45-second timeout to accommodate cold starts; subsequent requests use a 30-second timeout.
+
+### Retry with Exponential Backoff
+
+Failed requests are retried up to 3 times with exponential backoff (1s, 2s, 4s delays). Retries are triggered for:
+
+- Timeout errors (server still starting)
+- Network errors (transient connectivity issues)
+- 5xx server errors (temporary backend failures)
+
+Client errors (4xx) and successfully parsed error responses are not retried.
+
+### Request Timeouts
+
+Every API call uses an `AbortController` with a timeout to prevent hanging requests. If the server doesn't respond within the timeout window, the request is aborted and retried.
+
+### Error Recovery
+
+After any chat error, a background health check is triggered to pre-warm the server for the user's next attempt.
+
+### Graceful JSON Handling
+
+If the server returns a non-JSON response, the error is caught and a user-friendly message is shown instead of an unhandled exception.
 
 ---
 
