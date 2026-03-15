@@ -1,0 +1,36 @@
+---
+description: Content max-width is 1440px and centered beyond that breakpoint
+globs: **/*.html, **/*.css
+alwaysApply: false
+---
+
+# Max Width 1440px & Centered Content
+
+All page content must be constrained to a maximum width of **1440px** and horizontally centered for viewports wider than that.
+
+## Implementation
+
+- The `.frame` class is the primary content wrapper. Its max-width is set to `1440px` with `margin: 0 auto` in `style.css`, `style-2.css`, and `style-3.css`.
+- Never use inline `max-width` values below 1440px on `.frame` divs unless intentionally constraining a subsection (e.g. a narrower text column).
+- Full-bleed sections (like `header`, `#contact` footer) should span the full viewport width, but their inner `.frame` child must cap at 1440px and be centered.
+
+## Rules
+
+1. `.frame` containers: `max-width: 1440px; margin: 0 auto;`
+2. Grid containers (`.previous-work-grid`, `.archives-section`): `max-width: 1440px; margin: 0 auto;`
+3. Logo positioning breakpoint for centered content: use `1441px` for the min-width media query, with `left: calc((100% - 1440px) / 2 + 4rem)`.
+4. When adding new sections, wrap content in a `.frame` div or apply `max-width: 1440px; margin: 0 auto;` to ensure consistency.
+
+```css
+/* ✅ Correct */
+.frame {
+  max-width: 1440px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ❌ Wrong — old values */
+.frame {
+  max-width: 1280px; /* or 1300px, 1400px */
+}
+```
