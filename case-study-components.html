@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case Study — Component Blocks</title>
+  <link rel="stylesheet" href="style-2.css">
+  <link rel="stylesheet" href="case-study-components.css">
+  <style>
+    body { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+    .block-doc { font-size: 0.9rem; color: #666; margin-bottom: 1.5rem; border-left: 3px solid #0dc98b; padding-left: 1rem; }
+    section.component-block { margin: 3rem 0; padding: 2rem 0; border-bottom: 1px solid #eee; }
+    section.component-block:last-child { border-bottom: 0; }
+    h2.component-title { font-size: 1.25rem; margin-bottom: 0.5rem; }
+    code { background: #f5f5f5; padding: 0.1em 0.4em; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+  <h1>Case Study Component Blocks</h1>
+  <p>Copy each block below into your case study page. Ensure <code>style-2.css</code> and <code>case-study-components.css</code> are linked.</p>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Progress bar -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-progress-bar">
+    <h2 class="component-title">1. Progress bar (reading)</h2>
+    <p class="block-doc">Fixed at top. Wire <code>id="myBar"</code> to the scroll script in your page.</p>
+    <!-- COPY FROM HERE -->
+    <div class="header">
+      <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+      </div>
+    </div>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Back button -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-back-button">
+    <h2 class="component-title">2. Back button (glass)</h2>
+    <p class="block-doc">Link to home or works. Change <code>href</code> as needed.</p>
+    <!-- COPY FROM HERE -->
+    <a class="back-button-glass" href="index.html">
+      <div class="back-button-content">
+        <div class="back-button-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <path d="M19 12H5M12 19l-7-7 7-7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="back-button-text">Back</span>
+      </div>
+    </a>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Hero -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-hero">
+    <h2 class="component-title">3. Hero (title + image)</h2>
+    <p class="block-doc">Replace title lines and <code>src</code> for the hero image.</p>
+    <!-- COPY FROM HERE -->
+    <div id="about" style="background:#FFF;">
+      <p class="h1">
+        [PROJECT NAME] — <br>[ONE-LINE TAGLINE]
+      </p>
+      <img class="img1" src="images/[YOUR_FOLDER]/hero.png" style="margin: 5%" alt="">
+    </div>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Overview + meta -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-overview-meta">
+    <h2 class="component-title">4. Overview + project meta</h2>
+    <p class="block-doc">Left: overview paragraph. Right: project type, timeline, platform.</p>
+    <!-- COPY FROM HERE -->
+    <div style="display:flex; flex-wrap:wrap; padding:5%;">
+      <div style="flex:3 0 600px;">
+        <p class="txt3" style="padding:0;">Overview</p>
+        <div class="txt4" style="padding-left:0;">
+          <p style="flex:3;">[Overview paragraph — product, role, goal.]</p>
+        </div>
+      </div>
+      <div style="flex:3 0 450px; padding-left:8rem; padding-top:1rem;">
+        <h2 style="font-weight:500; font-family:'MyWebFont'; font-size:120%;">Project Type &amp; Involvement</h2>
+        <p style="font-family:'MyWebFont1'; padding:0.75rem 0; font-size:16px; margin-bottom:1.5rem;">[Company] — [Role]</p>
+        <h2 style="font-weight:500; font-family:'MyWebFont'; font-size:20px;">Timeline</h2>
+        <p style="font-family:'MyWebFont1'; padding:0.5rem 0; font-size:18px;">[Month YYYY] – [Month YYYY]</p>
+        <h2 style="padding-top:7%; font-weight:500; font-family:'MyWebFont'; font-size:20px;">Platform</h2>
+        <p style="font-family:'MyWebFont1'; padding:0.5rem 0; font-size:18px;">[e.g. iOS &amp; Android / Web]</p>
+      </div>
+    </div>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Text section (single column) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-text-section">
+    <h2 class="component-title">5. Text section (heading + body)</h2>
+    <p class="block-doc">Use for My Role, Problem, Vision, Research, etc. Replace heading and body.</p>
+    <!-- COPY FROM HERE -->
+    <div style="display:flex; flex-wrap:wrap; padding-left:5%; padding-top:5%; max-width:1000px;">
+      <div style="flex:3 0 400px;">
+        <p class="txt3" style="padding:0;">[Section heading]</p>
+        <div class="txt4" style="padding-left:0;">
+          <p style="flex:3;">[Body copy.]</p>
+        </div>
+      </div>
+    </div>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Container + title + body + centered image -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-container-image">
+    <h2 class="component-title">6. Container + title + body + centered image</h2>
+    <p class="block-doc">Use for process, methodology, or any section with a diagram below.</p>
+    <!-- COPY FROM HERE -->
+    <div class="Container">
+      <p class="txt3">[Section title]</p>
+      <p class="txt4">[Intro paragraph.]</p>
+    </div>
+    <div align="center">
+      <img src="images/[YOUR_FOLDER]/diagram.png" style="max-width:900px; padding-top:5%;" alt="">
+    </div>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Three insight cards -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-cards-three">
+    <h2 class="component-title">7. Three insight cards (grid)</h2>
+    <p class="block-doc">Uses <code>.Cards</code> and <code>.Card</code> with <code>.bg-accent-1|2|3</code>. Customise accent colours in <code>case-study-components.css</code>.</p>
+    <!-- COPY FROM HERE -->
+    <div class="Container">
+      <p class="txt3">Insights from Research</p>
+      <p class="txt4" style="line-height:25px; padding-top:0; padding-left:5%; font-size:95%; max-width:950px;">[Intro sentence.]</p>
+    </div>
+    <section class="Cards" style="padding-top:3%;">
+      <div class="Card bg-accent-1">
+        <p class="txt3" style="padding-left:0; padding-top:2%; color:#0dc98b;">[Theme 1]</p>
+        <p class="txt4" style="font-size:90%; line-height:1.2; padding-left:0; opacity:0.6;">[Sub-label]</p>
+        <p class="txt4" style="line-height:25px; padding-top:5%; padding-left:0; font-size:90%;">[Insight text.]</p>
+      </div>
+      <div class="Card bg-accent-2">
+        <p class="txt3" style="padding-left:0; padding-top:2%; color:#785ef0;">[Theme 2]</p>
+        <p class="txt4" style="font-size:90%; line-height:1.2; padding-left:0; opacity:0.6;">[Sub-label]</p>
+        <p class="txt4" style="line-height:25px; padding-top:5%; padding-left:0; font-size:90%;">[Insight text.]</p>
+      </div>
+      <div class="Card bg-accent-3">
+        <p class="txt3" style="padding-left:0; padding-top:2%; color:#036aff;">[Theme 3]</p>
+        <p class="txt4" style="line-height:1.4; padding-left:0; font-size:85%; opacity:0.6;">[Sub-label]</p>
+        <p class="txt4" style="line-height:25px; padding-top:5%; padding-left:0; font-size:95%;">[Insight text.]</p>
+      </div>
+    </section>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Key insights (bulleted) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-key-insights">
+    <h2 class="component-title">8. Other key insights (bold labels + text)</h2>
+    <p class="block-doc">Green accent for labels. Duplicate the inner <code>span</code> blocks as needed.</p>
+    <!-- COPY FROM HERE -->
+    <div style="display:flex; flex-wrap:wrap; padding:5%; padding-top:5%;">
+      <div style="flex:3 0 400px;">
+        <p class="txt3" style="padding:0;">Other Key Insights</p>
+        <div class="txt4" style="padding-left:0;">
+          <p style="padding-bottom:2%;">[Intro sentence.]</p>
+          <span style="line-height:1.5; padding-top:10px; display:block;">
+            <span style="font-weight:1000; font-size:18px; color:#19AF7A;">[Headline 1]:</span> [Description.]
+            <div>&nbsp;</div>
+            <span style="font-weight:800; font-size:18px; color:#19AF7A;">[Headline 2]:</span> [Description.]
+            <div>&nbsp;</div>
+            <span style="font-weight:800; font-size:18px; color:#19AF7A;">[Headline 3]:</span> [Description.]
+          </span>
+        </div>
+      </div>
+    </div>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Section heading + body + full-width image -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-heading-image">
+    <h2 class="component-title">9. Section heading + body + full-width image</h2>
+    <p class="block-doc">Use for User Flow, Sketching, Lo-Fi, etc.</p>
+    <!-- COPY FROM HERE -->
+    <h2 class="txt3">[Section title]</h2>
+    <div class="txt4" style="padding-left:0;">
+      <p style="flex:3; padding-left:5%;">[Body.]</p>
+    </div>
+    <img src="images/[YOUR_FOLDER]/image.png" style="margin-left:10%; max-width:1440px;" alt="">
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Article call-out -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-article-callout">
+    <h2 class="component-title">10. Article / Medium call-out card</h2>
+    <p class="block-doc">Link and teaser. Optionally add class <code>article-callout</code> to the inner div if using component CSS.</p>
+    <!-- COPY FROM HERE -->
+    <p class="txt3" style="padding-left:5%;">Read the detailed design process</p>
+    <a style="text-decoration:none;" href="[ARTICLE_URL]" target="_blank">
+      <div class="article-callout" style="width:80%; margin:5% auto; border-radius:3px; background-color:#02B875; box-shadow:0 4px 28px 0 rgba(0,0,0,0.15);">
+        <h2 class="txt3" style="text-align:center; color:white; padding:0 5%;">[Article headline]</h2>
+        <div class="txt4" style="padding-left:0;">
+          <p style="flex:3; padding:0 5% 5%; color:white; text-align:center;">"[Teaser quote.]"</p>
+        </div>
+      </div>
+    </a>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Feature (image left, text right) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-feature-row">
+    <h2 class="component-title">11. Feature row (image + title + description)</h2>
+    <p class="block-doc">Duplicate for each feature. First use <code>padding:5%</code>; subsequent use <code>padding-top:10%; padding-left:5%; padding-right:5%</code>.</p>
+    <!-- COPY FROM HERE -->
+    <div style="padding:5%; display:flex; flex-wrap:wrap;">
+      <div style="flex:10 0 400px;">
+        <img src="images/[YOUR_FOLDER]/feature.png" style="width:100%;" alt="">
+      </div>
+      <div style="flex:2 0 360px;">
+        <h2 style="font-weight:500; font-family:'MyWebFont'; font-size:30px; margin-bottom:2rem;">[Feature name]</h2>
+        <p style="font-weight:500; font-family:'MyWebFont1'; margin-bottom:2rem; line-height:2;">[Description.]</p>
+      </div>
+    </div>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Slideshow (Cycle.js) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-slideshow">
+    <h2 class="component-title">12. Image slideshow (Cycle.js)</h2>
+    <p class="block-doc">Requires <code>jquery.js</code> and <code>jquery.cycle2.js</code>. Give each slideshow unique <code>id</code> for prev/next/pager (e.g. <code>#prev-a</code>, <code>#next-a</code>, <code>#pager-a</code>).</p>
+    <!-- COPY FROM HERE -->
+    <div id="main">
+      <section class="cycle-container">
+        <div class="cycle-slideshow"
+             data-cycle-timeout="0"
+             data-cycle-prev="#prev"
+             data-cycle-next="#next"
+             data-cycle-pager="#pager"
+             data-cycle-pager-template="<a href=#><img src='{{src}}' width=20 height=20></a>">
+          <button id="prev" aria-label="Previous slide" class="cycle-slider-btn cycle-slider-previous-btn">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M15.8 22l-9.6-9.4c-.3-.3-.3-.8 0-1.1l9.6-9.4c.3-.3.7-.3 1 0l1 1c.3.3.3.7 0 1l-7.6 7.4c-.3.3-.3.8 0 1.1l7.5 7.4c.3.3.3.7 0 1l-1 1c-.2.2-.6.2-.9 0z"></path></svg>
+          </button>
+          <button id="next" aria-label="Next slide" class="cycle-slider-btn cycle-slider-next-btn">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M8.3 2l9.5 9.5c.3.3.3.7 0 1L8.3 22c-.3.2-.8.2-1.1 0l-1-1c-.2-.3-.2-.8 0-1.1l7.6-7.4c.2-.3.2-.7 0-1L6.3 4.1C6 3.8 6 3.3 6.3 3l1-1c.3-.2.7-.2 1 0z"></path></svg>
+          </button>
+          <img style="width:100%" src="images/[YOUR_FOLDER]/slide1.png" alt="">
+          <img style="width:100%" src="images/[YOUR_FOLDER]/slide2.png" alt="">
+          <img style="width:100%" src="images/[YOUR_FOLDER]/slide3.png" alt="">
+        </div>
+        <div id="pager" class="center external"></div>
+      </section>
+    </div>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: Deep-dive (subsections + images) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-deep-dive">
+    <h2 class="component-title">13. Deep-dive (heading + body + subheading + body + image)</h2>
+    <p class="block-doc">Repeat the <code>p.txt3</code> + <code>div.txt4</code> + <code>img</code> pattern for Competition, Iterations, Solution.</p>
+    <!-- COPY FROM HERE -->
+    <div style="display:flex; flex-wrap:wrap; padding-top:10%; padding-left:5%;">
+      <div style="flex:3 0 400px;">
+        <p class="txt3" style="padding:0;">Deep-Dive: [Component name]</p>
+        <div class="txt4" style="padding-left:0;">
+          <p style="flex:3 0 400px;">[Intro — why this was critical and how you iterated.]</p>
+        </div>
+      </div>
+    </div>
+    <p class="txt3" style="margin-top:0.5%;">Analysing the competition</p>
+    <div class="txt4" style="padding-left:5%;"><p>[What competitors did.]</p></div>
+    <img src="images/[YOUR_FOLDER]/competitor.png" style="margin-left:10%; max-width:1440px; padding-top:5%;" alt="">
+    <p class="txt3" style="margin-top:0.5%;">Iterations</p>
+    <div class="txt4" style="padding-left:5%;"><p>[Iteration story.]</p></div>
+    <img src="images/[YOUR_FOLDER]/iterations.png" style="margin-left:10%; max-width:1440px; padding-top:5%;" alt="">
+    <p class="txt3" style="margin-top:0.5%;">Solution</p>
+    <div class="txt4" style="padding-left:5%; max-width:1000px;"><p>[Final solution.]</p></div>
+    <div align="center"><img src="images/[YOUR_FOLDER]/solution.gif" style="max-width:650px; padding-top:5%;" alt=""></div>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: CTA buttons (App Store / Play Store) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-cta-buttons">
+    <h2 class="component-title">14. CTA buttons (e.g. App Store / Play Store)</h2>
+    <p class="block-doc">Uses existing <code>.button</code> from <code>style-2.css</code>. Replace <code>href</code> with store links.</p>
+    <!-- COPY FROM HERE -->
+    <div style="flex:1" class="btn-group">
+      <a href="[APP_STORE_URL]" target="_blank"><button style="background-color:#000" class="button">Download on App Store</button></a>
+      <a href="[PLAY_STORE_URL]" target="_blank"><button style="background-color:#000" class="button">Download on Play Store</button></a>
+    </div>
+    <!-- COPY TO HERE -->
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <!-- BLOCK: YouTube embed -->
+  <!-- ═══════════════════════════════════════════════════════════════════════ -->
+  <section class="component-block" id="block-video-embed">
+    <h2 class="component-title">15. YouTube embed</h2>
+    <p class="block-doc">Replace <code>[YOUR_VIDEO_ID]</code> in the <code>src</code>.</p>
+    <!-- COPY FROM HERE -->
+    <div style="height:80%; width:100%" align="center">
+      <iframe
+        src="//youtube.com/embed/[YOUR_VIDEO_ID]?autoplay=0&controls=0&color=ffffff&showinfo=0&rel=0"
+        frameborder="0"
+        webkitallowfullscreen="true"
+        mozallowfullscreen="true"
+        allowfullscreen="true"
+        style="width:80%; height:90%; margin:4rem auto; display:block;">
+      </iframe>
+    </div>
+    <!-- COPY TO HERE -->
+  </section>
+
+</body>
+</html>
