@@ -1673,9 +1673,26 @@ Designed a white label friendly design system scaling from design to code for fi
     }
     body.chat-open .chatbot-sidebar { width: 420px; }
     .chatbot-sidebar iframe { width: 100%; height: 100%; border: none; display: block; border-radius: 16px; }
-    .srini-chat-nav-li { display: flex; align-items: center; }
-    .srini-chat-nav-btn { background: #eaeefb; border: 1px solid rgba(255,255,255,0.5); padding: 0; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, opacity 0.2s; }
-    .srini-chat-sparkle { width: 22px; height: 22px; color: #3b65ef; transition: transform 0.2s ease, color 0.2s ease; }
+    .srini-chat-nav-li { display: flex; align-items: center; flex-shrink: 0; }
+    .srini-chat-nav-btn {
+      background: #eaeefb;
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 0;
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+      min-height: 40px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s, opacity 0.2s;
+      opacity: 1;
+      box-sizing: border-box;
+    }
+    .srini-chat-sparkle { width: 22px; height: 22px; flex-shrink: 0; color: #3b65ef; transition: transform 0.2s ease, color 0.2s ease; }
     .srini-chat-nav-btn:hover { background: #dce3f8; }
     .srini-chat-nav-btn:hover .srini-chat-sparkle { transform: scale(1.15); color: #7da1f7; }
     header nav .desk-menu:hover .srini-chat-nav-btn { opacity: 1; }
@@ -1743,6 +1760,7 @@ Designed a white label friendly design system scaling from design to code for fi
   });
 })();
   </script>
+  <script src="ui-sounds.js"></script>
 
 </body>
 
