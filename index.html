@@ -24,7 +24,7 @@
   <link rel="icon" href="images/favi.png" type="image/png" sizes="16x16">
 <!-- App Icon Ends -->
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=5">
   <style>
     /* Force Light Mode */
     html {
@@ -1793,6 +1793,8 @@ Designed a white label friendly design system scaling from design to code for fi
   }
 
   var CHAT_API_PUBLIC = 'https://srinilm.onrender.com';
+  /** Bump when deploying chatbot or host chat script changes (cache bust). */
+  var CHATBOT_CACHE_BUST = '5';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
@@ -1806,8 +1808,8 @@ Designed a white label friendly design system scaling from design to code for fi
   function getIframeSrc() {
     var base = getAppUrl();
     var api = resolveChatApiUrl((sidebar && sidebar.getAttribute('data-chat-api')) || window.SRINI_CHAT_API || '');
-    if (api) return base + '?api=' + encodeURIComponent(api);
-    return base;
+    if (api) return base + '?api=' + encodeURIComponent(api) + '&cb=' + CHATBOT_CACHE_BUST;
+    return base + '?cb=' + CHATBOT_CACHE_BUST;
   }
 
   function setOpen(open) {

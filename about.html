@@ -24,7 +24,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-3.css">
+<link rel="stylesheet" href="style-3.css?v=5">
 <style>
   /* Force Light Mode */
   html {
@@ -665,6 +665,7 @@ or contact me below</p>
   }
 
   var CHAT_API_PUBLIC = 'https://srinilm.onrender.com';
+  var CHATBOT_CACHE_BUST = '5';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
@@ -678,8 +679,8 @@ or contact me below</p>
   function getIframeSrc() {
     var base = getAppUrl();
     var api = resolveChatApiUrl((sidebar && sidebar.getAttribute('data-chat-api')) || window.SRINI_CHAT_API || '');
-    if (api) return base + '?api=' + encodeURIComponent(api);
-    return base;
+    if (api) return base + '?api=' + encodeURIComponent(api) + '&cb=' + CHATBOT_CACHE_BUST;
+    return base + '?cb=' + CHATBOT_CACHE_BUST;
   }
 
   function setOpen(open) {
