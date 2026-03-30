@@ -71,6 +71,7 @@ body{
   margin: 0;
   /*height: 2000px;*/
   overflow-x: hidden;
+  background-color: #fff;
 }
 .statusbar-overlay {
     background: white;

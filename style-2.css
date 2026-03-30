@@ -198,6 +198,7 @@ body {
   margin: 0;
   /*height: 2000px;*/
   overflow-x: hidden;
+  background-color: #fff;
 }
 .socialicons {
   text-align: center;
@@ -333,9 +334,12 @@ body {
   position: relative;
   padding-left: 5%;
   padding-top: 5%;
-  font-family: "MyWebFont1";
+  font-family: "Newsreader", "Georgia", serif;
   color: #212121;
   font-size: 300%;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .txt3 {
@@ -687,9 +691,12 @@ header {
     position: relative;
     padding-left: 5%;
     padding-top: 5%;
-    font-family: "MyWebFont1";
+    font-family: "Newsreader", "Georgia", serif;
     color: #212121;
     font-size: 200%;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
   }
   .txt6 {
     position: relative;
