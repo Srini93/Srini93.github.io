@@ -37,7 +37,7 @@ hr{
     background: #e6e6e6;
   }
 .frame{
-    max-width: 1280px;
+    max-width: 1440px;
     width: 100%;
     margin: 0px auto;
 }
@@ -110,6 +110,7 @@ body{
   margin: 0;
   /*height: 2000px;*/
   overflow-x: hidden;
+  background-color: #fff;
 }
 .socialicons{
   text-align:center; 

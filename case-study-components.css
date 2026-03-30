@@ -1,0 +1,348 @@
+/**
+ * Case Study Component Styles
+ * Use with style-2.css for typography and base layout.
+ * Link: <link rel="stylesheet" href="case-study-components.css">
+ */
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Video (responsive)
+   ───────────────────────────────────────────────────────────────────────── */
+@media only screen and (min-width: 1000px) {
+  video {
+    width: 90%;
+    height: auto;
+  }
+}
+
+@media only screen and (min-width: 300px) and (max-width: 600px) {
+  video {
+    width: 70%;
+    height: auto;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Slideshow pager (external thumbnails)
+   ───────────────────────────────────────────────────────────────────────── */
+.external > * {
+  margin: 0 5px;
+}
+
+.external img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.external {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  max-width: 800px;
+  margin: 1rem auto;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Cycle.js slideshow
+   ───────────────────────────────────────────────────────────────────────── */
+.cycle-container {
+  position: relative;
+}
+
+.cycle-slideshow {
+  margin: 2%;
+  position: relative;
+  display: block;
+  max-width: 1200px;
+}
+
+.cycle-slide {
+  max-width: 100%;
+}
+
+.cycle-pager-active:after {
+  content: '';
+  position: absolute;
+  background: hsla(0, 0%, 56%, 0.5);
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  top: 0;
+  left: 0;
+}
+
+.cycle-pager-active {
+  position: relative;
+  display: inline-block;
+}
+
+.cycle-slider-btn {
+  position: absolute;
+  color: rgba(255, 255, 255, 0.75);
+  z-index: 999;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: white;
+  background: rgba(0, 0, 0, 0.15);
+  height: 40px;
+  width: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: none;
+  transition: all 0.2s;
+}
+
+.cycle-slider-btn:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.cycle-slider-previous-btn {
+  left: 5%;
+}
+
+.cycle-slider-next-btn {
+  right: 5%;
+}
+
+.cycle-slider-btn svg {
+  height: 24px;
+  width: 24px;
+  fill: currentColor;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Reading progress bar
+   ───────────────────────────────────────────────────────────────────────── */
+.header {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  background-color: #f1f1f1;
+}
+
+.progress-container {
+  width: 100%;
+  height: 4px;
+  background: #fff;
+}
+
+.progress-bar {
+  height: 5px;
+  background: #4caf50;
+  position: fixed;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Layout containers
+   ───────────────────────────────────────────────────────────────────────── */
+.content {
+  padding: 100px 0;
+  margin: 50px auto 0 auto;
+  width: 80%;
+}
+
+.Container {
+  max-width: 1000px;
+  margin: 1rem;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Insight cards (3-column grid + accents)
+   ───────────────────────────────────────────────────────────────────────── */
+.bg-accent-1 {
+  background: #fff;
+  border: 2px solid #0dc98b;
+}
+
+.bg-accent-2 {
+  background: #fff;
+  border: 2px solid #785ef0;
+}
+
+.bg-accent-3 {
+  background: #fff;
+  border: 2px solid #036aff;
+}
+
+.Cards {
+  color: #000;
+  display: grid;
+  grid-template: "cell cell cell";
+  grid-gap: 2rem;
+  align-items: stretch;
+  grid-template-columns: repeat(3, minmax(320px, 1fr));
+  padding: 0 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 95%;
+  padding-top: 5%;
+}
+
+@media screen and (max-width: 1000px) {
+  .Cards {
+    padding: 0 2rem;
+    grid-template: "cell" "cell" "cell";
+  }
+}
+
+.Card {
+  padding: 1rem;
+  border-radius: 6px;
+}
+
+.Card h1 {
+  margin-bottom: 0.5rem;
+}
+
+.Card small {
+  color: hsla(0, 0%, 100%, 0.75);
+}
+
+.Card p {
+  color: inherit;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Back button (glass)
+   ───────────────────────────────────────────────────────────────────────── */
+.back-button-glass {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  min-height: 48px;
+  min-width: 120px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  color: #000 !important;
+  text-decoration: none !important;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  line-height: 1;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-button-glass:hover {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.back-button-glass::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-out;
+}
+
+.back-button-glass:hover::before {
+  transform: translateX(0);
+}
+
+.back-button-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  position: relative;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.back-button-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-button-icon svg {
+  width: 18px;
+  height: 18px;
+  stroke: #000;
+  stroke-width: 1.5;
+}
+
+.back-button-text {
+  display: inline-block;
+  position: relative;
+  z-index: 10;
+  transition: color 0.3s ease;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Article call-out card
+   ───────────────────────────────────────────────────────────────────────── */
+.article-callout {
+  width: 80%;
+  margin: 5% auto;
+  border-radius: 3px;
+  background-color: #02B875;
+  box-shadow: 0 4px 28px 0 rgba(0, 0, 0, 0.15);
+}
+
+.article-callout .txt3 {
+  text-align: center;
+  color: white;
+  padding: 0 5%;
+}
+
+.article-callout .txt4 p {
+  padding: 0 5% 5%;
+  color: white;
+  text-align: center;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Section layout utilities (flex text + meta)
+   ───────────────────────────────────────────────────────────────────────── */
+.section-flex {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 5%;
+}
+
+.section-flex--overview {
+  padding: 5%;
+}
+
+.section-flex--left {
+  flex: 3 0 600px;
+}
+
+.section-flex--meta {
+  flex: 3 0 450px;
+  padding-left: 8rem;
+  padding-top: 1rem;
+}
+
+.section-flex--narrow {
+  flex: 3 0 400px;
+}
+
+.section-flex--wide {
+  flex: 10 0 400px;
+}
+
+.section-flex--text {
+  flex: 2 0 360px;
+}
+
+@media (max-width: 900px) {
+  .section-flex--meta {
+    padding-left: 2rem;
+  }
+}
