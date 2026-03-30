@@ -461,6 +461,20 @@ button.srini-chat-trigger.srini-chat-nav-btn {
   min-height: 48px;
 }
 
+header nav .desk-menu:hover .srini-chat-nav-btn,
+header nav .desk-menu:hover .srini-chat-nav-btn .srini-chat-sparkle {
+  opacity: 1 !important;
+}
+
+.srini-chat-nav-btn:hover {
+  opacity: 1 !important;
+}
+
+.srini-chat-nav-btn:hover .srini-chat-sparkle {
+  color: #3b65ef;
+  opacity: 1 !important;
+}
+
 section {
   display: flex;
   flex-wrap: wrap;

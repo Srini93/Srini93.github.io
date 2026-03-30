@@ -24,7 +24,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-3.css?v=7">
+<link rel="stylesheet" href="style-3.css?v=8">
 <style>
   /* Force Light Mode */
   html {
@@ -591,9 +591,10 @@ or contact me below</p>
   }
   .srini-chat-nav-btn { background: #eaeefb; border: 1px solid rgba(255,255,255,0.5); padding: 0; width: 48px; height: 48px; min-width: 48px; min-height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; position: relative; }
   .srini-chat-sparkle { width: 26px; height: 26px; color: #3b65ef; transition: transform 0.2s ease, color 0.2s ease; }
-  .srini-chat-nav-btn:hover { background: #dce3f8; }
-  .srini-chat-nav-btn:hover .srini-chat-sparkle { transform: scale(1.15); color: #7da1f7; }
-  header nav .desk-menu:hover .srini-chat-nav-btn { opacity: 1 !important; }
+  .srini-chat-nav-btn:hover { background: #dce3f8; opacity: 1 !important; }
+  .srini-chat-nav-btn:hover .srini-chat-sparkle { transform: scale(1.15); color: #3b65ef; opacity: 1 !important; }
+  header nav .desk-menu:hover .srini-chat-nav-btn,
+  header nav .desk-menu:hover .srini-chat-nav-btn .srini-chat-sparkle { opacity: 1 !important; }
   .srini-chat-fab { position: fixed; top: 1.85rem; right: 2rem; z-index: 10002; display: none; align-items: center; justify-content: center; width: 75px; height: 75px; padding: 0; background: #eaeefb; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; box-shadow: none; transition: all 0.3s ease; overflow: visible; }
   .srini-chat-fab-icon { width: 32px; height: 32px; color: #3b65ef; transition: color 0.2s ease, transform 0.2s ease; }
   .srini-chat-fab:hover { background: #dce3f8; border-color: rgba(255,255,255,0.7); }
@@ -665,7 +666,7 @@ or contact me below</p>
   }
 
   var CHAT_API_PUBLIC = 'https://srinilm.onrender.com';
-  var CHATBOT_CACHE_BUST = '7';
+  var CHATBOT_CACHE_BUST = '8';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
@@ -732,6 +733,6 @@ or contact me below</p>
   }
 })();
 </script>
-<script src="ui-sounds.js?v=7"></script>
+<script src="ui-sounds.js?v=8"></script>
 
 </body></html>
