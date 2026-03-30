@@ -1733,10 +1733,21 @@ Designed a white label friendly design system scaling from design to code for fi
     return (typeof window.CHATBOT_APP_URL !== 'undefined' ? window.CHATBOT_APP_URL : (src || './chatbot/')).replace(/\/$/, '') + '/';
   }
 
+  var CHAT_API_PUBLIC = 'https://srinilm.onrender.com';
+  function resolveChatApiUrl(raw) {
+    var s = (raw || '').trim();
+    if (!s) return '';
+    try {
+      var u = new URL(s);
+      if (u.hostname === 'localhost' || u.hostname === '127.0.0.1') return CHAT_API_PUBLIC;
+    } catch (e) {}
+    return s.replace(/\/$/, '');
+  }
+
   function getIframeSrc() {
     var base = getAppUrl();
-    var api = (sidebar && sidebar.getAttribute('data-chat-api')) || window.SRINI_CHAT_API || '';
-    if (api) return base + '?api=' + encodeURIComponent(api.replace(/\/$/, ''));
+    var api = resolveChatApiUrl((sidebar && sidebar.getAttribute('data-chat-api')) || window.SRINI_CHAT_API || '');
+    if (api) return base + '?api=' + encodeURIComponent(api);
     return base;
   }
 
