@@ -74,7 +74,7 @@
 
   function playHoverTick() {
     var now = Date.now();
-    if (now - lastChatHoverAt < 140) return;
+    if (now - lastChatHoverAt < 120) return;
     lastChatHoverAt = now;
     var ctx = getContext();
     if (!ctx) return;
@@ -83,14 +83,15 @@
     var g = ctx.createGain();
     g.connect(ctx.destination);
     g.gain.setValueAtTime(0, t0);
-    g.gain.linearRampToValueAtTime(0.08, t0 + 0.008);
-    g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.06);
+    g.gain.linearRampToValueAtTime(0.14, t0 + 0.006);
+    g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.08);
     var osc = ctx.createOscillator();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(880, t0);
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(1040, t0);
+    osc.frequency.exponentialRampToValueAtTime(1320, t0 + 0.04);
     osc.connect(g);
     osc.start(t0);
-    osc.stop(t0 + 0.05);
+    osc.stop(t0 + 0.055);
   }
 
   function playAnswerChime() {
@@ -101,27 +102,25 @@
     var g = ctx.createGain();
     g.connect(ctx.destination);
     g.gain.setValueAtTime(0, t0);
-    g.gain.linearRampToValueAtTime(0.12, t0 + 0.02);
-    g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.45);
-    var freqs = [523.25, 659.25, 783.99];
-    var noteLen = 0.09;
+    g.gain.linearRampToValueAtTime(0.16, t0 + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.55);
+    var freqs = [392, 523.25, 659.25, 784];
+    var noteLen = 0.075;
     freqs.forEach(function (freq, i) {
       var osc = ctx.createOscillator();
       osc.type = 'sine';
       osc.frequency.setValueAtTime(freq, t0 + i * noteLen);
       osc.connect(g);
       osc.start(t0 + i * noteLen);
-      osc.stop(t0 + i * noteLen + noteLen * 0.95);
+      osc.stop(t0 + i * noteLen + noteLen * 0.9);
     });
   }
 
   /**
    * Called from chatbot iframe: 'hover' = suggestion hover, 'answer' = bot reply ready.
+   * (Does not honor prefers-reduced-motion — that setting is for motion; sounds stay audible.)
    */
   window.SRINI_CHAT_SOUND = function (kind) {
-    try {
-      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    } catch (e) {}
     if (kind === 'hover') playHoverTick();
     else if (kind === 'answer') playAnswerChime();
   };
