@@ -441,12 +441,24 @@ li.b {
   transition: all 0.2s;
 }
 
-.desk-menu:hover li a {
+.desk-menu:hover:not(:has(.srini-chat-nav-li:hover)) li a {
   opacity: 0.5;
 }
 
 .desk-menu li a:hover {
   opacity: 1;
+}
+
+.srini-chat-nav-li,
+.srini-chat-nav-btn {
+  opacity: 1 !important;
+}
+
+button.srini-chat-trigger.srini-chat-nav-btn {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
 }
 
 section {

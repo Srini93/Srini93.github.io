@@ -1,5 +1,6 @@
 /**
- * UI sounds: chirp on chatbot open/close and CTA clicks.
+ * UI sounds: chirp on chatbot open/close and CTA clicks; chatbot iframe calls
+ * window.SRINI_CHAT_SOUND('hover'|'answer') for suggestion hovers and bot replies.
  * Uses Web Audio API (no external audio files). Plays only after user gesture.
  */
 (function() {
@@ -67,4 +68,61 @@
   document.addEventListener('click', onChirpClick, true);
   document.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
   document.addEventListener('keydown', unlockAudio, { once: true });
+
+  /* ── Chatbot iframe (same-origin): hover on suggestions + answer received ── */
+  var lastChatHoverAt = 0;
+
+  function playHoverTick() {
+    var now = Date.now();
+    if (now - lastChatHoverAt < 140) return;
+    lastChatHoverAt = now;
+    var ctx = getContext();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') ctx.resume();
+    var t0 = ctx.currentTime;
+    var g = ctx.createGain();
+    g.connect(ctx.destination);
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(0.08, t0 + 0.008);
+    g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.06);
+    var osc = ctx.createOscillator();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880, t0);
+    osc.connect(g);
+    osc.start(t0);
+    osc.stop(t0 + 0.05);
+  }
+
+  function playAnswerChime() {
+    var ctx = getContext();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') ctx.resume();
+    var t0 = ctx.currentTime;
+    var g = ctx.createGain();
+    g.connect(ctx.destination);
+    g.gain.setValueAtTime(0, t0);
+    g.gain.linearRampToValueAtTime(0.12, t0 + 0.02);
+    g.gain.exponentialRampToValueAtTime(0.001, t0 + 0.45);
+    var freqs = [523.25, 659.25, 783.99];
+    var noteLen = 0.09;
+    freqs.forEach(function (freq, i) {
+      var osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, t0 + i * noteLen);
+      osc.connect(g);
+      osc.start(t0 + i * noteLen);
+      osc.stop(t0 + i * noteLen + noteLen * 0.95);
+    });
+  }
+
+  /**
+   * Called from chatbot iframe: 'hover' = suggestion hover, 'answer' = bot reply ready.
+   */
+  window.SRINI_CHAT_SOUND = function (kind) {
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    } catch (e) {}
+    if (kind === 'hover') playHoverTick();
+    else if (kind === 'answer') playAnswerChime();
+  };
 })();

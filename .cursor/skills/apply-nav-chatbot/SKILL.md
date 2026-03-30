@@ -426,8 +426,8 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
   body.chat-open .chatbot-sidebar { width: 420px; }
   .chatbot-sidebar iframe { width: 100%; height: 100%; border: none; display: block; border-radius: 16px; }
   .srini-chat-nav-li { display: flex; align-items: center; }
-  .srini-chat-nav-btn { background: #eaeefb; border: 1px solid rgba(255,255,255,0.5); padding: 0; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, opacity 0.2s; }
-  .srini-chat-sparkle { width: 22px; height: 22px; color: #3b65ef; transition: transform 0.2s ease, color 0.2s ease; }
+  .srini-chat-nav-btn { background: #eaeefb; border: 1px solid rgba(255,255,255,0.5); padding: 0; width: 48px; height: 48px; min-width: 48px; min-height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s, opacity 0.2s; }
+  .srini-chat-sparkle { width: 26px; height: 26px; color: #3b65ef; transition: transform 0.2s ease, color 0.2s ease; }
   .srini-chat-nav-btn:hover { background: #dce3f8; }
   .srini-chat-nav-btn:hover .srini-chat-sparkle { transform: scale(1.15); color: #7da1f7; }
   header nav .desk-menu:hover .srini-chat-nav-btn { opacity: 1; }
