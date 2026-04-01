@@ -61,6 +61,36 @@ The ingestion process:
 
 This runs once during build (`python ingest.py`) and the resulting `chroma_db/` directory is reused by the server at runtime.
 
+### Full-site portfolio text (this repository)
+
+The hand-written `KNOWLEDGE_BASE` in SriniLM can be **supplemented or replaced** with text extracted from every public HTML page in this portfolio repo. That keeps the vector store aligned with case studies, about, and index copy without manually duplicating paragraphs.
+
+1. From the **portfolio site repo** root, run:
+
+   ```bash
+   python3 scripts/extract_portfolio_knowledge.py
+   ```
+
+2. This writes **`portfolio_knowledge.json`**: a list of objects `{ "id", "source_file", "title", "text" }`. Long pages are split into overlapping chunks (~2200 characters) for embedding.
+
+3. **Excluded paths** (by design): `chatbot/`, `srini-chatbot/`, and `images/` (duplicate of root pages). **Excluded files**: `Norton.html`, `Nortonp.html` (password shells; case study body is not in public HTML).
+
+4. In the **SriniLM** repo, copy `portfolio_knowledge.json` into that project (or submodule path), then extend the ingest list. Example pattern:
+
+   ```python
+   import json
+   from pathlib import Path
+
+   with Path("portfolio_knowledge.json").open(encoding="utf-8") as f:
+       exported = json.load(f)
+   auto_chunks = [{"id": e["id"], "text": e["text"]} for e in exported]
+   KNOWLEDGE_BASE = [*HAND_WRITTEN_ENTRIES, *auto_chunks]  # or replace as needed
+   ```
+
+5. Run `python ingest.py` and redeploy the backend so ChromaDB is rebuilt.
+
+Until the backend ingest is updated on Render, the chatbot continues to use whatever knowledge was last embedded in SriniLM; the script here only produces the **source material** for that step.
+
 ### Step 2: Query Processing (`app.py`, `/chat` endpoint)
 
 When a visitor sends a message:
