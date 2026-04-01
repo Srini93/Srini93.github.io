@@ -1,5 +1,5 @@
 # Reference Render Blueprint: Srini chat API (FastAPI) under backend/
-# Adjust service name / plan to match your account. Set OPENAI_API_KEY in the dashboard.
+# Set GROQ_API_KEY in the Render dashboard (encrypted at rest) — do not paste keys into git.
 # https://render.com/docs/blueprint-spec
 
 services:

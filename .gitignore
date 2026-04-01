@@ -4,5 +4,22 @@
 # OS files
 .DS_Store
 
-# Backend secrets
+# --- Secrets (never commit API keys) ---
+.env
+.env.*
+!.env.example
+!**/.env.example
 backend/.env
+backend/.env.*
+!backend/.env.example
+
+# age / SOPS private material (public keys in .sops.yaml may be committed)
+*.agekey
+.sops_age_key
+.sops/keys/
+
+# Misc key material
+*.pem
+*.pkey
+secrets/
+!**/secrets.example*
