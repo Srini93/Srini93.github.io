@@ -553,6 +553,13 @@ AOS.init({
     .hamburgler-menu-list .get-in-touch-btn { display: flex !important; align-items: center !important; justify-content: center !important; margin: 1.25rem auto 0 !important; padding: 16px 32px !important; width: 100%; max-width: 280px; min-height: 56px; background: #000 !important; color: #fff !important; border-radius: 9999px !important; font-size: 15px !important; font-weight: 600 !important; text-decoration: none !important; transition: transform 0.2s ease, box-shadow 0.2s ease !important; }
     .hamburgler-menu-list .get-in-touch-btn:hover { transform: scale(1.03) !important; box-shadow: 0 6px 20px rgba(0,0,0,0.2) !important; background: #222 !important; }
     @media (max-width: 768px) {
+      .srini-chat-hovertip,
+      .srini-chat-fab:hover .srini-chat-hovertip,
+      .srini-chat-fab:focus-visible .srini-chat-hovertip {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+      }
       .srini-chat-fab { display: flex !important; }
       .chatbot-sidebar { top: 0; right: 0; bottom: 0; left: 0; width: 100% !important; height: 100%; border-radius: 0; z-index: 10003; transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); }
       body.chat-open .chatbot-sidebar { transform: translateY(0); }

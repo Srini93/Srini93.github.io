@@ -2008,6 +2008,15 @@ or contact me below</p>
   .srini-chat-fab:active { animation: none !important; transform: scale(0.95); }
   @media (min-width: 769px) { .srini-chat-fab { display: none !important; } }
   @media (max-width: 768px) {
+    .srini-chat-hovertip,
+    .srini-chat-nav-btn:hover .srini-chat-hovertip,
+    .srini-chat-nav-btn:focus-visible .srini-chat-hovertip,
+    .srini-chat-fab:hover .srini-chat-hovertip,
+    .srini-chat-fab:focus-visible .srini-chat-hovertip {
+      display: none !important;
+      opacity: 0 !important;
+      visibility: hidden !important;
+    }
     .srini-chat-fab { display: flex; top: auto; bottom: 24px; right: 24px; width: 75px; height: 75px; }
     .srini-chat-fab-icon { width: 32px; height: 32px; }
     .srini-chat-nav-li { display: none !important; }
