@@ -3,9 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from openai import OpenAI
 from dotenv import load_dotenv
+import asyncio
 import os
 
 load_dotenv()
+
+# Limit concurrent LLM calls so bursts don’t block the worker or exhaust API quota.
+_CHAT_SEM = asyncio.Semaphore(max(1, int(os.getenv("CHAT_MAX_CONCURRENT", "8"))))
 
 app = FastAPI()
 
@@ -43,15 +47,18 @@ async def chat(req: ChatRequest):
         raise HTTPException(status_code=400, detail="Message cannot be empty.")
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": SYSTEM_PROMPT},
-                {"role": "user", "content": req.message},
-            ],
-            max_tokens=500,
-            temperature=0.7,
-        )
+        async with _CHAT_SEM:
+            response = await asyncio.to_thread(
+                lambda: client.chat.completions.create(
+                    model="gpt-4o-mini",
+                    messages=[
+                        {"role": "system", "content": SYSTEM_PROMPT},
+                        {"role": "user", "content": req.message},
+                    ],
+                    max_tokens=500,
+                    temperature=0.7,
+                )
+            )
         return {"reply": response.choices[0].message.content}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
