@@ -1,0 +1,21 @@
+# Static portfolio (HTML/CSS/JS + /chatbot). No build step.
+#
+# Test this branch on Netlify:
+# 1) Push branch to GitHub, then in Netlify: Site → Build & deploy → Continuous deployment
+#    → enable "Deploy previews" for pull requests, or add a branch deploy for this branch.
+# 2) Or locally (logged in): `netlify deploy --dir=. --no-build` → draft URL for manual QA.
+#
+# The Python API in /backend is not run on Netlify; chat still uses data-chat-api (e.g. Render).
+
+[build]
+  publish = "."
+  command = "true"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[context.deploy-preview]
+  command = "true"
+
+[context.branch-deploy]
+  command = "true"
