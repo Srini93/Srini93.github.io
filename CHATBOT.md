@@ -206,6 +206,16 @@ The backend is configured for [Render](https://render.com) deployment via `rende
 
 Deploy via: [render.com/deploy?repo=https://github.com/Srini93/SriniLM](https://render.com/deploy?repo=https://github.com/Srini93/SriniLM)
 
+### Changing the Groq model
+
+Yes — the model is **not** chosen in this portfolio site or the chatbot iframe. It is set in the **backend** that implements `POST /chat` (the [SriniLM](https://github.com/Srini93/SriniLM) service on Render).
+
+1. Open the backend code where Groq is called (usually `chat.completions.create` or the Groq SDK equivalent).
+2. Change the `model` argument to any [currently supported Groq model ID](https://console.groq.com/docs/models) (for example `llama-3.3-70b-versatile`, `llama-3.1-8b-instant`, `meta-llama/llama-4-scout-17b-16e-instruct`, etc. — use the exact ID shown in Groq’s docs).
+3. **Recommended**: read the model name from an environment variable (e.g. `GROQ_MODEL`) in Render so you can switch models without a code change, then redeploy (or restart) the service.
+
+The static site and `data-chat-api` URL do not need to change when you only swap models on the server.
+
 ### Frontend (GitHub Pages / Netlify)
 
 The chatbot frontend is bundled into the portfolio site repository under `chatbot/`. It deploys alongside the main site — no separate frontend deployment needed.
