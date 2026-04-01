@@ -115,15 +115,15 @@ If `ui-sounds.js` is not loaded or `SRINI_CHAT_SOUND` is missing, calls are no-o
 ### Production (typical)
 
 - Hosted over **HTTPS** with **CORS** allowing browser origins (e.g. `Access-Control-Allow-Origin: *` or explicit site origins).
-- **`POST /chat`** — Request/response shape must match what the bundle expects (**`answer` + `suggestions`**), not only a single `reply` field.
+- **`POST /chat`** — Body: `{ "message": "..." }`. Response must include **`answer`** (string) and **`suggestions`** (array of strings; the UI uses up to three). The reference server also returns **`reply`** (same text as `answer`) for backward compatibility.
 
 ### Repository reference server (`backend/server.py`)
 
-This repo includes a small **FastAPI** app that:
+This repo includes a **FastAPI** app that:
 
-- Uses **OpenAI** (`OPENAI_API_KEY`) and returns **`{ "reply": "..." }`** for `POST /chat`.
-
-That response shape **does not** match the current iframe bundle (which expects **`answer`** and **`suggestions`**). Using it unchanged would require either adapting the server response or rebuilding the frontend. For local experiments, prefer pointing `SRINI_CHAT_API` at a service that returns the expected JSON, or extend `server.py` accordingly.
+- Defaults to **Groq** (fast, lightweight models; **`GROQ_API_KEY`**, optional **`GROQ_MODEL`**, e.g. `llama-3.1-8b-instant`) via the OpenAI-compatible API — no OpenAI account required. Alternatives: **`LLM_PROVIDER=openai`** with **`OPENAI_API_KEY`**, or **`LLM_PROVIDER=ollama`** for a local Ollama server.
+- Returns **`answer`**, **`reply`**, and **`suggestions`** for `POST /chat` (matches the bundled iframe).
+- Uses **`asyncio.Semaphore`** (`CHAT_MAX_CONCURRENT`) and **slowapi** per-IP limits (`RATE_LIMIT_PER_IP`, default `30/minute`) — see **`backend/SCALABILITY.md`** for scaling to high request rates (e.g. ~1000 RPM) with Gunicorn workers and horizontal replicas.
 
 ---
 
