@@ -1,7 +1,7 @@
 /**
  * UI sounds: chirp on chatbot open and CTA clicks; soft descending close sound
  * when the chatbot sidebar is dismissed. Chatbot iframe calls
- * window.SRINI_CHAT_SOUND('answer') for bot replies.
+ * window.SRINI_CHAT_SOUND('send'|'answer') when a message is sent and when a reply arrives.
  * Uses Web Audio API (no external audio files). Plays only after user gesture.
  */
 (function() {
@@ -99,6 +99,30 @@
   });
   observer.observe(document.body, { attributes: true, attributeOldValue: true });
 
+  /* ── Chatbot iframe: message sent (clear two-tone “sent” ping) ── */
+  function playSendSound() {
+    var ctx = getContext();
+    if (!ctx) return;
+    if (ctx.state === 'suspended') ctx.resume();
+    var t0 = ctx.currentTime;
+    var freqs = [660, 920];
+    var step = 0.05;
+    freqs.forEach(function(freq, i) {
+      var g = ctx.createGain();
+      g.connect(ctx.destination);
+      var start = t0 + i * step;
+      g.gain.setValueAtTime(0, start);
+      g.gain.linearRampToValueAtTime(0.24, start + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.001, start + 0.14);
+      var osc = ctx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(freq, start);
+      osc.connect(g);
+      osc.start(start);
+      osc.stop(start + 0.06);
+    });
+  }
+
   /* ── Chatbot iframe: answer received ── */
   function playAnswerChime() {
     var ctx = getContext();
@@ -123,6 +147,15 @@
   }
 
   window.SRINI_CHAT_SOUND = function (kind) {
-    if (kind === 'answer') playAnswerChime();
+    if (kind === 'send') playSendSound();
+    else if (kind === 'answer') playAnswerChime();
   };
+
+  /* Same-origin iframe cannot always call parent functions reliably; mirror close-button pattern */
+  window.addEventListener('message', function (e) {
+    if (e.data !== 'srini-chat-sound-send') return;
+    try {
+      if (typeof window.SRINI_CHAT_SOUND === 'function') window.SRINI_CHAT_SOUND('send');
+    } catch (err) {}
+  });
 })();
