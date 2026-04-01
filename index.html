@@ -703,6 +703,13 @@
       font-size: 14px !important;
       letter-spacing: 0.5px !important;
       text-transform: uppercase !important;
+      text-decoration: none;
+    }
+
+    .desk-menu li a:not(.get-in-touch-btn):hover,
+    .desk-menu li a:not(.get-in-touch-btn):focus-visible {
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
     }
 
     /* Hamburger menu links */
@@ -1755,15 +1762,12 @@ Designed a white label friendly design system scaling from design to code for fi
       align-items: center;
       justify-content: center;
       transition: background 0.2s;
-      opacity: 1;
       box-sizing: border-box;
       position: relative;
     }
     .srini-chat-sparkle { width: 26px; height: 26px; flex-shrink: 0; color: #3b65ef; transition: transform 0.2s ease, color 0.2s ease; }
-    .srini-chat-nav-btn:hover { background: #dce3f8; opacity: 1 !important; }
-    .srini-chat-nav-btn:hover .srini-chat-sparkle { transform: scale(1.15); color: #3b65ef; opacity: 1 !important; }
-    header nav .desk-menu:hover .srini-chat-nav-btn,
-    header nav .desk-menu:hover .srini-chat-nav-btn .srini-chat-sparkle { opacity: 1 !important; }
+    .srini-chat-nav-btn:hover { background: #dce3f8; }
+    .srini-chat-nav-btn:hover .srini-chat-sparkle { transform: scale(1.15); color: #3b65ef; }
     .srini-chat-fab { position: fixed; top: 1.85rem; right: 2rem; z-index: 10002; display: none; align-items: center; justify-content: center; width: 75px; height: 75px; padding: 0; background: #eaeefb; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; box-shadow: none; transition: all 0.3s ease; overflow: visible; }
     .srini-chat-fab-icon { width: 32px; height: 32px; color: #3b65ef; transition: color 0.2s ease, transform 0.2s ease; }
     .srini-chat-fab:hover { background: #dce3f8; border-color: rgba(255,255,255,0.7); }

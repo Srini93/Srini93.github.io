@@ -273,7 +273,11 @@
     color: #000 !important;
     text-decoration: none;
   }
-  .desk-menu li a:hover { color: #666 !important; }
+  .desk-menu li a:not(.get-in-touch-btn):hover,
+  .desk-menu li a:not(.get-in-touch-btn):focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
 
   /* Hamburger menu links */
   .hamburgler-menu-list li a {
@@ -1249,10 +1253,8 @@ or contact me below</p>
   }
   .srini-chat-nav-btn { background: #eaeefb; border: 1px solid rgba(255,255,255,0.5); padding: 0; width: 48px; height: 48px; min-width: 48px; min-height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; position: relative; }
   .srini-chat-sparkle { width: 26px; height: 26px; color: #3b65ef; transition: transform 0.2s ease, color 0.2s ease; }
-  .srini-chat-nav-btn:hover { background: #dce3f8; opacity: 1 !important; }
-  .srini-chat-nav-btn:hover .srini-chat-sparkle { transform: scale(1.15); color: #3b65ef; opacity: 1 !important; }
-  header nav .desk-menu:hover .srini-chat-nav-btn,
-  header nav .desk-menu:hover .srini-chat-nav-btn .srini-chat-sparkle { opacity: 1 !important; }
+  .srini-chat-nav-btn:hover { background: #dce3f8; }
+  .srini-chat-nav-btn:hover .srini-chat-sparkle { transform: scale(1.15); color: #3b65ef; }
   .srini-chat-fab { position: fixed; top: 1.85rem; right: 2rem; z-index: 10002; display: none; align-items: center; justify-content: center; width: 75px; height: 75px; padding: 0; background: #eaeefb; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; box-shadow: none; transition: all 0.3s ease; overflow: visible; }
   .srini-chat-fab-icon { width: 32px; height: 32px; color: #3b65ef; transition: color 0.2s ease, transform 0.2s ease; }
   .srini-chat-fab:hover { background: #dce3f8; border-color: rgba(255,255,255,0.7); }

@@ -197,7 +197,7 @@
       '.desk-menu{display:flex!important;align-items:center!important;justify-content:flex-end!important;height:100%;padding-top:40px!important;padding-right:1rem!important;overflow:visible!important}' +
       '.desk-menu li{display:flex!important;align-items:center!important;float:none!important;height:100%}' +
       '.desk-menu li a:not(.get-in-touch-btn){display:flex!important;align-items:center!important;height:100%;padding:0 25px!important;font-family:"Space Mono","Courier New","Monaco",monospace!important;font-size:14px!important;letter-spacing:0.5px!important;text-transform:uppercase!important;color:#000!important;text-decoration:none}' +
-      '.desk-menu li a:hover{color:#666!important}' +
+      '.desk-menu li a:not(.get-in-touch-btn):hover,.desk-menu li a:not(.get-in-touch-btn):focus-visible{text-decoration:underline;text-underline-offset:0.2em}' +
       '.hamburgler-menu-list li a{font-family:"Space Mono","Courier New","Monaco",monospace!important;font-size:16px!important;letter-spacing:0.5px!important;text-transform:uppercase!important}' +
       '.get-in-touch-btn{position:relative;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px;padding:14px 28px!important;min-height:auto!important;min-width:auto!important;background:rgba(255,255,255,0.1)!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;border:1px solid rgba(255,255,255,0.3)!important;box-shadow:0 4px 16px rgba(0,0,0,0.08),inset 0 1px 0 0 rgba(255,255,255,0.4),0 0 0 1px rgba(255,255,255,0.1)!important;color:#000!important;border-radius:9999px!important;font-size:13px!important;font-weight:400!important;font-family:"Space Mono","Courier New","Monaco",monospace!important;text-decoration:none!important;transition:all 0.3s ease!important;cursor:pointer!important;line-height:1!important;letter-spacing:0.5px!important;text-transform:uppercase!important;margin-left:8px!important;vertical-align:middle!important;overflow:hidden}' +
       '.get-in-touch-btn:hover{border-color:rgba(255,255,255,0.5)!important;transform:scale(1.03)!important}' +
@@ -206,15 +206,14 @@
       '.hamburgler-menu-list .get-in-touch-btn:hover{transform:scale(1.03)!important;box-shadow:0 6px 20px rgba(0,0,0,0.2)!important;background:#222!important;color:#fff!important}' +
       '@media screen and (max-width:768px){.desk-menu{display:none!important}.hamburgler-icon-wrapper{display:block!important}.hamburgler-menu{display:block!important;opacity:0}ul.hamburgler-menu-list{display:flex!important;flex-direction:column!important;overflow:visible!important}.hamburgler-menu-list li{display:block!important;float:none!important}header{padding-bottom:0!important}.srini-chat-nav-li{display:none!important}}' +
       '@media screen and (max-width:601px){.desk-menu{display:none!important}.hamburgler-icon-wrapper{display:block!important}.hamburgler-menu{display:block!important;opacity:0}ul.hamburgler-menu-list{display:flex!important;flex-direction:column!important;overflow:visible!important}.hamburgler-menu-list li{display:block!important;float:none!important}header{padding-bottom:0!important}}' +
-      '.srini-chat-nav-li{display:flex;align-items:center;overflow:visible;z-index:2}.srini-chat-nav-li,.srini-chat-nav-btn{opacity:1!important}' +
+      '.srini-chat-nav-li{display:flex;align-items:center;overflow:visible;z-index:2}' +
       '.srini-chat-hovertip{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(6px);padding:8px 14px;background:#000;color:#fff;font-family:"Space Mono","Courier New",Monaco,monospace;font-size:11px;font-weight:500;letter-spacing:0.03em;white-space:nowrap;border-radius:999px;box-shadow:0 8px 28px rgba(0,0,0,0.22);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.2s ease,transform 0.2s ease,visibility 0.2s;z-index:10005}' +
       '.srini-chat-hovertip::after{content:"";position:absolute;bottom:100%;left:50%;margin-left:-6px;border:6px solid transparent;border-bottom-color:#000}' +
       '.srini-chat-nav-btn:hover .srini-chat-hovertip,.srini-chat-nav-btn:focus-visible .srini-chat-hovertip,.srini-chat-fab:hover .srini-chat-hovertip,.srini-chat-fab:focus-visible .srini-chat-hovertip{opacity:1!important;visibility:visible!important;transform:translateX(-50%) translateY(0)!important}' +
       '.srini-chat-nav-btn{background:#eaeefb;border:1px solid rgba(255,255,255,0.5);padding:0;width:48px;height:48px;min-width:48px;min-height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;position:relative}' +
       '.srini-chat-sparkle{width:26px;height:26px;color:#3b65ef;transition:transform 0.2s ease,color 0.2s ease}' +
-      '.srini-chat-nav-btn:hover{background:#dce3f8;opacity:1!important}' +
-      '.srini-chat-nav-btn:hover .srini-chat-sparkle{transform:scale(1.15);color:#3b65ef;opacity:1!important}' +
-      'header nav .desk-menu:hover .srini-chat-nav-btn,header nav .desk-menu:hover .srini-chat-nav-btn .srini-chat-sparkle{opacity:1!important}' +
+      '.srini-chat-nav-btn:hover{background:#dce3f8}' +
+      '.srini-chat-nav-btn:hover .srini-chat-sparkle{transform:scale(1.15);color:#3b65ef}' +
       '</style>';
     html = html.replace(
       '<link rel="stylesheet" href="style-2.css">',

@@ -441,17 +441,14 @@ li.b {
   transition: all 0.2s;
 }
 
-.desk-menu:hover:not(:has(.srini-chat-nav-li:hover)) li a {
-  opacity: 0.5;
+.desk-menu li a:not(.get-in-touch-btn) {
+  text-decoration: none;
 }
 
-.desk-menu li a:hover {
-  opacity: 1;
-}
-
-.srini-chat-nav-li,
-.srini-chat-nav-btn {
-  opacity: 1 !important;
+.desk-menu li a:not(.get-in-touch-btn):hover,
+.desk-menu li a:not(.get-in-touch-btn):focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 button.srini-chat-trigger.srini-chat-nav-btn {
@@ -461,18 +458,8 @@ button.srini-chat-trigger.srini-chat-nav-btn {
   min-height: 48px;
 }
 
-header nav .desk-menu:hover .srini-chat-nav-btn,
-header nav .desk-menu:hover .srini-chat-nav-btn .srini-chat-sparkle {
-  opacity: 1 !important;
-}
-
-.srini-chat-nav-btn:hover {
-  opacity: 1 !important;
-}
-
 .srini-chat-nav-btn:hover .srini-chat-sparkle {
   color: #3b65ef;
-  opacity: 1 !important;
 }
 
 section {

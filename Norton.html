@@ -232,7 +232,11 @@
     color: #000 !important;
     text-decoration: none;
   }
-  .desk-menu li a:hover { color: #666 !important; }
+  .desk-menu li a:not(.get-in-touch-btn):hover,
+  .desk-menu li a:not(.get-in-touch-btn):focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
 
   /* Hamburger menu links */
   .hamburgler-menu-list li a {
