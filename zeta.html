@@ -23,7 +23,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-2.css?v=9">
+<link rel="stylesheet" href="style-2.css?v=10">
 <style type="text/css">
    header {
     background: #fff;
@@ -567,7 +567,7 @@ AOS.init({
     var triggers = document.querySelectorAll(".srini-chat-trigger");
     var iframeLoaded = false;
     function resolveChatApi(e) { e = String(e || "").trim(); if (!e) return ""; try { var t = new URL(e); if (t.hostname === "localhost" || t.hostname === "127.0.0.1") return "https://srinilm.onrender.com"; } catch (x) {} return e.replace(/\/$/, ""); }
-    function getIframeSrc() { var api = resolveChatApi((sidebar && sidebar.getAttribute("data-chat-api")) || (typeof window.SRINI_CHAT_API !== "undefined" ? window.SRINI_CHAT_API : "") || ""); var src = (sidebar && sidebar.getAttribute("data-chatbot-src")) || "./chatbot/"; var base = src.replace(/\/$/, "") + "/"; var cb = "9"; return api ? base + "?api=" + encodeURIComponent(api) + "&cb=" + cb : base + "?cb=" + cb; }
+    function getIframeSrc() { var api = resolveChatApi((sidebar && sidebar.getAttribute("data-chat-api")) || (typeof window.SRINI_CHAT_API !== "undefined" ? window.SRINI_CHAT_API : "") || ""); var src = (sidebar && sidebar.getAttribute("data-chatbot-src")) || "./chatbot/"; var base = src.replace(/\/$/, "") + "/"; var cb = "10"; return api ? base + "?api=" + encodeURIComponent(api) + "&cb=" + cb : base + "?cb=" + cb; }
     function setOpen(open) { document.body.classList.toggle("chat-open", !!open); if (sidebar) sidebar.setAttribute("aria-hidden", !open); triggers.forEach(function(t) { t.setAttribute("aria-label", open ? "Close AI chat" : "Open AI chat"); t.setAttribute("aria-expanded", !!open); }); if (open && sidebar && !iframeLoaded) { var iframe = document.createElement("iframe"); iframe.title = "Proxy AI chat"; iframe.src = getIframeSrc(); sidebar.appendChild(iframe); iframeLoaded = true; } }
     triggers.forEach(function(t) { t.addEventListener("click", function() { setOpen(!document.body.classList.contains("chat-open")); }); });
     window.addEventListener("message", function(e) { if (e.data === "srini-chat-close") setOpen(false); });
@@ -586,6 +586,6 @@ AOS.init({
     if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", runChatBounceIntro); } else { runChatBounceIntro(); }
   })();
   </script>
-  <script src="ui-sounds.js?v=9"></script>
+  <script src="ui-sounds.js?v=10"></script>
 
 </body></html>
