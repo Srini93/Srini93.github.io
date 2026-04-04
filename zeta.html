@@ -591,6 +591,15 @@ AOS.init({
       });
     }
     if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", runChatBounceIntro); } else { runChatBounceIntro(); }
+    function openChatFromUrlIfNeeded() {
+      try {
+        var u = new URL(window.location.href);
+        var sp = u.searchParams;
+        if (sp.get("chat") === "1" || sp.get("chat") === "true" || sp.get("openChat") === "1") { setOpen(true); return; }
+        if (u.hash === "#chat" || u.hash === "#open-chat") { setOpen(true); }
+      } catch (e) {}
+    }
+    if (document.readyState === "loading") { document.addEventListener("DOMContentLoaded", openChatFromUrlIfNeeded); } else { openChatFromUrlIfNeeded(); }
   })();
   </script>
   <script src="ui-sounds.js?v=26"></script>
