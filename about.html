@@ -683,7 +683,10 @@ or contact me below</p>
     if (!s) return '';
     try {
       var u = new URL(s);
-      if (u.hostname === 'localhost' || u.hostname === '127.0.0.1') return CHAT_API_PUBLIC;
+      if (u.hostname === 'localhost' || u.hostname === '127.0.0.1') {
+        var pageHost = window.location.hostname || '';
+        if (pageHost !== 'localhost' && pageHost !== '127.0.0.1') return CHAT_API_PUBLIC;
+      }
     } catch (e) {}
     return s.replace(/\/$/, '');
   }

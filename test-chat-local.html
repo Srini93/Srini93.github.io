@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Local chat test (iframe only)</title>
+  <style>
+    body { font-family: system-ui, sans-serif; margin: 0; padding: 16px; background: #f0f0f0; }
+    code { background: #e8e8e8; padding: 2px 6px; border-radius: 4px; font-size: 13px; }
+    iframe { width: min(420px, 100%); height: 85vh; border: 1px solid #ccc; border-radius: 16px; background: #fff; }
+  </style>
+</head>
+<body>
+  <p>
+    This page loads the chatbot app against <strong>your local API</strong> on port 9000.
+    Start the site from the repo root: <code>python3 -m http.server 8765</code>
+    and the API: <code>cd backend &amp;&amp; uvicorn server:app --host 127.0.0.1 --port 9000</code>
+    (requires <code>GROQ_API_KEY</code> in <code>backend/.env</code>, or use Ollama per <code>backend/.env.example</code>).
+  </p>
+  <p>Open: <code>http://127.0.0.1:8765/test-chat-local.html</code></p>
+  <iframe title="Proxy chat" src="chatbot/?api=http://127.0.0.1:9000&cb=local"></iframe>
+</body>
+</html>

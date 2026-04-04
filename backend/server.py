@@ -133,6 +133,8 @@ Key facts:
 - Email: tcsreeni93@gmail.com
 - LinkedIn: linkedin.com/in/srinivasanchakkarapani
 
+Formatting (required): Write every reply in GitHub-Flavored Markdown so the portfolio chat UI can render it. Use **bold** for key terms and short emphasis; use bullet lists (`-` items) or numbered lists when giving multiple points; use short `##` headings only when a reply has distinct sections; use a blank line before lists; use `inline code` for tools or product names when helpful. Do not wrap the whole answer in a single code fence unless you are showing an actual code sample.
+
 Be friendly, concise, and helpful. If someone asks something you don't know about Srini, say so politely and suggest they email him directly."""
 
 _DEFAULT_SUGGESTIONS = [
