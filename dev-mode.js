@@ -210,6 +210,7 @@
     '}',
     '.pro-mode-panel:not(.is-dragging) {',
     '  cursor: grab;',
+    '  transition: left 0.2s cubic-bezier(0.25, 0.8, 0.25, 1), top 0.2s cubic-bezier(0.25, 0.8, 0.25, 1);',
     '}',
     '.pro-mode-panel .pro-mode-close,',
     '.pro-mode-panel .pro-mode-toggle-row,',
@@ -262,6 +263,73 @@
     } catch (e) {}
   }
 
+  /** Snap panel to nearest of 9 slots: corners, edge midpoints, center (same margin as drag clamp). */
+  var SNAP_MARGIN = 8;
+
+  function snapPanelToNearestSlot(el) {
+    if (!el || !el.parentNode) return;
+    var w = el.offsetWidth;
+    var h = el.offsetHeight;
+    var vw = window.innerWidth;
+    var vh = window.innerHeight;
+    var m = SNAP_MARGIN;
+    if (w < 1 || h < 1) return;
+
+    var l0;
+    var t0;
+    var ls = el.style.left;
+    var ts = el.style.top;
+    if (ls && ts && ls !== 'auto' && ts !== 'auto') {
+      l0 = parseFloat(ls);
+      t0 = parseFloat(ts);
+    }
+    if (isNaN(l0) || isNaN(t0)) {
+      var r0 = el.getBoundingClientRect();
+      l0 = r0.left;
+      t0 = r0.top;
+    }
+
+    if (vw < w + 2 * m || vh < h + 2 * m) {
+      l0 = Math.max(m, Math.min(vw - w - m, l0));
+      t0 = Math.max(m, Math.min(vh - h - m, t0));
+      el.style.right = 'auto';
+      el.style.bottom = 'auto';
+      el.style.left = l0 + 'px';
+      el.style.top = t0 + 'px';
+      return;
+    }
+
+    var candidates = [
+      [m, m],
+      [vw - w - m, m],
+      [m, vh - h - m],
+      [vw - w - m, vh - h - m],
+      [Math.round((vw - w) / 2), m],
+      [Math.round((vw - w) / 2), vh - h - m],
+      [m, Math.round((vh - h) / 2)],
+      [vw - w - m, Math.round((vh - h) / 2)],
+      [Math.round((vw - w) / 2), Math.round((vh - h) / 2)]
+    ];
+
+    var bestL = candidates[0][0];
+    var bestT = candidates[0][1];
+    var bestD = Infinity;
+    for (var i = 0; i < candidates.length; i++) {
+      var cl = candidates[i][0];
+      var ct = candidates[i][1];
+      var d = (l0 - cl) * (l0 - cl) + (t0 - ct) * (t0 - ct);
+      if (d < bestD) {
+        bestD = d;
+        bestL = cl;
+        bestT = ct;
+      }
+    }
+    el.style.right = 'auto';
+    el.style.bottom = 'auto';
+    el.style.left = bestL + 'px';
+    el.style.top = bestT + 'px';
+  }
+
   function setupPanelDrag(el) {
     if (panelDragCleanup) {
       panelDragCleanup();
@@ -269,22 +337,7 @@
     }
 
     function clampToViewport() {
-      var w = el.offsetWidth;
-      var h = el.offsetHeight;
-      var l = parseFloat(el.style.left);
-      var t = parseFloat(el.style.top);
-      if (isNaN(l) || isNaN(t)) {
-        var r = el.getBoundingClientRect();
-        l = r.left;
-        t = r.top;
-      }
-      var maxL = Math.max(8, window.innerWidth - w - 8);
-      var maxT = Math.max(8, window.innerHeight - h - 8);
-      l = Math.max(8, Math.min(maxL, l));
-      t = Math.max(8, Math.min(maxT, t));
-      el.style.bottom = 'auto';
-      el.style.left = l + 'px';
-      el.style.top = t + 'px';
+      snapPanelToNearestSlot(el);
     }
 
     var dragging = false;
@@ -293,12 +346,13 @@
 
     function onPointerMove(e) {
       if (!dragging) return;
+      var m = SNAP_MARGIN;
       var w = el.offsetWidth;
       var h = el.offsetHeight;
       var l = e.clientX - offsetX;
       var t = e.clientY - offsetY;
-      l = Math.max(8, Math.min(window.innerWidth - w - 8, l));
-      t = Math.max(8, Math.min(window.innerHeight - h - 8, t));
+      l = Math.max(m, Math.min(window.innerWidth - w - m, l));
+      t = Math.max(m, Math.min(window.innerHeight - h - m, t));
       el.style.left = l + 'px';
       el.style.top = t + 'px';
       el.style.bottom = 'auto';
@@ -314,6 +368,7 @@
       try {
         el.releasePointerCapture(e.pointerId);
       } catch (err) {}
+      snapPanelToNearestSlot(el);
       persistPanelPosition(el);
     }
 
