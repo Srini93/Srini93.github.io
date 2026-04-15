@@ -283,6 +283,7 @@
     line-height: 1.5;
     display: inline-block;
     padding-bottom: 4px;
+    text-align: left;
   }
   .logo-srini::after { display: none; }
 
@@ -297,7 +298,7 @@
     .logo-srini {
       font-size: 12px;
       top: 2rem;
-      left: 5%;
+      left: 2rem;
       letter-spacing: 1px;
       transform: none;
     }
@@ -567,6 +568,132 @@
     .hamburgler-menu-list li { display: block !important; float: none !important; }
     header { padding-bottom: 0 !important; }
   }
+
+  /* ── Case study: left nav + coral/brown active highlight ── */
+  html {
+    scroll-behavior: smooth;
+  }
+  .case-study-page-wrap {
+    --case-layout-max: 1320px;
+    --case-nav-w: 100px;
+    --case-nav-gap: 1rem;
+    box-sizing: border-box;
+    max-width: var(--case-layout-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1.5rem 3rem;
+    /* Match logo-srini (left: 4rem) + TOC width + gap so main column clears the fixed nav */
+    padding-left: calc(4rem + var(--case-nav-w) + var(--case-nav-gap));
+    text-align: left;
+  }
+  .case-study-toc {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    /* Align with .logo-srini (desktop: left: 4rem) */
+    left: 4rem;
+    width: var(--case-nav-w);
+    max-height: min(380px, 70vh);
+    overflow-y: auto;
+    z-index: 60;
+    font-family: "MyWebFont";
+    font-size: 16px;
+    line-height: 1.45;
+    -webkit-overflow-scrolling: touch;
+  }
+  .case-study-toc nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .case-study-toc a {
+    display: block;
+    color: #9aa0ad;
+    text-decoration: none;
+    padding: 6px 8px 6px 12px;
+    border-left: 3px solid transparent;
+    border-radius: 0 6px 6px 0;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    text-align: left;
+  }
+  .case-study-toc a:hover {
+    color: #5c6370;
+    background: rgba(0, 0, 0, 0.03);
+  }
+  .case-study-toc a.is-active {
+    color: rgba(62, 61, 61, 1);
+    font-weight: 600;
+    border-left-color: rgba(59, 101, 239, 1);
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .case-study-main-col {
+    min-width: 0;
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    text-align: left;
+  }
+  #about, .case-study-main-col [id^="cs-"] {
+    scroll-margin-top: 5rem;
+  }
+  @media screen and (max-width: 1279px) {
+    .case-study-page-wrap {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
+    }
+    .case-study-toc {
+      display: none;
+    }
+  }
+
+  /* Scroll-driven blur reveal (main column blocks) */
+  .case-study-main-col > .case-study-scroll-reveal {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translate3d(0, 12px, 0);
+    transition:
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, filter, transform;
+  }
+
+  .case-study-main-col > .case-study-scroll-reveal.is-revealed {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .case-study-main-col > .case-study-scroll-reveal {
+      opacity: 1 !important;
+      filter: none !important;
+      transform: none !important;
+      transition: none !important;
+      will-change: auto !important;
+    }
+  }
+
+  /* Overview + project meta: two columns on wide viewports */
+  .case-study-overview-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem 3rem;
+    align-items: start;
+    padding: 5%;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  @media screen and (min-width: 880px) {
+    .case-study-overview-row {
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+    }
+  }
+  .case-study-overview-col-meta.wrapper {
+    padding-left: 0;
+    padding-top: 0;
+  }
 </style>
 
 <body>
@@ -597,6 +724,18 @@
 </header>
    
 
+<div class="case-study-page-wrap">
+<aside class="case-study-toc" aria-label="On this page">
+  <nav>
+    <a href="#about">Introduction</a>
+    <a href="#cs-overview">Overview</a>
+    <a href="#cs-interviews">Research</a>
+    <a href="#cs-ideation">Design</a>
+    <a href="#cs-final-mvp">Launch &amp; outcomes</a>
+  </nav>
+</aside>
+<div class="case-study-main-col">
+
 <div id="about" style="/* height:30%; */background:#FFF;">
        
     <p class="h1">
@@ -609,15 +748,9 @@ spreadsheets  <br> on your handhelds
      </div>
 </div>
 
-<div style="
-    display: flex;
-    flex-wrap: wrap;
-    padding: 5%;
-">
-  <div style="
-    flex: 3 0 600px;
-">
-     <p class="txt3" style="
+<div class="case-study-overview-row">
+  <div>
+     <p class="txt3" id="cs-overview" style="
     padding: 0;
 ">Overview</p>
      <div class="txt4" style="
@@ -626,10 +759,11 @@ spreadsheets  <br> on your handhelds
      <p style="flex: 3;">
        Zoho Sheet is an online SaaS-based spreadsheet application in the Zoho docs suite. Given the role of the product designer, I was responsible for designing mobile products for the existing web application. The primary goals were to design an intuitive mobile application that allows users to view, edit, share spreadsheets on the go. Spreadsheets were always complex for people who worked on it and we tried to simplify the experience on a mobile device thorugh this project.
 <br>
+     </p>
     </div>
 </div>
 
-  <div style="flex: 3 0 450px;padding-left: 8rem;padding-top: 1rem;" class="wrapper">
+  <div class="case-study-overview-col-meta wrapper">
     <h2 style="
     font-weight: 500;
     font-family: &quot;MyWebFont&quot;;
@@ -782,7 +916,7 @@ spreadsheets  <br> on your handhelds
 
 
 <div class="Container">
-  <p class="txt3">
+  <p class="txt3" id="cs-interviews">
     User Interviews - Inquiring users for valuable insights
   </p>
   <p class="txt4">
@@ -915,7 +1049,7 @@ Other than the feature oriented insights there were few other common attributes 
   <div style="
     flex: 3 0 400px;
 ">
-     <p class="txt3" style="
+     <p class="txt3" id="cs-ideation" style="
     padding: 0;
 ">Ideation: Zeroing in the features</p>
 <div style="
@@ -1073,7 +1207,7 @@ Other than the feature oriented insights there were few other common attributes 
     flex: 3 0 400px;
 ">
 
-     <p class="txt3" style="
+     <p class="txt3" id="cs-final-mvp" style="
     padding: 0; margin-top: 2%; font-size: 200%
 ">Final Product: The minimum viable features</p>
   </div>
@@ -1584,10 +1718,11 @@ The thought process was to place the function bar in a not disturbing place when
     margin-bottom: 1rem;
 ">Widgets | 3D Touch</h2>
     <p style="
-    font-weight: 500;
-    font-family: &quot;MyWebFont1&quot;;
+    font-family: &quot;MyWebFont&quot;;
+    font-size: 16px;
+    color: #444;
+    line-height: 1.6;
     margin-bottom: 1rem;
-    line-height: 2;
 ">The widgets provisioned users to access the most used spreadsheet without having the need to open the application everytime which reduces an extra step for users who are constantly accessing the same spreadsheets every day. The 3D Touch functionality also provides users to quickly create a new spreadsheet or access their favourite spreadsheet at ease.
   </div>
 </div>
@@ -1876,6 +2011,8 @@ The version 2 of Zoho Sheet involved a lot of feature additions which could tran
           
     </div>
     </div>
+</div>
+</div>
 </div>
 <hr>
 
@@ -2179,7 +2316,53 @@ window.onscroll = function() {
   }
 })();
 </script>
+<script>
+(function () {
+  var nav = document.querySelector('.case-study-toc nav');
+  if (!nav) return;
+  var links = nav.querySelectorAll('a[href^="#"]');
+  var sections = [];
+  links.forEach(function (a) {
+    var id = a.getAttribute('href').slice(1);
+    var el = id ? document.getElementById(id) : null;
+    if (el) sections.push({ id: id, el: el });
+  });
+  if (!sections.length) return;
+  function setActive(activeId) {
+    links.forEach(function (a) {
+      a.classList.toggle('is-active', a.getAttribute('href').slice(1) === activeId);
+    });
+  }
+  var focusY = 120;
+  var ticking = false;
+  function pickActive() {
+    var docEl = document.documentElement;
+    if (window.scrollY + window.innerHeight >= docEl.scrollHeight - 2) {
+      setActive(sections[sections.length - 1].id);
+      return;
+    }
+    var picked = sections[0].id;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].el.getBoundingClientRect().top <= focusY) picked = sections[i].id;
+    }
+    setActive(picked);
+  }
+  function onScrollOrResize() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      pickActive();
+      ticking = false;
+    });
+  }
+  pickActive();
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize, { passive: true });
+})();
+</script>
+<script src="case-study-scroll-reveal.js"></script>
 <script src="ui-sounds.js?v=26"></script>
+<script src="dev-mode.js"></script>
 
 </div></body></html>
 
