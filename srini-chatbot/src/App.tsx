@@ -171,9 +171,10 @@ function ChatHeader({ onReset }: { onReset: () => void }) {
         onClick={(ev) => ev.stopPropagation()}
         role="note"
       >
-        Hi, I&apos;m Proxy
+        I&apos;m <strong>Proxy</strong>—I use <strong>AI</strong> to answer questions about Srini&apos;s work, here as a friendly guide through
+        his portfolio rather than the final word on every detail.
         <br />
-        thanks for bearing with me.
+        I can get things wrong; if something actually matters to you, please double-check it.
       </div>
     </header>
   )

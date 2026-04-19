@@ -164,6 +164,26 @@
     '    0 0 0 1px rgba(0, 200, 100, 0.3) !important;',
     '}',
     '',
+    '/* Spacing values tooltip (mousemove, mono px readout) */',
+    '.pro-mode-spacing-tip {',
+    '  position: fixed;',
+    '  z-index: 99996;',
+    '  pointer-events: none;',
+    '  visibility: hidden;',
+    '  padding: 6px 9px;',
+    '  background: rgba(8, 18, 14, 0.94);',
+    '  border: 1px solid rgba(0, 200, 100, 0.5);',
+    '  border-radius: 6px;',
+    '  font-family: "SF Mono", "Fira Code", "Consolas", "Liberation Mono", monospace;',
+    '  font-size: 10px;',
+    '  line-height: 1.4;',
+    '  color: #8ef5b0;',
+    '  letter-spacing: 0.03em;',
+    '  white-space: pre;',
+    '  box-shadow: 0 4px 18px rgba(0,0,0,0.4);',
+    '  max-width: min(280px, calc(100vw - 16px));',
+    '}',
+    '',
     '/* Ensure pro panel always stays dark */',
     '.pro-mode-panel, .pro-mode-panel * {',
     '  outline: none !important;',
@@ -549,6 +569,114 @@
   var gridOn = false;
   var boxesOn = false;
   var spacingsOn = false;
+  var spacingTipEl = null;
+  var spacingMoveHandler = null;
+
+  function ensureSpacingTipEl() {
+    if (spacingTipEl) return spacingTipEl;
+    spacingTipEl = document.createElement('div');
+    spacingTipEl.className = 'pro-mode-spacing-tip';
+    spacingTipEl.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(spacingTipEl);
+    return spacingTipEl;
+  }
+
+  function hideSpacingTip() {
+    if (spacingTipEl) spacingTipEl.style.visibility = 'hidden';
+  }
+
+  function positionSpacingTip(clientX, clientY) {
+    if (!spacingTipEl) return;
+    var pad = 14;
+    var w = spacingTipEl.offsetWidth;
+    var h = spacingTipEl.offsetHeight;
+    var left = clientX + pad;
+    var top = clientY + pad;
+    if (left + w > window.innerWidth - 6) left = clientX - w - pad;
+    if (top + h > window.innerHeight - 6) top = clientY - h - pad;
+    if (left < 6) left = 6;
+    if (top < 6) top = 6;
+    spacingTipEl.style.left = left + 'px';
+    spacingTipEl.style.top = top + 'px';
+  }
+
+  function formatSpacingReadout(cs) {
+    var m =
+      'm ' +
+      cs.marginTop +
+      ' ' +
+      cs.marginRight +
+      ' ' +
+      cs.marginBottom +
+      ' ' +
+      cs.marginLeft;
+    var p =
+      'p ' +
+      cs.paddingTop +
+      ' ' +
+      cs.paddingRight +
+      ' ' +
+      cs.paddingBottom +
+      ' ' +
+      cs.paddingLeft;
+    var lines = m + '\n' + p;
+    var disp = cs.display || '';
+    if (
+      (disp.indexOf('flex') !== -1 || disp.indexOf('grid') !== -1) &&
+      cs.gap &&
+      cs.gap !== 'normal'
+    ) {
+      var gNum = parseFloat(cs.gap);
+      if (!isNaN(gNum) && gNum !== 0) {
+        lines += '\ng ' + cs.gap;
+      }
+    }
+    return lines;
+  }
+
+  function detachSpacingMouse() {
+    if (spacingMoveHandler) {
+      document.removeEventListener('mousemove', spacingMoveHandler);
+      spacingMoveHandler = null;
+    }
+    hideSpacingTip();
+  }
+
+  function removeSpacingTipNode() {
+    detachSpacingMouse();
+    if (spacingTipEl && spacingTipEl.parentNode) {
+      spacingTipEl.parentNode.removeChild(spacingTipEl);
+    }
+    spacingTipEl = null;
+  }
+
+  function attachSpacingMouse() {
+    if (spacingMoveHandler) return;
+    spacingMoveHandler = function (e) {
+      if (!spacingsOn || !active) return;
+      var el = document.elementFromPoint(e.clientX, e.clientY);
+      if (!el || !el.tagName) {
+        hideSpacingTip();
+        return;
+      }
+      if (el.closest && el.closest('.pro-mode-panel')) {
+        hideSpacingTip();
+        return;
+      }
+      if (gridOverlay && (el === gridOverlay || el.classList.contains('pro-mode-grid-overlay'))) {
+        hideSpacingTip();
+        return;
+      }
+      var cs = getComputedStyle(el);
+      var tip = ensureSpacingTipEl();
+      tip.textContent = formatSpacingReadout(cs);
+      tip.style.visibility = 'visible';
+      requestAnimationFrame(function () {
+        positionSpacingTip(e.clientX, e.clientY);
+      });
+    };
+    document.addEventListener('mousemove', spacingMoveHandler, { passive: true });
+  }
 
   function toggleGrid() {
     gridOn = !gridOn;
@@ -570,6 +698,11 @@
     spacingsOn = !spacingsOn;
     document.body.classList.toggle('pro-mode-spacings', spacingsOn);
     document.getElementById('pro-chk-spacings').classList.toggle('on', spacingsOn);
+    if (spacingsOn) {
+      attachSpacingMouse();
+    } else {
+      detachSpacingMouse();
+    }
   }
 
   function updateStats() {
@@ -645,6 +778,7 @@
     if (gridOverlay) gridOverlay.remove();
     if (styles.parentNode) styles.remove();
     document.body.classList.remove('pro-mode-boxes', 'pro-mode-spacings');
+    removeSpacingTipNode();
     panel = null;
     gridOverlay = null;
     gridOn = false;
