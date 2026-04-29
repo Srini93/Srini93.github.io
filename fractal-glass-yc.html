@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fractal Glass — YC Startup School 2026 style</title>
+
+  <!-- Monospace-style display font that mirrors YC's typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="fractal-glass.css" />
+
+  <style>
+    :root {
+      --yc-bg: #efe7d2;        /* warm cream */
+      --yc-text: #2b221a;      /* dark warm brown */
+      --yc-orange: #ff4a00;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: var(--yc-bg);
+      color: var(--yc-text);
+      font-family: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* --- Hero shell --- */
+    .yc-hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      min-height: 640px;
+      overflow: hidden;
+    }
+
+    /* The FractalGlass scene — fills the hero as the background layer */
+    .yc-fx {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+
+    /* --- Top bar --- */
+    .yc-top {
+      position: absolute;
+      top: 28px;
+      left: 32px;
+      right: 32px;
+      z-index: 30;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 18px;
+    }
+
+    /* Brush-stroke underline drawn under the header */
+    .yc-header-brush {
+      position: absolute;
+      left: -4px;
+      right: -4px;
+      bottom: 0;
+      width: calc(100% + 8px);
+      height: 28px;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .yc-brush-stroke {
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      vector-effect: non-scaling-stroke;
+    }
+    .yc-brush-stroke--a {
+      stroke: var(--yc-orange);
+      stroke-width: 3.25;
+      opacity: 0.92;
+      filter: url(#yc-brush-roughen);
+    }
+    .yc-brush-stroke--b {
+      stroke: var(--yc-text);
+      stroke-width: 2;
+      opacity: 0.22;
+    }
+    @keyframes yc-brush-draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .yc-brush-stroke {
+        animation: none !important;
+        stroke-dashoffset: 0 !important;
+      }
+    }
+    .yc-logo {
+      width: 42px;
+      height: 42px;
+      background: var(--yc-orange);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Georgia, 'Times New Roman', serif;
+      font-weight: 700;
+      font-size: 28px;
+      line-height: 1;
+      border-radius: 4px;
+      text-transform: none;
+    }
+    .yc-nav {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+    .yc-nav a { color: var(--yc-text); text-decoration: none; }
+    .yc-nav a:hover { opacity: 0.7; }
+    .yc-register {
+      border: 1.5px solid var(--yc-text);
+      border-radius: 999px;
+      padding: 12px 26px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .yc-register:hover {
+      background: var(--yc-text);
+      color: var(--yc-bg);
+      opacity: 1;
+    }
+
+    /* --- Hero body (headline + place + subtitle) --- */
+    .yc-body {
+      position: absolute;
+      inset: 0;
+      padding: 110px 5% 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .yc-body > * { pointer-events: auto; }
+
+    .yc-title-block {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: end;
+      gap: 40px;
+      row-gap: 48px;
+    }
+    .yc-title {
+      font-size: clamp(48px, 7.5vw, 104px);
+      line-height: 0.98;
+      letter-spacing: -0.015em;
+      margin: 0;
+      font-weight: 500;
+      color: var(--yc-text);
+    }
+    .yc-place {
+      font-size: clamp(44px, 6.8vw, 96px);
+      font-weight: 500;
+      line-height: 0.98;
+      letter-spacing: -0.015em;
+      align-self: end;
+      color: var(--yc-text);
+    }
+    .yc-sub {
+      font-size: 14px;
+      line-height: 1.5;
+      max-width: 500px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      margin: 32px 0 0 0;
+    }
+
+    /* --- Circular down arrow --- */
+    .yc-arrow {
+      position: absolute;
+      left: 50%;
+      bottom: 36px;
+      transform: translateX(-50%);
+      width: 58px;
+      height: 58px;
+      border-radius: 999px;
+      border: 1.5px solid var(--yc-text);
+      background: transparent;
+      color: var(--yc-text);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 25;
+      transition: background 0.2s, color 0.2s;
+    }
+    .yc-arrow:hover {
+      background: var(--yc-text);
+      color: var(--yc-bg);
+    }
+
+    @media (max-width: 768px) {
+      .yc-body { padding: 96px 6% 96px; }
+      .yc-title-block {
+        grid-template-columns: 1fr;
+        row-gap: 24px;
+      }
+      .yc-place { justify-self: end; }
+      .yc-top { top: 20px; left: 20px; right: 20px; }
+      .yc-register { padding: 10px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="yc-hero">
+    <!-- Fractal Glass background -->
+    <div id="yc-scene" class="yc-fx"></div>
+
+    <!-- Top bar -->
+    <header class="yc-top">
+      <svg class="yc-header-brush" viewBox="0 0 1200 36" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <filter id="yc-brush-roughen" x="-5%" y="-50%" width="110%" height="200%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.06 0.9" numOctaves="2" seed="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+        <!-- Organic paths read as a wide brush drag -->
+        <path class="yc-brush-stroke yc-brush-stroke--b"
+          d="M0 22 C140 30 260 14 400 22 S680 28 840 18 S1040 26 1200 20" />
+        <path class="yc-brush-stroke yc-brush-stroke--a"
+          d="M0 20 C160 12 280 28 440 20 S700 14 880 22 S1020 16 1200 24" />
+      </svg>
+      <div class="yc-logo" aria-label="Y Combinator">Y</div>
+      <nav class="yc-nav">
+        <a href="#">Sign in</a>
+        <a href="#" class="yc-register">Register</a>
+      </nav>
+    </header>
+
+    <!-- Hero content -->
+    <div class="yc-body">
+      <div class="yc-title-block">
+        <h1 class="yc-title">Startup School<br />2026<br />Jul 25&ndash;26</h1>
+        <div class="yc-place">SF.CA</div>
+      </div>
+      <p class="yc-sub">
+        Y Combinator's Startup School is a two-day, in-person gathering
+        of the most ambitious technical builders in the world.
+      </p>
+    </div>
+
+    <!-- Down arrow -->
+    <button class="yc-arrow" aria-label="Scroll down">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="4" x2="12" y2="20"/>
+        <polyline points="6 14 12 20 18 14"/>
+      </svg>
+    </button>
+  </section>
+
+  <script src="fractal-glass.js"></script>
+  <script>
+    // Configured to match the YC Startup School 2026 header:
+    // warm cream bg, orange-red glow positioned low, more (narrower) columns,
+    // and the inset frame highlight disabled for a full-bleed look.
+    FractalGlass.create(document.getElementById('yc-scene'), {
+      bgColor: '#efe7d2',
+      glowColor: '#ef3a00',
+      glowSecondary: '#ff6a26',
+      glowSize: 80,
+      glowY: 72,
+      glowIntensity: 1,
+      columnCount: 24,
+      blur: 22,
+      columnOpacity: 0.14,
+      darkOpacity: 0.14,
+      columnBorderWidth: 3,
+      blendMode: 'overlay',
+      wrap: 0,
+      insetHighlight: 0,
+      insetOpacity: 0
+    });
+
+    (function initHeaderBrush() {
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var paths = document.querySelectorAll('.yc-brush-stroke');
+      for (var i = 0; i < paths.length; i++) {
+        var path = paths[i];
+        var len = path.getTotalLength();
+        path.style.strokeDasharray = len + ' ' + len;
+        path.style.strokeDashoffset = reduce ? '0' : String(len);
+        if (!reduce) {
+          var delay = i * 0.14;
+          var dur = i === 0 ? 1.35 : 1.15;
+          path.style.animation =
+            'yc-brush-draw ' + dur + 's cubic-bezier(0.33, 0.9, 0.4, 1) ' + delay + 's forwards';
+        }
+      }
+    })();
+  </script>
+</body>
+</html>

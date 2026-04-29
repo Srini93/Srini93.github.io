@@ -315,13 +315,29 @@
     align-items: center;
     min-height: 65px;
     justify-content: flex-end;
-    padding: 0 2rem 0 0;
+    padding: 0 0.75rem 0 0;
     overflow: visible;
   }
   header nav {
     display: flex;
     justify-content: flex-end;
     flex: 1;
+    min-width: 0;
+  }
+  /* Full-bleed header so background spans viewport */
+  .frame #site-content-wrap > header {
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    box-sizing: border-box;
+    padding-right: max(8px, env(safe-area-inset-right, 0px));
+    padding-left: max(8px, env(safe-area-inset-left, 0px));
+  }
+  @media screen and (min-width: 769px) {
+    .frame #site-content-wrap > header .hamburgler-icon-wrapper {
+      right: max(8px, env(safe-area-inset-right, 0px)) !important;
+    }
   }
 
   /* ── Hamburger menu overrides ── */
@@ -433,6 +449,7 @@
     justify-content: flex-end !important;
     height: 100%;
     padding-top: 40px !important;
+    padding-left: 1rem !important;
     padding-right: 1rem !important;
     overflow: visible !important;
   }
@@ -573,10 +590,13 @@
   html {
     scroll-behavior: smooth;
   }
+  body:has(.case-study-page-wrap) {
+    /* Space Mono + padding: fits longest label (“Launch & outcomes”) */
+    --case-nav-w: 168px;
+    --case-nav-gap: 1rem;
+  }
   .case-study-page-wrap {
     --case-layout-max: 1320px;
-    --case-nav-w: 100px;
-    --case-nav-gap: 1rem;
     box-sizing: border-box;
     max-width: var(--case-layout-max);
     margin-left: auto;
@@ -589,22 +609,50 @@
   .case-study-toc {
     position: fixed;
     top: 50%;
+    top: 50dvh;
     transform: translateY(-50%);
-    /* Align with .logo-srini (desktop: left: 4rem) */
+    transition:
+      top 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    /* Align left edge with .logo-srini (desktop: left: 4rem) */
     left: 4rem;
     width: var(--case-nav-w);
-    max-height: min(380px, 70vh);
+    height: min(380px, 70vh);
+    height: min(380px, 70dvh);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    justify-content: safe center;
     overflow-y: auto;
     z-index: 60;
-    font-family: "MyWebFont";
-    font-size: 16px;
+    font-family: "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 13px;
     line-height: 1.45;
     -webkit-overflow-scrolling: touch;
+  }
+  .case-study-toc.case-study-toc--pinned {
+    top: max(6.75rem, calc(env(safe-area-inset-top, 0px) + 5.5rem));
+    transform: none;
+    height: auto;
+    max-height: min(380px, calc(100vh - 8rem));
+    max-height: min(380px, calc(100dvh - 8rem));
+    justify-content: flex-start;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .case-study-toc {
+      transition: none;
+      top: max(6.75rem, calc(env(safe-area-inset-top, 0px) + 5.5rem));
+      transform: none;
+      height: auto;
+      max-height: min(380px, calc(100dvh - 8rem));
+      justify-content: flex-start;
+    }
   }
   .case-study-toc nav {
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
+    flex-shrink: 0;
   }
   .case-study-toc a {
     display: block;
@@ -615,6 +663,9 @@
     border-radius: 0 6px 6px 0;
     transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
     text-align: left;
+    white-space: normal;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
   .case-study-toc a:hover {
     color: #5c6370;
@@ -633,6 +684,9 @@
     margin: 0;
     text-align: left;
   }
+  .case-study-main-col #about img.img1 {
+    border-radius: clamp(10px, 1.5vw, 20px);
+  }
   #about, .case-study-main-col [id^="cs-"] {
     scroll-margin-top: 5rem;
   }
@@ -643,6 +697,22 @@
     }
     .case-study-toc {
       display: none;
+    }
+  }
+
+  /* Footer #contact: align with case study content column (not full-bleed under #site-content-wrap) */
+  body:has(.case-study-page-wrap) #site-content-wrap > #contact {
+    box-sizing: border-box;
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  @media screen and (min-width: 1280px) {
+    body:has(.case-study-page-wrap) #site-content-wrap > #contact {
+      padding-left: calc(4rem + var(--case-nav-w) + var(--case-nav-gap));
+      padding-right: 1.5rem;
     }
   }
 
@@ -2318,7 +2388,8 @@ window.onscroll = function() {
 </script>
 <script>
 (function () {
-  var nav = document.querySelector('.case-study-toc nav');
+  var aside = document.querySelector('.case-study-toc');
+  var nav = aside && aside.querySelector('nav');
   if (!nav) return;
   var links = nav.querySelectorAll('a[href^="#"]');
   var sections = [];
@@ -2328,6 +2399,31 @@ window.onscroll = function() {
     if (el) sections.push({ id: id, el: el });
   });
   if (!sections.length) return;
+
+  var mqDesktop = window.matchMedia('(min-width: 1280px)');
+  var TOC_PIN_AFTER_SCROLL = 88;
+
+  function prefersReducedMotion() {
+    try {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function updateTocPin() {
+    if (!aside) return;
+    if (!mqDesktop.matches) {
+      aside.classList.remove('case-study-toc--pinned');
+      return;
+    }
+    if (prefersReducedMotion()) {
+      aside.classList.add('case-study-toc--pinned');
+      return;
+    }
+    aside.classList.toggle('case-study-toc--pinned', window.scrollY > TOC_PIN_AFTER_SCROLL);
+  }
+
   function setActive(activeId) {
     links.forEach(function (a) {
       a.classList.toggle('is-active', a.getAttribute('href').slice(1) === activeId);
@@ -2352,12 +2448,21 @@ window.onscroll = function() {
     ticking = true;
     requestAnimationFrame(function () {
       pickActive();
+      updateTocPin();
       ticking = false;
     });
   }
+  updateTocPin();
   pickActive();
   window.addEventListener('scroll', onScrollOrResize, { passive: true });
   window.addEventListener('resize', onScrollOrResize, { passive: true });
+  if (mqDesktop.addEventListener) {
+    mqDesktop.addEventListener('change', function () {
+      updateTocPin();
+    });
+  } else if (mqDesktop.addListener) {
+    mqDesktop.addListener(updateTocPin);
+  }
 })();
 </script>
 <script src="case-study-scroll-reveal.js"></script>

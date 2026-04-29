@@ -19,9 +19,8 @@
   <link href="images/Appicons/iOS/152.png" rel="apple-touch-icon" sizes="152x152" />
   <link href="images/Appicons/iOS/167.png" rel="apple-touch-icon" sizes="167x167" />
   <link href="images/Appicons/iOS/180.png" rel="apple-touch-icon" sizes="180x180" />
-  <link href="images/Appicons/android/192.png" rel="icon" sizes="192x192" />
-  <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128" />
-  <link rel="icon" href="images/favi.png" type="image/png" sizes="16x16">
+  <link href="images/favi.png" rel="icon" sizes="192x192" type="image/png" />
+  <link href="images/favi.png" rel="icon" sizes="128x128" type="image/png" />
 <!-- App Icon Ends -->
 
   <link rel="stylesheet" href="style.css?v=19">
@@ -351,6 +350,33 @@
       display: flex;
       flex-direction: column;
       background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);
+    }
+
+    /* Subtle film grain + paper weave — sits on the gradient only (z-index 0),
+       below water (0) and hero copy (10). Pure CSS, no extra assets. */
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E"),
+        repeating-linear-gradient(
+          105deg,
+          rgba(255, 255, 255, 0.022) 0 1px,
+          transparent 1px 6px
+        );
+      background-size: 256px 256px, auto;
+      background-repeat: repeat, repeat;
+      opacity: 0.5;
+      mix-blend-mode: soft-light;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      header::before {
+        opacity: 0.38;
+      }
     }
 
     header .water-effect-container {
@@ -1143,7 +1169,7 @@
         <div
          class="cards-layout"
           style=" padding-top: 5%; padding-left: 5%; padding-right: 5%; color: #0A2540;">
-          <div  class="cards-layout-image work-image-container"> <img src="images/Intuit.png" style=" width: 90%; border-radius: 4%; ">
+          <div  class="cards-layout-image work-image-container"> <a href="Intuit.html" target="_blank"><img src="images/Intuit.png" style=" width: 90%; border-radius: 4%; "></a>
           </div>
 
           <div style="margin: 24px"></div>
@@ -1151,8 +1177,7 @@
           <div  class="cards-layout-content" style="padding-top: 5%; min-width: 320px;">
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
-            
-            Intuit Assist – GenAI-Powered Developer Assistant</h2>
+            <a href="Intuit.html" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Intuit Assist – GenAI-Powered Developer Assistant</a></h2>
             <p class="project-date">June 2023 - Present</p>
             <ul
              class="card-list-points"
@@ -1185,6 +1210,19 @@
               </div>
               </li>
             </ul>
+
+            <div style="padding-top: 6rem;">
+              <a class="read-more-glass" href="Intuit.html" target="_blank">
+                <div class="read-more-content">
+                  <span class="read-more-text">Read More</span>
+                  <div class="read-more-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M7 7h8.586L5.293 17.293a1 1 0 1 0 1.414 1.414L17 8.414V17a1 1 0 1 0 2 0V7a1 1 0 0 0-1-1H7a1 1 0 0 0 0 2z"/>
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -1196,7 +1234,7 @@
         <div
          class="cards-layout"
           style=" padding-top: 5%; padding-left: 5%; padding-right: 5%; color: #0A2540;">
-          <div  class="cards-layout-image work-image-container"> <img src="images/API.png" style=" width: 90%; border-radius: 4%; ">
+          <div  class="cards-layout-image work-image-container"> <a href="API.html" target="_blank"><img src="images/API.png" style=" width: 90%; border-radius: 4%; "></a>
           </div>
 
           <div style="margin: 24px"></div>
@@ -1204,8 +1242,7 @@
           <div  class="cards-layout-content" style="padding-top: 5%; min-width: 320px;">
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
-            
-            API Experiences – Developer Platform & Integration Tools</h2>
+            <a href="API.html" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">API Experiences – Developer Platform & Integration Tools</a></h2>
             <p class="project-date">Jan 2023 - Present</p>
             <ul
              class="card-list-points"
@@ -1238,6 +1275,19 @@
               </div>
               </li>
             </ul>
+
+            <div style="padding-top: 6rem;">
+              <a class="read-more-glass" href="API.html" target="_blank">
+                <div class="read-more-content">
+                  <span class="read-more-text">Read More</span>
+                  <div class="read-more-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M7 7h8.586L5.293 17.293a1 1 0 1 0 1.414 1.414L17 8.414V17a1 1 0 1 0 2 0V7a1 1 0 0 0-1-1H7a1 1 0 0 0 0 2z"/>
+                    </svg>
+                  </div>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
 

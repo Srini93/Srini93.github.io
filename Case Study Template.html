@@ -1,5 +1,5 @@
 <html><head>
-<title>Srinivasan - About me</title>
+<title>Case study template</title>
 <link rel="icon" type="favi.png" href="favi.png"> 
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -24,7 +24,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-3.css?v=19">
+<link rel="stylesheet" href="style-2.css?v=19">
 <style>
   /* Force Light Mode */
   html {
@@ -37,17 +37,223 @@
     color: #000;
   }
 </style>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-
-
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+ <script src="./jquery.js"></script>
+    <script src="./jquery.cycle2.js"></script>
 
 </head> 
+<style>
+
+@media only screen and (min-width:1000px){
+   video {
+  width: 90%;
+  height: auto;
+}
+ }
+ @media only screen and (min-width: 300px) and (max-width: 600px) {
+     video {
+  width: 70%;
+  height: auto;
+}
+}
+
+.external > * {
+                margin: 0 5px
+            }
+            
+            .external img {
+                width: 100%;
+                height: 80px;
+                object-fit: cover;
+                border-radius: 2px;
+            }
+            
+            .external {
+        display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr;
+          max-width: 800px;
+          margin: 1rem auto;
+            }
+            
+            .cycle-container {
+                position: relative;
+            }
+            
+            .cycle-slideshow {
+                margin: 2%;
+                position: relative;
+                display: block;
+                max-width: 1200px;
+            }
+
+            .cycle-slide {
+              max-width: 100%;
+            }
+            
+            .cycle-pager-active:after {
+                content: '';
+                position: absolute;
+                background: hsla(0, 0%, 56%, 0.5);
+                width: 100%;
+                height: 100%;
+                z-index: 5;
+                top: 0;
+                left: 0;
+            }
+            
+            .cycle-pager-active {
+                position: relative;
+                display: inline-block;
+            }
+   
+.cycle-pager-active {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .cycle-slider-btn {
+            position: absolute;
+            color: rgba(255, 255, 255, .75);
+            z-index: 999;
+            top: 50%;
+            transform: translateY(-50%);
+            position: absolute;
+            fill: white;
+            z-index: 999;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, .15);
+            height: 40px;
+            width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: none;
+            transition: all 0.2s;
+        }
+        
+        .cycle-slider-btn:hover {
+            background: rgba(0, 0, 0, .5);
+        }
+        
+        .cycle-slider-previous-btn {
+            left: 5%;
+        }
+        
+        .cycle-slider-next-btn {
+            right: 5%;
+        }
+        
+        .cycle-slider-btn svg {
+            height: 24px;
+            width: 24px;
+            fill: currentColor;
+        }
+
+.header {
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  width: 100%;
+  background-color: #f1f1f1;
+}
+
+.header h2 {
+  text-align: center;
+}
+
+.progress-container {
+  width: 100%;
+  height: 4px;
+  background: #fff;
+}
+
+.progress-bar {
+  height: 5px;
+  background: #4caf50;
+  position: fixed;
+  
+}
+
+.content {
+  padding: 100px 0;
+  margin: 50px auto 0 auto;
+  width: 80%;
+}
+
+.Container {
+   max-width: 1000px;
+  margin: 1rem;
+}
 
 
+
+.bg-blue{
+  background: #fff;
+   border: 2px solid  #0dc98b;
+}
+
+.bg-sky {
+   background: #fff;
+   border: 2px solid #785ef0;
+ 
+}
+
+.bg-violet {
+    background: #fff;
+   border: 2px solid  #036aff;
+  
+}
+
+.Cards {
+  color: #000;
+    display: grid;
+    grid-template: "cell cell cell";
+    grid-gap: 2rem;
+    align-items: stretch;
+    grid-template-columns: repeat( 3, minmax(320px, 1fr) );
+    padding:0 5rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 95%;
+    padding-top:5%;
+}
+
+@media screen and (max-width: 1000px) {
+  .Cards {
+    padding: 0 2rem;
+    grid-template:
+      "cell"
+      "cell"
+      "cell";
+  }
+}
+
+
+.Card {
+  padding: 1rem;
+  border-radius: 6px;
+
+}
+
+.Card h1 {
+  margin-bottom: 0.5rem;
+}
+
+.Card small {
+  color: hsla(0, 0%, 100%, .75);
+}
+
+.Card p { color: inherit; }
+
+  #logo svg {
+    width: 140px;
+  }
+
+</style>
 
 <!-- Logo -->
 <a href="index.html" class="logo-srini" data-text="srini">srini</a>
@@ -109,16 +315,32 @@
     align-items: center;
     min-height: 65px;
     justify-content: flex-end;
-    padding: 0 2rem 0 0;
+    padding: 0 0.75rem 0 0;
     overflow: visible;
   }
   header nav {
     display: flex;
     justify-content: flex-end;
     flex: 1;
+    min-width: 0;
+  }
+  /* Full-bleed header so background spans viewport (not just .frame width) */
+  .frame #site-content-wrap > header {
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    box-sizing: border-box;
+    padding-right: max(8px, env(safe-area-inset-right, 0px));
+    padding-left: max(8px, env(safe-area-inset-left, 0px));
+  }
+  @media screen and (min-width: 769px) {
+    .frame #site-content-wrap > header .hamburgler-icon-wrapper {
+      right: max(8px, env(safe-area-inset-right, 0px)) !important;
+    }
   }
 
-  /* ── Hamburger menu (override style-3.css to match style.css / index.html) ── */
+  /* ── Hamburger menu overrides ── */
   .hamburgler-icon-wrapper {
     z-index: 10000 !important;
     position: absolute !important;
@@ -227,6 +449,7 @@
     justify-content: flex-end !important;
     height: 100%;
     padding-top: 40px !important;
+    padding-left: 1rem !important;
     padding-right: 1rem !important;
     overflow: visible !important;
   }
@@ -363,396 +586,170 @@
     header { padding-bottom: 0 !important; }
   }
 
-  /* ── About page content styles ── */
-  .txt3 { font-family: 'Fraunces', serif; }
-  .txt4, .txt8, .txt9 {
-    font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* ── Case study: left nav + coral/brown active highlight ── */
+  html {
+    scroll-behavior: smooth;
   }
-  .txt9 {
-    font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: #999;
-    font-size: 14px;
-    padding-left: 5%;
+  body:has(.case-study-page-wrap) {
+    /* Wide enough for Space Mono + padding (“Exploration”, longest template label) */
+    --case-nav-w: 132px;
+    --case-nav-gap: 1rem;
   }
-  p, body {
-    font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  }
-  .mypic {
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px;
-  }
-  .txt3, .txt4, .txt8, .txt9, p, .mypic {
-    animation: slideUpFade 1.2s ease-out;
-  }
-  @keyframes slideUpFade {
-    0% { opacity: 0; transform: translateY(50px); }
-    100% { opacity: 1; transform: translateY(0); }
-  }
-
-  /* Intro row only: flex gap between copy + portrait (not other .txt4 blocks under #about) */
-  #about > #about > .txt4 {
-    gap: 1.25rem 1.75rem;
-    align-items: flex-start;
-  }
-  @media (min-width: 769px) {
-    #about > #about > .txt4 { gap: 1.5rem clamp(1rem, 2.5vw, 1.75rem); }
-  }
-
-  /* Intro portrait — clip must match wrapper (object-fit + img radius is buggy in WebKit/Blink) */
-  .about-profile-photo {
-    flex: 0 0 auto;
-    margin: 0;
-    padding: 0;
-    align-self: center;
-    width: min(320px, 80vw);
-    max-width: 100%;
-    border-radius: 28px;
-    overflow: hidden;
-    line-height: 0;
-    isolation: isolate;
-  }
-  @media (max-width: 768px) {
-    .about-profile-photo { margin: 1.5rem auto 0.75rem; }
-  }
-  .about-profile-photo img {
-    display: block;
-    width: 100%;
-    max-width: none !important;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    border-radius: 28px;
-    object-fit: cover;
-    object-position: center;
-    vertical-align: top;
-    clip-path: inset(0 round 28px);
-    transform: translateZ(0);
-  }
-  @media (max-width: 600px) {
-    .about-profile-photo {
-      width: min(260px, 88vw);
-      margin: 1.25rem auto 0.75rem;
-      border-radius: 24px;
-    }
-    .about-profile-photo img {
-      border-radius: 24px;
-      clip-path: inset(0 round 24px);
-    }
-  }
-
-  /* ── Refined typography palette ──
-     Warm, editorial neutrals inspired by Apple / Stripe systems.
-     --ink:        primary headings  (near-black, warm)
-     --ink-soft:   body copy         (refined slate)
-     --ink-muted:  supporting text   (subtle gray)
-     --ink-quiet:  eyebrows / labels (very subtle)
-     --hair:       hairline borders
-     --tint:       soft section background
-  */
-  :root {
-    --ink: #2c2c2e;
-    --ink-soft: #6e6e73;
-    --ink-muted: #8a8a8e;
-    --ink-quiet: #aeaeb2;
-    --hair: rgba(29, 29, 31, 0.08);
-    --hair-strong: rgba(29, 29, 31, 0.12);
-    --tint: #faf9f6;
-    --accent: #4f6fee;
-    --accent-soft: rgba(79, 111, 238, 0.10);
-  }
-
-  /* ── Soften legacy intro typography so the whole page reads lighter ── */
-  body, p {
-    color: var(--ink-soft);
-  }
-  .txt3 {
-    color: var(--ink) !important;
-  }
-  .txt4, .txt8 {
-    color: var(--ink-soft) !important;
-  }
-  .txt9 {
-    color: var(--ink-muted) !important;
-  }
-  /* Email link in the intro paragraph (inline-styled) */
-  #about .txt4 span a,
-  #about .txt4 p span a {
-    color: var(--ink) !important;
-    font-weight: 500 !important;
-    letter-spacing: 0.04em !important;
-  }
-
-  /* ── How I work ── */
-  .about-howiwork {
-    margin-top: 4rem;
-    padding: 0 5% 1%;
-  }
-  .about-howiwork .txt3 {
-    padding-left: 0 !important;
-    padding-top: 0 !important;
-    margin: 0.25rem 0 1.25rem;
-    color: var(--ink);
-    letter-spacing: -0.012em;
-    line-height: 1.15;
-  }
-  .about-howiwork-eyebrow,
-  .about-mentorship-eyebrow {
-    display: inline-block;
-    font-family: 'Space Mono', 'Courier New', Monaco, monospace;
-    font-size: 11px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--ink-quiet);
-    margin: 0;
-  }
-  .about-howiwork-lead {
-    display: block;
-    margin: 0 0 2.25rem;
-    padding-left: 0 !important;
-    line-height: 1.75;
-    color: var(--ink-soft);
-    font-size: 1.0625rem;
-    font-weight: 400;
-    max-width: 56ch;
-    letter-spacing: 0.001em;
-  }
-  .about-howiwork-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.25rem;
-    margin-top: 1.5rem;
-  }
-  @media (min-width: 720px) {
-    .about-howiwork-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 1.5rem;
-    }
-  }
-  .about-howiwork-card {
-    position: relative;
-    padding: 1.75rem 1.6rem 1.6rem;
-    background: var(--tint);
-    border-radius: 20px;
-    border: 1px solid var(--hair);
-    box-shadow: none;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-                background 0.25s ease,
-                border-color 0.25s ease;
-    display: flex;
-    flex-direction: column;
-    gap: 0.65rem;
-  }
-  .about-howiwork-card:hover {
-    transform: translateY(-2px);
-    background: #fff;
-    border-color: var(--hair-strong);
-    box-shadow: 0 16px 40px rgba(29, 29, 31, 0.06),
-                0 2px 6px rgba(29, 29, 31, 0.04);
-  }
-  .about-howiwork-step {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-family: 'Space Mono', 'Courier New', Monaco, monospace;
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    color: var(--accent);
-    text-transform: uppercase;
-  }
-  .about-howiwork-step::before {
-    content: '';
-    width: 18px;
-    height: 1px;
-    background: var(--accent);
-    opacity: 0.6;
-  }
-  .about-howiwork-card h3 {
-    font-family: 'Fraunces', serif;
-    font-size: 1.375rem;
-    font-weight: 500;
-    color: var(--ink);
-    margin: 0.15rem 0 0.1rem;
-    line-height: 1.25;
-    letter-spacing: -0.012em;
-  }
-  .about-howiwork-card p {
-    font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: var(--ink-soft);
-    line-height: 1.7;
-    margin: 0;
-    font-size: 0.9375rem;
-    font-weight: 400;
-  }
-  .about-howiwork-principles {
-    margin: 2.5rem 0 0;
-    padding-left: 1.1rem;
-    line-height: 1.85;
-    font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: var(--ink-soft);
-    max-width: 56ch;
-    list-style: disc outside;
+  .case-study-page-wrap {
+    --case-layout-max: 1320px;
+    box-sizing: border-box;
+    max-width: var(--case-layout-max);
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 1.5rem 3rem;
+    /* Match logo-srini (left: 4rem) + TOC width + gap so main column clears the fixed nav */
+    padding-left: calc(4rem + var(--case-nav-w) + var(--case-nav-gap));
     text-align: left;
-    font-size: 1rem;
   }
-  .about-howiwork-principles li {
-    float: none !important;
-    display: list-item !important;
-    text-align: left !important;
-    margin-bottom: 0.5rem;
-    list-style: disc outside;
-  }
-  .about-howiwork-principles li::marker {
-    color: var(--ink-quiet);
-  }
-  .about-howiwork-principles li strong {
-    font-weight: 600;
-    color: var(--ink);
-  }
-
-  /* ── Mentorship ── */
-  .about-mentorship {
-    margin-top: 4rem;
-    padding: 0 5% 4%;
-  }
-  .about-mentorship .txt3 {
-    padding-left: 0 !important;
-    padding-top: 0 !important;
-    margin: 0.25rem 0 0.5rem;
-    color: var(--ink);
-    letter-spacing: -0.012em;
-    line-height: 1.15;
-  }
-  .about-mentorship-grid {
+  .case-study-toc {
+    position: fixed;
+    /* Start vertically centered; .case-study-toc--pinned sticks under header (JS) */
+    top: 50%;
+    top: 50dvh;
+    transform: translateY(-50%);
+    transition:
+      top 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    /* Align left edge with .logo-srini (desktop: left: 4rem) */
+    left: 4rem;
+    width: var(--case-nav-w);
+    max-height: min(380px, calc(100vh - 8rem));
+    max-height: min(380px, calc(100dvh - 8rem));
     display: flex;
     flex-direction: column;
-    gap: 2rem;
-    margin-top: 1.5rem;
+    justify-content: flex-start;
     align-items: stretch;
+    overflow-y: auto;
+    z-index: 60;
+    font-family: "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 13px;
+    line-height: 1.45;
+    -webkit-overflow-scrolling: touch;
   }
-  @media (min-width: 960px) {
-    .about-mentorship-grid {
-      flex-direction: row;
-      align-items: flex-start;
-      gap: 3.5rem;
+  .case-study-toc.case-study-toc--pinned {
+    top: max(6.75rem, calc(env(safe-area-inset-top, 0px) + 5.5rem));
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .case-study-toc {
+      transition: none;
+      top: max(6.75rem, calc(env(safe-area-inset-top, 0px) + 5.5rem));
+      transform: none;
     }
   }
-  .about-mentorship-copy {
-    flex: 1 1 0;
-    min-width: 0;
-    max-width: 38rem;
+  .case-study-toc nav {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 0.35rem;
+    flex-shrink: 0;
   }
-  .about-mentorship-lead {
+  .case-study-toc a {
     display: block;
-    line-height: 1.75;
-    margin: 0;
-    color: var(--ink-soft);
-    padding-left: 0 !important;
-    font-size: 1.0625rem;
-    font-weight: 400;
-    letter-spacing: 0.001em;
-  }
-  .about-mentorship-topics {
-    margin: 0;
-    padding-left: 1.1rem;
-    line-height: 1.85;
-    font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    color: var(--ink-soft);
-    list-style: disc outside;
-    text-align: left;
-    font-size: 1rem;
-  }
-  .about-mentorship-topics li {
-    float: none !important;
-    display: list-item !important;
-    text-align: left !important;
-    margin-bottom: 0.5rem;
-    list-style: disc outside;
-  }
-  .about-mentorship-topics li::marker {
-    color: var(--ink-quiet);
-  }
-  .about-mentorship-topics li strong {
-    font-weight: 600;
-    color: var(--ink);
-  }
-  .about-mentorship-cta {
-    align-self: flex-start;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.55rem;
-    margin-top: 0.5rem;
-    padding: 14px 26px;
-    background: var(--ink);
-    color: #fff !important;
-    border-radius: 9999px;
-    font-family: 'Space Mono', 'Courier New', Monaco, monospace;
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    color: #9aa0ad;
     text-decoration: none;
-    box-shadow: 0 4px 14px rgba(29, 29, 31, 0.12);
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-                background 0.2s ease;
+    padding: 6px 8px 6px 12px;
+    border-left: 3px solid transparent;
+    border-radius: 0 6px 6px 0;
+    transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    text-align: left;
+    white-space: normal;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
-  .about-mentorship-cta:hover,
-  .about-mentorship-cta:focus-visible {
-    background: #2c2c2e;
-    transform: translateY(-1px);
-    box-shadow: 0 10px 24px rgba(29, 29, 31, 0.18);
+  .case-study-toc a:hover {
+    color: #5c6370;
+    background: rgba(0, 0, 0, 0.03);
   }
-  .about-mentorship-cta::after {
-    content: '→';
-    font-family: inherit;
-    transition: transform 0.25s ease;
+  .case-study-toc a.is-active {
+    color: rgba(62, 61, 61, 1);
+    font-weight: 600;
+    border-left-color: rgba(59, 101, 239, 1);
+    background: rgba(255, 255, 255, 0.12);
   }
-  .about-mentorship-cta:hover::after { transform: translateX(3px); }
-
-  .about-mentorship-reviews {
-    flex: 0 1 600px;
+  .case-study-main-col {
+    min-width: 0;
     width: 100%;
-    max-width: 600px;
-    height: 540px;
-    border-radius: 20px;
-    overflow: hidden;
-    background: linear-gradient(180deg, #fbfaf6 0%, #f4f3ee 100%);
-    box-shadow: 0 12px 36px rgba(29, 29, 31, 0.06),
-                0 0 0 1px var(--hair);
-    align-self: stretch;
+    max-width: none;
+    margin: 0;
+    text-align: left;
   }
-  @media (min-width: 960px) {
-    .about-mentorship-reviews {
-      align-self: flex-start;
-      height: 560px;
-    }
+  .case-study-main-col #about img.img1 {
+    border-radius: clamp(10px, 1.5vw, 20px);
   }
-  .about-mentorship-reviews iframe {
-    border: 0;
-    width: 100%;
-    height: 100%;
-    display: block;
+  #about, .case-study-main-col [id^="cs-"] {
+    scroll-margin-top: 5rem;
   }
-  @media (max-width: 600px) {
-    .about-mentorship {
-      padding: 0 5% 8%;
+  @media screen and (max-width: 1279px) {
+    .case-study-page-wrap {
+      padding-left: 1.25rem;
+      padding-right: 1.25rem;
     }
-    .about-mentorship-reviews {
-      height: 480px;
-      border-radius: 16px;
+    .case-study-toc {
+      display: none;
     }
-    .about-howiwork-card { padding: 1.5rem 1.4rem 1.4rem; }
   }
 
-  /* Footer (match index.html) */
+  /* Footer — match index.html (gradient, links, colophon) + case-study content alignment */
+  .frame #site-content-wrap > #contact {
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    box-sizing: border-box;
+  }
   #contact {
-    background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%) !important;
+    background: linear-gradient(
+      90deg,
+      rgba(232, 240, 254, 0.2) 0%,
+      rgba(248, 250, 252, 0.2) 50%,
+      rgba(254, 247, 237, 0.2) 100%
+    ) !important;
   }
   #contact .frame {
     box-sizing: border-box;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #contact .txt6 {
+    color: #000 !important;
+    text-align: left !important;
+    padding-top: 0 !important;
+  }
+  #contact .txt6 a {
+    color: #3b65ef !important;
+  }
+  #contact .footertxt {
+    text-align: left !important;
+  }
+  #contact .frame > p {
+    text-align: left !important;
+  }
+  #contact .txt6,
+  #contact .footertxt {
+    padding-left: 5% !important;
+  }
+  .contact-link svg {
+    transition: transform 0.3s ease;
+  }
+  .contact-link:hover svg {
+    transform: translate(3px, -3px);
+  }
+  body:has(.case-study-page-wrap) #contact .frame {
+    max-width: 1320px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  @media screen and (min-width: 1280px) {
+    body:has(.case-study-page-wrap) #contact .frame {
+      padding-left: calc(4rem + var(--case-nav-w) + var(--case-nav-gap));
+      padding-right: 1.5rem;
+    }
   }
   @media screen and (max-width: 768px) {
     #contact .frame {
@@ -762,6 +759,7 @@
     #contact .txt6 {
       font-size: 150% !important;
       line-height: 1.4 !important;
+      text-align: left !important;
       padding-left: 5% !important;
       padding-right: 5% !important;
     }
@@ -784,17 +782,70 @@
       font-size: 130% !important;
     }
   }
-  .txt6,
-  .footertxt {
-    padding-left: 5% !important;
+
+  /* Scroll-driven blur reveal (main column blocks) */
+  .case-study-main-col > .case-study-scroll-reveal {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translate3d(0, 12px, 0);
+    transition:
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, filter, transform;
   }
-  #contact .contact-link svg {
-    transition: transform 0.3s ease;
+
+  .case-study-main-col > .case-study-scroll-reveal.is-revealed {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
   }
-  #contact .contact-link:hover svg {
-    transform: translate(3px, -3px);
+
+  @media (prefers-reduced-motion: reduce) {
+    .case-study-main-col > .case-study-scroll-reveal {
+      opacity: 1 !important;
+      filter: none !important;
+      transform: none !important;
+      transition: none !important;
+      will-change: auto !important;
+    }
+  }
+
+  /* Overview + project meta: two columns on wide viewports */
+  .case-study-overview-row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem 3rem;
+    align-items: start;
+    padding: 5%;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  .case-study-overview-col-copy {
+    min-width: 0;
+  }
+  @media screen and (min-width: 880px) {
+    .case-study-overview-row {
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 450px);
+    }
+  }
+  .case-study-overview-col-meta.wrapper {
+    box-sizing: border-box;
+    padding-top: 1rem;
+    padding-left: clamp(0rem, 2vw, 8rem);
   }
 </style>
+
+<body>
+
+<div class="header">
+  <div class="progress-container">
+    <div class="progress-bar" id="myBar"></div>
+  </div>  
+</div>
+
+<div class="frame">
 
 <div id="site-content-wrap">
 <!-- Header -->
@@ -812,104 +863,126 @@
     </ul>
   </nav>
 </header>
+   
 
-        
- 
-<!-- About me -->
-<div class="frame">
+<div class="case-study-page-wrap">
+<aside class="case-study-toc" aria-label="On this page">
+  <nav>
+    <a href="#about">Cover</a>
+    <a href="#cs-context">About</a>
+    <a href="#cs-discovery">Discovery</a>
+    <a href="#cs-exploration">Exploration</a>
+    <a href="#cs-solution">Solution</a>
+    <a href="#cs-impact">Impact</a>
+  </nav>
+</aside>
+<div class="case-study-main-col">
+
 <div id="about" style="/* height:30%; */">
-       
-   <div id="about" style="/* height:30%; */backgroun;">
-       
-    <p class="txt3">Hello again! 👋</p>
-    <div class="txt4" >
-      
-      <p style="flex: 3;">
-     I'm Srini, a Product Designer passionate about creating digital experiences that blend design, technology, and real human insight. I love being hands-on throughout the entire product journey — from shaping early ideas to crafting interactions and guiding them through implementation. For me, a great product is that perfect harmony of design, experience, and technology.
-
-
-            <br>
-            <br>
-            When I'm not designing, you'll likely find me in a Bay Area café sipping on a cappuccino, exploring a new vegetarian spot, or capturing everyday moments through my camera. I make it a point to take a trip every year to disconnect, recharge, and return with fresh ideas. I'm currently based in the San Francisco Bay Area, though my roots trace back to the vibrant cultural heart of Tamil Nadu, India. 
-
-<br>
-<br>
-Feel free to contact me if you would like to get in touch.
-<br>
-<span><a style="color: #000; font-size: 90%; top: 5%; font-weight: 600; letter-spacing: 1.5px; text-decoration: none; font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"> 
-tcsreeni93@gmail.com </a></span>
-
-      </p>
-      <figure class="about-profile-photo" data-aos="fade-left">
-        <img src="images/My pic 2.png" alt="Srini portrait" width="320" height="400" loading="lazy" decoding="async" />
-      </figure>
-    
+    <p class="h1">[Project title]<br>[One-line subtitle or context]</p>
+    <img class="img1" src="https://placehold.co/1400x720/ffffff/999999?text=Hero+image" alt="" style="margin: 5%">
+    <div class="txt4">
+     <p>[Replace with hero caption, or title, role, and year.]</p>
      </div>
 </div>
 
-<div>
+<div class="case-study-overview-row" id="cs-context">
+  <div class="case-study-overview-col-copy">
+     <p class="txt3" style="padding: 0;">About the project</p>
+     <div class="txt4" style="padding-left: 0;">
+     <p style="flex: 3;">[Two or three sentences: product or feature, users, and constraint. Keep brief; let screenshots and diagrams carry detail.]</p>
+     </div>
+  </div>
+  <div class="case-study-overview-col-meta wrapper">
+    <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 120%;">Role</h2>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.75rem 0; font-size: 18px; margin-bottom: 1.5rem;">[Role or contribution]</p>
+    <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Timeline</h2>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 18px;">[Dates]</p>
+  <h2 style="padding-top: 7%; font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Platform</h2>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 18px;">[e.g. Android, iOS &amp; Web]</p>
+  </div>
+</div>
 
-<div class="about-howiwork" id="how-i-work">
-  <span class="about-howiwork-eyebrow" data-aos="fade-up">Process</span>
-  <p class="txt3" data-aos="fade-up">How I work</p>
-  <p class="txt4 about-howiwork-lead" data-aos="fade-up">
-    I treat product design as a team sport — pairing curiosity with craft. Whether I'm sketching a flow, running a critique, or shipping pixel-perfect screens with engineering, I aim for clarity, momentum, and decisions everyone can stand behind.
+<div align="center" style="padding: 2rem 0;">
+  <img src="https://placehold.co/900x500/eeeeee/777777?text=Context+visual" alt="" style="max-width:1100px; padding-top:3%; width: 95%;">
+</div>
+
+<div id="cs-discovery">
+<div class="Container">
+	<p class="txt3" style="padding-bottom: 2px">
+  Discovery
   </p>
-
-  <div class="about-howiwork-grid">
-    <article class="about-howiwork-card" data-aos="fade-up">
-      <span class="about-howiwork-step">01</span>
-      <h3>Understand</h3>
-      <p>Start with the problem, not the solution. I dig into user research, business context, and constraints, then frame what we're really solving — and why it matters now.</p>
-    </article>
-    <article class="about-howiwork-card" data-aos="fade-up" data-aos-delay="100">
-      <span class="about-howiwork-step">02</span>
-      <h3>Explore &amp; align</h3>
-      <p>I sketch broadly before going deep — multiple directions, fast prototypes, and tight loops with PMs and engineers. Decisions are made together, with tradeoffs on the table.</p>
-    </article>
-    <article class="about-howiwork-card" data-aos="fade-up" data-aos-delay="200">
-      <span class="about-howiwork-step">03</span>
-      <h3>Refine &amp; ship</h3>
-      <p>Polish in the details — micro-interactions, edge cases, accessibility, and copy. I stay close through dev to make sure what ships matches the intent.</p>
-    </article>
-  </div>
-
-  <ul class="about-howiwork-principles" data-aos="fade-up">
-    <li><strong>Default to clarity</strong> — short writing, named decisions, visible tradeoffs.</li>
-    <li><strong>Prototype to think</strong> — interactive artifacts move conversations forward faster than slides.</li>
-    <li><strong>Design with engineers</strong> — the best craft happens when design and code grow together.</li>
-    <li><strong>Stay curious</strong> — I keep a running list of questions, books, and tools to learn from.</li>
-  </ul>
+  <p class="txt4">[Artifacts only: maps, notes, clusters, insight callouts—avoid long methodology text.]</p>
+</div>
+<div align="center" style="padding-bottom: 3%;">
+  <img src="https://placehold.co/1100x420/eeeeee/555555?text=Research+artifact" alt="" style="max-width:1100px; padding-top:3%; width: 95%;">
+</div>
+<p class="txt4" style="padding-top:0; padding-left: 5%;">[One or two insights that changed direction.]</p>
+<div class="Container">
+  <p class="txt3">[Insight 1]</p>
+  <p class="txt4">[Summary.]</p>
+</div>
+<div class="Container">
+  <p class="txt3">[Insight 2]</p>
+  <p class="txt4">[Summary.]</p>
+</div>
+<div class="Container">
+  <p class="txt3">[Insight 3]</p>
+  <p class="txt4">[Summary.]</p>
+</div>
 </div>
 
-<div class="about-mentorship" id="mentorship">
-  <span class="about-mentorship-eyebrow" data-aos="fade-up">Giving back</span>
-  <p class="txt3" data-aos="fade-up">Mentorship</p>
-  <div class="about-mentorship-grid">
-    <div class="about-mentorship-copy" data-aos="fade-up">
-      <p class="txt4 about-mentorship-lead">
-        I mentor designers around the world on portfolio reviews, interview prep, and growing their craft. My goal is practical, actionable feedback—you should leave a session with a short list of concrete things to try next.
-      </p>
-      <ul class="about-mentorship-topics">
-        <li><strong>Portfolio &amp; case-study narrative</strong> — structure, hierarchy, and what to cut</li>
-        <li><strong>Interview prep</strong> — articulating process, tradeoffs, and outcomes</li>
-        <li><strong>Product design craft</strong> — flows, systems, and cross-functional collaboration</li>
-      </ul>
-      <a class="about-mentorship-cta" id="adplist-profile-link" href="https://adplist.org/mentors/srini-chakkarapani" target="_blank" rel="noopener noreferrer">Book a session</a>
+<div id="cs-exploration">
+<div style="display: flex; flex-wrap: wrap; padding: 5%;">
+  <div style="flex: 3 0 600px;">
+     <p class="txt3" style="padding: 0;">Exploration</p>
+     <div class="txt4" style="padding-left: 0;">
+     <p style="flex: 3;">[Sketches, wireframes, alternatives—including ideas you did not ship. Short note on what you narrowed to and why.]</p>
     </div>
-    <section class="about-mentorship-reviews" data-aos="fade-up" aria-label="Mentor reviews">
-      <iframe src="https://adplist.org/widgets/reviews?src=srini-chakkarapani" title="Mentor reviews" width="100%" height="100%" loading="lazy"></iframe>
-    </section>
   </div>
 </div>
-
+<div align="center"><img src="https://placehold.co/900x520/f5f5f5/666666?text=Exploration+A" alt="" style="max-width:1100px; padding-top:3%; width: 95%;"></div>
+<div align="center"><img src="https://placehold.co/900x520/f0f0f0/666666?text=Exploration+B" alt="" style="max-width:1100px; padding-top:3%; width: 95%;"></div>
 </div>
 
+<div id="cs-solution">
+<div style="display: flex; flex-wrap: wrap; padding: 5%;">
+  <div style="flex: 3 0 600px;">
+     <p class="txt3" style="padding: 0;">Solution</p>
+     <div class="txt4" style="padding-left: 0;">
+     <p style="flex: 3;">[Final UI, flows, before/after, or prototype—short annotations.]</p>
+    </div>
+  </div>
+</div>
+<div align="center">
+  <img src="https://placehold.co/1200x680/ffffff/666666?text=Final+screens" alt="" style="max-width:1100px; padding-top:3%; width: 95%;">
+</div>
+</div>
 
+<div id="cs-impact">
+<div style="display: flex; flex-wrap: wrap; padding: 5%;">
+  <div style="flex: 3 0 600px;">
+     <p class="txt3" style="padding: 0;">Impact</p>
+     <div class="txt4" style="padding-left: 0;">
+     <p style="flex: 3 0 400px; line-height: 3rem; padding-bottom: 2%">[Metric or outcome 1 — e.g. primary KPI.]<br>
+[Metric or outcome 2 — optional.]<br>
+[Metric or outcome 3 — qualitative result if needed.]</p>
+     <p style="flex: 3;">[Optional stakeholder or user quote.]</p>
+    </div>
+ </div>
+</div>
 
-  <!-- Footer -->
-  <div id="contact" style="background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);">
-    <div class="frame" style="max-width: 1400px; padding-top: 4rem; padding-bottom: 3rem;">
+<div class="Container">
+  <p class="txt3" style="padding-bottom: 2px">Outcome</p>
+  <p class="txt4">[One sentence on what changed for people or the business.]</p>
+</div>
+</div>
+
+</div>
+</div>
+
+<div id="contact">
+    <div class="frame" style="padding-top: 4rem; padding-bottom: 3rem;">
       <p class="txt6 wrap" style="font-size: 200%; line-height: 1.5;">You made it! Curious to say hello?<br> View my <a
           style="color:#3b65ef; text-decoration:none" href="Resume_Srinivasan.pdf" target="_blank">résumé</a>,
         get in touch 👇</p>
@@ -1032,11 +1105,17 @@ tcsreeni93@gmail.com </a></span>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
+// Progress bar
+window.onscroll = function() {
+  var winScroll = window.scrollY;
+  var height = document.documentElement.clientHeight - 1000;
+  var scrolled = (winScroll / height) * 100;
+  document.getElementById("myBar").style.width = scrolled + "%";
+};
+</script>
+<script>
   $(function(){
     try { AOS.init({ duration: 1200 }); } catch(e) {}
-
-    var y = document.getElementById('current-year');
-    if (y) { y.textContent = new Date().getFullYear(); }
 
     // Smooth scroll links
     $('.desk-menu a[href^="#"]').on("click", function(){
@@ -1063,14 +1142,11 @@ tcsreeni93@gmail.com </a></span>
         $('.hamburgler-backdrop').removeClass('active');
       }
     }
-
     function closeNav(e) {
       $('body').removeClass('hamburgler-active');
       $('.hamburgler-backdrop').removeClass('active');
     }
-
     function ifEscClose(e) { if (e.keyCode == 27) closeNav() }
-
   });
 </script>
 
@@ -1175,6 +1251,96 @@ tcsreeni93@gmail.com </a></span>
   }
 })();
 </script>
+<script>
+(function () {
+  var aside = document.querySelector('.case-study-toc');
+  var nav = aside && aside.querySelector('nav');
+  if (!nav) return;
+  var links = nav.querySelectorAll('a[href^="#"]');
+  var sections = [];
+  links.forEach(function (a) {
+    var id = a.getAttribute('href').slice(1);
+    var el = id ? document.getElementById(id) : null;
+    if (el) sections.push({ id: id, el: el });
+  });
+  if (!sections.length) return;
+
+  var mqDesktop = window.matchMedia('(min-width: 1280px)');
+  var TOC_PIN_AFTER_SCROLL = 88;
+
+  function prefersReducedMotion() {
+    try {
+      return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function updateTocPin() {
+    if (!aside) return;
+    if (!mqDesktop.matches) {
+      aside.classList.remove('case-study-toc--pinned');
+      return;
+    }
+    if (prefersReducedMotion()) {
+      aside.classList.add('case-study-toc--pinned');
+      return;
+    }
+    aside.classList.toggle('case-study-toc--pinned', window.scrollY > TOC_PIN_AFTER_SCROLL);
+  }
+
+  function setActive(activeId) {
+    links.forEach(function (a) {
+      a.classList.toggle('is-active', a.getAttribute('href').slice(1) === activeId);
+    });
+  }
+  var focusY = 120;
+  var ticking = false;
+  function pickActive() {
+    var docEl = document.documentElement;
+    if (window.scrollY + window.innerHeight >= docEl.scrollHeight - 2) {
+      setActive(sections[sections.length - 1].id);
+      return;
+    }
+    var picked = sections[0].id;
+    for (var i = 0; i < sections.length; i++) {
+      if (sections[i].el.getBoundingClientRect().top <= focusY) picked = sections[i].id;
+    }
+    setActive(picked);
+  }
+  function onScrollOrResize() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () {
+      pickActive();
+      updateTocPin();
+      ticking = false;
+    });
+  }
+  updateTocPin();
+  pickActive();
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize, { passive: true });
+  if (mqDesktop.addEventListener) {
+    mqDesktop.addEventListener('change', function () {
+      updateTocPin();
+    });
+  } else if (mqDesktop.addListener) {
+    mqDesktop.addListener(updateTocPin);
+  }
+})();
+</script>
+<script>
+(function () {
+  var el = document.getElementById('current-year');
+  if (el) el.textContent = new Date().getFullYear();
+})();
+</script>
+<script src="case-study-scroll-reveal.js"></script>
 <script src="ui-sounds.js?v=26"></script>
 
-</body></html>
+</div></body></html>
+
+
+</div></body></html>
+

@@ -23,16 +23,55 @@
   var configEl = document.getElementById('password-protect');
   if (!configEl) return;
 
-  var payload = configEl.getAttribute('data-payload') || '';
+  // Normalize: dropped newlines tabs spaces if markup was wrapped (would break base64)
+  var payload = String(configEl.getAttribute('data-payload') || '').replace(/\s/g, '');
   if (!payload) {
     console.warn('[password-protect] No data-payload attribute found.');
     return;
+  }
+
+  function ppEscapeAttr(val) {
+    return String(val)
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;');
+  }
+  function ppEscapeHtml(val) {
+    return String(val)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
   }
 
   // ─── Inject dialog HTML ─────────────────────────────────────────────
   var dialogHTML =
     '<iframe id="pp-contentFrame" style="display:none" allowfullscreen></iframe>' +
     '<div id="pp-dialogWrap">' +
+    // Logo
+    '<a href="index.html" class="pp-logo-srini" data-text="srini">srini</a>' +
+    // Hamburger menu overlay (mobile)
+    '<div class="pp-hamburgler-menu">' +
+    '  <ul class="pp-hamburgler-menu-list">' +
+    '    <li><a href="about.html">About</a></li>' +
+    '    <li><a href="index.html#Selectedworks">Works</a></li>' +
+    '    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>' +
+    '    <li><a class="pp-get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>' +
+    '  </ul>' +
+    '</div>' +
+    // Fixed header with hamburger icon and desktop nav
+    '<header class="pp-header">' +
+    '  <div id="pp-hamburgler" class="pp-hamburgler-icon-wrapper">' +
+    '    <span class="pp-hamburgler-icon"></span>' +
+    '  </div>' +
+    '  <nav>' +
+    '    <ul class="pp-desk-menu">' +
+    '      <li><a href="index.html#Selectedworks">Works</a></li>' +
+    '      <li><a href="about.html">About</a></li>' +
+    '      <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>' +
+    '      <li><a class="pp-get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>' +
+    '    </ul>' +
+    '  </nav>' +
+    '</header>' +
     '  <div id="pp-dialogWrapCell">' +
     '    <div id="pp-mainDialog">' +
     '      <div class="pp-lock-icon">' +
@@ -56,8 +95,9 @@
     '      <div id="pp-getInTouch">' +
     '        <a href="mailto:tcsreeni93@gmail.com">Get in touch to request access.</a>' +
     '      </div>' +
-    '      <div id="pp-securecontext" class="pp-error"><p>Sorry, but password protection only works over a secure connection. Please load this page via HTTPS.</p></div>' +
-    '      <div id="pp-nocrypto" class="pp-error"><p>Your web browser appears to be outdated. Please visit this page using a modern browser.</p></div>' +
+      '      <div id="pp-fileprotocol" class="pp-error"><p>This page cannot unlock when opened straight from Finder/Explorer (<code style="background:rgba(0,0,0,0.08);padding:0 4px;border-radius:4px;">file://</code>). Browsers block Web Crypto there. Serve the folder locally (<code style="background:rgba(0,0,0,0.08);padding:0 4px;border-radius:4px;">npx serve</code> or <code style="background:rgba(0,0,0,0.08);padding:0 4px;border-radius:4px;">python3 -m http.server</code>) and open <code style="background:rgba(0,0,0,0.08);padding:0 4px;border-radius:4px;">http://127.0.0.1:…</code>, or use your published HTTPS site.</p></div>' +
+      '      <div id="pp-securecontext" class="pp-error"><p>Password unlock requires a secure context (HTTPS or <code>http://localhost</code> / <code>http://127.0.0.1</code>). Open the deployed HTTPS URL or run a local web server—not a raw <code>file://</code> path.</p></div>' +
+      '      <div id="pp-nocrypto" class="pp-error"><p>Your browser does not expose Web Crypto here (often non-HTTPS on public hosts, or restricted embeds). Try another browser or load the page over HTTPS.</p></div>' +
     '    </div>' +
     '  </div>' +
     '</div>';
@@ -74,6 +114,12 @@
   var frame      = document.getElementById('pp-contentFrame');
 
   // ─── Sanity checks ─────────────────────────────────────────────────
+  // Opening saved HTML as file:// disables Web Crypto; http://localhost and HTTPS are OK.
+  if (window.location.protocol === 'file:') {
+    document.getElementById('pp-passArea').style.display = 'none';
+    document.getElementById('pp-fileprotocol').style.display = 'block';
+    return;
+  }
   if (!isSecureContext) {
     document.getElementById('pp-passArea').style.display = 'none';
     document.getElementById('pp-securecontext').style.display = 'block';
@@ -443,6 +489,50 @@
     setTimeout(checkButtonState, 10);
   });
   checkButtonState();
+
+  // ─── Hamburger menu toggle ────────────────────────────────────────
+  var hamburgler = document.getElementById('pp-hamburgler');
+  var backdrop = null;
+
+  function ppToggleNav() {
+    var isOpen = document.body.classList.contains('pp-hamburgler-active');
+    document.body.classList.toggle('pp-hamburgler-active');
+    if (!isOpen) {
+      if (!backdrop) {
+        backdrop = document.createElement('div');
+        backdrop.className = 'pp-hamburgler-backdrop';
+        document.body.appendChild(backdrop);
+        backdrop.addEventListener('click', ppCloseNav);
+      }
+      backdrop.classList.add('active');
+    } else {
+      if (backdrop) backdrop.classList.remove('active');
+    }
+  }
+
+  function ppCloseNav() {
+    document.body.classList.remove('pp-hamburgler-active');
+    if (backdrop) backdrop.classList.remove('active');
+  }
+
+  if (hamburgler) {
+    hamburgler.addEventListener('click', ppToggleNav);
+  }
+
+  // Close on Escape key
+  document.addEventListener('keyup', function (e) {
+    if (e.key === 'Escape' && document.body.classList.contains('pp-hamburgler-active')) {
+      ppCloseNav();
+    }
+  });
+
+  // Close when clicking a menu link
+  var menuLinks = document.querySelectorAll('.pp-hamburgler-menu-list a');
+  menuLinks.forEach(function (link) {
+    link.addEventListener('click', function () {
+      setTimeout(ppCloseNav, 100);
+    });
+  });
 
   submitBtn.onclick = doSubmit;
   passEl.onkeypress = function (e) {
