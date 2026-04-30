@@ -1,4 +1,4 @@
-@import url("srini-tokens.css?v=1");
+@import url("srini-tokens.css?v=2");
 
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
@@ -201,7 +201,8 @@ body {
   /*height: 2000px;*/
   overflow-x: hidden;
   background-color: #fff;
-  font-size: 15px;
+  font-size: var(--srini-body-font-size, 15px);
+  line-height: var(--srini-body-line-height, 25px);
   font-family: var(--srini-font-body);
   color: var(--srini-color-text-body);
   text-align: left;
@@ -363,12 +364,12 @@ body {
   position: relative;
   font-family: var(--srini-font-body);
   color: var(--srini-color-text-body);
-  font-size: 15px;
+  font-size: var(--srini-body-font-size, 15px);
 
   padding-left: 5%;
   padding-top: 2%;
   text-align: left;
-  line-height: 2rem;
+  line-height: var(--srini-body-line-height, 25px);
 }
 
 .txt5 {
@@ -379,7 +380,7 @@ body {
   padding-top: 3%;
   padding-left: 5%;
   text-align: left;
-  line-height: 150%;
+  line-height: var(--srini-body-line-height, 25px);
 }
 .txt6 {
   position: relative;
@@ -403,11 +404,11 @@ body {
   position: relative;
   font-family: var(--srini-font-body);
   color: var(--srini-color-text-body);
-  font-size: 100%;
+  font-size: var(--srini-body-font-size, 15px);
   padding-top: 4%;
   padding-left: 5%;
   text-align: left;
-  line-height: 150%;
+  line-height: var(--srini-body-line-height, 25px);
 }
 
 * {
@@ -740,11 +741,11 @@ header {
     position: relative;
     font-family: var(--srini-font-body);
     color: var(--srini-color-text-body);
-    font-size: 100%;
+    font-size: var(--srini-body-font-size, 15px);
     padding-top: 8%;
     padding-left: 5%;
     text-align: left;
-    line-height: 150%;
+    line-height: var(--srini-body-line-height, 25px);
   }
   .foot {
     position: relative;
@@ -867,4 +868,114 @@ header {
   max-width: 1100px;
   width: 100%;
   height: auto;
+}
+
+/* Centered image strip with mild gradient — reuse on any case study */
+.case-study-image-block {
+  --case-study-image-max: 1100px;
+  --case-study-image-pad-y: clamp(1.5rem, 4vw, 3rem);
+  --case-study-image-pad-x: clamp(1rem, 5%, 2.5rem);
+  --case-study-image-bg: linear-gradient(
+    145deg,
+    #f5f7fb 0%,
+    #eef1f9 48%,
+    #f4f2f8 100%
+  );
+
+  margin: 1.75rem 0;
+  padding: var(--case-study-image-pad-y) var(--case-study-image-pad-x);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  background: var(--case-study-image-bg);
+  border-radius: clamp(10px, 1.5vw, 18px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.case-study-page-wrap .case-study-main-col .case-study-image-block {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.case-study-image-block > img,
+.case-study-image-block > a > img {
+  display: block;
+  width: auto;
+  max-width: min(100%, var(--case-study-image-max));
+  height: auto;
+  margin: 0 auto;
+  border-radius: clamp(6px, 1vw, 12px);
+}
+
+.case-study-image-block > video {
+  display: block;
+  width: 100%;
+  max-width: min(100%, var(--case-study-image-max));
+  height: auto;
+  margin: 0 auto;
+  border-radius: clamp(6px, 1vw, 12px);
+  background: rgba(13, 17, 23, 0.06);
+}
+
+/* High-DPI screenshot: wider cap + light depth so scaled-down PNGs stay crisp-looking */
+.case-study-image-block--hq {
+  --case-study-image-max: min(94vw, 1280px);
+}
+.case-study-image-block--hq > img,
+.case-study-image-block--hq > a > img,
+.case-study-image-block--hq > video {
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.1),
+    0 2px 10px rgba(15, 23, 42, 0.06);
+  border-radius: clamp(8px, 1vw, 14px);
+}
+
+/* Slow, subtle drift for custom --case-study-image-bg on figure strips */
+.case-study-image-block.case-study-image-block--gradient-drift {
+  background: var(--case-study-image-bg) no-repeat;
+  background-size: 280% 280%;
+  animation: srini-case-study-gradient-drift 32s ease-in-out infinite alternate;
+}
+
+@keyframes srini-case-study-gradient-drift {
+  0% {
+    background-position: 4% 24%;
+  }
+  100% {
+    background-position: 96% 76%;
+  }
+}
+
+.case-study-image-block > a {
+  display: inline-flex;
+  justify-content: center;
+  max-width: 100%;
+  line-height: 0;
+}
+
+.case-study-image-block figcaption {
+  margin: 0;
+  margin-top: 0.875rem;
+  max-width: min(100%, 42rem);
+  padding: 0 0.25rem;
+  box-sizing: border-box;
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--srini-color-text-muted, #666666);
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-study-image-block {
+    transition: none;
+  }
+  .case-study-image-block.case-study-image-block--gradient-drift {
+    animation: none;
+    background-size: 100% 100%;
+    background-position: 50% 50%;
+  }
 }

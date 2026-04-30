@@ -24,7 +24,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-2.css?v=25">
+<link rel="stylesheet" href="style-2.css?v=29">
 <style>
   /* Force Light Mode */
   html {
@@ -34,7 +34,7 @@
   
   body {
     background: #fff;
-    color: #000;
+    color: var(--srini-color-text-body);
   }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -903,9 +903,12 @@
   </div>
 </div>
 
-<div class="case-study-figure-row" style="padding: 2rem 5% 1rem;">
-  <img src="https://placehold.co/900x500/eeeeee/777777?text=Context+visual" alt="" style="padding-top:3%;">
-</div>
+<!-- Gradient image block: swap src/alt; optional caption in figcaption.
+     Tweak width: style="--case-study-image-max: 900px" on the figure. -->
+<figure class="case-study-image-block">
+  <img src="https://placehold.co/900x500/eeeeee/777777?text=Context+visual" alt="Describe the image for accessibility.">
+  <figcaption>Optional short caption under the image.</figcaption>
+</figure>
 
 <div id="cs-discovery">
 <div class="Container">

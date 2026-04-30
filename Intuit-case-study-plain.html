@@ -24,7 +24,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-2.css?v=26">
+<link rel="stylesheet" href="style-2.css?v=29">
 <style>
   /* Force Light Mode */
   html {
@@ -34,7 +34,7 @@
   
   body {
     background: #fff;
-    color: #000;
+    color: var(--srini-color-text-body);
   }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -173,7 +173,7 @@
 
 .progress-bar {
   height: 5px;
-  background: #4caf50;
+  background: #3b65ef;
   position: fixed;
   
 }
@@ -591,12 +591,12 @@
     scroll-behavior: smooth;
   }
   body:has(.case-study-page-wrap) {
-    /* Wide enough for Space Mono + padding (“Impact & outcome”, longest label) */
-    --case-nav-w: 132px;
+    /* Wide enough for Space Mono + padding (longest sidebar label) */
+    --case-nav-w: 200px;
     --case-nav-gap: 1rem;
   }
   .case-study-page-wrap {
-    --case-layout-max: 1320px;
+    --case-layout-max: 1350px;
     box-sizing: border-box;
     max-width: var(--case-layout-max);
     margin-left: auto;
@@ -678,11 +678,116 @@
     margin: 0;
     text-align: left;
   }
+  .case-study-main-col #about .h1 {
+    padding-left: clamp(0.5rem, 2.25vw, 1.75rem);
+    padding-right: clamp(0.5rem, 1.5vw, 1.25rem);
+  }
   .case-study-main-col #about img.img1 {
     border-radius: clamp(10px, 1.5vw, 20px);
+    width: 100%;
+    max-width: 100%;
+    display: block;
+    box-sizing: border-box;
+    margin: 1rem clamp(0.5rem, 2vw, 1.25rem) 1.5rem;
   }
   #about, .case-study-main-col [id^="cs-"] {
     scroll-margin-top: 5rem;
+  }
+  /* Impact & outcome — typography and measure only (no card chrome) */
+  #cs-impact {
+    box-sizing: border-box;
+    padding: 5%;
+    max-width: 100%;
+  }
+  #cs-impact .impact-outcome-wrap {
+    box-sizing: border-box;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  #cs-impact .impact-outcome-wrap > .txt3 {
+    padding-top: 0 !important;
+    padding-bottom: 0.95rem !important;
+    padding-left: 0 !important;
+    margin: 0 0 0.25rem;
+  }
+  #cs-impact .impact-outcome-prose {
+    padding-left: 0 !important;
+    padding-top: 0;
+    max-width: min(100%, 52rem) !important;
+  }
+  /* Override global nav ul/li rules so real bullets render and align with section title */
+  #cs-impact .impact-outcome-list {
+    font-family: var(--srini-font-body, system-ui, sans-serif) !important;
+    font-size: 15px;
+    line-height: 1.62;
+    margin: 0;
+    margin-left: 0;
+    padding-left: 1.25rem !important;
+    overflow: visible !important;
+    position: relative;
+    z-index: auto;
+    list-style-type: disc !important;
+    list-style-position: outside;
+    color: var(--srini-color-text-body, #374151);
+  }
+  #cs-impact .impact-outcome-list li {
+    float: none !important;
+    display: list-item !important;
+    margin-bottom: 0.85rem;
+    padding-left: 0.35rem;
+    text-align: left;
+  }
+  #cs-impact .impact-outcome-list li:last-child {
+    margin-bottom: 0;
+  }
+  #cs-impact .impact-outcome-list strong.impact-kpi {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #3b65ef;
+    letter-spacing: -0.02em;
+  }
+  #cs-impact .impact-outcome-list strong.impact-term {
+    font-weight: 600;
+    color: var(--srini-color-text-primary, #0f172a);
+  }
+  .case-study-main-col #cs-impact .case-study-figure-row {
+    margin-top: clamp(1.25rem, 3vw, 1.75rem);
+  }
+  .case-study-main-col .case-study-process-note {
+    box-sizing: border-box;
+    margin: 1.5rem auto 0.35rem;
+    padding: 0.65rem 0.85rem;
+    max-width: min(100%, 44rem);
+    text-align: center;
+    font-family: "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12.5px;
+    line-height: 1.58;
+    letter-spacing: 0.01em;
+    color: rgba(90, 94, 104, 0.95);
+    background: rgba(15, 23, 42, 0.035);
+    border-radius: 6px;
+    border: none;
+    border-left: 1px solid rgba(15, 23, 42, 0.1);
+  }
+  .case-study-main-col .case-study-process-note strong {
+    font-weight: 500;
+    color: rgba(75, 79, 88, 1);
+  }
+  .case-study-main-col .case-study-process-note a {
+    color: rgba(80, 84, 94, 1);
+    text-decoration: underline;
+    text-decoration-color: rgba(59, 101, 239, 0.35);
+    text-underline-offset: 0.2em;
+    font-weight: inherit;
+  }
+  .case-study-main-col .case-study-process-note a:hover {
+    color: #3b65ef;
+    text-decoration-color: rgba(59, 101, 239, 0.55);
   }
   @media screen and (max-width: 1279px) {
     .case-study-page-wrap {
@@ -997,6 +1102,22 @@
     line-height: 1.47;
     letter-spacing: -0.01em;
   }
+  #cs-strategy .surf-sum {
+    font-size: 12px;
+    font-weight: 400;
+    color: var(--eco-text-tertiary);
+    margin: 10px 0 0;
+    padding-top: 10px;
+    border-top: 1px solid var(--eco-line);
+    line-height: 1.45;
+    letter-spacing: -0.01em;
+  }
+  #cs-strategy .surf-sum-k {
+    font-weight: 600;
+    color: var(--eco-accent);
+    letter-spacing: -0.02em;
+    margin-right: 0.25em;
+  }
   #cs-strategy .connectors-top {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -1296,7 +1417,7 @@
     <a href="#about">Cover</a>
     <a href="#cs-overview">Overview</a>
     <a href="#cs-strategy">Strategy</a>
-    <a href="#cs-solution">Solution</a>
+    <a href="#cs-solution">Key features in the solution</a>
     <a href="#cs-impact">Impact &amp; outcome</a>
   </nav>
 </aside>
@@ -1304,7 +1425,7 @@
 
 <div id="about" style="/* height:30%; */">
     <p class="h1">Intuit Assist – GenAI-Powered Developer Assistant</p>
-    <img class="img1" src="images/intuit-thumbnail.png" alt="Intuit Assist in the IDE and Development Portal — AI panels with code snippets and documentation answers" style="margin: 5%">
+    <img class="img1" src="images/intuit-thumbnail.png" alt="Intuit Assist in the IDE and Development Portal — AI panels with code snippets and documentation answers" loading="eager" decoding="async">
 </div>
 
 <div class="case-study-overview-stack">
@@ -1333,6 +1454,7 @@
       </div>
       <p class="surf-title">Dev portal</p>
       <p class="surf-sub">Discover docs, assets, components</p>
+      <p class="surf-sum"><span class="surf-sum-k">Summarization</span>Long pages and API guides condensed for quick orientation.</p>
     </div>
     <div class="surf s2">
       <div class="surf-icon" style="background:#FEF3DC;">
@@ -1435,38 +1557,55 @@
   </section>
   <div class="case-study-overview-grid-meta wrapper">
     <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 120%;">Role</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.75rem 0; font-size: 15px; margin-bottom: 1.5rem;">XD, DevX · PM/PD &amp; GenUX</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.75rem 0; font-size: 15px; margin-bottom: 1.5rem;">Lead Designer</p>
     <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Timeline</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">FY23–FY24 · Alpha → Private Beta → GA</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">April – October 2023</p>
   <h2 style="padding-top: 7%; font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Platform</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">Dev portal · IDE · GenUX</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">Web, Desktop</p>
   </div>
 </div>
 
 <div id="cs-solution">
 <div style="display: flex; flex-wrap: wrap; padding: 5%;">
   <div style="flex: 3 0 600px;">
-     <p class="txt3" style="padding: 0;">Solution</p>
+     <p class="txt3" style="padding: 0;">Key features in the solution</p>
      <div class="txt4" style="padding-left: 0;">
-     <p style="flex: 3;">Intuit Assist was framed as the primary developer-facing experience for GenAI-assisted workflows—moving from fragmented tooling toward guided discovery and generation. Delivery progressed through Alpha and Private Beta with explicit content rendering needs: markdown, code blocks, and GenUX components. Knowledge sources evolved in parallel, which influenced pacing for dependency mapping and integration milestones.</p>
+     <p style="flex: 3;">Intuit Assist was framed as the primary developer-facing experience for GenAI-assisted workflows—a single pane of glass where context is preserved as developers move between the portal, IDE, and Slack—moving from fragmented tooling toward guided discovery and generation. Delivery progressed through Alpha and Private Beta with explicit content rendering needs: markdown, code blocks, and GenUX components. Knowledge sources evolved in parallel, which influenced pacing for dependency mapping and integration milestones.</p>
     </div>
   </div>
 </div>
-<div class="case-study-figure-row">
-  <img src="https://placehold.co/1200x680/ffffff/666666?text=Markdown+%2B+code+%2B+GenUX+components" alt="" style="padding-top:3%;">
-</div>
+<figure class="case-study-image-block case-study-image-block--hq" style="--case-study-image-bg: linear-gradient(155deg, #e5f2fb 0%, #d8e8f8 42%, #eef6ff 100%);">
+  <video controls playsinline preload="metadata" aria-label="Intuit Assist solution walkthrough">
+    <source src="Area.mp4" type="video/mp4">
+  </video>
+  <figcaption>Walkthrough — Assist in flow: discovery, code, and follow-up actions in one surface.</figcaption>
+</figure>
+<figure class="case-study-image-block case-study-image-block--hq" style="--case-study-image-bg: linear-gradient(155deg, #e5f2fb 0%, #d8e8f8 42%, #eef6ff 100%);">
+  <img src="images/intuit-assist-transaction-api-vscode.png" width="3058" height="2032" loading="lazy" decoding="async" sizes="(max-width: 640px) 92vw, min(94vw, 1280px)" alt="Intuit Assist in VS Code: developer asks for Transaction API React code; assistant returns a JSON snippet with Add to Code and follow-up actions.">
+  <figcaption>IDE-embedded Assist: natural-language requests map to API-aware responses, code blocks, and one-click actions like “Add to Code.”</figcaption>
+</figure>
+<figure class="case-study-image-block case-study-image-block--hq" style="--case-study-image-bg: linear-gradient(155deg, #e5f2fb 0%, #d8e8f8 42%, #eef6ff 100%);">
+  <video controls playsinline preload="metadata" aria-label="Intuit Assist — summary overview">
+    <source src="Summary.mp4" type="video/mp4">
+  </video>
+  <figcaption>Summary clip — condensed overview tying together strategy and outcomes presented to stakeholders.</figcaption>
+</figure>
 </div>
 
 <div id="cs-impact">
-<div style="padding: 5%; max-width: 100%; box-sizing: border-box;">
+<div class="impact-outcome-wrap">
      <p class="txt3" style="padding: 0;">Impact &amp; outcome</p>
-     <div class="txt4" style="padding-left: 0; max-width: none;">
-     <p style="font-size: 15px; line-height: 1.65; padding-bottom: 1.25rem; margin: 0;">Early UX measurement benchmarks from the deep dive: ~40% answer accuracy in early evaluations; feedback skewed roughly 60% negative to 40% positive—expected for a fast-moving beta—with follow-up mechanisms (homes, structured feedback) planned to tighten the loop.<br>
-Qualitative signal: teams valued directionally correct guidance even when responses needed refinement.</p>
+     <div class="txt4 impact-outcome-prose">
+     <ul class="impact-outcome-list">
+       <li>Reduced time to access support by <strong class="impact-kpi">25–35%</strong>, deflecting common queries through <strong class="impact-term">AI-assisted workflows</strong> and lowering dependency on <strong class="impact-term">support channels</strong></li>
+       <li>Accelerated <strong class="impact-term">IDS</strong> code discovery and integration time by <strong class="impact-kpi">20–30%</strong>, enabling faster <strong class="impact-term">end-to-end implementation</strong> and shortening development cycles</li>
+       <li>Scaled <strong class="impact-term">Intuit Assist</strong> for <strong class="impact-term">DevPortal</strong> to support <strong class="impact-kpi">5K+ developers</strong>, increasing feature adoption and reducing friction across <strong class="impact-term">discovery</strong>, <strong class="impact-term">troubleshooting</strong>, and <strong class="impact-term">integration</strong></li>
+       <li>Elevated <strong class="impact-term">Intuit Assist</strong> as a <strong class="impact-term">strategic platform investment</strong>, featured in <strong class="impact-term">Investor Relations</strong> as part of Intuit’s <strong class="impact-term">AI-led growth narrative</strong> and <strong class="impact-term">developer ecosystem</strong> strategy</li>
+     </ul>
      </div>
      <div class="case-study-figure-row" style="padding-top: 1rem; max-width: 1100px;">
        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #000;">
-         <iframe src="https://www.youtube.com/embed/eweQZPEBeZM?si=0OxUxGk7R8ToHXcg"
+         <iframe src="https://www.youtube.com/embed/eweQZPEBeZM?si=quHk1tnkNCccI07m&amp;start=459"
            title="Impact — YouTube clip"
            loading="lazy"
            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;"
@@ -1474,17 +1613,13 @@ Qualitative signal: teams valued directionally correct guidance even when respon
            allowfullscreen></iframe>
        </div>
        <p class="txt4" style="padding-top: 1rem; margin: 0;">
-         <a href="https://youtu.be/eweQZPEBeZM?si=0OxUxGk7R8ToHXcg" target="_blank" rel="noopener noreferrer" style="color:#3b65ef; text-decoration:none">Watch on YouTube →</a>
+         <a href="https://youtu.be/eweQZPEBeZM?si=quHk1tnkNCccI07m&amp;t=459" target="_blank" rel="noopener noreferrer" style="color:#3b65ef; text-decoration:none">Watch on YouTube →</a>
        </p>
      </div>
-     <div class="txt4" style="padding-left: 0; max-width: none; padding-top: 0.5rem;">
-     <p style="font-size: 15px; line-height: 1.65; margin: 0;">Operational challenges called out in the deck included dependency on GenUX for new components, integrating GenUX surfaces into Assist, and building knowledge sources concurrently with the product—informing sequencing for subsequent quarters.</p>
-     </div>
-     <div class="txt4" style="padding-left: 0; max-width: none; padding-top: 1.25rem;">
-     <p style="font-size: 15px; line-height: 1.65; margin: 0;">Established a shared narrative for GenAI-assisted Developer Experiences—bridging GenUX, portal, and IDE—with a transparent roadmap toward accuracy (prompt gallery, streamlined feedback), richer rendering formats, and more context-aware responses.</p>
-    </div>
 </div>
 </div>
+
+<p class="case-study-process-note" role="note"><strong>Note:</strong> This page is intentionally high-level. For a deeper walkthrough of research, facilitation, milestones, and handoff artifacts, <a href="mailto:tcsreeni93@gmail.com">reach out directly</a>—or use Email / LinkedIn in the footer below.</p>
 
 </div>
 </div>

@@ -11,7 +11,9 @@
 
   /* Text — homepage card copy & hero subtitle */
   --srini-color-text-primary: #000000;
-  --srini-color-text-body: #343434;
+  --srini-color-text-body: #4a4a4a;
+  --srini-body-font-size: 15px;
+  --srini-body-line-height: 25px;
   --srini-color-text-secondary: #333333;
   --srini-color-text-accent: #0a2540;
   --srini-color-text-muted: #666666;

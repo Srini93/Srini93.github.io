@@ -26,7 +26,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-2.css?v=26">
+<link rel="stylesheet" href="style-2.css?v=29">
 <style>
   /* Force Light Mode */
   html {
@@ -36,7 +36,7 @@
   
   body {
     background: #fff;
-    color: #000;
+    color: var(--srini-color-text-body);
   }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
@@ -175,7 +175,7 @@
 
 .progress-bar {
   height: 5px;
-  background: #4caf50;
+  background: #3b65ef;
   position: fixed;
   
 }
@@ -686,6 +686,128 @@
   #about, .case-study-main-col [id^="cs-"] {
     scroll-margin-top: 5rem;
   }
+  /* Key features — numbered pillars (consumer + authoring) */
+  #cs-solution .txt4.cs-solution-features {
+    max-width: min(100%, 52rem);
+  }
+  #cs-solution .cs-solution-feature-list {
+    font-family: var(--srini-font-body, system-ui, sans-serif) !important;
+    font-size: var(--srini-body-font-size, 15px);
+    line-height: var(--srini-body-line-height, 25px);
+    margin: 0.85rem 0 0;
+    padding-left: 1.35rem !important;
+    list-style-type: decimal;
+    list-style-position: outside;
+    color: var(--srini-color-text-body, #374151);
+  }
+  #cs-solution .cs-solution-feature-list li {
+    display: list-item !important;
+    margin-bottom: 0.9rem;
+    padding-left: 0.35rem;
+    text-align: left;
+  }
+  #cs-solution .cs-solution-feature-list li:last-child {
+    margin-bottom: 0;
+  }
+  #cs-solution .cs-solution-feature-list strong.cs-solution-feature-title {
+    font-weight: 600;
+    color: var(--srini-color-text-primary, #0f172a);
+  }
+  /* Impact & outcome — typography and measure only (aligned with Intuit case study) */
+  #cs-impact {
+    box-sizing: border-box;
+    padding: 5%;
+    max-width: 100%;
+  }
+  #cs-impact .impact-outcome-wrap {
+    box-sizing: border-box;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    background: none;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+  #cs-impact .impact-outcome-wrap > .txt3 {
+    padding-top: 0 !important;
+    padding-bottom: 0.95rem !important;
+    padding-left: 0 !important;
+    margin: 0 0 0.25rem;
+  }
+  #cs-impact .impact-outcome-prose {
+    padding-left: 0 !important;
+    padding-top: 0;
+    max-width: min(100%, 52rem) !important;
+  }
+  #cs-impact .impact-outcome-list {
+    font-family: var(--srini-font-body, system-ui, sans-serif) !important;
+    font-size: var(--srini-body-font-size, 15px);
+    line-height: var(--srini-body-line-height, 25px);
+    margin: 0;
+    margin-left: 0;
+    padding-left: 1.25rem !important;
+    overflow: visible !important;
+    position: relative;
+    z-index: auto;
+    list-style-type: disc !important;
+    list-style-position: outside;
+    color: var(--srini-color-text-body, #374151);
+  }
+  #cs-impact .impact-outcome-list li {
+    float: none !important;
+    display: list-item !important;
+    margin-bottom: 0.85rem;
+    padding-left: 0.35rem;
+    text-align: left;
+  }
+  #cs-impact .impact-outcome-list li:last-child {
+    margin-bottom: 0;
+  }
+  #cs-impact .impact-outcome-list strong.impact-kpi {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    color: #3b65ef;
+    letter-spacing: -0.02em;
+  }
+  #cs-impact .impact-outcome-list strong.impact-term {
+    font-weight: 600;
+    color: var(--srini-color-text-primary, #0f172a);
+  }
+  .case-study-main-col #cs-impact .case-study-figure-row {
+    margin-top: clamp(1.25rem, 3vw, 1.75rem);
+  }
+  .case-study-main-col .case-study-process-note {
+    box-sizing: border-box;
+    margin: 1.5rem auto 0.35rem;
+    padding: 0.65rem 0.85rem;
+    max-width: min(100%, 44rem);
+    text-align: center;
+    font-family: "Space Mono", ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 12.5px;
+    line-height: 1.58;
+    letter-spacing: 0.01em;
+    color: rgba(90, 94, 104, 0.95);
+    background: rgba(15, 23, 42, 0.035);
+    border-radius: 6px;
+    border: none;
+    border-left: 1px solid rgba(15, 23, 42, 0.1);
+  }
+  .case-study-main-col .case-study-process-note strong {
+    font-weight: 500;
+    color: rgba(75, 79, 88, 1);
+  }
+  .case-study-main-col .case-study-process-note a {
+    color: rgba(80, 84, 94, 1);
+    text-decoration: underline;
+    text-decoration-color: rgba(59, 101, 239, 0.35);
+    text-underline-offset: 0.2em;
+    font-weight: inherit;
+  }
+  .case-study-main-col .case-study-process-note a:hover {
+    color: #3b65ef;
+    text-decoration-color: rgba(59, 101, 239, 0.55);
+  }
   @media screen and (max-width: 1279px) {
     .case-study-page-wrap {
       padding-left: 1.25rem;
@@ -848,7 +970,7 @@
     padding-top: 1rem;
     padding-left: 0;
     font-size: 15px;
-    line-height: 1.55;
+    line-height: 25px;
   }
 
   /* Single-column readable measure; keep two-column layout only in .case-study-overview-stack (overview | meta) */
@@ -860,11 +982,10 @@
   }
   .case-study-main-col .case-study-overview-grid-overview .txt4,
   .case-study-main-col .case-study-overview-grid-strategy .txt4,
-  .case-study-main-col .case-study-prose-block .txt4,
-  .case-study-main-col #cs-impact .txt4 {
+  .case-study-main-col .case-study-prose-block .txt4 {
     max-width: min(72ch, 100%);
-    font-size: 16px;
-    line-height: 1.65;
+    font-size: 15px;
+    line-height: 25px;
   }
   .case-study-main-col .txt4 p {
     margin-top: 0;
@@ -924,32 +1045,30 @@
 <div class="case-study-page-wrap">
 <aside class="case-study-toc" aria-label="On this page">
   <nav>
-    <a href="#about">Cover</a>
     <a href="#cs-overview">Overview</a>
     <a href="#cs-strategy">Strategy</a>
-    <a href="#cs-solution">Solution</a>
+    <a href="#cs-solution">Key features in the solution</a>
     <a href="#cs-impact">Impact &amp; outcome</a>
   </nav>
 </aside>
 <div class="case-study-main-col">
 
 <div id="about" style="/* height:30%; */">
-    <p class="h1">API Experiences – Developer Platform &amp; Integration Tools</p>
-    <img class="img1" src="https://placehold.co/1400x720/f5f7fa/5c6370?text=REST+%26+GraphQL+APIs" alt="" style="margin: 5%">
+    <p class="h1">API Experiences – Developer Platform & Integration Tools</p>
+    <img class="img1" src="API%20Header%202.png" alt="Intuit Development Portal REST API Explorer with REST API Playground modal for authenticated requests and JSON responses" style="margin: 5%">
 </div>
 
 <div class="case-study-overview-stack">
   <div class="case-study-overview-grid-overview" id="cs-overview">
      <p class="txt3" style="padding: 0;">Overview</p>
      <div class="txt4" style="padding-left: 0;">
-     <p><em>Presentation · June 21, 2023 · XD: Srini Chakkarapani · PM: Anish Dhason · PD: Jakob Harclerode, Saroj Kumar</em></p>
-     <p>An interface that helps software connect and communicate. API-first companies (Stripe, Plaid, Rapyd, Checkr) show how critical developer experience is. GraphQL uses one endpoint for queries; REST uses multiple endpoints for specific HTTP operations—both matter for how we documented and explored APIs in Autura.</p>
+     <p>Intuit's API ecosystem grew fragmented across teams &mdash; no centralized place to discover or author APIs, no uniform testing tools, and a disjointed experience that forced constant context-switching. The unified API Platform consolidates discovery, authoring, testing, and lifecycle management into one coherent surface, replacing a team-by-team patchwork with a foundation that compounds in value with every team that builds on it.</p>
      </div>
   </div>
   <section class="case-study-overview-grid-strategy" id="cs-strategy" aria-labelledby="cs-strategy-heading">
      <p class="txt3" id="cs-strategy-heading" style="padding: 0; margin: 0; text-align: left !important;">Strategy</p>
      <div class="txt4" style="padding-left: 0;">
-     <p>We shipped a hub—API Explorer—for browsing documentation in one place: L0 capabilities, universal guidance, per-API descriptions, endpoints, parameters, and a code playground with sample request/response and test calls.</p>
+     <p>Unify Intuit's fragmented API experience into a single, well-designed platform where discovery, authoring, testing, and lifecycle flow as one continuous developer journey &mdash; establishing the design foundation to scale beyond internal teams and open Intuit's APIs to third-party developers as a core business growth lever.</p>
      </div>
      <figure style="margin: 1.25rem 0 0; padding: 0 0 0 5%; max-width: 100%; box-sizing: border-box;">
        <img src="images/apistart.png" alt="Producing and Consuming APIs — producer loop (create, design, publish) and consumer loop (discover, onboard, authenticate, test)" width="2542" height="1330" style="width: 100%; max-width: 1100px; height: auto; display: block; border-radius: clamp(10px, 1.5vw, 16px); border: 1px solid rgba(0, 0, 0, 0.06); box-sizing: border-box;">
@@ -957,53 +1076,58 @@
   </section>
   <div class="case-study-overview-grid-meta wrapper">
     <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 120%;">Role</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.75rem 0; font-size: 15px; margin-bottom: 1.5rem;">XD lead · Autura DevX</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.75rem 0; font-size: 15px; margin-bottom: 1.5rem;">Product design lead</p>
     <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Timeline</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">Q4 FY23 – Q1 FY24 · MVP Jun 2023</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">Jan 2023 &ndash; Present</p>
   <h2 style="padding-top: 7%; font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Platform</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">Web · Autura · REST first, GraphQL next</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">Web, Desktop</p>
   </div>
 </div>
 
 <div id="cs-solution">
-<div class="case-study-prose-block">
-     <p class="txt3" style="padding: 0;">Solution</p>
-     <div class="txt4" style="padding-left: 0;">
-     <p>Analyzed 20+ API references for documentation patterns. Problem space: APIs were hard to discover in the developer portal; documentation was inconsistent; scaling to a third-party platform needed clearer standards and a single place for guidance.</p>
-     <p>Insights from research and cross-functional FMHs steered the IA toward capability-based grouping and a shared playground pattern.</p>
-     <p><strong>Personas.</strong> <strong>API architects</strong> — create and publish APIs and guidance. <strong>TPMs / PMs</strong> — validate need and pick APIs. <strong>Consumers</strong> — internal and external developers embedding APIs in products.</p>
-     <p><strong>Friction.</strong> Poor discovery in the portal; uneven doc quality; no single home for universal guidance—blocking velocity for teams onboarding to REST and GraphQL.</p>
-     <p><strong>Opportunity.</strong> A global explorer with consistent patterns and testable examples reduces time to first successful call and supports standardization org-wide.</p>
-     <p><strong>Initial FMHs &amp; competitor analysis</strong> — patterned behaviors from public API references. <strong>Go broad to go narrow</strong> — three directions for technical and non-technical readers. <strong>Design validation</strong> — five FMHs with IDE, IDX, and non-API teams to converge on a balanced approach.</p>
-     <p><strong>REST landing</strong> — space inside Autura for REST APIs, universal guides, L0 grouping, search across APIs, endpoints, and objects.</p>
-     <p><strong>Capability &amp; endpoints</strong> — framework-centric view into related endpoints.</p>
-     <p><strong>Documentation</strong> — API name/description; endpoints with URLs; parameters with types, required flags, and descriptions.</p>
-     <p><strong>Code playground</strong> — sample requests/responses across languages and status codes (including errors); edit parameters and run requests.</p>
+<div style="display: flex; flex-wrap: wrap; padding: 5%;">
+  <div style="flex: 3 0 600px;">
+     <p class="txt3" style="padding: 0;">Key features in the solution</p>
+     <div class="txt4 cs-solution-features" style="padding-left: 0;">
+     <p style="flex: 3;">The platform centers on three capabilities that tie consumer adoption to producer quality &mdash; shaped with architects, TPMs, and IDE/IDX partners.</p>
+     <ol class="cs-solution-feature-list">
+       <li><strong class="cs-solution-feature-title">API Explorer for REST and GraphQL &mdash; documentation and playground.</strong> Brings grouped discovery, reference docs, and a runnable playground into one flow so teams shorten time-to-first-call for both REST and GraphQL surfaces.</li>
+       <li><strong class="cs-solution-feature-title">Onboarding and authentication tool.</strong> Walks developers from first-use through credentialing and test-ready contexts so authenticated requests stay repeatable without juggling external tools.</li>
+       <li><strong class="cs-solution-feature-title">Authoring tools for REST and GraphQL schemas.</strong> Gives API owners an opinionated design-to-publish path for REST contracts and GraphQL supergraphs so what ships in catalog matches what consumers see in Explorer.</li>
+     </ol>
     </div>
+  </div>
 </div>
-<div class="case-study-figure-row" style="padding-bottom: 3%;">
-  <img src="https://placehold.co/1100x420/f0f4ff/555555?text=Competitive+API+reference+review" alt="" style="padding-top:3%;">
-</div>
-<div class="case-study-figure-row"><img src="https://placehold.co/900x520/f5f5f5/666666?text=Early+IA+%2B+variants" alt="" style="padding-top:3%;"></div>
-<div class="case-study-figure-row"><img src="https://placehold.co/900x520/f0f0f0/666666?text=Validation+with+mixed+personas" alt="" style="padding-top:3%;"></div>
-<div class="case-study-figure-row">
-  <img src="https://placehold.co/1200x680/ffffff/666666?text=API+Explorer+%E2%80%94+docs+%2B+playground" alt="" style="padding-top:3%;">
-</div>
+<figure class="case-study-image-block case-study-image-block--hq case-study-image-block--gradient-drift" style="--case-study-image-bg: linear-gradient(155deg, #eef2f8 0%, #e5eaf4 42%, #f5f7fb 100%);">
+  <img src="https://placehold.co/1440x720/f6f9fc/4a5668?text=Competitive+API+reference+synthesis" width="1440" height="720" loading="lazy" decoding="async" alt="Slides and notes from benchmarking external API references and documentation norms.">
+  <figcaption>Synthesis across references &mdash; turning competitive patterns into Autura-aligned guidance for writers and readers.</figcaption>
+</figure>
+<figure class="case-study-image-block case-study-image-block--hq case-study-image-block--gradient-drift" style="--case-study-image-bg: linear-gradient(155deg, #eef2f8 0%, #e5eaf4 42%, #f5f7fb 100%);">
+  <img src="https://placehold.co/1440x800/f8fafc/4a5668?text=IA+%2B+design+validation" width="1440" height="800" loading="lazy" decoding="async" alt="Early information architecture sketches and directional explorations validated with mixed personas.">
+  <figcaption>Broad-to-narrow exploration &mdash; IA variants and facilitation notes from FMHs with technical and lighter readers.</figcaption>
+</figure>
+<figure class="case-study-image-block case-study-image-block--hq case-study-image-block--gradient-drift" style="--case-study-image-bg: linear-gradient(155deg, #eef2f8 0%, #e5eaf4 42%, #f5f7fb 100%);">
+  <img src="https://placehold.co/1440x820/fcfdff/455064?text=API+Explorer+%E2%80%94+docs+%2B+playground" width="1440" height="820" loading="lazy" decoding="async" alt="Unified API Explorer combining documentation navigation and runnable code playground.">
+  <figcaption>Explorer surface &mdash; documentation, endpoints, parameters, and a playground wired to multilingual samples.</figcaption>
+</figure>
 </div>
 
 <div id="cs-impact">
-<div class="case-study-prose-block">
+<div class="impact-outcome-wrap">
      <p class="txt3" style="padding: 0;">Impact &amp; outcome</p>
-     <div class="txt4" style="padding-left: 0;">
-     <p>NPS vs. prior experience · Time to discover &amp; consume APIs · Engagement (clicks, scroll, bounce) · Adoption of the documentation pattern across internal APIs</p>
-     <p>“Code theme was long overdue. Good to see one.” — Saroj, Group Engineering Manager</p>
-     <p>“Looks good and clean and offers a much better experience over the previous version.” — Aditi Rajawat, Staff Engineer</p>
-     <p>“As an engineer, I was so glued to the Swagger experience — might take time to adopt the new one.” — Sai Vamsee, Staff Engineer</p>
-     <p style="padding-top: 0.75rem;"><strong>MVP (target June 2023):</strong> updated capability page, REST-first docs, CURL samples with response codes. <strong>Next:</strong> Global Explorer, Postman-style parameter testing, lifecycle alignment with the third-party portal, then GraphQL. Shared code components keep contributions consistent as scale grows.</p>
-     <p style="padding-top: 1rem;">Source: <em>Rest and GraphQL APIs — Deep Dive.pptx</em> · Structured for the portfolio using the case study template.</p>
-    </div>
+     <div class="txt4 impact-outcome-prose">
+     <ul class="impact-outcome-list">
+       <li><strong class="impact-kpi">1,000+</strong> REST APIs and <strong class="impact-kpi">8</strong> supergraphs onboarded into a single governed catalog, establishing the platform as the <strong class="impact-term">canonical source of truth</strong> across Intuit.</li>
+       <li><strong class="impact-kpi">2,500</strong> average DAU discovering APIs daily, signaling deep engagement across <strong class="impact-term">product</strong> and <strong class="impact-term">engineering</strong> teams.</li>
+       <li>Trusted <strong class="impact-term">knowledge source for agentic tools</strong>, powering <strong class="impact-term">AI agents</strong> that autonomously draw on APIs to complete developer workflows.</li>
+       <li>Expanded into a <strong class="impact-term">third-party developer portal</strong>, opening Intuit’s API surface to external businesses and unlocking a new channel for <strong class="impact-term">ecosystem growth</strong>.</li>
+       <li>Streamlined <strong class="impact-term">authoring tools</strong> for REST and GraphQL, cutting average API authoring time by <strong class="impact-kpi">~40%</strong> and giving developers a consistent, opinionated path from <strong class="impact-term">design</strong> to <strong class="impact-term">publish</strong>.</li>
+     </ul>
+     </div>
 </div>
 </div>
+
+<p class="case-study-process-note" role="note"><strong>Note:</strong> This page is intentionally high-level. For a deeper walkthrough of research, facilitation, milestones, and handoff artifacts, <a href="mailto:tcsreeni93@gmail.com">reach out directly</a>&mdash;or use Email / LinkedIn in the footer below.</p>
 
 </div>
 </div>

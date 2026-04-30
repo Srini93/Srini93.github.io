@@ -1,4 +1,4 @@
-@import url("srini-tokens.css?v=1");
+@import url("srini-tokens.css?v=2");
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -72,6 +72,8 @@ body{
   /*height: 2000px;*/
   overflow-x: hidden;
   background-color: #fff;
+  font-size: var(--srini-body-font-size, 15px);
+  line-height: var(--srini-body-line-height, 25px);
   color: var(--srini-color-text-body);
   text-align: left;
 }
