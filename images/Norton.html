@@ -83,6 +83,96 @@
   margin: 50px auto 0 auto;
   width: 80%;
 }
+
+  /* Footer — Intuit-case-study-plain pattern (gradient, links, colophon) */
+  .frame #site-content-wrap > #contact,
+  .frame > #contact {
+    position: relative;
+    width: 100vw;
+    max-width: 100vw;
+    margin-inline: calc(50% - 50vw);
+    box-sizing: border-box;
+  }
+  #contact {
+    background: linear-gradient(
+      90deg,
+      rgba(232, 240, 254, 0.2) 0%,
+      rgba(248, 250, 252, 0.2) 50%,
+      rgba(254, 247, 237, 0.2) 100%
+    ) !important;
+  }
+  #contact .frame {
+    box-sizing: border-box;
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #contact .txt6 {
+    color: #000 !important;
+    text-align: left !important;
+    padding-top: 0 !important;
+  }
+  #contact .txt6 a {
+    color: #3b65ef !important;
+  }
+  #contact .footertxt {
+    text-align: left !important;
+  }
+  #contact .frame > p {
+    text-align: left !important;
+  }
+  #contact .txt6,
+  #contact .footertxt {
+    padding-left: 5% !important;
+  }
+  .contact-link svg {
+    transition: transform 0.3s ease;
+  }
+  .contact-link:hover svg {
+    transform: translate(3px, -3px);
+  }
+  body:has(.case-study-page-wrap) #contact .frame {
+    max-width: 1320px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  @media screen and (min-width: 1280px) {
+    body:has(.case-study-page-wrap) #contact .frame {
+      padding-left: calc(4rem + var(--case-nav-w) + var(--case-nav-gap));
+      padding-right: 1.5rem;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    #contact .frame {
+      padding-top: 2.5rem !important;
+      padding-bottom: 2rem !important;
+    }
+    #contact .txt6 {
+      font-size: 150% !important;
+      line-height: 1.4 !important;
+      text-align: left !important;
+      padding-left: 5% !important;
+      padding-right: 5% !important;
+    }
+    #contact .footer-links,
+    #contact p[style*="font-family"] {
+      font-size: 100% !important;
+      padding-left: 5% !important;
+      padding-right: 5% !important;
+    }
+    #contact .footertxt {
+      padding-left: 5% !important;
+      padding-right: 5% !important;
+      font-size: 12px !important;
+      line-height: 1.6 !important;
+      max-width: 100% !important;
+    }
+  }
+  @media screen and (max-width: 480px) {
+    #contact .txt6 {
+      font-size: 130% !important;
+    }
+  }
 </style>
 
 <div class="header" style="z-index: 1">
@@ -866,9 +956,8 @@ There was no dedicated design / engineering team for implementing this system. H
 
 
 
-  <!-- Footer -->
-  <div id="contact" style="background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);">
-    <div class="frame" style="max-width: 1400px; padding-top: 4rem; padding-bottom: 3rem;">
+  <div id="contact">
+    <div class="frame" style="padding-top: 4rem; padding-bottom: 3rem;">
       <p class="txt6 wrap" style="font-size: 200%; line-height: 1.5;">You made it! Curious to say hello?<br> View my <a
           style="color:#3b65ef; text-decoration:none" href="../Resume_Srinivasan.pdf" target="_blank">résumé</a>,
         get in touch 👇</p>
@@ -880,13 +969,6 @@ There was no dedicated design / engineering team for implementing this system. H
       <p class="footertxt" style="max-width: 600px; padding-top: 3rem; color: #9e9e9e;">Designed and Handcoded in San Francisco Bay with <span style="color:#ff2957;"><span class="semibold">♥</span></span> © <span id="current-year"></span></p>
     </div>
   </div>
-<a style="text-decoration: none; color:#000" href="mailto:tcsreeni93@gmail.com">
-        <p  
-          style="padding-left:5%; padding-top:2%; font-size: 150%;letter-spacing: 0.1em; font-family:mywebfont1;  text-decoration: none; "><a style="text-decoration: none; color: #000" href="mailto: tcsreeni93@gmail.com" >
-          Email 📩 </a> | <a target="_blank" href="https://www.linkedin.com/in/srinivasanchakkarapani/" style="text-decoration: none"><Span style="text-decoration: none; color: #000"> LinkedIn 💼 </Span> </p> </a>
-
-          
-</div>
 
 <!-- Scriptcode-->
 
@@ -947,5 +1029,11 @@ AOS.init({
 </script>
 
 
-</div><script>document.getElementById('current-year').textContent = new Date().getFullYear();</script>
+</div>
+<script>
+(function () {
+  var el = document.getElementById('current-year');
+  if (el) el.textContent = new Date().getFullYear();
+})();
+</script>
 </body></html>

@@ -1,5 +1,5 @@
 <html><head>
-<title>Intuit Assist in Developer Experiences — DevX Design Deep Dive</title>
+<title>Intuit Assist – GenAI-Powered Developer Assistant — Case study</title>
 <link rel="icon" type="favi.png" href="favi.png"> 
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -24,7 +24,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-2.css?v=19">
+<link rel="stylesheet" href="style-2.css?v=26">
 <style>
   /* Force Light Mode */
   html {
@@ -591,7 +591,7 @@
     scroll-behavior: smooth;
   }
   body:has(.case-study-page-wrap) {
-    /* Wide enough for Space Mono + padding (“Exploration”, longest template label) */
+    /* Wide enough for Space Mono + padding (“Impact & outcome”, longest label) */
     --case-nav-w: 132px;
     --case-nav-gap: 1rem;
   }
@@ -812,28 +812,453 @@
     }
   }
 
-  /* Overview + project meta: two columns on wide viewports */
-  .case-study-overview-row {
+  /* Overview + Strategy (full bleed row) + project meta: responsive order */
+  .case-study-overview-stack {
     display: grid;
-    grid-template-columns: 1fr;
     gap: 2rem 3rem;
     align-items: start;
     padding: 5%;
     box-sizing: border-box;
     width: 100%;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "overview"
+      "strategy"
+      "meta";
   }
-  .case-study-overview-col-copy {
+  .case-study-overview-grid-overview {
+    grid-area: overview;
     min-width: 0;
   }
-  @media screen and (min-width: 880px) {
-    .case-study-overview-row {
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 450px);
-    }
+  .case-study-overview-grid-strategy {
+    grid-area: strategy;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: stretch;
   }
-  .case-study-overview-col-meta.wrapper {
+  .case-study-overview-grid-strategy .txt4 {
+    max-width: none;
+  }
+  .case-study-overview-grid-meta {
+    grid-area: meta;
     box-sizing: border-box;
     padding-top: 1rem;
-    padding-left: clamp(0rem, 2vw, 8rem);
+    padding-left: 0;
+  }
+  @media screen and (min-width: 880px) {
+    .case-study-overview-stack {
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 450px);
+      grid-template-areas:
+        "overview meta"
+        "strategy strategy";
+    }
+    .case-study-overview-grid-meta {
+      padding-left: clamp(0rem, 2vw, 8rem);
+    }
+  }
+
+  /* Gen AI ecosystem — Apple / Stripe–inspired: neutral canvas, hairline borders, quiet motion */
+  #cs-strategy {
+    --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --eco-text: #1d1d1f;
+    --eco-text-secondary: #6e6e73;
+    --eco-text-tertiary: #86868b;
+    --eco-line: rgba(0, 0, 0, 0.06);
+    --eco-line-strong: rgba(0, 0, 0, 0.1);
+    --eco-card: #ffffff;
+    --eco-canvas: linear-gradient(180deg, #fafafa 0%, #f5f5f7 100%);
+    --eco-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 4px 16px rgba(0, 0, 0, 0.04);
+    --eco-shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.07), 0 0 0 1px rgba(0, 0, 0, 0.06);
+    --eco-accent: #0077c5;
+    --eco-accent-soft: rgba(0, 119, 197, 0.12);
+    --eco-flow-down: #0077c5;
+    --eco-flow-up: #00a86b;
+    --eco-dark: linear-gradient(165deg, #2d2d30 0%, #1d1d1f 45%, #141416 100%);
+  }
+  #cs-strategy-heading {
+    text-align: left !important;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+  }
+  #cs-strategy .section-lbl {
+    text-align: left;
+  }
+  @keyframes ecoFadeSlideDown {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes ecoFadeSlideUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes ecoFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+  @keyframes ecoPulseSoft {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.92; transform: scale(1.02); }
+  }
+  @keyframes ecoFlowDot {
+    0%   { transform: translateY(0); opacity: 0; }
+    12%  { opacity: 0.85; }
+    88%  { opacity: 0.85; }
+    100% { transform: translateY(36px); opacity: 0; }
+  }
+  @keyframes ecoFlowDotUp {
+    0%   { transform: translateY(32px); opacity: 0; }
+    12%  { opacity: 0.75; }
+    88%  { opacity: 0.75; }
+    100% { transform: translateY(0); opacity: 0; }
+  }
+  @keyframes ecoScaleIn {
+    from { opacity: 0; transform: scale(0.98); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  #cs-strategy .eco {
+    margin-top: 0.5rem;
+    padding: clamp(1.25rem, 3vw, 1.75rem) clamp(1rem, 2.5vw, 1.5rem);
+    font-family: var(--font-sans);
+    max-width: 100%;
+    box-sizing: border-box;
+    background: var(--eco-canvas);
+    border-radius: 16px;
+    border: 1px solid var(--eco-line);
+    box-shadow: var(--eco-shadow);
+    -webkit-font-smoothing: antialiased;
+  }
+  #cs-strategy .section-lbl {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--eco-text-tertiary);
+    margin-bottom: 12px;
+    opacity: 0;
+    animation: ecoFadeIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  #cs-strategy .section-lbl.s1 { animation-delay: 0.08s; }
+  #cs-strategy .section-lbl.s2 { animation-delay: 1.1s; }
+  #cs-strategy .section-lbl.s3 { animation-delay: 2.2s; }
+  #cs-strategy .surfaces-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    margin-bottom: 0;
+  }
+  #cs-strategy .surf {
+    background: var(--eco-card);
+    border: 1px solid var(--eco-line);
+    border-radius: 14px;
+    padding: 18px 16px;
+    opacity: 0;
+    animation: ecoFadeSlideDown 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  }
+  #cs-strategy .surf:hover {
+    border-color: var(--eco-line-strong);
+    box-shadow: var(--eco-shadow-hover);
+    transform: translateY(-2px);
+  }
+  #cs-strategy .surf.s1 { animation-delay: 0.12s; }
+  #cs-strategy .surf.s2 { animation-delay: 0.22s; }
+  #cs-strategy .surf.s3 { animation-delay: 0.32s; }
+  #cs-strategy .surf-icon {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+  #cs-strategy .surf-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    color: var(--eco-text);
+    margin: 0 0 6px;
+    line-height: 1.25;
+  }
+  #cs-strategy .surf-sub {
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--eco-text-secondary);
+    margin: 0;
+    line-height: 1.47;
+    letter-spacing: -0.01em;
+  }
+  #cs-strategy .connectors-top {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    height: 40px;
+    opacity: 0;
+    animation: ecoFadeIn 0.45s ease forwards;
+    animation-delay: 0.75s;
+  }
+  #cs-strategy .conn-col { display: flex; justify-content: center; position: relative; }
+  #cs-strategy .conn-track {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(180deg, var(--eco-line-strong), var(--eco-line));
+    position: relative;
+    overflow: visible;
+    border-radius: 1px;
+  }
+  #cs-strategy .flow-dot {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    margin-left: -2.5px;
+    border-radius: 50%;
+    background: var(--eco-flow-down);
+    box-shadow: 0 0 0 3px rgba(0, 119, 197, 0.15);
+    opacity: 0;
+    animation: ecoFlowDot 2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+  #cs-strategy .conn-col:nth-child(1) .flow-dot { animation-delay: 0.85s; }
+  #cs-strategy .conn-col:nth-child(2) .flow-dot { animation-delay: 1.05s; }
+  #cs-strategy .conn-col:nth-child(3) .flow-dot { animation-delay: 1.25s; }
+  #cs-strategy .intel-band {
+    background: var(--eco-dark);
+    border-radius: 14px;
+    padding: 22px 22px;
+    margin: 4px 0;
+    opacity: 0;
+    animation: ecoScaleIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    animation-delay: 1.05s;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.06) inset,
+      0 12px 40px rgba(0, 0, 0, 0.18);
+  }
+  #cs-strategy .intel-band:hover {
+    transform: translateY(-1px);
+    box-shadow:
+      0 1px 0 rgba(255, 255, 255, 0.08) inset,
+      0 16px 48px rgba(0, 0, 0, 0.22);
+  }
+  #cs-strategy .intel-band::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.18), transparent);
+    opacity: 0.9;
+  }
+  #cs-strategy .intel-inner {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+  }
+  #cs-strategy .intel-orb {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    animation: ecoPulseSoft 4s ease-in-out infinite;
+    animation-delay: 1.4s;
+  }
+  #cs-strategy .intel-text-block { flex: 1; min-width: 0; padding-top: 1px; }
+  #cs-strategy .intel-title {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: #f5f5f7;
+    margin: 0 0 8px;
+    line-height: 1.25;
+  }
+  #cs-strategy .intel-sub {
+    font-size: 13px;
+    line-height: 1.5;
+    letter-spacing: -0.01em;
+    color: rgba(255, 255, 255, 0.58);
+    margin: 0 0 14px;
+  }
+  #cs-strategy .caps {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  #cs-strategy .cap {
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    padding: 6px 11px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    opacity: 0;
+    animation: ecoFadeIn 0.45s ease forwards;
+  }
+  #cs-strategy .cap:nth-child(1) { animation-delay: 1.35s; }
+  #cs-strategy .cap:nth-child(2) { animation-delay: 1.48s; }
+  #cs-strategy .cap:nth-child(3) { animation-delay: 1.61s; }
+  #cs-strategy .cap:nth-child(4) { animation-delay: 1.74s; }
+  #cs-strategy .connectors-bot {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    height: 36px;
+    opacity: 0;
+    animation: ecoFadeIn 0.4s ease forwards;
+    animation-delay: 1.85s;
+  }
+  #cs-strategy .conn-bot { display: flex; justify-content: center; }
+  #cs-strategy .conn-bot-track {
+    width: 1px;
+    height: 36px;
+    background: linear-gradient(0deg, var(--eco-line-strong), var(--eco-line));
+    position: relative;
+    overflow: visible;
+    border-radius: 1px;
+  }
+  #cs-strategy .flow-dot-up {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 5px;
+    height: 5px;
+    margin-left: -2.5px;
+    border-radius: 50%;
+    background: var(--eco-flow-up);
+    box-shadow: 0 0 0 3px rgba(0, 168, 107, 0.14);
+    opacity: 0;
+    animation: ecoFlowDotUp 2.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+  }
+  #cs-strategy .conn-bot:nth-child(1) .flow-dot-up { animation-delay: 2.25s; }
+  #cs-strategy .conn-bot:nth-child(2) .flow-dot-up { animation-delay: 2.45s; }
+  #cs-strategy .conn-bot:nth-child(3) .flow-dot-up { animation-delay: 2.65s; }
+  #cs-strategy .conn-bot:nth-child(4) .flow-dot-up { animation-delay: 2.85s; }
+  #cs-strategy .conn-bot:nth-child(5) .flow-dot-up { animation-delay: 3.05s; }
+  #cs-strategy .sources-row {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+  }
+  #cs-strategy .src {
+    background: var(--eco-card);
+    border: 1px solid var(--eco-line);
+    border-radius: 12px;
+    padding: 14px 12px;
+    opacity: 0;
+    animation: ecoFadeSlideUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    transition: box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1), transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.25s ease;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.8) inset;
+  }
+  #cs-strategy .src:hover {
+    border-color: var(--eco-line-strong);
+    box-shadow: var(--eco-shadow-hover);
+    transform: translateY(-1px);
+  }
+  #cs-strategy .src.s1 { animation-delay: 2.15s; }
+  #cs-strategy .src.s2 { animation-delay: 2.26s; }
+  #cs-strategy .src.s3 { animation-delay: 2.37s; }
+  #cs-strategy .src.s4 { animation-delay: 2.48s; }
+  #cs-strategy .src.s5 { animation-delay: 2.59s; }
+  #cs-strategy .src-dot {
+    width: 22px;
+    height: 22px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+  #cs-strategy .src-title {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    color: var(--eco-text);
+    margin: 0 0 4px;
+    line-height: 1.3;
+  }
+  #cs-strategy .src-sub {
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+    color: var(--eco-text-secondary);
+    margin: 0;
+    line-height: 1.42;
+  }
+  #cs-strategy .footer-note {
+    text-align: left;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--eco-text-tertiary);
+    margin-top: 22px;
+    padding-top: 18px;
+    border-top: 1px solid var(--eco-line);
+    opacity: 0;
+    animation: ecoFadeIn 0.5s ease forwards;
+    animation-delay: 2.85s;
+  }
+  @media (max-width: 720px) {
+    #cs-strategy .eco {
+      padding: 1.125rem 1rem;
+      border-radius: 14px;
+    }
+    #cs-strategy .surfaces-row {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    #cs-strategy .sources-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    #cs-strategy .connectors-top {
+      grid-template-columns: 1fr;
+      height: 28px;
+    }
+    #cs-strategy .conn-col:not(:first-child) { display: none; }
+    #cs-strategy .connectors-bot {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    #cs-strategy .conn-bot:nth-child(n+3) { display: none; }
+    #cs-strategy .intel-inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #cs-strategy .surf,
+    #cs-strategy .section-lbl,
+    #cs-strategy .intel-band,
+    #cs-strategy .cap,
+    #cs-strategy .src,
+    #cs-strategy .footer-note,
+    #cs-strategy .connectors-top,
+    #cs-strategy .connectors-bot,
+    #cs-strategy .flow-dot,
+    #cs-strategy .flow-dot-up {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    #cs-strategy .intel-orb {
+      animation: none !important;
+    }
   }
 </style>
 
@@ -869,50 +1294,153 @@
 <aside class="case-study-toc" aria-label="On this page">
   <nav>
     <a href="#about">Cover</a>
-    <a href="#cs-context">About</a>
-    <a href="#cs-exploration">Exploration</a>
+    <a href="#cs-overview">Overview</a>
+    <a href="#cs-strategy">Strategy</a>
     <a href="#cs-solution">Solution</a>
-    <a href="#cs-impact">Impact</a>
+    <a href="#cs-impact">Impact &amp; outcome</a>
   </nav>
 </aside>
 <div class="case-study-main-col">
 
 <div id="about" style="/* height:30%; */">
-    <p class="h1">Intuit Assist in Developer Experiences</p>
-    <img class="img1" src="https://placehold.co/1400x720/f8fafc/334155?text=Intuit+Assist+%E2%80%94+DevX" alt="" style="margin: 5%">
-    <div class="txt4">
-     <p>DevX design deep dive presentation · September 28, 2022. Experience design: Srini C · PM partners: Anish Dhason, Ashwani Kumar, Kayla N · Portal UI with Bhargavan, Baotam, Bhavana, Tuija · Collaboration: Foundations, GenUX, Knowledge Base &amp; Tools.</p>
-     </div>
+    <p class="h1">Intuit Assist – GenAI-Powered Developer Assistant</p>
+    <img class="img1" src="images/intuit-thumbnail.png" alt="Intuit Assist in the IDE and Development Portal — AI panels with code snippets and documentation answers" style="margin: 5%">
 </div>
 
-<div class="case-study-overview-row" id="cs-context">
-  <div class="case-study-overview-col-copy">
-     <p class="txt3" style="padding: 0;">About the project</p>
+<div class="case-study-overview-stack">
+  <div class="case-study-overview-grid-overview" id="cs-overview">
+     <p class="txt3" style="padding: 0;">Overview</p>
      <div class="txt4" style="padding-left: 0;">
-     <p style="flex: 3;">DevX’s north star was an AI-powered application platform: GenAI-assisted development across coding, testing, and debugging, plus AI-powered app experiences and smarter runtime operations. The immediate problem was velocity—developers still bounced between Slack, search, internal tools, Stack Overflow, Storybook, and Autura to piece answers together. Intuit Assist targeted that fragmentation: use generative AI to unify discovery, summarization, and guided generation so teams spend less time switching apps and more time building.</p>
+     <p style="flex: 3;">Developers across the platform lose meaningful time not in the building, but in the finding — searching for the right API, tracking down a reusable component, or digging through Slack for an answer that's already been given a dozen times. To solve this, we embedded a shared AI intelligence layer across the three surfaces where developers spend most of their time: the portal, the IDE, and Slack — so the right answer surfaces in context, without breaking flow.</p>
      </div>
   </div>
-  <div class="case-study-overview-col-meta wrapper">
-    <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 120%;">Role</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.75rem 0; font-size: 18px; margin-bottom: 1.5rem;">Experience design (XD), DevX · Partnered with PM/PD and GenUX for strategy &amp; ship cadence</p>
-    <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Timeline</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 18px;">FY23–FY24: GenAI Week &amp; GED validations → GenUX alignment → Alpha → Private Beta (Sept target) → broader rollout toward GA</p>
-  <h2 style="padding-top: 7%; font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Platform</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 18px;">Intuit Developer portal · IDE surfaces · GenUX component ecosystem</p>
-  </div>
-</div>
-
-<div id="cs-exploration">
-<div style="display: flex; flex-wrap: wrap; padding: 5%;">
-  <div style="flex: 3 0 600px;">
-     <p class="txt3" style="padding: 0;">Exploration</p>
+  <section class="case-study-overview-grid-strategy" id="cs-strategy" aria-labelledby="cs-strategy-heading">
+     <p class="txt3" id="cs-strategy-heading" style="padding: 0; margin: 0; text-align: left !important;">Strategy</p>
      <div class="txt4" style="padding-left: 0;">
-     <p style="flex: 3;"><strong>Going broad.</strong> Workshops explored where generative AI could accelerate Developer Experiences; we reviewed analogous products and ran structured design explorations around content discovery, API discovery, and widget customization—then aligned early with leadership.<br><br><strong>Stepping stones.</strong> GenAI Week surfaced initial concepts; feedback from the developer community and GED (Global Engineering Days) pressure-tested what was implementable.<br><br><strong>Strategy &amp; alignment.</strong> GenUX consolidated a united experience across Intuit products; requirements were finalized with the broader product group, with a lift-and-shift plan across the Development portal and IDE toward Beta milestones.</p>
+     <p style="flex: 3;">Meet developers where they already work, with AI that understands intent — not just keywords. One shared intelligence layer, expressed across every surface that slows them down.</p>
+     </div>
+     <div class="eco" role="region" aria-label="Gen AI ecosystem: surfaces, shared intelligence layer, and knowledge sources">
+  <div class="section-lbl s1">Developer surfaces</div>
+  <div class="surfaces-row">
+    <div class="surf s1">
+      <div class="surf-icon" style="background:#D6EDFB;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="2" y="2" width="5" height="5" rx="1.2" fill="#0077C5"/>
+          <rect x="9" y="2" width="5" height="5" rx="1.2" fill="#0077C5"/>
+          <rect x="2" y="9" width="5" height="5" rx="1.2" fill="#0077C5"/>
+          <rect x="9" y="9" width="5" height="5" rx="1.2" fill="#4DA3DC"/>
+        </svg>
+      </div>
+      <p class="surf-title">Dev portal</p>
+      <p class="surf-sub">Discover docs, assets, components</p>
+    </div>
+    <div class="surf s2">
+      <div class="surf-icon" style="background:#FEF3DC;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <rect x="1" y="3" width="14" height="10" rx="2" fill="#F5A623" opacity="0.4"/>
+          <path d="M4 6L6.5 8L4 10" stroke="#F5A623" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <rect x="8" y="9.5" width="4" height="1.5" rx="0.75" fill="#F5A623"/>
+        </svg>
+      </div>
+      <p class="surf-title">IDE</p>
+      <p class="surf-sub">In-editor contextual assistance</p>
+    </div>
+    <div class="surf s3">
+      <div class="surf-icon" style="background:#D6F5EC;">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M2 3C2 2.448 2.448 2 3 2H13C13.552 2 14 2.448 14 3V10C14 10.552 13.552 11 13 11H9L6 14V11H3C2.448 11 2 10.552 2 10V3Z" fill="#00A86B" opacity="0.35"/>
+          <rect x="5" y="5.5" width="6" height="1.2" rx="0.6" fill="#00A86B"/>
+          <rect x="5" y="7.8" width="4" height="1.2" rx="0.6" fill="#00A86B"/>
+        </svg>
+      </div>
+      <p class="surf-title">Slack</p>
+      <p class="surf-sub">Auto-answer support queries</p>
     </div>
   </div>
+  <div class="connectors-top">
+    <div class="conn-col">
+      <div class="conn-track"><div class="flow-dot"></div></div>
+    </div>
+    <div class="conn-col">
+      <div class="conn-track"><div class="flow-dot"></div></div>
+    </div>
+    <div class="conn-col">
+      <div class="conn-track"><div class="flow-dot"></div></div>
+    </div>
+  </div>
+  <div class="intel-band">
+    <div class="intel-inner">
+      <div class="intel-orb">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <circle cx="11" cy="11" r="4" fill="rgba(255,255,255,0.9)"/>
+          <circle cx="11" cy="3.5" r="2" fill="rgba(255,255,255,0.5)"/>
+          <circle cx="11" cy="18.5" r="2" fill="rgba(255,255,255,0.5)"/>
+          <circle cx="3.5" cy="11" r="2" fill="rgba(255,255,255,0.5)"/>
+          <circle cx="18.5" cy="11" r="2" fill="rgba(255,255,255,0.5)"/>
+          <line x1="11" y1="5.5" x2="11" y2="7.5" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+          <line x1="11" y1="14.5" x2="11" y2="16.5" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+          <line x1="5.5" y1="11" x2="7.5" y2="11" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+          <line x1="14.5" y1="11" x2="16.5" y2="11" stroke="rgba(255,255,255,0.7)" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="intel-text-block">
+        <p class="intel-title">Shared intelligence layer</p>
+        <p class="intel-sub">Single retrieval and reasoning backbone — consistent answers across every surface</p>
+        <div class="caps">
+          <span class="cap">Retrieval</span>
+          <span class="cap">Reasoning</span>
+          <span class="cap">Response generation</span>
+          <span class="cap">Context awareness</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="connectors-bot">
+    <div class="conn-bot"><div class="conn-bot-track"><div class="flow-dot-up"></div></div></div>
+    <div class="conn-bot"><div class="conn-bot-track"><div class="flow-dot-up"></div></div></div>
+    <div class="conn-bot"><div class="conn-bot-track"><div class="flow-dot-up"></div></div></div>
+    <div class="conn-bot"><div class="conn-bot-track"><div class="flow-dot-up"></div></div></div>
+    <div class="conn-bot"><div class="conn-bot-track"><div class="flow-dot-up"></div></div></div>
+  </div>
+  <div class="section-lbl s3" style="margin-bottom:10px;">Knowledge sources</div>
+  <div class="sources-row">
+    <div class="src s1">
+      <div class="src-dot" style="background:#D6EDFB;"></div>
+      <p class="src-title">Internal docs</p>
+      <p class="src-sub">Dev portal content</p>
+    </div>
+    <div class="src s2">
+      <div class="src-dot" style="background:#FDE8E2;"></div>
+      <p class="src-title">GitHub</p>
+      <p class="src-sub">Repos and assets</p>
+    </div>
+    <div class="src s3">
+      <div class="src-dot" style="background:#FEF3DC;"></div>
+      <p class="src-title">Design system</p>
+      <p class="src-sub">Components, tokens</p>
+    </div>
+    <div class="src s4">
+      <div class="src-dot" style="background:#D6F5EC;"></div>
+      <p class="src-title">API specs</p>
+      <p class="src-sub">References, schemas</p>
+    </div>
+    <div class="src s5">
+      <div class="src-dot" style="background:#D6EDFB;"></div>
+      <p class="src-title">Slack history</p>
+      <p class="src-sub">Past Q&amp;As, threads</p>
+    </div>
+  </div>
+  <p class="footer-note">one intelligence layer · consistent answers · zero context switching</p>
 </div>
-<div align="center"><img src="https://placehold.co/900x520/f5f5f5/666666?text=Workshop+%26+broad+exploration" alt="" style="max-width:1100px; padding-top:3%; width: 95%;"></div>
-<div align="center"><img src="https://placehold.co/900x520/f0f0f0/666666?text=GenAI+Week+%2F+GED+%E2%86%92+GenUX+alignment" alt="" style="max-width:1100px; padding-top:3%; width: 95%;"></div>
+  </section>
+  <div class="case-study-overview-grid-meta wrapper">
+    <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 120%;">Role</h2>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.75rem 0; font-size: 15px; margin-bottom: 1.5rem;">XD, DevX · PM/PD &amp; GenUX</p>
+    <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Timeline</h2>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">FY23–FY24 · Alpha → Private Beta → GA</p>
+  <h2 style="padding-top: 7%; font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Platform</h2>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">Dev portal · IDE · GenUX</p>
+  </div>
 </div>
 
 <div id="cs-solution">
@@ -924,16 +1452,19 @@
     </div>
   </div>
 </div>
-<div align="center">
-  <img src="https://placehold.co/1200x680/ffffff/666666?text=Markdown+%2B+code+%2B+GenUX+components" alt="" style="max-width:1100px; padding-top:3%; width: 95%;">
+<div class="case-study-figure-row">
+  <img src="https://placehold.co/1200x680/ffffff/666666?text=Markdown+%2B+code+%2B+GenUX+components" alt="" style="padding-top:3%;">
 </div>
 </div>
 
 <div id="cs-impact">
-<div style="display: flex; flex-wrap: wrap; padding: 5%;">
-  <div style="flex: 3 0 600px;">
-     <p class="txt3" style="padding: 0;">Impact</p>
-     <div align="center" style="padding: 1rem 0 1.5rem; max-width: 900px; margin: 0 auto;">
+<div style="padding: 5%; max-width: 100%; box-sizing: border-box;">
+     <p class="txt3" style="padding: 0;">Impact &amp; outcome</p>
+     <div class="txt4" style="padding-left: 0; max-width: none;">
+     <p style="font-size: 15px; line-height: 1.65; padding-bottom: 1.25rem; margin: 0;">Early UX measurement benchmarks from the deep dive: ~40% answer accuracy in early evaluations; feedback skewed roughly 60% negative to 40% positive—expected for a fast-moving beta—with follow-up mechanisms (homes, structured feedback) planned to tighten the loop.<br>
+Qualitative signal: teams valued directionally correct guidance even when responses needed refinement.</p>
+     </div>
+     <div class="case-study-figure-row" style="padding-top: 1rem; max-width: 1100px;">
        <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px; background: #000;">
          <iframe src="https://www.youtube.com/embed/eweQZPEBeZM?si=0OxUxGk7R8ToHXcg"
            title="Impact — YouTube clip"
@@ -946,17 +1477,12 @@
          <a href="https://youtu.be/eweQZPEBeZM?si=0OxUxGk7R8ToHXcg" target="_blank" rel="noopener noreferrer" style="color:#3b65ef; text-decoration:none">Watch on YouTube →</a>
        </p>
      </div>
-     <div class="txt4" style="padding-left: 0;">
-     <p style="flex: 3 0 400px; line-height: 3rem; padding-bottom: 2%">Early UX measurement benchmarks from the deep dive: ~40% answer accuracy in early evaluations; feedback skewed roughly 60% negative to 40% positive—expected for a fast-moving beta—with follow-up mechanisms (homes, structured feedback) planned to tighten the loop.<br>
-Qualitative signal: teams valued directionally correct guidance even when responses needed refinement.</p>
-     <p style="flex: 3;">Operational challenges called out in the deck included dependency on GenUX for new components, integrating GenUX surfaces into Assist, and building knowledge sources concurrently with the product—informing sequencing for subsequent quarters.</p>
+     <div class="txt4" style="padding-left: 0; max-width: none; padding-top: 0.5rem;">
+     <p style="font-size: 15px; line-height: 1.65; margin: 0;">Operational challenges called out in the deck included dependency on GenUX for new components, integrating GenUX surfaces into Assist, and building knowledge sources concurrently with the product—informing sequencing for subsequent quarters.</p>
+     </div>
+     <div class="txt4" style="padding-left: 0; max-width: none; padding-top: 1.25rem;">
+     <p style="font-size: 15px; line-height: 1.65; margin: 0;">Established a shared narrative for GenAI-assisted Developer Experiences—bridging GenUX, portal, and IDE—with a transparent roadmap toward accuracy (prompt gallery, streamlined feedback), richer rendering formats, and more context-aware responses.</p>
     </div>
- </div>
-</div>
-
-<div class="Container">
-  <p class="txt3" style="padding-bottom: 2px">Outcome</p>
-  <p class="txt4">Established a shared narrative for GenAI-assisted Developer Experiences—bridging GenUX, portal, and IDE—with a transparent roadmap toward accuracy (prompt gallery, streamlined feedback), richer rendering formats, and more context-aware responses.</p>
 </div>
 </div>
 

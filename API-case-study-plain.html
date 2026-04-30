@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>REST &amp; GraphQL APIs — Deep Dive</title>
+<title>API Experiences – Developer Platform &amp; Integration Tools — Case study</title>
 <link rel="icon" type="favi.png" href="favi.png"> 
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
@@ -27,7 +27,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-2.css?v=19">
+<link rel="stylesheet" href="style-2.css?v=26">
 <style>
   /* Force Light Mode */
   html {
@@ -594,7 +594,7 @@
     scroll-behavior: smooth;
   }
   body:has(.case-study-page-wrap) {
-    /* Wide enough for Space Mono + padding (“Exploration”, longest template label) */
+    /* Wide enough for Space Mono + padding (“Impact & outcome”, longest label) */
     --case-nav-w: 132px;
     --case-nav-gap: 1rem;
   }
@@ -815,28 +815,53 @@
     }
   }
 
-  /* Overview + project meta: two columns on wide viewports */
-  .case-study-overview-row {
+  /* Overview + Strategy + project meta: responsive order */
+  .case-study-overview-stack {
     display: grid;
-    grid-template-columns: 1fr;
     gap: 2rem 3rem;
     align-items: start;
     padding: 5%;
     box-sizing: border-box;
     width: 100%;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "overview"
+      "strategy"
+      "meta";
   }
-  .case-study-overview-col-copy {
+  .case-study-overview-grid-overview {
+    grid-area: overview;
     min-width: 0;
   }
-  @media screen and (min-width: 880px) {
-    .case-study-overview-row {
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 450px);
-    }
+  .case-study-overview-grid-strategy {
+    grid-area: strategy;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: stretch;
   }
-  .case-study-overview-col-meta.wrapper {
+  .case-study-overview-grid-strategy .txt4 {
+    max-width: none;
+  }
+  .case-study-overview-grid-meta {
+    grid-area: meta;
     box-sizing: border-box;
     padding-top: 1rem;
-    padding-left: clamp(0rem, 2vw, 8rem);
+    padding-left: 0;
+  }
+  @media screen and (min-width: 880px) {
+    .case-study-overview-stack {
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 450px);
+      grid-template-areas:
+        "overview meta"
+        "strategy strategy";
+    }
+    .case-study-overview-grid-meta {
+      padding-left: clamp(0rem, 2vw, 8rem);
+    }
   }
 </style>
 
@@ -872,81 +897,44 @@
 <aside class="case-study-toc" aria-label="On this page">
   <nav>
     <a href="#about">Cover</a>
-    <a href="#cs-context">About</a>
-    <a href="#cs-discovery">Discovery</a>
-    <a href="#cs-exploration">Exploration</a>
+    <a href="#cs-overview">Overview</a>
+    <a href="#cs-strategy">Strategy</a>
     <a href="#cs-solution">Solution</a>
-    <a href="#cs-impact">Impact</a>
+    <a href="#cs-impact">Impact &amp; outcome</a>
   </nav>
 </aside>
 <div class="case-study-main-col">
 
 <div id="about" style="/* height:30%; */">
-    <p class="h1">REST &amp; GraphQL APIs<br>Deep dive — API Explorer &amp; documentation</p>
+    <p class="h1">API Experiences – Developer Platform &amp; Integration Tools</p>
     <img class="img1" src="https://placehold.co/1400x720/f5f7fa/5c6370?text=REST+%26+GraphQL+APIs" alt="" style="margin: 5%">
-    <div class="txt4">
-     <p>Presentation · June 21, 2023 · XD: Srini Chakkarapani · PM: Anish Dhason · PD: Jakob Harclerode, Saroj Kumar</p>
-     </div>
 </div>
 
-<div class="case-study-overview-row" id="cs-context">
-  <div class="case-study-overview-col-copy">
-     <p class="txt3" style="padding: 0;">About the project</p>
+<div class="case-study-overview-stack">
+  <div class="case-study-overview-grid-overview" id="cs-overview">
+     <p class="txt3" style="padding: 0;">Overview</p>
      <div class="txt4" style="padding-left: 0;">
+     <p style="flex: 3;"><em>Presentation · June 21, 2023 · XD: Srini Chakkarapani · PM: Anish Dhason · PD: Jakob Harclerode, Saroj Kumar</em></p>
      <p style="flex: 3;">An interface that helps software connect and communicate. API-first companies (Stripe, Plaid, Rapyd, Checkr) show how critical developer experience is. GraphQL uses one endpoint for queries; REST uses multiple endpoints for specific HTTP operations—both matter for how we documented and explored APIs in Autura.</p>
+     </div>
+  </div>
+  <section class="case-study-overview-grid-strategy" id="cs-strategy" aria-labelledby="cs-strategy-heading">
+     <p class="txt3" id="cs-strategy-heading" style="padding: 0; margin: 0; text-align: left !important;">Strategy</p>
+     <div class="txt4" style="padding-left: 0;">
      <p style="flex: 3;">We shipped a hub—API Explorer—for browsing documentation in one place: L0 capabilities, universal guidance, per-API descriptions, endpoints, parameters, and a code playground with sample request/response and test calls.</p>
      </div>
-  </div>
-  <div class="case-study-overview-col-meta wrapper">
+     <figure style="margin: 1.25rem 0 0; padding: 0 0 0 5%; max-width: 100%; box-sizing: border-box;">
+       <img src="images/apistart.png" alt="Producing and Consuming APIs — producer loop (create, design, publish) and consumer loop (discover, onboard, authenticate, test)" width="2542" height="1330" style="width: 100%; max-width: 1100px; height: auto; display: block; border-radius: clamp(10px, 1.5vw, 16px); border: 1px solid rgba(0, 0, 0, 0.06); box-sizing: border-box;">
+     </figure>
+  </section>
+  <div class="case-study-overview-grid-meta wrapper">
     <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 120%;">Role</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.75rem 0; font-size: 18px; margin-bottom: 1.5rem;">Experience design lead</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.75rem 0; font-size: 15px; margin-bottom: 1.5rem;">XD lead · Autura DevX</p>
     <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Timeline</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 18px;">Q4 FY23 – Q1 FY24 (MVP June 2023)</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">Q4 FY23 – Q1 FY24 · MVP Jun 2023</p>
   <h2 style="padding-top: 7%; font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Platform</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 18px;">Web — Autura (REST first; GraphQL following)</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">Web · Autura · REST first, GraphQL next</p>
   </div>
-</div>
-
-<div align="center" style="padding: 2rem 0;">
-  <img src="https://placehold.co/900x500/e8f0fe/3b65ef?text=Developer+ecosystem+%2B+API+styles" alt="" style="max-width:1100px; padding-top:3%; width: 95%;">
-</div>
-
-<div id="cs-discovery">
-<div class="Container">
-	<p class="txt3" style="padding-bottom: 2px">
-  Discovery
-  </p>
-  <p class="txt4">Analyzed 20+ API references for documentation patterns. Problem space: APIs were hard to discover in the developer portal; documentation was inconsistent; scaling to a third-party platform needed clearer standards and a single place for guidance.</p>
-</div>
-<div align="center" style="padding-bottom: 3%;">
-  <img src="https://placehold.co/1100x420/f0f4ff/555555?text=Competitive+API+reference+review" alt="" style="max-width:1100px; padding-top:3%; width: 95%;">
-</div>
-<p class="txt4" style="padding-top:0; padding-left: 5%;">Insights from research and cross-functional FMHs steered the IA toward capability-based grouping and a shared playground pattern.</p>
-<div class="Container">
-  <p class="txt3">Personas</p>
-  <p class="txt4"><strong>API architects</strong> — create and publish APIs and guidance. <strong>TPMs / PMs</strong> — validate need and pick APIs. <strong>Consumers</strong> — internal and external developers embedding APIs in products.</p>
-</div>
-<div class="Container">
-  <p class="txt3">Friction</p>
-  <p class="txt4">Poor discovery in the portal; uneven doc quality; no single home for universal guidance—blocking velocity for teams onboarding to REST and GraphQL.</p>
-</div>
-<div class="Container">
-  <p class="txt3">Opportunity</p>
-  <p class="txt4">A global explorer with consistent patterns and testable examples reduces time to first successful call and supports standardization org-wide.</p>
-</div>
-</div>
-
-<div id="cs-exploration">
-<div style="display: flex; flex-wrap: wrap; padding: 5%;">
-  <div style="flex: 3 0 600px;">
-     <p class="txt3" style="padding: 0;">Exploration</p>
-     <div class="txt4" style="padding-left: 0;">
-     <p style="flex: 3;"><strong>Initial FMHs &amp; competitor analysis</strong> — patterned behaviors from public API references. <strong>Go broad to go narrow</strong> — three directions for technical and non-technical readers. <strong>Design validation</strong> — five FMHs with IDE, IDX, and non-API teams to converge on a balanced approach.</p>
-    </div>
-  </div>
-</div>
-<div align="center"><img src="https://placehold.co/900x520/f5f5f5/666666?text=Early+IA+%2B+variants" alt="" style="max-width:1100px; padding-top:3%; width: 95%;"></div>
-<div align="center"><img src="https://placehold.co/900x520/f0f0f0/666666?text=Validation+with+mixed+personas" alt="" style="max-width:1100px; padding-top:3%; width: 95%;"></div>
 </div>
 
 <div id="cs-solution">
@@ -954,6 +942,12 @@
   <div style="flex: 3 0 600px;">
      <p class="txt3" style="padding: 0;">Solution</p>
      <div class="txt4" style="padding-left: 0;">
+     <p style="flex: 3;">Analyzed 20+ API references for documentation patterns. Problem space: APIs were hard to discover in the developer portal; documentation was inconsistent; scaling to a third-party platform needed clearer standards and a single place for guidance.</p>
+     <p style="flex: 3;">Insights from research and cross-functional FMHs steered the IA toward capability-based grouping and a shared playground pattern.</p>
+     <p style="flex: 3;"><strong>Personas.</strong> <strong>API architects</strong> — create and publish APIs and guidance. <strong>TPMs / PMs</strong> — validate need and pick APIs. <strong>Consumers</strong> — internal and external developers embedding APIs in products.</p>
+     <p style="flex: 3;"><strong>Friction.</strong> Poor discovery in the portal; uneven doc quality; no single home for universal guidance—blocking velocity for teams onboarding to REST and GraphQL.</p>
+     <p style="flex: 3;"><strong>Opportunity.</strong> A global explorer with consistent patterns and testable examples reduces time to first successful call and supports standardization org-wide.</p>
+     <p style="flex: 3;"><strong>Initial FMHs &amp; competitor analysis</strong> — patterned behaviors from public API references. <strong>Go broad to go narrow</strong> — three directions for technical and non-technical readers. <strong>Design validation</strong> — five FMHs with IDE, IDX, and non-API teams to converge on a balanced approach.</p>
      <p style="flex: 3;"><strong>REST landing</strong> — space inside Autura for REST APIs, universal guides, L0 grouping, search across APIs, endpoints, and objects.</p>
      <p style="flex: 3;"><strong>Capability &amp; endpoints</strong> — framework-centric view into related endpoints.</p>
      <p style="flex: 3;"><strong>Documentation</strong> — API name/description; endpoints with URLs; parameters with types, required flags, and descriptions.</p>
@@ -961,28 +955,27 @@
     </div>
   </div>
 </div>
-<div align="center">
-  <img src="https://placehold.co/1200x680/ffffff/666666?text=API+Explorer+%E2%80%94+docs+%2B+playground" alt="" style="max-width:1100px; padding-top:3%; width: 95%;">
+<div class="case-study-figure-row" style="padding-bottom: 3%;">
+  <img src="https://placehold.co/1100x420/f0f4ff/555555?text=Competitive+API+reference+review" alt="" style="padding-top:3%;">
+</div>
+<div class="case-study-figure-row"><img src="https://placehold.co/900x520/f5f5f5/666666?text=Early+IA+%2B+variants" alt="" style="padding-top:3%;"></div>
+<div class="case-study-figure-row"><img src="https://placehold.co/900x520/f0f0f0/666666?text=Validation+with+mixed+personas" alt="" style="padding-top:3%;"></div>
+<div class="case-study-figure-row">
+  <img src="https://placehold.co/1200x680/ffffff/666666?text=API+Explorer+%E2%80%94+docs+%2B+playground" alt="" style="padding-top:3%;">
 </div>
 </div>
 
 <div id="cs-impact">
-<div style="display: flex; flex-wrap: wrap; padding: 5%;">
-  <div style="flex: 3 0 600px;">
-     <p class="txt3" style="padding: 0;">Impact</p>
-     <div class="txt4" style="padding-left: 0;">
-     <p style="flex: 3 0 400px; line-height: 3rem; padding-bottom: 2%">NPS vs. prior experience · Time to discover &amp; consume APIs · Engagement (clicks, scroll, bounce) · Adoption of the documentation pattern across internal APIs</p>
-     <p style="flex: 3;">“Code theme was long overdue. Good to see one.” — Saroj, Group Engineering Manager</p>
-     <p style="flex: 3;">“Looks good and clean and offers a much better experience over the previous version.” — Aditi Rajawat, Staff Engineer</p>
-     <p style="flex: 3;">“As an engineer, I was so glued to the Swagger experience — might take time to adopt the new one.” — Sai Vamsee, Staff Engineer</p>
+<div style="padding: 5%; max-width: 100%; box-sizing: border-box;">
+     <p class="txt3" style="padding: 0;">Impact &amp; outcome</p>
+     <div class="txt4" style="padding-left: 0; max-width: none;">
+     <p>NPS vs. prior experience · Time to discover &amp; consume APIs · Engagement (clicks, scroll, bounce) · Adoption of the documentation pattern across internal APIs</p>
+     <p>“Code theme was long overdue. Good to see one.” — Saroj, Group Engineering Manager</p>
+     <p>“Looks good and clean and offers a much better experience over the previous version.” — Aditi Rajawat, Staff Engineer</p>
+     <p>“As an engineer, I was so glued to the Swagger experience — might take time to adopt the new one.” — Sai Vamsee, Staff Engineer</p>
+     <p style="padding-top: 0.75rem;"><strong>MVP (target June 2023):</strong> updated capability page, REST-first docs, CURL samples with response codes. <strong>Next:</strong> Global Explorer, Postman-style parameter testing, lifecycle alignment with the third-party portal, then GraphQL. Shared code components keep contributions consistent as scale grows.</p>
+     <p style="padding-top: 1rem;">Source: <em>Rest and GraphQL APIs — Deep Dive.pptx</em> · Structured for the portfolio using the case study template.</p>
     </div>
- </div>
-</div>
-
-<div class="Container">
-  <p class="txt3" style="padding-bottom: 2px">Outcome &amp; roadmap</p>
-  <p class="txt4"><strong>MVP (target June 2023):</strong> updated capability page, REST-first docs, CURL samples with response codes. <strong>Next:</strong> Global Explorer, Postman-style parameter testing, lifecycle alignment with the third-party portal, then GraphQL. Shared code components keep contributions consistent as scale grows.</p>
-  <p class="txt4" style="padding-top:1rem;">Source: <em>Rest and GraphQL APIs — Deep Dive.pptx</em> · Structured for the portfolio using the case study template.</p>
 </div>
 </div>
 

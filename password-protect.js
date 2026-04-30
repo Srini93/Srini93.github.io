@@ -174,7 +174,7 @@
       '<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">';
     html = html.replace(
       '<link rel="stylesheet" href="style-2.css">',
-      fontLinks + '<link rel="stylesheet" href="style-2.css">'
+      fontLinks + '<link rel="stylesheet" href="srini-tokens.css?v=1">' + '<link rel="stylesheet" href="style-2.css">'
     );
 
     // 4. Replace old hamburger menu with updated version
@@ -263,7 +263,7 @@
       '</style>';
     html = html.replace(
       '<link rel="stylesheet" href="style-2.css">',
-      '<link rel="stylesheet" href="style-2.css">' + navCSS
+      '<link rel="stylesheet" href="srini-tokens.css?v=1">' + '<link rel="stylesheet" href="style-2.css">' + navCSS
     );
 
     // 7. Replace old hamburger JS with backdrop-aware version

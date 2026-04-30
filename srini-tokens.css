@@ -1,0 +1,21 @@
+/**
+ * Srini portfolio — shared design tokens (aligned with index.html).
+ * Import before style.css / style-2.css / style-3.css.
+ */
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&display=swap");
+
+:root {
+  /* Typography */
+  --srini-font-body: "Work Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, sans-serif;
+
+  /* Text — homepage card copy & hero subtitle */
+  --srini-color-text-primary: #000000;
+  --srini-color-text-body: #343434;
+  --srini-color-text-secondary: #333333;
+  --srini-color-text-accent: #0a2540;
+  --srini-color-text-muted: #666666;
+  --srini-color-text-caption: #9e9e9e;
+
+  --srini-color-link: #3b65ef;
+}

@@ -1,4 +1,4 @@
-x
+@import url("srini-tokens.css?v=1");
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -72,6 +72,8 @@ body{
   /*height: 2000px;*/
   overflow-x: hidden;
   background-color: #fff;
+  color: var(--srini-color-text-body);
+  text-align: left;
 }
 .statusbar-overlay {
     background: white;
@@ -236,14 +238,14 @@ body{
  	padding-left:5%;
  	padding-top: 8%;
 	font-family: "MyWebFont";
-	color:#000;
+	color: var(--srini-color-text-primary);
 	font-size: 250%;
  	}
 
 .txt4{
  	position: relative;
 	font-family: "MyWebFont";
-	color:#444;
+	color: var(--srini-color-text-body);
   font-size: 95%;
 
 	padding-left: 5%;
@@ -404,7 +406,7 @@ button.srini-chat-trigger.srini-chat-nav-btn {
 }
 
 .srini-chat-nav-btn:hover .srini-chat-sparkle {
-  color: #3b65ef;
+  color: var(--srini-color-link);
 }
 
 section {
@@ -484,6 +486,14 @@ header section {
 .HeaderContent {
   display:flex; flex-direction: column; padding-top: 4rem;
   flex: 1;
+  align-items: flex-start;
+}
+
+header .HeaderContent h1,
+header .HeaderContent > p:first-of-type,
+header .HeaderContent .HeaderContent-description {
+  text-align: left;
+  width: 100%;
 }
 
 
@@ -491,13 +501,13 @@ header section {
   .HeaderContent {
     padding: 0 4rem;
     justify-content: center;
-
+    align-items: flex-start;
   }
 }
 
 
 .HeaderContent a {
-  color: #3b65ef;
+  color: var(--srini-color-link);
   font-family: "MyWebFont1" ;
   text-decoration: none;
 }
@@ -507,8 +517,8 @@ header section {
 }
 
 .HeaderContent-description {
-  color: #2a2a2a;
-  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: var(--srini-color-text-secondary);
+  font-family: var(--srini-font-body);
   font-size: 18px;
   font-weight: 400;
   margin-top: 4.5rem;
@@ -518,7 +528,7 @@ header section {
 .see-more {
   position: relative;
   display: block;
-  text-align: center;
+  text-align: left;
   margin-top: 3rem;
   z-index: 10;
 }
@@ -744,7 +754,7 @@ header section h2 {
   .txt4{
   position: relative;
   font-family: "MyWebFont1";
-  color:#444444;
+  color: var(--srini-color-text-body);
   font-weight: 50%;
   padding-left: 5%;
   padding-top: 10%;
@@ -756,7 +766,7 @@ header section h2 {
     padding-left: 5%;
     padding-top: 10%;
     font-family: "MyWebFont";
-    color: #000;
+    color: var(--srini-color-text-primary);
     font-size: 200%;
 }
  .txt6{

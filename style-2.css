@@ -1,3 +1,5 @@
+@import url("srini-tokens.css?v=1");
+
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -199,9 +201,13 @@ body {
   /*height: 2000px;*/
   overflow-x: hidden;
   background-color: #fff;
+  font-size: 15px;
+  font-family: var(--srini-font-body);
+  color: var(--srini-color-text-body);
+  text-align: left;
 }
 .socialicons {
-  text-align: center;
+  text-align: left;
 }
 
 .header {
@@ -335,11 +341,12 @@ body {
   padding-left: 5%;
   padding-top: 5%;
   font-family: "Newsreader", "Georgia", serif;
-  color: #212121;
+  color: var(--srini-color-text-primary);
   font-size: 300%;
   font-weight: 600;
   letter-spacing: -0.02em;
   line-height: 1.2;
+  text-align: left;
 }
 
 .txt3 {
@@ -347,15 +354,16 @@ body {
   padding-left: 5%;
   padding-top: 5%;
   font-family: "MyWebFont1";
-  color: #212121;
+  color: var(--srini-color-text-accent);
   font-size: 160%;
+  text-align: left;
 }
 
 .txt4 {
   position: relative;
-  font-family: "MyWebFont2";
-  color: #000;
-  font-size: 1.1rem;
+  font-family: var(--srini-font-body);
+  color: var(--srini-color-text-body);
+  font-size: 15px;
 
   padding-left: 5%;
   padding-top: 2%;
@@ -366,7 +374,7 @@ body {
 .txt5 {
   position: relative;
   font-family: "MyWebFont1";
-  color: #000;
+  color: var(--srini-color-text-body);
   font-weight: 150%;
   padding-top: 3%;
   padding-left: 5%;
@@ -376,7 +384,7 @@ body {
 .txt6 {
   position: relative;
   padding-top: 4%;
-  text-align: center;
+  text-align: left;
   font-family: "MyWebFont";
   color: #fff;
   font-size: 400%;
@@ -388,17 +396,17 @@ body {
   font-size: 200%;
   padding-top: 3%;
   padding-left: 5%;
-  text-align: Centre;
+  text-align: left;
   line-height: 150%;
 }
 .txt8 {
   position: relative;
-  font-family: "MyWebFont2";
-  color: #000;
+  font-family: var(--srini-font-body);
+  color: var(--srini-color-text-body);
   font-size: 100%;
   padding-top: 4%;
   padding-left: 5%;
-  text-align: Centre;
+  text-align: left;
   line-height: 150%;
 }
 
@@ -469,6 +477,13 @@ section {
   justify-content: center;
   max-width: 1280px;
   box-sizing: border-box;
+}
+
+/* Case study strategy uses <section>; global section flex + justify-content:center shrink-wraps headings */
+.case-study-overview-grid-strategy {
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: stretch;
 }
 
 .sample {
@@ -668,7 +683,7 @@ header {
     font-size: 111%;
   }
   .socialicons {
-    text-align: center;
+    text-align: left;
     padding-top: 10%;
   }
 
@@ -684,8 +699,8 @@ header {
   .txt4 {
     max-width: 360px;
     position: relative;
-    font-family: "MyWebFont2";
-    color: #000;
+    font-family: var(--srini-font-body);
+    color: var(--srini-color-text-body);
     font-weight: 50%;
     padding-left: 5%;
     padding-top: 5%;
@@ -697,36 +712,38 @@ header {
     padding-left: 5%;
     padding-top: 10%;
     font-family: "MyWebFont";
-    color: #000;
+    color: var(--srini-color-text-accent);
     font-size: 200%;
+    text-align: left;
   }
   .h1 {
     position: relative;
     padding-left: 5%;
     padding-top: 5%;
     font-family: "Newsreader", "Georgia", serif;
-    color: #212121;
+    color: var(--srini-color-text-primary);
     font-size: 200%;
     font-weight: 600;
     letter-spacing: -0.02em;
     line-height: 1.2;
+    text-align: left;
   }
   .txt6 {
     position: relative;
     padding-top: 6%;
-    text-align: center;
+    text-align: left;
     font-family: "MyWebFont";
     color: #fff;
     font-size: 250%;
   }
   .txt8 {
     position: relative;
-    font-family: "MyWebFont2";
-    color: #000;
+    font-family: var(--srini-font-body);
+    color: var(--srini-color-text-body);
     font-size: 100%;
     padding-top: 8%;
     padding-left: 5%;
-    text-align: Centre;
+    text-align: left;
     line-height: 150%;
   }
   .foot {
@@ -832,4 +849,22 @@ header {
   #toc {
     display: block;
   }
+}
+
+/* Case studies — left-align prose & media (matches body copy gutter) */
+.case-study-page-wrap,
+.case-study-main-col {
+  text-align: left;
+}
+.case-study-figure-row {
+  text-align: left;
+  padding: 0.5rem 5% 1rem;
+  box-sizing: border-box;
+}
+.case-study-figure-row img {
+  display: block;
+  margin: 0;
+  max-width: 1100px;
+  width: 100%;
+  height: auto;
 }
