@@ -24,7 +24,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-2.css?v=29">
+<link rel="stylesheet" href="style-2.css?v=35">
 <style>
   /* Force Light Mode */
   html {
@@ -39,6 +39,7 @@
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
  <script src="./jquery.js"></script>
     <script src="./jquery.cycle2.js"></script>
 
@@ -46,13 +47,13 @@
 <style>
 
 @media only screen and (min-width:1000px){
-   video {
+   .case-study-image-block .srini-video-wrap {
   width: 90%;
   height: auto;
 }
  }
  @media only screen and (min-width: 300px) and (max-width: 600px) {
-     video {
+     .case-study-image-block .srini-video-wrap {
   width: 70%;
   height: auto;
 }
@@ -945,6 +946,31 @@
     flex-direction: column;
     align-items: stretch;
   }
+  .case-study-overview-grid-strategy .case-study-problem-statement {
+    margin: 0 auto 1.15rem;
+    padding: 1.05rem 1.35rem;
+    max-width: min(100%, 52rem);
+    box-sizing: border-box;
+    text-align: center;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-size: clamp(1.06rem, 2.15vw, 1.3rem);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.48;
+    letter-spacing: 0.01em;
+    color: #0f172a;
+    text-wrap: balance;
+    background: linear-gradient(
+      118deg,
+      rgba(59, 101, 239, 0.09) 0%,
+      rgba(241, 245, 249, 0.95) 42%,
+      rgba(248, 250, 252, 0.98) 100%
+    );
+    border: none;
+    border-top: 3px solid rgba(59, 101, 239, 0.55);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  }
   .case-study-overview-grid-strategy .txt4 {
     max-width: none;
   }
@@ -953,6 +979,14 @@
     box-sizing: border-box;
     padding-top: 1rem;
     padding-left: 0;
+    font-size: 15px;
+    line-height: 25px;
+  }
+  .case-study-overview-grid-meta h2 {
+    margin: 0 0 0.1rem;
+  }
+  .case-study-overview-grid-meta p {
+    margin-top: 0;
   }
   @media screen and (min-width: 880px) {
     .case-study-overview-stack {
@@ -1435,7 +1469,8 @@
      <p style="flex: 3;">Developers across the platform lose meaningful time not in the building, but in the finding — searching for the right API, tracking down a reusable component, or digging through Slack for an answer that's already been given a dozen times. To solve this, we embedded a shared AI intelligence layer across the three surfaces where developers spend most of their time: the portal, the IDE, and Slack — so the right answer surfaces in context, without breaking flow.</p>
      </div>
   </div>
-  <section class="case-study-overview-grid-strategy" id="cs-strategy" aria-labelledby="cs-strategy-heading">
+  <section class="case-study-overview-grid-strategy" id="cs-strategy" aria-labelledby="cs-strategy-heading" aria-describedby="cs-strategy-problem">
+     <p class="case-study-problem-statement" id="cs-strategy-problem">How might we empower developers with LLM experiences that meet them in their workflow &mdash; reducing friction, cutting repetitive tasks, and keeping them in flow?</p>
      <p class="txt3" id="cs-strategy-heading" style="padding: 0; margin: 0; text-align: left !important;">Strategy</p>
      <div class="txt4" style="padding-left: 0;">
      <p style="flex: 3;">Meet developers where they already work, with AI that understands intent — not just keywords. One shared intelligence layer, expressed across every surface that slows them down.</p>
@@ -1557,7 +1592,7 @@
   </section>
   <div class="case-study-overview-grid-meta wrapper">
     <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 120%;">Role</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.75rem 0; font-size: 15px; margin-bottom: 1.5rem;">Lead Designer</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.15rem 0 0.45rem; font-size: 15px; margin-bottom: 1.1rem;">Lead Designer</p>
     <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Timeline</h2>
     <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">April – October 2023</p>
   <h2 style="padding-top: 7%; font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Platform</h2>
@@ -1575,20 +1610,50 @@
   </div>
 </div>
 <figure class="case-study-image-block case-study-image-block--hq" style="--case-study-image-bg: linear-gradient(155deg, #e5f2fb 0%, #d8e8f8 42%, #eef6ff 100%);">
-  <video controls playsinline preload="metadata" aria-label="Intuit Assist solution walkthrough">
+  <div class="srini-video-wrap">
+  <video playsinline preload="metadata" aria-label="Intuit Assist solution walkthrough">
     <source src="Area.mp4" type="video/mp4">
   </video>
-  <figcaption>Walkthrough — Assist in flow: discovery, code, and follow-up actions in one surface.</figcaption>
+  <button type="button" class="srini-video-play" aria-label="Play video">
+    <span class="srini-video-play-pill">
+      <svg class="srini-video-play-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M10 8.25 L16.25 12 L10 15.75 Z"/></svg>
+      <span class="srini-video-play-text" aria-hidden="true">Play</span>
+    </span>
+  </button>
+  </div>
+  <figcaption>Intuit Assist in the Developer Portal &mdash; conversational help over docs and APIs, so teams find the right information without leaving their flow.</figcaption>
 </figure>
 <figure class="case-study-image-block case-study-image-block--hq" style="--case-study-image-bg: linear-gradient(155deg, #e5f2fb 0%, #d8e8f8 42%, #eef6ff 100%);">
   <img src="images/intuit-assist-transaction-api-vscode.png" width="3058" height="2032" loading="lazy" decoding="async" sizes="(max-width: 640px) 92vw, min(94vw, 1280px)" alt="Intuit Assist in VS Code: developer asks for Transaction API React code; assistant returns a JSON snippet with Add to Code and follow-up actions.">
-  <figcaption>IDE-embedded Assist: natural-language requests map to API-aware responses, code blocks, and one-click actions like “Add to Code.”</figcaption>
+  <figcaption>From the Development portal to the IDE, Intuit Assist stays with you &mdash; a single pane for information, design system components, and asset discovery, right where you build.</figcaption>
 </figure>
 <figure class="case-study-image-block case-study-image-block--hq" style="--case-study-image-bg: linear-gradient(155deg, #e5f2fb 0%, #d8e8f8 42%, #eef6ff 100%);">
-  <video controls playsinline preload="metadata" aria-label="Intuit Assist — summary overview">
+  <div class="srini-video-wrap">
+  <video playsinline preload="metadata" aria-label="Intuit Assist in Slack">
+    <source src="Slack.mp4" type="video/mp4">
+  </video>
+  <button type="button" class="srini-video-play" aria-label="Play video">
+    <span class="srini-video-play-pill">
+      <svg class="srini-video-play-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M10 8.25 L16.25 12 L10 15.75 Z"/></svg>
+      <span class="srini-video-play-text" aria-hidden="true">Play</span>
+    </span>
+  </button>
+  </div>
+  <figcaption>Intuit Assist extends into Slack and support channels, bringing contextual developer support into the collaboration spaces where teams already ask questions and coordinate work.</figcaption>
+</figure>
+<figure class="case-study-image-block case-study-image-block--hq" style="--case-study-image-bg: linear-gradient(155deg, #e5f2fb 0%, #d8e8f8 42%, #eef6ff 100%);">
+  <div class="srini-video-wrap">
+  <video playsinline preload="metadata" aria-label="Intuit Assist — summary overview">
     <source src="Summary.mp4" type="video/mp4">
   </video>
-  <figcaption>Summary clip — condensed overview tying together strategy and outcomes presented to stakeholders.</figcaption>
+  <button type="button" class="srini-video-play" aria-label="Play video">
+    <span class="srini-video-play-pill">
+      <svg class="srini-video-play-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M10 8.25 L16.25 12 L10 15.75 Z"/></svg>
+      <span class="srini-video-play-text" aria-hidden="true">Play</span>
+    </span>
+  </button>
+  </div>
+  <figcaption>Intuit Assist helps developers cut through lengthy documentation &mdash; surfacing contextual summaries so they get to the right information faster, without reading through entire docs.</figcaption>
 </figure>
 </div>
 
@@ -1619,7 +1684,7 @@
 </div>
 </div>
 
-<p class="case-study-process-note" role="note"><strong>Note:</strong> This page is intentionally high-level. For a deeper walkthrough of research, facilitation, milestones, and handoff artifacts, <a href="mailto:tcsreeni93@gmail.com">reach out directly</a>—or use Email / LinkedIn in the footer below.</p>
+<p class="case-study-process-note" role="note"><strong>Note:</strong> This page is intentionally high-level. For a deeper walkthrough of research, facilitation, milestones, and handoff artifacts, <a href="mailto:tcsreeni93@gmail.com">reach out directly</a>.</p>
 
 </div>
 </div>
@@ -1980,6 +2045,7 @@ window.onscroll = function() {
 })();
 </script>
 <script src="case-study-scroll-reveal.js"></script>
+<script src="srini-video-preview.js"></script>
 <script src="ui-sounds.js?v=26"></script>
 
 </div></body></html>

@@ -5,6 +5,7 @@
  *
  * Usage:
  *   1. Add <div id="password-protect" data-payload="BASE64_ENCRYPTED_DATA"></div>
+ *      (optional data-plain-src="Case-study-plain.html" for localhost IDE tools — see below)
  *      somewhere in your page body.
  *   2. Include the CSS:  <link rel="stylesheet" href="password-protect.css">
  *   3. Include this JS:  <script src="password-protect.js"></script>
@@ -15,6 +16,11 @@
  *   - Load decrypted HTML into a full-screen iframe
  *   - Patch the decrypted content with the site's standard nav/chatbot
  *   - Hide the parent page's nav once the iframe is displayed
+ *
+ * Local dev (Cursor browser / select-and-prompt): decrypted HTML uses iframe srcdoc, which
+ * many IDE tools do not treat as a navigable document. With data-plain-src set to your
+ * *-case-study-plain.html, add ?plain=1 or ?cursorDev=1 on localhost, 127.0.0.1, ::1, or file://
+ * so the iframe loads that file via src= instead (ignored on public HTTPS hosts).
  */
 (function () {
   'use strict';
@@ -23,9 +29,30 @@
   var configEl = document.getElementById('password-protect');
   if (!configEl) return;
 
+  function ppIsLocalDevPlainLoad() {
+    var qs = new URLSearchParams(window.location.search);
+    var flag = qs.get('plain') === '1' || qs.get('cursorDev') === '1';
+    if (!flag) return false;
+    if (window.location.protocol === 'file:') return true;
+    var h = String(window.location.hostname || '').toLowerCase();
+    return h === 'localhost' || h === '127.0.0.1' || h === '::1';
+  }
+
+  /** Relative path only — blocks absolute URLs and .. for safety. */
+  function ppSanitizePlainSrc(raw) {
+    var src = String(raw || '').trim();
+    if (!src || /[\r\n\0]/.test(src)) return '';
+    if (/^https?:\/\//i.test(src) || src.indexOf('//') === 0) return '';
+    if (src.indexOf('..') !== -1) return '';
+    return src;
+  }
+
+  var plainSrc = ppSanitizePlainSrc(configEl.getAttribute('data-plain-src'));
+  var devPlainLoad = ppIsLocalDevPlainLoad() && plainSrc.length > 0;
+
   // Normalize: dropped newlines tabs spaces if markup was wrapped (would break base64)
   var payload = String(configEl.getAttribute('data-payload') || '').replace(/\s/g, '');
-  if (!payload) {
+  if (!payload && !devPlainLoad) {
     console.warn('[password-protect] No data-payload attribute found.');
     return;
   }
@@ -112,6 +139,32 @@
   var successEl  = document.getElementById('pp-success');
   var dialogWrap = document.getElementById('pp-dialogWrap');
   var frame      = document.getElementById('pp-contentFrame');
+
+  // ─── Hide parent page nav once iframe takes over ────────────────────
+  function hideParentNav() {
+    var selectors = [
+      '.logo-srini', 'header', '.hamburgler-menu',
+      '.srini-chat-fab', '#chatbot-sidebar'
+    ];
+    selectors.forEach(function (sel) {
+      var el = sel.startsWith('#')
+        ? document.getElementById(sel.slice(1))
+        : document.querySelector(sel);
+      if (el && el.closest('#password-protect') === null) {
+        el.style.display = 'none';
+      }
+    });
+  }
+
+  if (devPlainLoad) {
+    frame.removeAttribute('srcdoc');
+    frame.src = plainSrc;
+    frame.style.display = 'block';
+    dialogWrap.style.display = 'none';
+    hideParentNav();
+    console.info('[password-protect] Dev plain load: open editors should use the iframe document (' + plainSrc + ').');
+    return;
+  }
 
   // ─── Sanity checks ─────────────────────────────────────────────────
   // Opening saved HTML as file:// disables Web Crypto; http://localhost and HTTPS are OK.
@@ -375,22 +428,6 @@
     }
 
     return html;
-  }
-
-  // ─── Hide parent page nav once iframe loads ─────────────────────────
-  function hideParentNav() {
-    var selectors = [
-      '.logo-srini', 'header', '.hamburgler-menu',
-      '.srini-chat-fab', '#chatbot-sidebar'
-    ];
-    selectors.forEach(function (sel) {
-      var el = sel.startsWith('#')
-        ? document.getElementById(sel.slice(1))
-        : document.querySelector(sel);
-      if (el && el.closest('#password-protect') === null) {
-        el.style.display = 'none';
-      }
-    });
   }
 
   // ─── Submit handler ─────────────────────────────────────────────────

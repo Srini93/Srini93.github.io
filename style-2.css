@@ -921,6 +921,185 @@ header {
   background: rgba(13, 17, 23, 0.06);
 }
 
+/* Case-study videos: preview frame + custom play overlay */
+.case-study-image-block .srini-video-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: min(100%, var(--case-study-image-max));
+  margin: 0 auto;
+  line-height: 0;
+  overflow: hidden;
+  border-radius: clamp(6px, 1vw, 12px);
+  background: transparent;
+}
+
+.case-study-image-block .srini-video-wrap video {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 0;
+  vertical-align: top;
+  border-radius: 0;
+  background: #000;
+}
+
+/* Case-study video play: centered pill; full-area hit target, no overlay scrim */
+.case-study-image-block .srini-video-play {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 1rem;
+  box-sizing: border-box;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  background: transparent;
+  transition: opacity 0.22s ease;
+}
+
+.case-study-image-block .srini-video-play:focus-visible {
+  outline: 2px solid #3b65ef;
+  outline-offset: 3px;
+}
+
+.case-study-image-block .srini-video-wrap--playing .srini-video-play {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.case-study-image-block .srini-video-play-pill {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 9999px;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.65) 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    rgba(255, 255, 255, 0.55) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+
+  color: #000;
+  transition:
+    width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    padding 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    gap 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.2s ease,
+    border-color 0.3s ease;
+}
+
+.case-study-image-block .srini-video-play:hover .srini-video-play-pill,
+.case-study-image-block .srini-video-play:focus-visible .srini-video-play-pill {
+  width: 148px;
+  gap: 10px;
+  padding: 0 22px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.78) 0%,
+    rgba(255, 255, 255, 0.45) 50%,
+    rgba(255, 255, 255, 0.68) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+  transform: scale(1.02);
+}
+
+.case-study-image-block .srini-video-play-pill:active {
+  transform: scale(0.97);
+}
+
+.case-study-image-block .srini-video-play-svg {
+  flex-shrink: 0;
+  display: block;
+  width: 22px;
+  height: 22px;
+  margin-top: -1px;
+}
+
+.case-study-image-block .srini-video-play-text {
+  font-family: "Space Mono", "Courier New", Monaco, monospace;
+  font-size: 12px;
+  font-weight: 400;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  line-height: 1;
+  color: #000;
+  white-space: nowrap;
+  opacity: 0;
+  width: 0;
+  min-width: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  padding-top: 1px;
+  transition:
+    opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+    width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition-delay: 0s;
+}
+
+.case-study-image-block .srini-video-play:hover .srini-video-play-text,
+.case-study-image-block .srini-video-play:focus-visible .srini-video-play-text {
+  opacity: 1;
+  width: auto;
+  transition-delay: 0.1s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-study-image-block .srini-video-play,
+  .case-study-image-block .srini-video-play-pill,
+  .case-study-image-block .srini-video-play-text {
+    transition: none;
+  }
+
+  .case-study-image-block .srini-video-play-pill {
+    width: auto;
+    min-height: 48px;
+    padding: 0 22px;
+    gap: 10px;
+    transform: none;
+  }
+
+  .case-study-image-block .srini-video-play:hover .srini-video-play-pill,
+  .case-study-image-block .srini-video-play:focus-visible .srini-video-play-pill {
+    transform: none;
+  }
+
+  .case-study-image-block .srini-video-play-pill:active {
+    transform: none;
+  }
+
+  .case-study-image-block .srini-video-play-text {
+    opacity: 1;
+    width: auto;
+    transition-delay: 0s;
+  }
+}
+
 /* High-DPI screenshot: wider cap + light depth so scaled-down PNGs stay crisp-looking */
 .case-study-image-block--hq {
   --case-study-image-max: min(94vw, 1280px);
@@ -932,6 +1111,13 @@ header {
     0 20px 50px rgba(15, 23, 42, 0.1),
     0 2px 10px rgba(15, 23, 42, 0.06);
   border-radius: clamp(8px, 1vw, 14px);
+}
+
+.case-study-image-block--hq .srini-video-wrap {
+  border-radius: clamp(8px, 1vw, 14px);
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.1),
+    0 2px 10px rgba(15, 23, 42, 0.06);
 }
 
 /* Slow, subtle drift for custom --case-study-image-bg on figure strips */

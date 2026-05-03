@@ -64,6 +64,16 @@ If the target page has the old inline password protection (like the original `No
 
 4. **Keep everything else**: Any other page content (navigation, styles, scripts) should remain untouched. The password dialog layers on top of the existing page.
 
+## Cursor / local IDE (select and prompt)
+
+After unlock, content loads in an iframe via `srcdoc`. Cursor’s browser **Select** and some **@**-mentions work best against a normal document URL, not `srcdoc`.
+
+On **localhost** / **127.0.0.1** / **`file://`** (with query flag only), you can load the editable plain HTML instead:
+
+1. On the password-protect div, set `data-plain-src="Your-case-study-plain.html"` (relative path; no `..` or absolute URLs).
+2. Open: `YourPage.html?plain=1` or `YourPage.html?cursorDev=1`.
+3. The lock screen is skipped; the iframe uses `src=` to the plain file so IDE tools can target that document. **Production** (non-localhost HTTPS) ignores this — visitors still use the password + encrypted payload.
+
 ## Step 5 — Verify
 
 1. Open the page in a browser

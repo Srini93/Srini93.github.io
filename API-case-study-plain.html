@@ -27,7 +27,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-2.css?v=29">
+<link rel="stylesheet" href="style-2.css?v=35">
 <style>
   /* Force Light Mode */
   html {
@@ -40,6 +40,7 @@
     color: var(--srini-color-text-body);
   }
 </style>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
  <script src="./jquery.js"></script>
@@ -49,13 +50,13 @@
 <style>
 
 @media only screen and (min-width:1000px){
-   video {
+   .case-study-image-block .srini-video-wrap {
   width: 90%;
   height: auto;
 }
  }
  @media only screen and (min-width: 300px) and (max-width: 600px) {
-     video {
+     .case-study-image-block .srini-video-wrap {
   width: 70%;
   height: auto;
 }
@@ -965,8 +966,36 @@
     flex-direction: column;
     align-items: stretch;
   }
+  .case-study-overview-grid-strategy .case-study-problem-statement {
+    margin: 0 auto 1.15rem;
+    padding: 1.05rem 1.35rem;
+    max-width: min(100%, 52rem);
+    box-sizing: border-box;
+    text-align: center;
+    font-family: "Newsreader", Georgia, "Times New Roman", serif;
+    font-size: clamp(1.06rem, 2.15vw, 1.3rem);
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.48;
+    letter-spacing: 0.01em;
+    color: #0f172a;
+    text-wrap: balance;
+    background: linear-gradient(
+      118deg,
+      rgba(59, 101, 239, 0.09) 0%,
+      rgba(241, 245, 249, 0.95) 42%,
+      rgba(248, 250, 252, 0.98) 100%
+    );
+    border: none;
+    border-top: 3px solid rgba(59, 101, 239, 0.55);
+    border-radius: 12px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  }
   .case-study-overview-grid-strategy .txt4 {
     max-width: none;
+  }
+  .case-study-overview-grid-overview .txt4 {
+    max-width: 100%;
   }
   .case-study-overview-grid-meta {
     grid-area: meta;
@@ -976,15 +1005,21 @@
     font-size: 15px;
     line-height: 25px;
   }
+  .case-study-overview-grid-meta h2 {
+    margin: 0 0 0.1rem;
+  }
+  .case-study-overview-grid-meta p {
+    margin-top: 0;
+  }
   @media screen and (min-width: 880px) {
     .case-study-overview-stack {
-      grid-template-columns: minmax(0, 1fr) minmax(280px, 450px);
+      grid-template-columns: minmax(0, 1.6fr) minmax(220px, 320px);
       grid-template-areas:
         "overview meta"
         "strategy strategy";
     }
     .case-study-overview-grid-meta {
-      padding-left: clamp(0rem, 2vw, 8rem);
+      padding-left: clamp(0rem, 2vw, 6rem);
     }
   }
 </style>
@@ -1022,7 +1057,7 @@
   <nav>
     <a href="#cs-overview">Overview</a>
     <a href="#cs-strategy">Strategy</a>
-    <a href="#cs-solution">Key features in the solution</a>
+    <a href="#cs-solution">Key features in the ecosystem</a>
     <a href="#cs-impact">Impact &amp; outcome</a>
   </nav>
 </aside>
@@ -1037,10 +1072,11 @@
   <div class="case-study-overview-grid-overview" id="cs-overview">
      <p class="txt3" style="padding: 0;">Overview</p>
      <div class="txt4" style="padding-left: 0;">
-     <p style="flex: 3;">Intuit's API ecosystem grew fragmented across teams &mdash; no centralized place to discover or author APIs, no uniform testing tools, and a disjointed experience that forced constant context-switching. The unified API Platform consolidates discovery, authoring, testing, and lifecycle management into one coherent surface, replacing a team-by-team patchwork with a foundation that compounds in value with every team that builds on it.</p>
+     <p style="flex: 3;">Intuit's API ecosystem grew fragmented across teams &mdash; no centralized place to discover or author APIs, no uniform testing tools, and a disjointed experience that forced constant context-switching. Critically, flagship products like TurboTax and QuickBooks carry a heavy reliance on this API platform, meaning fragmentation at the infrastructure level directly impacts the reliability and velocity of Intuit's most business-critical surfaces. The unified API Platform consolidates discovery, authoring, testing, and lifecycle management into one coherent surface, replacing a team-by-team patchwork with a foundation that compounds in value with every team that builds on it.</p>
      </div>
   </div>
-  <section class="case-study-overview-grid-strategy" id="cs-strategy" aria-labelledby="cs-strategy-heading">
+  <section class="case-study-overview-grid-strategy" id="cs-strategy" aria-labelledby="cs-strategy-heading" aria-describedby="cs-strategy-problem">
+     <p class="case-study-problem-statement" id="cs-strategy-problem">How might we unify Intuit&rsquo;s fragmented API ecosystem into a single platform that scales across teams, products, and partners?</p>
      <p class="txt3" id="cs-strategy-heading" style="padding: 0; margin: 0; text-align: left !important;">Strategy</p>
      <div class="txt4" style="padding-left: 0;">
      <p style="flex: 3;">Unify Intuit's fragmented API experience into a single, well-designed platform where discovery, authoring, testing, and lifecycle flow as one continuous developer journey &mdash; establishing the design foundation to scale beyond internal teams and open Intuit's APIs to third-party developers as a core business growth lever.</p>
@@ -1051,18 +1087,18 @@
   </section>
   <div class="case-study-overview-grid-meta wrapper">
     <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 120%;">Role</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.75rem 0; font-size: 15px; margin-bottom: 1.5rem;">Product design lead</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.15rem 0 0.45rem; font-size: 15px; margin-bottom: 1.1rem;">Product design lead</p>
     <h2 style="font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Timeline</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">Jan 2023 &ndash; Present</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.15rem 0 0.35rem; font-size: 15px;">Jan 2023 &ndash; Present</p>
   <h2 style="padding-top: 7%; font-weight: 500; font-family: &quot;MyWebFont&quot;; font-size: 20px;">Platform</h2>
-    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.5rem 0; font-size: 15px;">Web, Desktop</p>
+    <p style="font-family: &quot;MyWebFont1&quot;; padding: 0.15rem 0 0.35rem; font-size: 15px;">Web, Desktop</p>
   </div>
 </div>
 
 <div id="cs-solution">
 <div style="display: flex; flex-wrap: wrap; padding: 5%;">
   <div style="flex: 3 0 600px;">
-     <p class="txt3" style="padding: 0;">Key features in the solution</p>
+     <p class="txt3" style="padding: 0;">Key features in the ecosystem</p>
      <div class="txt4 cs-solution-features" style="padding-left: 0;">
      <p style="flex: 3;">The platform centers on three capabilities that tie consumer adoption to producer quality &mdash; shaped with architects, TPMs, and IDE/IDX partners.</p>
      <ol class="cs-solution-feature-list">
@@ -1074,17 +1110,48 @@
   </div>
 </div>
 <figure class="case-study-image-block case-study-image-block--hq case-study-image-block--gradient-drift" style="--case-study-image-bg: linear-gradient(155deg, #eef2f8 0%, #e5eaf4 42%, #f5f7fb 100%);">
-  <img src="https://placehold.co/1440x720/f6f9fc/4a5668?text=Competitive+API+reference+synthesis" width="1440" height="720" loading="lazy" decoding="async" alt="Slides and notes from benchmarking external API references and documentation norms.">
-  <figcaption>Synthesis across references &mdash; turning competitive patterns into Autura-aligned guidance for writers and readers.</figcaption>
+  <div class="srini-video-wrap">
+  <video playsinline preload="metadata" aria-label="REST API documentation and testing experience">
+    <source src="REST Final.mp4" type="video/mp4">
+  </video>
+  <button type="button" class="srini-video-play" aria-label="Play video">
+    <span class="srini-video-play-pill">
+      <svg class="srini-video-play-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M10 8.25 L16.25 12 L10 15.75 Z"/></svg>
+      <span class="srini-video-play-text" aria-hidden="true">Play</span>
+    </span>
+  </button>
+  </div>
+  <figcaption>REST API Explorer centralizes capability-level APIs and documentation in a schema-aligned structure, with an embedded Intuit API client to build requests and test endpoints in context.</figcaption>
 </figure>
 <figure class="case-study-image-block case-study-image-block--hq case-study-image-block--gradient-drift" style="--case-study-image-bg: linear-gradient(155deg, #eef2f8 0%, #e5eaf4 42%, #f5f7fb 100%);">
-  <img src="https://placehold.co/1440x800/f8fafc/4a5668?text=IA+%2B+design+validation" width="1440" height="800" loading="lazy" decoding="async" alt="Early information architecture sketches and directional explorations validated with mixed personas.">
-  <figcaption>Broad-to-narrow exploration &mdash; IA variants and facilitation notes from FMHs with technical and lighter readers.</figcaption>
+  <div class="srini-video-wrap">
+  <video playsinline preload="metadata" aria-label="GraphQL documentation and authoring experience">
+    <source src="GraphQL fINAL.mp4" type="video/mp4">
+  </video>
+  <button type="button" class="srini-video-play" aria-label="Play video">
+    <span class="srini-video-play-pill">
+      <svg class="srini-video-play-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M10 8.25 L16.25 12 L10 15.75 Z"/></svg>
+      <span class="srini-video-play-text" aria-hidden="true">Play</span>
+    </span>
+  </button>
+  </div>
+  <figcaption>GraphQL Explorer structures APIs as supergraphs with clear documentation for queries, mutations, and object types, plus a sandboxed playground for safely testing queries.</figcaption>
 </figure>
 <figure class="case-study-image-block case-study-image-block--hq case-study-image-block--gradient-drift" style="--case-study-image-bg: linear-gradient(155deg, #eef2f8 0%, #e5eaf4 42%, #f5f7fb 100%);">
-  <img src="https://placehold.co/1440x820/fcfdff/455064?text=API+Explorer+%E2%80%94+docs+%2B+playground" width="1440" height="820" loading="lazy" decoding="async" alt="Unified API Explorer combining documentation navigation and runnable code playground.">
-  <figcaption>Explorer surface &mdash; documentation, endpoints, parameters, and a playground wired to multilingual samples.</figcaption>
+  <div class="srini-video-wrap">
+  <video playsinline preload="metadata" aria-label="Unified API Explorer combining documentation navigation and runnable code playground.">
+    <source src="GraphQL Authoring final.mp4" type="video/mp4">
+  </video>
+  <button type="button" class="srini-video-play" aria-label="Play video">
+    <span class="srini-video-play-pill">
+      <svg class="srini-video-play-svg" viewBox="0 0 24 24" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M10 8.25 L16.25 12 L10 15.75 Z"/></svg>
+      <span class="srini-video-play-text" aria-hidden="true">Play</span>
+    </span>
+  </button>
+  </div>
+  <figcaption>GraphQL authoring in the IDE provides real-time schema linting and collision detection, helping authors draft and validate schemas confidently before publish.</figcaption>
 </figure>
+<p class="txt4" style="max-width: 760px; margin: -1.5rem auto 2rem auto; display: flex; justify-content: center; text-align: center;"><a href="https://www.youtube.com/watch?v=wGsP8yoCHVY" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; padding: 0.7rem 1rem; border: 1px solid rgba(31, 41, 55, 0.14); border-radius: 999px; background: rgba(255, 255, 255, 0.72); color: #25314d; text-decoration: none; box-shadow: 0 10px 28px rgba(31, 41, 55, 0.08);">Watch the Apollo GraphQL Conversations presentation by developers <span aria-hidden="true">↗</span></a></p>
 </div>
 
 <div id="cs-impact">
@@ -1102,7 +1169,7 @@
 </div>
 </div>
 
-<p class="case-study-process-note" role="note"><strong>Note:</strong> This page is intentionally high-level. For a deeper walkthrough of research, facilitation, milestones, and handoff artifacts, <a href="mailto:tcsreeni93@gmail.com">reach out directly</a>&mdash;or use Email / LinkedIn in the footer below.</p>
+<p class="case-study-process-note" role="note"><strong>Note:</strong> This page is intentionally high-level. For a deeper walkthrough of research, facilitation, milestones, and handoff artifacts, <a href="mailto:tcsreeni93@gmail.com">reach out directly</a>.</p>
 
 </div>
 </div>
@@ -1463,6 +1530,7 @@ window.onscroll = function() {
 })();
 </script>
 <script src="case-study-scroll-reveal.js"></script>
+<script src="srini-video-preview.js"></script>
 <script src="ui-sounds.js?v=26"></script>
 
 </div></body></html>

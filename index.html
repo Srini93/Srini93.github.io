@@ -59,6 +59,11 @@
       display: inline-block;
       padding-bottom: 4px;
       text-align: left;
+      white-space: nowrap;
+    }
+
+    .logo-srini:hover {
+      text-transform: none;
     }
 
     .logo-srini::after {
@@ -1234,7 +1239,7 @@
         <div
          class="cards-layout"
           style=" padding-top: 5%; padding-left: 5%; padding-right: 5%; color: var(--srini-color-text-accent);">
-          <div  class="cards-layout-image work-image-container"> <a href="API.html" target="_blank"><img src="images/API.png" style=" width: 90%; border-radius: 4%; "></a>
+          <div  class="cards-layout-image work-image-container"> <a href="API.html" target="_blank" rel="noopener noreferrer"><img src="images/API.png" style=" width: 90%; border-radius: 4%; "></a>
           </div>
 
           <div style="margin: 24px"></div>
@@ -1242,7 +1247,7 @@
           <div  class="cards-layout-content" style="padding-top: 5%; min-width: 320px;">
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
-            <a href="API.html" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">API Experiences – Developer Platform & Integration Tools</a></h2>
+            <a href="API.html" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">API platform - API Documentation, testing and integration experiences</a></h2>
             <p class="project-date">Jan 2023 - Present</p>
             <ul
              class="card-list-points"
@@ -1277,7 +1282,7 @@
             </ul>
 
             <div style="padding-top: 6rem;">
-              <a class="read-more-glass" href="API.html" target="_blank">
+              <a class="read-more-glass" href="API.html" target="_blank" rel="noopener noreferrer">
                 <div class="read-more-content">
                   <span class="read-more-text">Read More</span>
                   <div class="read-more-icon">
@@ -1578,6 +1583,27 @@ Designed a white label friendly design system scaling from design to code for fi
     // ── Text Scramble Decode Animation on Hover ──
     (function () {
       const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*<>[]{}/\\|~^';
+      // One word per hover, rotated like loading copy (optional override: data-text-hover="Hi|Hello|Welcome")
+      const DEFAULT_LOGO_HOVER_GREETINGS = [
+        'Hello',
+        'Hi',
+        'Hey',
+        'Welcome',
+        'Howdy',
+        'Greetings',
+        'Salutations',
+        'Hiya',
+        'Yo',
+        'Cheers',
+        'Aloha',
+        'Hola',
+        'Ciao',
+        'Ahoy',
+        'Sup',
+        'Hej',
+        'Hallo',
+        'Bonjour',
+      ];
       const TICK = 40;           // ms per scramble frame
       const WARMUP = 12;         // full-scramble cycles before resolving
       const MIN_EXTRA = 2;       // min extra scramble ticks before lock-in
@@ -1598,8 +1624,51 @@ Designed a white label friendly design system scaling from design to code for fi
         return indices;
       }
 
-      function scrambleDecode(el) {
-        const finalText = (el.getAttribute('data-text') || el.textContent).trim();
+      function stopScramble(el) {
+        if (el._scrambleTimer != null) {
+          clearInterval(el._scrambleTimer);
+          el._scrambleTimer = null;
+        }
+        el._scrambling = false;
+      }
+
+      function hoverGreetingPool(el) {
+        const attr = (el.getAttribute('data-text-hover') || '').trim();
+        if (attr.includes('|')) {
+          return attr.split('|').map(function (s) { return s.trim(); }).filter(Boolean);
+        }
+        return DEFAULT_LOGO_HOVER_GREETINGS;
+      }
+
+      function pickHoverGreeting(el) {
+        const pool = hoverGreetingPool(el);
+        if (!pool.length) return 'Hello';
+        if (pool.length === 1) return pool[0];
+        const last = el._lastHoverGreeting;
+        let pick = pool[Math.floor(Math.random() * pool.length)];
+        let guard = 0;
+        while (pick === last && guard < 40) {
+          pick = pool[Math.floor(Math.random() * pool.length)];
+          guard++;
+        }
+        el._lastHoverGreeting = pick;
+        return pick;
+      }
+
+      function homeLogoText(el) {
+        const a = el.getAttribute('data-text');
+        return (a != null && String(a).trim() !== '') ? String(a).trim() : 'srini';
+      }
+
+      function scrambleDecode(el, targetOverride) {
+        stopScramble(el);
+        let finalText;
+        if (targetOverride != null) {
+          const t = String(targetOverride).trim();
+          finalText = t.length ? t : homeLogoText(el);
+        } else {
+          finalText = homeLogoText(el);
+        }
         const len = finalText.length;
         const locked = new Array(len).fill(false);
         const display = new Array(len);
@@ -1662,7 +1731,16 @@ Designed a white label friendly design system scaling from design to code for fi
         el._scrambleTimer = scrambleDecode(el);
 
         el.addEventListener('mouseenter', function () {
-          if (el._scrambling) return;
+          const hoverText = pickHoverGreeting(el);
+          stopScramble(el);
+          el._scrambling = true;
+          el._scrambleTimer = scrambleDecode(el, hoverText);
+        });
+
+        el.addEventListener('mouseleave', function () {
+          const home = homeLogoText(el);
+          if (el.textContent.trim() === home) return;
+          stopScramble(el);
           el._scrambling = true;
           el._scrambleTimer = scrambleDecode(el);
         });

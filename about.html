@@ -399,7 +399,7 @@
     #about > #about > .txt4 { gap: 1.5rem clamp(1rem, 2.5vw, 1.75rem); }
   }
 
-  /* Intro portrait — clip must match wrapper (object-fit + img radius is buggy in WebKit/Blink) */
+  /* Intro portrait — Framer-style card (tanvipisal.com/about): 16px radius + layered elevation */
   .about-profile-photo {
     flex: 0 0 auto;
     margin: 0;
@@ -407,36 +407,48 @@
     align-self: center;
     width: min(320px, 80vw);
     max-width: 100%;
-    border-radius: 28px;
+    aspect-ratio: 4 / 5;
+    border-radius: 16px;
     overflow: hidden;
+    border: 1px solid rgba(29, 29, 31, 0.12);
+    background: #fff;
     line-height: 0;
     isolation: isolate;
+    box-sizing: border-box;
+    box-shadow:
+      0 1.34368px 1.34368px -0.34375px rgba(0, 0, 0, 0.04),
+      0 3.18477px 3.18477px -0.6875px rgba(0, 0, 0, 0.04),
+      0 5.80935px 5.80935px -1.03125px rgba(0, 0, 0, 0.04),
+      0 9.65803px 9.65803px -1.375px rgba(0, 0, 0, 0.04),
+      0 15.5969px 15.5969px -1.71875px rgba(0, 0, 0, 0.04),
+      0 25.5306px 25.5306px -2.0625px rgba(0, 0, 0, 0.04),
+      0 43.962px 43.962px -2.40625px rgba(0, 0, 0, 0.04),
+      0 80px 80px -2.75px rgba(0, 0, 0, 0.04);
   }
   @media (max-width: 768px) {
-    .about-profile-photo { margin: 1.5rem auto 0.75rem; }
+    .about-profile-photo { margin: 1.5rem auto 0; }
   }
   .about-profile-photo img {
     display: block;
     width: 100%;
     max-width: none !important;
-    height: auto;
-    aspect-ratio: 4 / 5;
-    border-radius: 28px;
+    height: 100%;
+    border-radius: 16px;
     object-fit: cover;
     object-position: center;
     vertical-align: top;
-    clip-path: inset(0 round 28px);
+    clip-path: inset(0 round 16px);
     transform: translateZ(0);
   }
   @media (max-width: 600px) {
     .about-profile-photo {
       width: min(260px, 88vw);
-      margin: 1.25rem auto 0.75rem;
-      border-radius: 24px;
+      margin: 1.25rem auto 0;
+      border-radius: 14px;
     }
     .about-profile-photo img {
-      border-radius: 24px;
-      clip-path: inset(0 round 24px);
+      border-radius: 14px;
+      clip-path: inset(0 round 14px);
     }
   }
 
@@ -870,7 +882,7 @@ tcsreeni93@gmail.com </a></span>
     <article class="about-howiwork-card" data-aos="fade-up" data-aos-delay="200">
       <span class="about-howiwork-step">03</span>
       <h3>Refine &amp; ship</h3>
-      <p>Polish in the details — micro-interactions, edge cases, accessibility, and copy. I stay close through dev to make sure what ships matches the intent. I'm comfortable with agentic coding and shipping work to production alongside engineering.</p>
+      <p>Stay close through dev — sweating micro-interactions, edge cases, and copy until the details hold. That same care carries into the repo: agentic tooling to iterate fast, tight loops with engineering, and nothing shipped until it matches the intent.</p>
     </article>
   </div>
 
