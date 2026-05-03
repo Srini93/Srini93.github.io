@@ -1,6 +1,8 @@
 <html><head>
 <title>Intuit Assist – GenAI-Powered Developer Assistant — Case study</title>
-<link rel="icon" type="favi.png" href="favi.png"> 
+<link href="images/favi.png" rel="icon" sizes="192x192" type="image/png" />
+<link href="images/favi.png" rel="icon" sizes="128x128" type="image/png" />
+
 <meta name="theme-color" content="#ffffff">
 <meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
@@ -1715,6 +1717,17 @@
 <style>
   #site-content-wrap { transition: margin-right 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
   body.chat-open #site-content-wrap { margin-right: 444px; }
+  @media screen and (min-width: 1280px) {
+    .case-study-page-wrap {
+      transition: padding-left 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    body.chat-open aside.case-study-toc {
+      display: none !important;
+    }
+    body.chat-open .case-study-page-wrap {
+      padding-left: 1.5rem !important;
+    }
+  }
   .chatbot-sidebar {
     position: fixed; top: 12px; right: 12px; bottom: 12px; width: 0; overflow: hidden;
     transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 9999;

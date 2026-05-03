@@ -193,6 +193,20 @@
     return view;
   }
 
+  /** Directory URL for the current shell page (so srcdoc iframe resolves ./chatbot/ correctly). */
+  function ppIframeBaseHref() {
+    try {
+      var u = new URL(window.location.href);
+      u.hash = '';
+      var path = u.pathname;
+      var i = path.lastIndexOf('/');
+      u.pathname = i >= 0 ? path.slice(0, i + 1) : '/';
+      return u.href;
+    } catch (e) {
+      return '.';
+    }
+  }
+
   async function deriveKey(salt, password) {
     var encoder = new TextEncoder();
     var baseKey = await crypto.subtle.importKey(
@@ -221,56 +235,10 @@
       'try { AOS.init({ duration: 1200 }); } catch(e) {}'
     );
 
-    // 3. Add Google Fonts to <head>
+    // 3. Add Google Fonts + tokens + nav CSS (match style-2.css with optional ?v= cache-bust)
     var fontLinks =
       '<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">' +
       '<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">';
-    html = html.replace(
-      '<link rel="stylesheet" href="style-2.css">',
-      fontLinks + '<link rel="stylesheet" href="srini-tokens.css?v=2">' + '<link rel="stylesheet" href="style-2.css?v=29">'
-    );
-
-    // 4. Replace old hamburger menu with updated version
-    var oldHamMenu =
-      '<div class="hamburgler-menu">\n  <ul class="hamburgler-menu-list">\n' +
-      ' <li><a href="index.html#Selectedworks">Works</a></li>\n' +
-      '  <li><a href="About.html">About</a></li>\n' +
-      '           \n' +
-      '    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">R\u00e9sum\u00e9</a></li>\n' +
-      '         \n        \n  </ul>\n</div>';
-    var newHamMenu =
-      '<a href="index.html" class="logo-srini" data-text="srini">srini</a>\n' +
-      '<div class="hamburgler-menu">\n  <ul class="hamburgler-menu-list">\n' +
-      '    <li><a href="about.html">About</a></li>\n' +
-      '    <li><a href="index.html#Selectedworks">Works</a></li>\n' +
-      '    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">R\u00e9sum\u00e9</a></li>\n' +
-      '    <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>\n' +
-      '  </ul>\n</div>';
-    html = html.replace(oldHamMenu, newHamMenu);
-
-    // 5. Replace old <header> with new nav
-    var headerMatch = html.match(/<header[^>]*>[\s\S]*?<\/header>/i);
-    if (headerMatch) {
-      var sparkle = '<svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>';
-      var newHeader =
-        '<header>\n' +
-        '  <div id="hamburgler" class="hamburgler-icon-wrapper">\n' +
-        '    <span class="hamburgler-icon"></span>\n' +
-        '  </div>\n' +
-        '  <nav>\n' +
-        '    <ul class="desk-menu">\n' +
-        '      <li><a href="index.html#Selectedworks">Works</a></li>\n' +
-        '      <li><a href="about.html">About</a></li>\n' +
-        '      <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">R\u00e9sum\u00e9</a></li>\n' +
-        '      <li class="srini-chat-nav-li"><button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><span class="srini-chat-hovertip" role="tooltip" style="opacity:0;visibility:hidden;pointer-events:none">Ask about Srini</span>' + sparkle + '</button></li>\n' +
-        '      <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>\n' +
-        '    </ul>\n' +
-        '  </nav>\n' +
-        '</header>';
-      html = html.replace(headerMatch[0], newHeader);
-    }
-
-    // 6. Inject nav CSS
     var navCSS = '<style>' +
       '.logo-srini{position:absolute;z-index:10001;font-family:"Press Start 2P","Courier New","Monaco",monospace;font-size:16px;color:#666;text-decoration:none;letter-spacing:2px;cursor:pointer;text-transform:uppercase;line-height:1.5;display:inline-block;padding-bottom:4px}' +
       '.logo-srini::after{display:none}' +
@@ -315,9 +283,51 @@
       '.srini-chat-nav-btn:hover .srini-chat-sparkle{transform:scale(1.15);color:#3b65ef}' +
       '</style>';
     html = html.replace(
-      '<link rel="stylesheet" href="style-2.css">',
-      '<link rel="stylesheet" href="srini-tokens.css?v=2">' + '<link rel="stylesheet" href="style-2.css?v=29">' + navCSS
+      /<link rel="stylesheet" href="style-2\.css[^"]*">/,
+      fontLinks + '<link rel="stylesheet" href="srini-tokens.css?v=2">' + '<link rel="stylesheet" href="style-2.css?v=29">' + navCSS
     );
+
+    // 4. Replace old hamburger menu with updated version
+    var oldHamMenu =
+      '<div class="hamburgler-menu">\n  <ul class="hamburgler-menu-list">\n' +
+      ' <li><a href="index.html#Selectedworks">Works</a></li>\n' +
+      '  <li><a href="About.html">About</a></li>\n' +
+      '           \n' +
+      '    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">R\u00e9sum\u00e9</a></li>\n' +
+      '         \n        \n  </ul>\n</div>';
+    var newHamMenu =
+      '<a href="index.html" class="logo-srini" data-text="srini">srini</a>\n' +
+      '<div class="hamburgler-menu">\n  <ul class="hamburgler-menu-list">\n' +
+      '    <li><a href="about.html">About</a></li>\n' +
+      '    <li><a href="index.html#Selectedworks">Works</a></li>\n' +
+      '    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">R\u00e9sum\u00e9</a></li>\n' +
+      '    <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>\n' +
+      '  </ul>\n</div>';
+    html = html.replace(oldHamMenu, newHamMenu);
+
+    // 5. Replace old <header> with new nav
+    var headerMatch = html.match(/<header[^>]*>[\s\S]*?<\/header>/i);
+    if (headerMatch) {
+      var sparkle = '<svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>';
+      var newHeader =
+        '<header>\n' +
+        '  <div id="hamburgler" class="hamburgler-icon-wrapper">\n' +
+        '    <span class="hamburgler-icon"></span>\n' +
+        '  </div>\n' +
+        '  <nav>\n' +
+        '    <ul class="desk-menu">\n' +
+        '      <li><a href="index.html#Selectedworks">Works</a></li>\n' +
+        '      <li><a href="about.html">About</a></li>\n' +
+        '      <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">R\u00e9sum\u00e9</a></li>\n' +
+        '      <li class="srini-chat-nav-li"><button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><span class="srini-chat-hovertip" role="tooltip" style="opacity:0;visibility:hidden;pointer-events:none">Ask about Srini</span>' + sparkle + '</button></li>\n' +
+        '      <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>\n' +
+        '    </ul>\n' +
+        '  </nav>\n' +
+        '</header>';
+      html = html.replace(headerMatch[0], newHeader);
+    }
+
+    // 6. (nav CSS merged into step 3 style-2 replace)
 
     // 7. Replace old hamburger JS with backdrop-aware version
     var oldJS =
@@ -352,31 +362,41 @@
       "$(window).on('keyup', ifEscClose);\n      $(document).on('click', '.hamburgler-backdrop', closeNav);"
     );
 
-    // 9. Wrap body content in #site-content-wrap for content-push behavior
-    var bodyOpenMatch = html.match(/<body[^>]*>/i);
-    if (bodyOpenMatch) {
-      html = html.replace(bodyOpenMatch[0], bodyOpenMatch[0] + '<div id="site-content-wrap">');
+    // 9–10. Wrap + chat UI only when absent (plain case studies already ship both — duplicating breaks chat/layout)
+    var plainHadSiteWrap = /id\s*=\s*["']site-content-wrap["']/i.test(html);
+    var plainHadChatSidebar = /id\s*=\s*["']chatbot-sidebar["']/i.test(html);
+
+    if (!plainHadSiteWrap) {
+      var bodyOpenMatch = html.match(/<body[^>]*>/i);
+      if (bodyOpenMatch) {
+        html = html.replace(bodyOpenMatch[0], bodyOpenMatch[0] + '<div id="site-content-wrap">');
+      }
     }
 
-    // 10. Inject chatbot sidebar + FAB + JS before </body>, closing the wrap first
     var parentSidebar = document.getElementById('chatbot-sidebar');
     var chatSrc = (parentSidebar && parentSidebar.getAttribute('data-chatbot-src')) || './chatbot/';
-    var chatApi = (parentSidebar && parentSidebar.getAttribute('data-chat-api')) || '';
+    var chatApi =
+      (parentSidebar && parentSidebar.getAttribute('data-chat-api')) || 'https://srinilm.onrender.com';
+
+    var closeWrapPrefix = plainHadSiteWrap ? '' : '</div><!-- /site-content-wrap -->';
 
     var chatbotHTML =
-      '</div><!-- /site-content-wrap -->' +
+      closeWrapPrefix +
       '<button type="button" class="srini-chat-trigger srini-chat-fab" aria-label="Open AI chat" aria-expanded="false">' +
       '<span class="srini-chat-hovertip" role="tooltip" style="opacity:0;visibility:hidden;pointer-events:none">Ask about Srini</span>' +
       '<svg class="srini-chat-fab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>' +
       '</button>' +
-      '<div id="chatbot-sidebar" class="chatbot-sidebar" data-chatbot-src="' + chatSrc + '"' +
-      (chatApi ? ' data-chat-api="' + chatApi + '"' : '') +
-      ' aria-hidden="true"></div>';
+      '<div id="chatbot-sidebar" class="chatbot-sidebar" data-chatbot-src="' +
+      ppEscapeAttr(chatSrc) +
+      '" data-chat-api="' +
+      ppEscapeAttr(chatApi) +
+      '" aria-hidden="true"></div>';
 
     var chatbotCSS =
       '<style>' +
       '#site-content-wrap{transition:margin-right 0.3s cubic-bezier(0.16,1,0.3,1)}' +
       'body.chat-open #site-content-wrap{margin-right:444px}' +
+      '@media(min-width:1280px){.case-study-page-wrap{transition:padding-left 0.3s cubic-bezier(0.16,1,0.3,1)}body.chat-open aside.case-study-toc{display:none!important}body.chat-open .case-study-page-wrap{padding-left:1.5rem!important}}' +
       '.chatbot-sidebar{position:fixed;top:12px;right:12px;bottom:12px;width:0;overflow:hidden;transition:width 0.3s cubic-bezier(0.16,1,0.3,1);z-index:9999;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,0.06);border-radius:16px}' +
       'body.chat-open .chatbot-sidebar{width:420px}' +
       '.chatbot-sidebar iframe{width:100%;height:100%;border:none;display:block;border-radius:16px}' +
@@ -421,10 +441,12 @@
       '})();' +
       '<\/script>';
 
+    var injectTail = plainHadChatSidebar ? '' : chatbotHTML + chatbotCSS + chatbotJS;
+
     if (html.includes('</body>')) {
-      html = html.replace('</body>', chatbotHTML + chatbotCSS + chatbotJS + '</body>');
+      html = html.replace('</body>', injectTail + '</body>');
     } else {
-      html = html + chatbotHTML + chatbotCSS + chatbotJS;
+      html = html + injectTail;
     }
 
     return html;
@@ -463,8 +485,10 @@
       if (decrypted === '') throw 'No data returned';
 
       // Standard iframe helpers
-      var basestr = '<base href="." target="_top">';
+      var basestr = '<base href="' + ppEscapeAttr(ppIframeBaseHref()) + '" target="_top">';
       var sectionStyle = '<style>#Selectedworks { background: #fff !important; }</style>';
+      var chatOpenTocStyle =
+        '<style>@media(min-width:1280px){.case-study-page-wrap{transition:padding-left 0.3s cubic-bezier(0.16,1,0.3,1)}body.chat-open aside.case-study-toc{display:none!important}body.chat-open .case-study-page-wrap{padding-left:1.5rem!important}}</style>';
       var anchorfix =
         '<script>' +
         'Array.from(document.links).forEach(function(a){' +
@@ -478,11 +502,14 @@
         '<\/script>';
 
       if (decrypted.includes('<head>'))
-        decrypted = decrypted.replace('<head>', '<head>' + basestr + sectionStyle);
+        decrypted = decrypted.replace('<head>', '<head>' + basestr + sectionStyle + chatOpenTocStyle);
       else if (decrypted.includes('<!DOCTYPE html>'))
-        decrypted = decrypted.replace('<!DOCTYPE html>', '<!DOCTYPE html>' + basestr + sectionStyle);
+        decrypted = decrypted.replace(
+          '<!DOCTYPE html>',
+          '<!DOCTYPE html>' + basestr + sectionStyle + chatOpenTocStyle
+        );
       else
-        decrypted = basestr + sectionStyle + decrypted;
+        decrypted = basestr + sectionStyle + chatOpenTocStyle + decrypted;
 
       if (decrypted.includes('</body>'))
         decrypted = decrypted.replace('</body>', anchorfix + '</body>');
