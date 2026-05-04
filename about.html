@@ -1,4 +1,5 @@
-<html><head>
+<html lang="en"><head>
+<meta charset="utf-8">
 <title>Srinivasan - About me</title>
 <link href="images/favi.png" rel="icon" sizes="192x192" type="image/png" />
 <link href="images/favi.png" rel="icon" sizes="128x128" type="image/png" />
@@ -697,7 +698,8 @@
     align-self: flex-start;
     display: inline-flex;
     align-items: center;
-    gap: 0.55rem;
+    justify-content: center;
+    gap: 0.65rem;
     margin-top: 0.5rem;
     padding: 14px 26px;
     background: var(--ink);
@@ -709,6 +711,7 @@
     text-transform: uppercase;
     text-decoration: none;
     box-shadow: 0 4px 14px rgba(29, 29, 31, 0.12);
+    line-height: 1;
     transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
                 box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
                 background 0.2s ease;
@@ -719,12 +722,19 @@
     transform: translateY(-1px);
     box-shadow: 0 10px 24px rgba(29, 29, 31, 0.18);
   }
-  .about-mentorship-cta::after {
-    content: '→';
-    font-family: inherit;
+  /* SF Symbols–style arrow (arrow.forward geometry); SVG works cross-browser vs. SF Symbols font */
+  .about-mentorship-cta-icon {
+    flex-shrink: 0;
+    width: 1.125rem;
+    height: 1.125rem;
+    display: block;
+    color: inherit;
     transition: transform 0.25s ease;
   }
-  .about-mentorship-cta:hover::after { transform: translateX(3px); }
+  .about-mentorship-cta:hover .about-mentorship-cta-icon,
+  .about-mentorship-cta:focus-visible .about-mentorship-cta-icon {
+    transform: translateX(3px);
+  }
 
   .about-mentorship-reviews {
     flex: 0 1 600px;
@@ -761,8 +771,11 @@
     .about-howiwork-card { padding: 1.5rem 1.4rem 1.4rem; }
   }
 
-  /* Footer (match index.html) */
+  /* Footer (match index.html): full-bleed gradient edge-to-edge of #site-content-wrap */
   #contact {
+    width: 100%;
+    max-width: none;
+    box-sizing: border-box;
     background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%) !important;
   }
   #contact .frame {
@@ -860,6 +873,7 @@ tcsreeni93@gmail.com </a></span>
     
      </div>
 </div>
+</div>
 
 <div>
 
@@ -909,7 +923,7 @@ tcsreeni93@gmail.com </a></span>
         <li><strong>Interview prep</strong> — articulating process, tradeoffs, and outcomes</li>
         <li><strong>Product design craft</strong> — flows, systems, and cross-functional collaboration</li>
       </ul>
-      <a class="about-mentorship-cta" id="adplist-profile-link" href="https://adplist.org/mentors/srini-chakkarapani" target="_blank" rel="noopener noreferrer">Book a session</a>
+      <a class="about-mentorship-cta" id="adplist-profile-link" href="https://adplist.org/mentors/srini-chakkarapani" target="_blank" rel="noopener noreferrer"><span class="about-mentorship-cta-label">Book a session</span><svg class="about-mentorship-cta-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
     <section class="about-mentorship-reviews" data-aos="fade-up" aria-label="Mentor reviews">
       <iframe src="https://adplist.org/widgets/reviews?src=srini-chakkarapani" title="Mentor reviews" width="100%" height="100%" loading="lazy"></iframe>
@@ -919,10 +933,10 @@ tcsreeni93@gmail.com </a></span>
 
 </div>
 
-
+</div><!-- /.frame — footer below is full-bleed like index.html -->
 
   <!-- Footer -->
-  <div id="contact" style="background: linear-gradient(90deg, #e8f0fe 0%, #f8fafc 50%, #fef7ed 100%);">
+  <div id="contact">
     <div class="frame" style="max-width: 1400px; padding-top: 4rem; padding-bottom: 3rem;">
       <p class="txt6 wrap" style="font-size: 200%; line-height: 1.5;">You made it! Curious to say hello?<br> View my <a
           style="color:#3b65ef; text-decoration:none" href="Resume_Srinivasan.pdf" target="_blank">résumé</a>,
