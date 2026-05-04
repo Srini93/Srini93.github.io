@@ -50,6 +50,10 @@
   var plainSrc = ppSanitizePlainSrc(configEl.getAttribute('data-plain-src'));
   var devPlainLoad = ppIsLocalDevPlainLoad() && plainSrc.length > 0;
 
+  /** When the shell HTML lives in a subfolder (e.g. images/), use data-pp-path-prefix="../" so nav links hit site root. Only "../" is allowed. */
+  var ppPathRaw = String(configEl.getAttribute('data-pp-path-prefix') || '').trim();
+  var ppP = ppPathRaw === '../' ? '../' : '';
+
   // Normalize: dropped newlines tabs spaces if markup was wrapped (would break base64)
   var payload = String(configEl.getAttribute('data-payload') || '').replace(/\s/g, '');
   if (!payload && !devPlainLoad) {
@@ -75,13 +79,13 @@
     '<iframe id="pp-contentFrame" style="display:none" allowfullscreen></iframe>' +
     '<div id="pp-dialogWrap">' +
     // Logo
-    '<a href="index.html" class="pp-logo-srini" data-text="srini">srini</a>' +
+    '<a href="' + ppP + 'index.html" class="pp-logo-srini" data-text="srini">srini</a>' +
     // Hamburger menu overlay (mobile)
     '<div class="pp-hamburgler-menu">' +
     '  <ul class="pp-hamburgler-menu-list">' +
-    '    <li><a href="about.html">About</a></li>' +
-    '    <li><a href="index.html#Selectedworks">Works</a></li>' +
-    '    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>' +
+    '    <li><a href="' + ppP + 'about.html">About</a></li>' +
+    '    <li><a href="' + ppP + 'index.html#Selectedworks">Works</a></li>' +
+    '    <li><a class="contact" href="' + ppP + 'Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>' +
     '    <li><a class="pp-get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>' +
     '  </ul>' +
     '</div>' +
@@ -92,9 +96,9 @@
     '  </div>' +
     '  <nav>' +
     '    <ul class="pp-desk-menu">' +
-    '      <li><a href="index.html#Selectedworks">Works</a></li>' +
-    '      <li><a href="about.html">About</a></li>' +
-    '      <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>' +
+    '      <li><a href="' + ppP + 'index.html#Selectedworks">Works</a></li>' +
+    '      <li><a href="' + ppP + 'about.html">About</a></li>' +
+    '      <li><a class="contact" href="' + ppP + 'Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>' +
     '      <li><a class="pp-get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>' +
     '    </ul>' +
     '  </nav>' +
@@ -296,11 +300,11 @@
       '    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">R\u00e9sum\u00e9</a></li>\n' +
       '         \n        \n  </ul>\n</div>';
     var newHamMenu =
-      '<a href="index.html" class="logo-srini" data-text="srini">srini</a>\n' +
+      '<a href="' + ppP + 'index.html" class="logo-srini" data-text="srini">srini</a>\n' +
       '<div class="hamburgler-menu">\n  <ul class="hamburgler-menu-list">\n' +
-      '    <li><a href="about.html">About</a></li>\n' +
-      '    <li><a href="index.html#Selectedworks">Works</a></li>\n' +
-      '    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">R\u00e9sum\u00e9</a></li>\n' +
+      '    <li><a href="' + ppP + 'about.html">About</a></li>\n' +
+      '    <li><a href="' + ppP + 'index.html#Selectedworks">Works</a></li>\n' +
+      '    <li><a class="contact" href="' + ppP + 'Resume_Srinivasan.pdf" target="_blank">R\u00e9sum\u00e9</a></li>\n' +
       '    <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>\n' +
       '  </ul>\n</div>';
     html = html.replace(oldHamMenu, newHamMenu);
@@ -316,9 +320,9 @@
         '  </div>\n' +
         '  <nav>\n' +
         '    <ul class="desk-menu">\n' +
-        '      <li><a href="index.html#Selectedworks">Works</a></li>\n' +
-        '      <li><a href="about.html">About</a></li>\n' +
-        '      <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">R\u00e9sum\u00e9</a></li>\n' +
+        '      <li><a href="' + ppP + 'index.html#Selectedworks">Works</a></li>\n' +
+        '      <li><a href="' + ppP + 'about.html">About</a></li>\n' +
+        '      <li><a class="contact" href="' + ppP + 'Resume_Srinivasan.pdf" target="_blank">R\u00e9sum\u00e9</a></li>\n' +
         '      <li class="srini-chat-nav-li"><button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><span class="srini-chat-hovertip" role="tooltip" style="opacity:0;visibility:hidden;pointer-events:none">Ask about Srini</span>' + sparkle + '</button></li>\n' +
         '      <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>\n' +
         '    </ul>\n' +
