@@ -23,3 +23,6 @@ backend/.env.*
 *.pkey
 secrets/
 !**/secrets.example*
+
+# Paper header shader — commit dist + source; not node_modules
+header-gradient/node_modules/
