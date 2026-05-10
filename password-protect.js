@@ -197,14 +197,31 @@
     return view;
   }
 
-  /** Directory URL for the current shell page (so srcdoc iframe resolves ./chatbot/ correctly). */
+  /**
+   * Base URL for the decrypted srcdoc iframe.
+   * Default: shell page directory (e.g. / for /Norton.html).
+   * With data-pp-path-prefix="../", the shell lives under a subfolder (e.g. /images/Norton.html) but
+   * the encrypted HTML is authored for the site root — same paths as root Norton.html. Using the
+   * subfolder as base would wrongly resolve index.html → /images/index.html instead of /index.html.
+   */
   function ppIframeBaseHref() {
     try {
       var u = new URL(window.location.href);
       u.hash = '';
       var path = u.pathname;
       var i = path.lastIndexOf('/');
-      u.pathname = i >= 0 ? path.slice(0, i + 1) : '/';
+      var dir = i >= 0 ? path.slice(0, i + 1) : '/';
+      if (ppP === '../') {
+        if (dir === '/') {
+          u.pathname = '/';
+        } else {
+          var noTrail = dir.slice(0, -1);
+          var j = noTrail.lastIndexOf('/');
+          u.pathname = j >= 0 ? noTrail.slice(0, j + 1) : '/';
+        }
+        return u.href;
+      }
+      u.pathname = dir;
       return u.href;
     } catch (e) {
       return '.';
