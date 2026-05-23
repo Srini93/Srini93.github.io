@@ -20,4 +20,15 @@
   --srini-color-text-caption: #9e9e9e;
 
   --srini-color-link: #3b65ef;
+
+  /* Large displays — scale type like ~120% browser zoom */
+  --srini-type-scale: 1;
+}
+
+@media screen and (min-width: 1801px) {
+  :root {
+    --srini-type-scale: 1.2;
+    --srini-body-font-size: 18px;
+    --srini-body-line-height: 30px;
+  }
 }
