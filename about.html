@@ -395,11 +395,19 @@
 
   /* Intro row only: flex gap between copy + portrait (not other .txt4 blocks under #about) */
   #about > #about > .txt4 {
-    gap: 1.25rem 1.75rem;
+    gap: 1.25rem 1.25rem;
     align-items: flex-start;
+    padding-left: 0;
+    padding-top: 0;
+  }
+  #about > #about > .txt4 > p {
+    flex: 3;
+    margin: 0;
+    padding-left: 5%;
+    padding-top: 3%;
   }
   @media (min-width: 769px) {
-    #about > #about > .txt4 { gap: 1.5rem clamp(1rem, 2.5vw, 1.75rem); }
+    #about > #about > .txt4 { gap: 1.5rem 1.25rem; }
   }
 
   /* Intro portrait — Framer-style card (tanvipisal.com/about): 16px radius + layered elevation */
@@ -407,7 +415,7 @@
     flex: 0 0 auto;
     margin: 0;
     padding: 0;
-    align-self: center;
+    align-self: flex-start;
     width: min(320px, 80vw);
     max-width: 100%;
     aspect-ratio: 4 / 5;
@@ -416,6 +424,7 @@
     border: 1px solid rgba(29, 29, 31, 0.12);
     background: #fff;
     line-height: 0;
+    font-size: 0;
     isolation: isolate;
     box-sizing: border-box;
     box-shadow:
@@ -429,29 +438,31 @@
       0 80px 80px -2.75px rgba(0, 0, 0, 0.04);
   }
   @media (max-width: 768px) {
-    .about-profile-photo { margin: 1.5rem auto 0; }
+    .about-profile-photo { margin: 0 auto; }
   }
   .about-profile-photo img {
     display: block;
     width: 100%;
     max-width: none !important;
     height: 100%;
-    border-radius: 16px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
     object-fit: cover;
     object-position: center;
     vertical-align: top;
-    clip-path: inset(0 round 16px);
-    transform: translateZ(0);
+    transform: scale(1.16) translateZ(0);
+    transform-origin: center center;
   }
   @media (max-width: 600px) {
     .about-profile-photo {
       width: min(260px, 88vw);
-      margin: 1.25rem auto 0;
+      margin: 0 auto;
       border-radius: 14px;
     }
     .about-profile-photo img {
-      border-radius: 14px;
-      clip-path: inset(0 round 14px);
+      border-radius: 0;
     }
   }
 
@@ -849,9 +860,8 @@
    <div id="about" style="/* height:30%; */backgroun;">
        
     <p class="txt3">Hello again! 👋</p>
-    <div class="txt4" >
-      
-      <p style="flex: 3;">
+    <div class="txt4">
+      <p>
      I'm Srini, a Product Designer passionate about creating digital experiences that blend design, technology, and real human insight. I love being hands-on throughout the entire product journey — from shaping early ideas to crafting interactions and guiding them through implementation. For me, a great product is that perfect harmony of design, experience, and technology.
 
 
@@ -866,11 +876,9 @@ Feel free to contact me if you would like to get in touch.
 <span><a style="color: #000; font-size: 90%; top: 5%; font-weight: 600; letter-spacing: 1.5px; text-decoration: none; font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif"> 
 tcsreeni93@gmail.com </a></span>
 
-      </p>
-      <figure class="about-profile-photo" data-aos="fade-left">
+      </p><figure class="about-profile-photo" data-aos="fade-left">
         <img src="images/My pic 2.png" alt="Srini portrait" width="320" height="400" loading="lazy" decoding="async" />
       </figure>
-    
      </div>
 </div>
 </div>

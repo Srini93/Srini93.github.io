@@ -885,3 +885,30 @@ header section h2 {
     padding-top: 0 !important;
   }
 }
+
+/* Large displays (1800px+) — ~120% type scale */
+@media screen and (min-width: 1801px) {
+  h1 {
+    font-size: 420%;
+  }
+
+  header section h2 {
+    font-size: 192%;
+  }
+
+  .txt3 {
+    font-size: 240%;
+  }
+
+  .txt4 {
+    font-size: 114%;
+  }
+
+  .txt6 {
+    font-size: 240%;
+  }
+
+  .HeaderContent-description {
+    font-size: calc(18px * var(--srini-type-scale));
+  }
+}
