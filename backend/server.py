@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import asyncio
 import os
+import re
 import time
 from typing import Any
 
@@ -121,7 +122,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-SYSTEM_PROMPT = """You are Srini's AI assistant on his portfolio website. Srinivasan (Srini) is a Staff Product Designer at Intuit, previously at Norton, Google, and Zoho. He is based in the San Francisco Bay Area.
+CONTACT_EMAIL = "tcsreeni93@gmail.com"
+_INVALID_EMAIL_AT_PORTFOLIO_DOMAIN = re.compile(
+    r"\b[A-Za-z0-9._%+-]+\s*(?:@|\(at\)|\bat\b)\s*srinivasan\.design\b",
+    re.IGNORECASE,
+)
+_INVALID_CONTACT_EMAIL_RE = re.compile(
+    r"mailto:[A-Za-z0-9._%+-]+@srinivasan\.design|"
+    r"\b[A-Za-z0-9._%+-]+@srinivasan\.design\b",
+    re.IGNORECASE,
+)
+_DUPLICATE_CONTACT_RE = re.compile(
+    re.escape(CONTACT_EMAIL) + r"\s*(?:,\s*|\s+or\s+|\s+and\s+)" + re.escape(CONTACT_EMAIL),
+    re.IGNORECASE,
+)
+
+SYSTEM_PROMPT = f"""You are Srini's AI assistant on his portfolio website. Srinivasan (Srini) is a Staff Product Designer at Intuit, previously at Norton, Google, and Zoho. He is based in the San Francisco Bay Area.
 
 Key facts:
 - Currently designing GenAI-powered developer experiences (Intuit Assist) and API platform tools at Intuit.
@@ -130,12 +146,13 @@ Key facts:
 - At Zoho: designed and shipped Zoho Sheet for iOS and Android.
 - Also worked on Holachef (FoodTech startup) ecosystem of applications.
 - Full-spectrum product designer: research, interaction design, visual design, prototyping, design systems.
-- Email: tcsreeni93@gmail.com
+- Contact email (always use this exact address only): {CONTACT_EMAIL}
+- Do not invent or guess any other email address for Srini.
 - LinkedIn: linkedin.com/in/srinivasanchakkarapani
 
 Formatting (required): Write every reply in GitHub-Flavored Markdown so the portfolio chat UI can render it. Use **bold** for key terms and short emphasis; use bullet lists (`-` items) or numbered lists when giving multiple points; use short `##` headings only when a reply has distinct sections; use a blank line before lists; use `inline code` for tools or product names when helpful. Do not wrap the whole answer in a single code fence unless you are showing an actual code sample.
 
-Be friendly, concise, and helpful. If someone asks something you don't know about Srini, say so politely and suggest they email him directly."""
+Be friendly, concise, and helpful. When asked how to contact Srini, always give **{CONTACT_EMAIL}** only. If someone asks something you don't know about Srini, say so politely and suggest they email **{CONTACT_EMAIL}**."""
 
 _DEFAULT_SUGGESTIONS = [
     "What does Srini focus on at Intuit?",
@@ -148,6 +165,14 @@ _startup_monotonic = time.monotonic()
 
 class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1, max_length=8000)
+
+
+def _sanitize_contact_email(text: str) -> str:
+    """Replace any @srinivasan.design address with the real contact email."""
+    out = _INVALID_EMAIL_AT_PORTFOLIO_DOMAIN.sub(CONTACT_EMAIL, text)
+    out = _INVALID_CONTACT_EMAIL_RE.sub(CONTACT_EMAIL, out)
+    out = _DUPLICATE_CONTACT_RE.sub(CONTACT_EMAIL, out)
+    return out
 
 
 def _build_response_payload(answer_text: str) -> dict[str, Any]:
@@ -201,6 +226,7 @@ async def chat(request: Request, req: ChatRequest) -> dict[str, Any]:
         text = (response.choices[0].message.content or "").strip()
         if not text:
             raise HTTPException(status_code=502, detail="Empty model response.")
+        text = _sanitize_contact_email(text)
         return _build_response_payload(text)
     except HTTPException:
         raise

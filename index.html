@@ -79,6 +79,12 @@
     /* Nav items are approximately 48-56px tall, centered at ~64px from top (40px padding + half nav height) */
     /* HeaderContent has padding: 0 4rem (64px) on screens >= 720px */
     /* Header text is inside centered frame with max-width 1400px */
+    header nav,
+    header .see-more {
+      position: relative;
+      z-index: 10;
+    }
+
     @media screen and (min-width: 1401px) {
       .logo-srini {
         top: 64px;
@@ -434,12 +440,6 @@
     
     header .HeaderContent h1 a {
       color: #3b65ef !important;
-    }
-    
-    header nav,
-    header .see-more {
-      position: relative;
-      z-index: 10;
     }
 
     /* Hamburger menu - compact dropdown panel */
@@ -1975,7 +1975,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
   var CHAT_API_PUBLIC = 'https://srinilm.onrender.com';
   /** Bump when deploying chatbot or host chat script changes (cache bust). */
-  var CHATBOT_CACHE_BUST = '31';
+  var CHATBOT_CACHE_BUST = '32';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';

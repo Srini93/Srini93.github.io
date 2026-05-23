@@ -3,6 +3,8 @@ import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import remarkBreaks from 'remark-breaks'
 import type { Components } from 'react-markdown'
+import { prepareBotMarkdown } from './linkifyBotMarkdown'
+import { sanitizeContactEmail } from './sanitizeContactEmail'
 import './chat-ui.css'
 
 const DEFAULT_API = 'https://srinilm.onrender.com'
@@ -98,11 +100,16 @@ function playSound(kind: string) {
 }
 
 const mdComponents: Components = {
-  a: ({ href, children }) => (
-    <a href={href} target="_blank" rel="noopener noreferrer">
-      {children}
-    </a>
-  ),
+  a: ({ href, children }) => {
+    if (href?.startsWith('mailto:') || href?.startsWith('tel:')) {
+      return <a href={href}>{children}</a>
+    }
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    )
+  },
 }
 
 const remarkPlugins = [remarkGfm, remarkBreaks]
@@ -225,7 +232,7 @@ function MessageRow({
           ) : (
             <div className="msg-md">
               <ReactMarkdown remarkPlugins={remarkPlugins} components={mdComponents}>
-                {text}
+                {prepareBotMarkdown(text)}
               </ReactMarkdown>
             </div>
           )}
@@ -371,7 +378,7 @@ export default function App() {
         window.parent.postMessage('srini-chat-sound-send', '*')
         const { answer, suggestions } = await postChat(text)
         playSound('answer')
-        setMessages((prev) => [...prev, { role: 'bot', text: answer, suggestions }])
+        setMessages((prev) => [...prev, { role: 'bot', text: sanitizeContactEmail(answer), suggestions }])
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Could not reach the server. Please try again.')
       } finally {
