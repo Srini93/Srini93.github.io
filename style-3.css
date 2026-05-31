@@ -339,15 +339,49 @@ li.b {
    text-underline-offset: 0.2em;
 }
 
+@keyframes srini-chat-nav-shine {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
 button.srini-chat-trigger.srini-chat-nav-btn {
   width: 48px;
   height: 48px;
   min-width: 48px;
   min-height: 48px;
+  background: #eaeefb;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  overflow: hidden;
+  transition: box-shadow 0.25s, transform 0.2s;
 }
 
-.srini-chat-nav-btn:hover .srini-chat-sparkle {
-  color: var(--srini-color-link);
+.srini-chat-nav-btn .srini-chat-sparkle {
+  color: #3b65ef;
+  transition: transform 0.2s ease, color 0.2s ease;
+  position: relative;
+  z-index: 1;
+}
+
+.srini-chat-nav-btn:hover,
+.srini-chat-nav-btn:focus-visible {
+  background: linear-gradient(135deg, #d4dcfc, #a8c0ff, #3b65ef, #7da1f7, #c5cef8, #3b65ef);
+  background-size: 300% 300%;
+  animation: srini-chat-nav-shine 3.5s ease infinite;
+  box-shadow: 0 2px 12px rgba(59, 101, 239, 0.18), 0 0 14px rgba(59, 101, 239, 0.1);
+  border-color: rgba(255, 255, 255, 0.65);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .srini-chat-nav-btn:hover,
+  .srini-chat-nav-btn:focus-visible {
+    animation: none;
+    background: linear-gradient(135deg, #b8c8f5, #3b65ef, #a8c0ff);
+  }
+}
+
+.srini-chat-nav-btn:hover .srini-chat-sparkle,
+.srini-chat-nav-btn:focus-visible .srini-chat-sparkle {
+  transform: scale(1.15);
 }
 
 section {

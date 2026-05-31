@@ -298,10 +298,12 @@
       '.srini-chat-hovertip{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(6px);padding:8px 14px;background:#000;color:#fff;font-family:"Space Mono","Courier New",Monaco,monospace;font-size:11px;font-weight:500;letter-spacing:0.03em;white-space:nowrap;border-radius:999px;box-shadow:0 8px 28px rgba(0,0,0,0.22);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.2s ease,transform 0.2s ease,visibility 0.2s;z-index:10005}' +
       '.srini-chat-hovertip::after{content:"";position:absolute;bottom:100%;left:50%;margin-left:-6px;border:6px solid transparent;border-bottom-color:#000}' +
       '.srini-chat-nav-btn:hover .srini-chat-hovertip,.srini-chat-nav-btn:focus-visible .srini-chat-hovertip,.srini-chat-fab:hover .srini-chat-hovertip,.srini-chat-fab:focus-visible .srini-chat-hovertip{opacity:1!important;visibility:visible!important;transform:translateX(-50%) translateY(0)!important}' +
-      '.srini-chat-nav-btn{background:#eaeefb;border:1px solid rgba(255,255,255,0.5);padding:0;width:48px;height:48px;min-width:48px;min-height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s;position:relative}' +
-      '.srini-chat-sparkle{width:26px;height:26px;color:#3b65ef;transition:transform 0.2s ease,color 0.2s ease}' +
-      '.srini-chat-nav-btn:hover{background:#dce3f8}' +
-      '.srini-chat-nav-btn:hover .srini-chat-sparkle{transform:scale(1.15);color:#3b65ef}' +
+      '@keyframes srini-chat-nav-shine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}' +
+      '.srini-chat-nav-btn{background:#eaeefb;border:1px solid rgba(255,255,255,0.5);padding:0;width:48px;height:48px;min-width:48px;min-height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:box-shadow 0.25s,transform 0.2s;position:relative;overflow:hidden}' +
+      '.srini-chat-sparkle{width:26px;height:26px;color:#3b65ef;transition:transform 0.2s ease,color 0.2s ease;position:relative;z-index:1}' +
+      '.srini-chat-nav-btn:hover,.srini-chat-nav-btn:focus-visible{background:linear-gradient(135deg,#d4dcfc,#a8c0ff,#3b65ef,#7da1f7,#c5cef8,#3b65ef);background-size:300% 300%;animation:srini-chat-nav-shine 3.5s ease infinite;box-shadow:0 2px 12px rgba(59,101,239,0.18),0 0 14px rgba(59,101,239,0.1);border-color:rgba(255,255,255,0.65)}' +
+      '@media (prefers-reduced-motion:reduce){.srini-chat-nav-btn:hover,.srini-chat-nav-btn:focus-visible{animation:none;background:linear-gradient(135deg,#b8c8f5,#3b65ef,#a8c0ff)}}' +
+      '.srini-chat-nav-btn:hover .srini-chat-sparkle,.srini-chat-nav-btn:focus-visible .srini-chat-sparkle{transform:scale(1.15)}' +
       '</style>';
     html = html.replace(
       /<link rel="stylesheet" href="style-2\.css[^"]*">/,
@@ -454,7 +456,7 @@
       'var iframeLoaded=false;' +
       'function resolveChatApi(e){e=String(e||"").trim();if(!e)return"";try{var t=new URL(e);if(t.hostname==="localhost"||t.hostname==="127.0.0.1")return"https://srinilm.onrender.com"}catch(x){}return e.replace(/\\/$/,"")}' +
       'function getAppUrl(){var src=sidebar&&sidebar.getAttribute("data-chatbot-src");return(typeof window.CHATBOT_APP_URL!=="undefined"?window.CHATBOT_APP_URL:(src||"./chatbot/")).replace(/\\/$/,"")+"/";}' +
-      'function getIframeSrc(){var base=getAppUrl();var api=resolveChatApi((sidebar&&sidebar.getAttribute("data-chat-api"))||window.SRINI_CHAT_API||"");var cb="32";if(api)return base+"?api="+encodeURIComponent(api)+"&cb="+cb;return base+"?cb="+cb;}' +
+      'function getIframeSrc(){var base=getAppUrl();var api=resolveChatApi((sidebar&&sidebar.getAttribute("data-chat-api"))||window.SRINI_CHAT_API||"");var cb="33";if(api)return base+"?api="+encodeURIComponent(api)+"&cb="+cb;return base+"?cb="+cb;}' +
       'function setOpen(open){var isOpen=!!open;document.body.classList.toggle("chat-open",isOpen);if(sidebar)sidebar.setAttribute("aria-hidden",!isOpen);triggers.forEach(function(t){t.setAttribute("aria-label",isOpen?"Close AI chat":"Open AI chat");t.setAttribute("aria-expanded",isOpen);});if(isOpen&&sidebar&&!iframeLoaded){var iframe=document.createElement("iframe");iframe.title="Proxy chat";iframe.src=getIframeSrc();sidebar.appendChild(iframe);iframeLoaded=true;}}' +
       'triggers.forEach(function(t){t.addEventListener("click",function(){var isOpen=document.body.classList.contains("chat-open");setOpen(!isOpen);});});' +
       'window.addEventListener("message",function(e){if(e.data==="srini-chat-close")setOpen(false);});' +

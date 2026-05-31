@@ -165,6 +165,26 @@ _startup_monotonic = time.monotonic()
 
 class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1, max_length=8000)
+    # Optional context about the portfolio page the visitor is viewing.
+    page_path: str | None = Field(default=None, max_length=512)
+    page_title: str | None = Field(default=None, max_length=300)
+
+
+def _build_page_context_hint(req: ChatRequest) -> str | None:
+    """A system hint describing the page the visitor is currently on, if known."""
+    parts: list[str] = []
+    if req.page_title and req.page_title.strip():
+        parts.append(f'title "{req.page_title.strip()}"')
+    if req.page_path and req.page_path.strip():
+        parts.append(f"path {req.page_path.strip()}")
+    if not parts:
+        return None
+    return (
+        "Page context: the visitor is currently viewing this page of Srini's portfolio ("
+        + ", ".join(parts)
+        + "). If their question refers to \"this\", \"this project\", \"this case study\", "
+        "or otherwise points at the page they're on, answer about this page first."
+    )
 
 
 def _sanitize_contact_email(text: str) -> str:
@@ -210,15 +230,18 @@ async def chat(request: Request, req: ChatRequest) -> dict[str, Any]:
     except RuntimeError as e:
         raise HTTPException(status_code=503, detail=str(e)) from e
 
+    messages: list[dict[str, str]] = [{"role": "system", "content": SYSTEM_PROMPT}]
+    page_hint = _build_page_context_hint(req)
+    if page_hint:
+        messages.append({"role": "system", "content": page_hint})
+    messages.append({"role": "user", "content": req.message})
+
     try:
         async with _CHAT_SEM:
             response = await asyncio.to_thread(
                 lambda: llm.chat.completions.create(
                     model=model,
-                    messages=[
-                        {"role": "system", "content": SYSTEM_PROMPT},
-                        {"role": "user", "content": req.message},
-                    ],
+                    messages=messages,
                     max_tokens=500,
                     temperature=0.7,
                 )

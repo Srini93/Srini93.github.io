@@ -25,11 +25,47 @@ function getApiBase(): string {
   return DEFAULT_API
 }
 
+type PageContext = { page_path?: string; page_title?: string }
+
+/**
+ * Best-effort context about the host page the chat is embedded on.
+ * Priority: explicit `?page`/`?title` query params (set by the host shell),
+ * then a same-origin read of the parent document (covers every portfolio page
+ * with no host edits). Cross-origin embeds fall back to query params only.
+ */
+function getPageContext(): PageContext {
+  const ctx: PageContext = {}
+  try {
+    const q = new URLSearchParams(window.location.search)
+    const qp = q.get('page')
+    const qt = q.get('title')
+    if (qp) ctx.page_path = qp
+    if (qt) ctx.page_title = qt
+  } catch {
+    /* ignore malformed query string */
+  }
+  try {
+    if (window.parent && window.parent !== window) {
+      if (!ctx.page_path) {
+        const loc = window.parent.location
+        ctx.page_path = loc.pathname + loc.search
+      }
+      if (!ctx.page_title) ctx.page_title = window.parent.document.title
+    }
+  } catch {
+    /* cross-origin parent: rely on query params */
+  }
+  return ctx
+}
+
 function sleep(ms: number) {
   return new Promise<void>((r) => setTimeout(r, ms))
 }
 
-async function postChat(message: string): Promise<{ answer: string; suggestions: string[] }> {
+async function postChat(
+  message: string,
+  context: PageContext,
+): Promise<{ answer: string; suggestions: string[] }> {
   const base = getApiBase()
   const backoff = [2000, 4000, 8000, 16000, 32000]
   let lastErr: Error | null = null
@@ -41,7 +77,7 @@ async function postChat(message: string): Promise<{ answer: string; suggestions:
       const res = await fetch(`${base}/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message }),
+        body: JSON.stringify({ message, ...context }),
         mode: 'cors',
         keepalive: true,
         cache: 'no-store',
@@ -376,7 +412,7 @@ export default function App() {
       setTimeout(scrollToBottom, 50)
       try {
         window.parent.postMessage('srini-chat-sound-send', '*')
-        const { answer, suggestions } = await postChat(text)
+        const { answer, suggestions } = await postChat(text, getPageContext())
         playSound('answer')
         setMessages((prev) => [...prev, { role: 'bot', text: sanitizeContactEmail(answer), suggestions }])
       } catch (e) {

@@ -698,10 +698,12 @@ or contact me below</p>
     visibility: visible !important;
     transform: translateX(-50%) translateY(0) !important;
   }
-  .srini-chat-nav-btn { background: #eaeefb; border: 1px solid rgba(255,255,255,0.5); padding: 0; width: 48px; height: 48px; min-width: 48px; min-height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; position: relative; }
-  .srini-chat-sparkle { width: 26px; height: 26px; color: #3b65ef; transition: transform 0.2s ease, color 0.2s ease; }
-  .srini-chat-nav-btn:hover { background: #dce3f8; }
-  .srini-chat-nav-btn:hover .srini-chat-sparkle { transform: scale(1.15); color: #3b65ef; }
+  @keyframes srini-chat-nav-shine { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
+  .srini-chat-nav-btn { background: #eaeefb; border: 1px solid rgba(255,255,255,0.5); padding: 0; width: 48px; height: 48px; min-width: 48px; min-height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: box-shadow 0.25s, transform 0.2s; position: relative; overflow: hidden; }
+  .srini-chat-sparkle { width: 26px; height: 26px; color: #3b65ef; transition: transform 0.2s ease, color 0.2s ease; position: relative; z-index: 1; }
+  .srini-chat-nav-btn:hover, .srini-chat-nav-btn:focus-visible { background: linear-gradient(135deg, #d4dcfc, #a8c0ff, #3b65ef, #7da1f7, #c5cef8, #3b65ef); background-size: 300% 300%; animation: srini-chat-nav-shine 3.5s ease infinite; box-shadow: 0 2px 12px rgba(59, 101, 239, 0.18), 0 0 14px rgba(59, 101, 239, 0.1); border-color: rgba(255,255,255,0.65); }
+  @media (prefers-reduced-motion: reduce) { .srini-chat-nav-btn:hover, .srini-chat-nav-btn:focus-visible { animation: none; background: linear-gradient(135deg, #b8c8f5, #3b65ef, #a8c0ff); } }
+  .srini-chat-nav-btn:hover .srini-chat-sparkle, .srini-chat-nav-btn:focus-visible .srini-chat-sparkle { transform: scale(1.15); }
   .srini-chat-fab { position: fixed; top: 1.85rem; right: 2rem; z-index: 10002; display: none; align-items: center; justify-content: center; width: 75px; height: 75px; padding: 0; background: #eaeefb; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; box-shadow: none; transition: all 0.3s ease; overflow: visible; }
   .srini-chat-fab-icon { width: 32px; height: 32px; color: #3b65ef; transition: color 0.2s ease, transform 0.2s ease; }
   .srini-chat-fab:hover { background: #dce3f8; border-color: rgba(255,255,255,0.7); }
@@ -780,7 +782,7 @@ or contact me below</p>
   }
 
   var CHAT_API_PUBLIC = 'https://srinilm.onrender.com';
-  var CHATBOT_CACHE_BUST = '32';
+  var CHATBOT_CACHE_BUST = '33';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
