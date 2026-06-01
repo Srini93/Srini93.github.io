@@ -5,15 +5,15 @@ import remarkBreaks from 'remark-breaks'
 import type { Components } from 'react-markdown'
 import { prepareBotMarkdown } from './linkifyBotMarkdown'
 import { sanitizeContactEmail } from './sanitizeContactEmail'
+import { getPageContext } from './pageContext'
+import {
+  getWelcomeHeading,
+  getWelcomeSuggestions,
+  resolveSuggestions,
+} from './pageSuggestions'
 import './chat-ui.css'
 
 const DEFAULT_API = 'https://srinilm.onrender.com'
-
-const WELCOME_SUGGESTIONS = [
-  'What does Srini do and where does he work?',
-  'What projects is Srini most proud of?',
-  "What's Srini's design philosophy?",
-]
 
 type Msg = { role: 'user' | 'bot'; text: string; suggestions?: string[] }
 
@@ -25,46 +25,13 @@ function getApiBase(): string {
   return DEFAULT_API
 }
 
-type PageContext = { page_path?: string; page_title?: string }
-
-/**
- * Best-effort context about the host page the chat is embedded on.
- * Priority: explicit `?page`/`?title` query params (set by the host shell),
- * then a same-origin read of the parent document (covers every portfolio page
- * with no host edits). Cross-origin embeds fall back to query params only.
- */
-function getPageContext(): PageContext {
-  const ctx: PageContext = {}
-  try {
-    const q = new URLSearchParams(window.location.search)
-    const qp = q.get('page')
-    const qt = q.get('title')
-    if (qp) ctx.page_path = qp
-    if (qt) ctx.page_title = qt
-  } catch {
-    /* ignore malformed query string */
-  }
-  try {
-    if (window.parent && window.parent !== window) {
-      if (!ctx.page_path) {
-        const loc = window.parent.location
-        ctx.page_path = loc.pathname + loc.search
-      }
-      if (!ctx.page_title) ctx.page_title = window.parent.document.title
-    }
-  } catch {
-    /* cross-origin parent: rely on query params */
-  }
-  return ctx
-}
-
 function sleep(ms: number) {
   return new Promise<void>((r) => setTimeout(r, ms))
 }
 
 async function postChat(
   message: string,
-  context: PageContext,
+  context: ReturnType<typeof getPageContext>,
 ): Promise<{ answer: string; suggestions: string[] }> {
   const base = getApiBase()
   const backoff = [2000, 4000, 8000, 16000, 32000]
@@ -224,18 +191,16 @@ function ChatHeader({ onReset }: { onReset: () => void }) {
 }
 
 function Welcome({ onSuggestionClick }: { onSuggestionClick: (q: string) => void }) {
-  const greeting = (() => {
-    const h = new Date().getHours()
-    const part = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening'
-    return `${part}, what would you like to know about Srini?`
-  })()
+  const pageCtx = getPageContext()
+  const greeting = getWelcomeHeading(pageCtx)
+  const suggestions = getWelcomeSuggestions(pageCtx)
 
   return (
     <div className="welcome">
       <div className="welcome-avatar" />
       <h1 className="welcome-heading">{greeting}</h1>
       <div className="welcome-suggestions">
-        {WELCOME_SUGGESTIONS.map((s) => (
+        {suggestions.map((s) => (
           <button key={s} type="button" className="suggestion-row" onClick={() => onSuggestionClick(s)} onMouseEnter={() => playSound('hover')}>
             <SuggestionArrow />
             {s}
@@ -412,9 +377,17 @@ export default function App() {
       setTimeout(scrollToBottom, 50)
       try {
         window.parent.postMessage('srini-chat-sound-send', '*')
-        const { answer, suggestions } = await postChat(text, getPageContext())
+        const pageCtx = getPageContext()
+        const { answer, suggestions } = await postChat(text, pageCtx)
         playSound('answer')
-        setMessages((prev) => [...prev, { role: 'bot', text: sanitizeContactEmail(answer), suggestions }])
+        setMessages((prev) => [
+          ...prev,
+          {
+            role: 'bot',
+            text: sanitizeContactEmail(answer),
+            suggestions: resolveSuggestions(suggestions, pageCtx),
+          },
+        ])
       } catch (e) {
         setError(e instanceof Error ? e.message : 'Could not reach the server. Please try again.')
       } finally {
