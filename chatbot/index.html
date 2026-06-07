@@ -142,6 +142,53 @@
         display: none !important;
       }
 
+      /* Send: circular button, active once the user has typed */
+      .chat-form__send {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: var(--surface);
+        color: var(--text-muted);
+        opacity: 0.35;
+        cursor: not-allowed;
+        transition:
+          background 0.2s ease,
+          color 0.2s ease,
+          opacity 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .chat-form__send svg {
+        width: 18px;
+        height: 18px;
+        transition: transform 0.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+      }
+
+      .chat-form.has-text .chat-form__send:not(:disabled) {
+        background: var(--accent);
+        color: #fff;
+        opacity: 1;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(59, 101, 239, 0.35);
+      }
+
+      .chat-form.has-text .chat-form__send:not(:disabled):hover {
+        background: var(--accent-light);
+        box-shadow: 0 4px 12px rgba(59, 101, 239, 0.4);
+      }
+
+      .chat-form.has-text .chat-form__send:not(:disabled):hover svg {
+        transform: translateY(-2px);
+      }
+
+      .chat-form__send:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+        background: var(--surface);
+        color: var(--text-muted);
+      }
+
     </style>
   </head>
   <body>
