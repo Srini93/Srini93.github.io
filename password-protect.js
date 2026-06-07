@@ -399,7 +399,7 @@
     var parentSidebar = document.getElementById('chatbot-sidebar');
     var chatSrc = (parentSidebar && parentSidebar.getAttribute('data-chatbot-src')) || './chatbot/';
     var chatApi =
-      (parentSidebar && parentSidebar.getAttribute('data-chat-api')) || 'https://srinilm.onrender.com';
+      (parentSidebar && parentSidebar.getAttribute('data-chat-api')) || 'https://sriniai.netlify.app';
 
     var closeWrapPrefix = plainHadSiteWrap ? '' : '</div><!-- /site-content-wrap -->';
 
@@ -454,7 +454,7 @@
       'var sidebar=document.getElementById("chatbot-sidebar");' +
       'var triggers=document.querySelectorAll(".srini-chat-trigger");' +
       'var iframeLoaded=false;' +
-      'function resolveChatApi(e){e=String(e||"").trim();if(!e)return"";try{var t=new URL(e);if(t.hostname==="localhost"||t.hostname==="127.0.0.1")return"https://srinilm.onrender.com"}catch(x){}return e.replace(/\\/$/,"")}' +
+      'function resolveChatApi(e){e=String(e||"").trim();if(!e)return"";try{var t=new URL(e);if(t.hostname==="localhost"||t.hostname==="127.0.0.1")return"https://sriniai.netlify.app"}catch(x){}return e.replace(/\\/$/,"")}' +
       'function getAppUrl(){var src=sidebar&&sidebar.getAttribute("data-chatbot-src");return(typeof window.CHATBOT_APP_URL!=="undefined"?window.CHATBOT_APP_URL:(src||"./chatbot/")).replace(/\\/$/,"")+"/";}' +
       'function getIframeSrc(){var base=getAppUrl();var api=resolveChatApi((sidebar&&sidebar.getAttribute("data-chat-api"))||window.SRINI_CHAT_API||"");var cb="33";if(api)return base+"?api="+encodeURIComponent(api)+"&cb="+cb;return base+"?cb="+cb;}' +
       'function setOpen(open){var isOpen=!!open;document.body.classList.toggle("chat-open",isOpen);if(sidebar)sidebar.setAttribute("aria-hidden",!isOpen);triggers.forEach(function(t){t.setAttribute("aria-label",isOpen?"Close AI chat":"Open AI chat");t.setAttribute("aria-expanded",isOpen);});if(isOpen&&sidebar&&!iframeLoaded){var iframe=document.createElement("iframe");iframe.title="Proxy chat";iframe.src=getIframeSrc();sidebar.appendChild(iframe);iframeLoaded=true;}}' +
