@@ -433,7 +433,7 @@ or contact me below</p>
   
 </nav>
 </div>
-<a style="text-decoration: none; color: #000; text-decoration: underline;" href="mailto:tcsreeni93@gmail.com;"><p style="padding-left:5%; font-size: 120%;letter-spacing: 0.1em;font-family:mywebfont1; color:#000; 
+<a style="text-decoration: none; color: #2b2b2b; text-decoration: underline;" href="mailto:tcsreeni93@gmail.com;"><p style="padding-left:5%; font-size: 120%;letter-spacing: 0.1em;font-family:mywebfont1; color:#2b2b2b; 
  ">tcsreeni93@gmail.com</a> 
 </div>
 
@@ -537,7 +537,7 @@ AOS.init({
       left: 50%;
       margin-left: -6px;
       border: 6px solid transparent;
-      border-bottom-color: #000;
+      border-bottom-color: #2b2b2b;
     }
     .srini-chat-fab:hover .srini-chat-hovertip,
     .srini-chat-fab:focus-visible .srini-chat-hovertip {
@@ -576,7 +576,7 @@ AOS.init({
     var triggers = document.querySelectorAll(".srini-chat-trigger");
     var iframeLoaded = false;
     function resolveChatApi(e) { e = String(e || "").trim(); if (!e) return ""; try { var t = new URL(e); if (t.hostname === "localhost" || t.hostname === "127.0.0.1") return "https://srinilm.onrender.com"; } catch (x) {} return e.replace(/\/$/, ""); }
-    function getIframeSrc() { var api = resolveChatApi((sidebar && sidebar.getAttribute("data-chat-api")) || (typeof window.SRINI_CHAT_API !== "undefined" ? window.SRINI_CHAT_API : "") || ""); var src = (sidebar && sidebar.getAttribute("data-chatbot-src")) || "./chatbot/"; var base = src.replace(/\/$/, "") + "/"; var cb = "33"; return api ? base + "?api=" + encodeURIComponent(api) + "&cb=" + cb : base + "?cb=" + cb; }
+    function getIframeSrc() { var api = resolveChatApi((sidebar && sidebar.getAttribute("data-chat-api")) || (typeof window.SRINI_CHAT_API !== "undefined" ? window.SRINI_CHAT_API : "") || ""); var src = (sidebar && sidebar.getAttribute("data-chatbot-src")) || "./chatbot/"; var base = src.replace(/\/$/, "") + "/"; var params = []; if (api) params.push("api=" + encodeURIComponent(api)); try { params.push("page=" + encodeURIComponent(window.location.pathname)); if (document.title) params.push("title=" + encodeURIComponent(document.title)); } catch (x) {} params.push("cb=34"); return base + "?" + params.join("&"); }
     function setOpen(open) { document.body.classList.toggle("chat-open", !!open); if (sidebar) sidebar.setAttribute("aria-hidden", !open); triggers.forEach(function(t) { t.setAttribute("aria-label", open ? "Close AI chat" : "Open AI chat"); t.setAttribute("aria-expanded", !!open); }); if (open && sidebar && !iframeLoaded) { var iframe = document.createElement("iframe"); iframe.title = "Proxy chat"; iframe.src = getIframeSrc(); sidebar.appendChild(iframe); iframeLoaded = true; } }
     triggers.forEach(function(t) { t.addEventListener("click", function() { setOpen(!document.body.classList.contains("chat-open")); }); });
     window.addEventListener("message", function(e) { if (e.data === "srini-chat-close") setOpen(false); });

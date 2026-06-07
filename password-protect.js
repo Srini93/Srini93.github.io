@@ -74,6 +74,24 @@
       .replace(/>/g, '&gt;');
   }
 
+  function ppProtectedPagePath() {
+    try {
+      return window.location.pathname + window.location.search;
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function ppChatPageContextScript() {
+    var path = ppProtectedPagePath();
+    if (!path) return '';
+    return (
+      '<script>' +
+      'window.SRINI_CHAT_PAGE_PATH=' + JSON.stringify(path) + ';' +
+      '<\/script>'
+    );
+  }
+
   // ─── Inject dialog HTML ─────────────────────────────────────────────
   var dialogHTML =
     '<iframe id="pp-contentFrame" style="display:none" allowfullscreen></iframe>' +
@@ -272,22 +290,22 @@
       '.hamburgler-active .hamburgler-icon{background:transparent!important;transform:rotate(-135deg)!important}' +
       '.hamburgler-active .hamburgler-icon:before,.hamburgler-active .hamburgler-icon:after{top:0!important;background:black!important}' +
       '.hamburgler-active .hamburgler-icon:before{transform:rotate(90deg)!important}' +
-      '.hamburgler-menu{opacity:0!important;pointer-events:none!important;position:fixed!important;top:12px!important;right:12px!important;bottom:auto!important;left:12px!important;width:auto!important;background-color:#fbfaf4!important;color:#000!important;text-align:center!important;border-radius:20px!important;padding:5rem 2rem 2.5rem!important;box-shadow:0 8px 40px rgba(0,0,0,0.12),0 0 0 1px rgba(0,0,0,0.04)!important;z-index:9998!important;transform:translateY(-12px) scale(0.98)!important;transition:opacity 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1)!important}' +
+      '.hamburgler-menu{opacity:0!important;pointer-events:none!important;position:fixed!important;top:12px!important;right:12px!important;bottom:auto!important;left:12px!important;width:auto!important;background-color:#fbfaf4!important;color:#2b2b2b!important;text-align:center!important;border-radius:20px!important;padding:5rem 2rem 2.5rem!important;box-shadow:0 8px 40px rgba(0,0,0,0.12),0 0 0 1px rgba(0,0,0,0.04)!important;z-index:9998!important;transform:translateY(-12px) scale(0.98)!important;transition:opacity 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1)!important}' +
       '.hamburgler-active .hamburgler-menu{opacity:1!important;pointer-events:initial!important;transform:translateY(0) scale(1)!important;z-index:9998!important}' +
       '.hamburgler-active{overflow:visible!important;max-height:none!important}' +
       '.hamburgler-menu-list{display:flex!important;flex-direction:column!important;gap:0.25rem!important;float:none!important;text-align:center!important;padding:0!important;margin:0!important;list-style-type:none!important;position:static!important;transform:none!important;font-size:110%!important;overflow:visible!important}' +
       '.hamburgler-active .hamburgler-menu-list{transform:none!important}' +
       '.hamburgler-menu-list li{line-height:1.4!important;float:none!important;display:block!important;margin:0!important;text-align:center!important}' +
-      '.hamburgler-menu-list li a:not(.get-in-touch-btn){display:block!important;padding:0.85rem 1rem!important;border-radius:12px!important;color:#000!important;text-decoration:none!important;transition:background 0.2s ease!important}' +
+      '.hamburgler-menu-list li a:not(.get-in-touch-btn){display:block!important;padding:0.85rem 1rem!important;border-radius:12px!important;color:#2b2b2b!important;text-decoration:none!important;transition:background 0.2s ease!important}' +
       '.hamburgler-menu-list li a:not(.get-in-touch-btn):hover{background:rgba(0,0,0,0.05)!important}' +
       '.hamburgler-backdrop{position:fixed;inset:0;z-index:9997;background:rgba(0,0,0,0);pointer-events:none;transition:background 0.3s ease}' +
       '.hamburgler-backdrop.active{background:rgba(0,0,0,0.15);pointer-events:auto}' +
       '.desk-menu{display:flex!important;align-items:center!important;justify-content:flex-end!important;height:100%;padding-top:40px!important;padding-right:1rem!important;overflow:visible!important}' +
       '.desk-menu li{display:flex!important;align-items:center!important;float:none!important;height:100%}' +
-      '.desk-menu li a:not(.get-in-touch-btn){display:flex!important;align-items:center!important;height:100%;padding:0 25px!important;font-family:"Space Mono","Courier New","Monaco",monospace!important;font-size:14px!important;letter-spacing:0.5px!important;text-transform:uppercase!important;color:#000!important;text-decoration:none}' +
+      '.desk-menu li a:not(.get-in-touch-btn){display:flex!important;align-items:center!important;height:100%;padding:0 25px!important;font-family:"Space Mono","Courier New","Monaco",monospace!important;font-size:14px!important;letter-spacing:0.5px!important;text-transform:uppercase!important;color:#2b2b2b!important;text-decoration:none}' +
       '.desk-menu li a:not(.get-in-touch-btn):hover,.desk-menu li a:not(.get-in-touch-btn):focus-visible{text-decoration:underline;text-underline-offset:0.2em}' +
       '.hamburgler-menu-list li a{font-family:"Space Mono","Courier New","Monaco",monospace!important;font-size:16px!important;letter-spacing:0.5px!important;text-transform:uppercase!important}' +
-      '.get-in-touch-btn{position:relative;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px;padding:14px 28px!important;min-height:auto!important;min-width:auto!important;background:rgba(255,255,255,0.1)!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;border:1px solid rgba(255,255,255,0.3)!important;box-shadow:0 4px 16px rgba(0,0,0,0.08),inset 0 1px 0 0 rgba(255,255,255,0.4),0 0 0 1px rgba(255,255,255,0.1)!important;color:#000!important;border-radius:9999px!important;font-size:13px!important;font-weight:400!important;font-family:"Space Mono","Courier New","Monaco",monospace!important;text-decoration:none!important;transition:all 0.3s ease!important;cursor:pointer!important;line-height:1!important;letter-spacing:0.5px!important;text-transform:uppercase!important;margin-left:8px!important;vertical-align:middle!important;overflow:hidden}' +
+      '.get-in-touch-btn{position:relative;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px;padding:14px 28px!important;min-height:auto!important;min-width:auto!important;background:rgba(255,255,255,0.1)!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;border:1px solid rgba(255,255,255,0.3)!important;box-shadow:0 4px 16px rgba(0,0,0,0.08),inset 0 1px 0 0 rgba(255,255,255,0.4),0 0 0 1px rgba(255,255,255,0.1)!important;color:#2b2b2b!important;border-radius:9999px!important;font-size:13px!important;font-weight:400!important;font-family:"Space Mono","Courier New","Monaco",monospace!important;text-decoration:none!important;transition:all 0.3s ease!important;cursor:pointer!important;line-height:1!important;letter-spacing:0.5px!important;text-transform:uppercase!important;margin-left:8px!important;vertical-align:middle!important;overflow:hidden}' +
       '.get-in-touch-btn:hover{border-color:rgba(255,255,255,0.5)!important;transform:scale(1.03)!important}' +
       '.get-in-touch-btn:active{transform:scale(0.98)!important}' +
       '.hamburgler-menu-list .get-in-touch-btn{display:flex!important;align-items:center!important;justify-content:center!important;margin:1.25rem auto 0!important;padding:16px 32px!important;width:100%;max-width:280px;min-height:56px;background:#000!important;color:#fff!important;border:none!important;border-radius:9999px!important;font-size:14px!important;font-weight:200!important;letter-spacing:0.5px!important;box-shadow:0 4px 14px rgba(0,0,0,0.15)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;transition:transform 0.2s ease,box-shadow 0.2s ease!important}' +
@@ -296,7 +314,7 @@
       '@media screen and (max-width:601px){.desk-menu{display:none!important}.hamburgler-icon-wrapper{display:block!important}.hamburgler-menu{display:block!important;opacity:0}ul.hamburgler-menu-list{display:flex!important;flex-direction:column!important;overflow:visible!important}.hamburgler-menu-list li{display:block!important;float:none!important}header{padding-bottom:0!important}}' +
       '.srini-chat-nav-li{display:flex;align-items:center;overflow:visible;z-index:2}' +
       '.srini-chat-hovertip{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(6px);padding:8px 14px;background:#000;color:#fff;font-family:"Space Mono","Courier New",Monaco,monospace;font-size:11px;font-weight:500;letter-spacing:0.03em;white-space:nowrap;border-radius:999px;box-shadow:0 8px 28px rgba(0,0,0,0.22);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.2s ease,transform 0.2s ease,visibility 0.2s;z-index:10005}' +
-      '.srini-chat-hovertip::after{content:"";position:absolute;bottom:100%;left:50%;margin-left:-6px;border:6px solid transparent;border-bottom-color:#000}' +
+      '.srini-chat-hovertip::after{content:"";position:absolute;bottom:100%;left:50%;margin-left:-6px;border:6px solid transparent;border-bottom-color:#2b2b2b}' +
       '.srini-chat-nav-btn:hover .srini-chat-hovertip,.srini-chat-nav-btn:focus-visible .srini-chat-hovertip,.srini-chat-fab:hover .srini-chat-hovertip,.srini-chat-fab:focus-visible .srini-chat-hovertip{opacity:1!important;visibility:visible!important;transform:translateX(-50%) translateY(0)!important}' +
       '@keyframes srini-chat-nav-shine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}' +
       '.srini-chat-nav-btn{background:#eaeefb;border:1px solid rgba(255,255,255,0.5);padding:0;width:48px;height:48px;min-width:48px;min-height:48px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:box-shadow 0.25s,transform 0.2s;position:relative;overflow:hidden}' +
@@ -427,7 +445,7 @@
       '@keyframes srini-chat-bounce-load{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(59,101,239,0)}48%{transform:scale(1.13);box-shadow:0 8px 24px rgba(59,101,239,0.24)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(59,101,239,0)}}' +
       '@media (prefers-reduced-motion:no-preference){.srini-chat-trigger.srini-chat-bounce-enter{animation:srini-chat-bounce-load 0.9s cubic-bezier(0.45,0,0.55,1) 0.4s 1 both!important}.srini-chat-fab{animation:srini-chat-attention 2.75s ease-in-out infinite}.srini-chat-fab:hover{animation-play-state:paused}body.chat-open .srini-chat-fab{animation:none!important}}' +
       '.srini-chat-hovertip{position:absolute;top:calc(100% + 10px);left:50%;transform:translateX(-50%) translateY(6px);padding:8px 14px;background:#000;color:#fff;font-family:"Space Mono","Courier New",Monaco,monospace;font-size:11px;font-weight:500;letter-spacing:0.03em;white-space:nowrap;border-radius:999px;box-shadow:0 8px 28px rgba(0,0,0,0.22);opacity:0;visibility:hidden;pointer-events:none;transition:opacity 0.2s ease,transform 0.2s ease,visibility 0.2s;z-index:10005}' +
-      '.srini-chat-hovertip::after{content:"";position:absolute;bottom:100%;left:50%;margin-left:-6px;border:6px solid transparent;border-bottom-color:#000}' +
+      '.srini-chat-hovertip::after{content:"";position:absolute;bottom:100%;left:50%;margin-left:-6px;border:6px solid transparent;border-bottom-color:#2b2b2b}' +
       '.srini-chat-nav-btn:hover .srini-chat-hovertip,.srini-chat-nav-btn:focus-visible .srini-chat-hovertip,.srini-chat-fab:hover .srini-chat-hovertip,.srini-chat-fab:focus-visible .srini-chat-hovertip{opacity:1!important;visibility:visible!important;transform:translateX(-50%) translateY(0)!important}' +
       '.srini-chat-fab{position:fixed;top:1.85rem;right:2rem;z-index:10002;display:none;align-items:center;justify-content:center;width:75px;height:75px;padding:0;background:#eaeefb;backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);border:1px solid rgba(255,255,255,0.5);border-radius:50%;cursor:pointer;box-shadow:none;transition:all 0.3s ease;overflow:visible}' +
       '.srini-chat-fab-icon{width:32px;height:32px;color:#3b65ef;transition:color 0.2s ease,transform 0.2s ease}' +
@@ -456,7 +474,7 @@
       'var iframeLoaded=false;' +
       'function resolveChatApi(e){e=String(e||"").trim();if(!e)return"";try{var t=new URL(e);if(t.hostname==="localhost"||t.hostname==="127.0.0.1")return"https://srinilm.onrender.com"}catch(x){}return e.replace(/\\/$/,"")}' +
       'function getAppUrl(){var src=sidebar&&sidebar.getAttribute("data-chatbot-src");return(typeof window.CHATBOT_APP_URL!=="undefined"?window.CHATBOT_APP_URL:(src||"./chatbot/")).replace(/\\/$/,"")+"/";}' +
-      'function getIframeSrc(){var base=getAppUrl();var api=resolveChatApi((sidebar&&sidebar.getAttribute("data-chat-api"))||window.SRINI_CHAT_API||"");var cb="33";if(api)return base+"?api="+encodeURIComponent(api)+"&cb="+cb;return base+"?cb="+cb;}' +
+      'function getIframeSrc(){var base=getAppUrl();var api=resolveChatApi((sidebar&&sidebar.getAttribute("data-chat-api"))||window.SRINI_CHAT_API||"");var params=[];if(api)params.push("api="+encodeURIComponent(api));try{var pagePath=window.SRINI_CHAT_PAGE_PATH||window.location.pathname;params.push("page="+encodeURIComponent(pagePath));if(document.title)params.push("title="+encodeURIComponent(document.title));}catch(x){}params.push("cb=34");return base+"?"+params.join("&");}' +
       'function setOpen(open){var isOpen=!!open;document.body.classList.toggle("chat-open",isOpen);if(sidebar)sidebar.setAttribute("aria-hidden",!isOpen);triggers.forEach(function(t){t.setAttribute("aria-label",isOpen?"Close AI chat":"Open AI chat");t.setAttribute("aria-expanded",isOpen);});if(isOpen&&sidebar&&!iframeLoaded){var iframe=document.createElement("iframe");iframe.title="Proxy chat";iframe.src=getIframeSrc();sidebar.appendChild(iframe);iframeLoaded=true;}}' +
       'triggers.forEach(function(t){t.addEventListener("click",function(){var isOpen=document.body.classList.contains("chat-open");setOpen(!isOpen);});});' +
       'window.addEventListener("message",function(e){if(e.data==="srini-chat-close")setOpen(false);});' +
@@ -464,7 +482,8 @@
       '})();' +
       '<\/script>';
 
-    var injectTail = plainHadChatSidebar ? '' : chatbotHTML + chatbotCSS + chatbotJS;
+    var pageContextScript = ppChatPageContextScript();
+    var injectTail = pageContextScript + (plainHadChatSidebar ? '' : chatbotHTML + chatbotCSS + chatbotJS);
 
     if (html.includes('</body>')) {
       html = html.replace('</body>', injectTail + '</body>');

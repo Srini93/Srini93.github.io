@@ -284,7 +284,7 @@ body {
     padding-top: 4%;
     padding-left: 4%;
     font-family: "MyWebFont";
-    color: #000;
+    color: #2b2b2b;
     font-size: 250%;
     line-height: 150%;
   }
@@ -297,7 +297,7 @@ body {
     padding-top: 4%;
     padding-left: 5%;
     font-family: "MyWebFont";
-    color: #000;
+    color: #2b2b2b;
     font-size: 250%;
     line-height: 150%;
   }
@@ -435,7 +435,7 @@ li {
 
 li a {
   display: block;
-  color: black;
+  color: #2b2b2b;
   text-align: center;
   text-decoration: none;
 }
@@ -582,7 +582,7 @@ header {
     padding-top: 4%;
     padding-left: 5%;
     font-family: "MyWebFont";
-    color: #000;
+    color: #2b2b2b;
     font-size: 250%;
     line-height: 150%;
   }
@@ -657,7 +657,7 @@ header {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: #000;
+  background-color: #2b2b2b;
   color: white;
   text-align: center;
 }
@@ -786,7 +786,7 @@ header {
     padding-top: 4%;
     padding-left: 5%;
     font-family: "MyWebFont";
-    color: #000;
+    color: #2b2b2b;
     font-size: 250%;
     line-height: 150%;
   }
@@ -1032,7 +1032,7 @@ header {
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     inset 0 -1px 0 rgba(255, 255, 255, 0.2);
 
-  color: #000;
+  color: #2b2b2b;
   transition:
     width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
     padding 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
@@ -1081,7 +1081,7 @@ header {
   letter-spacing: 0.5px;
   text-transform: uppercase;
   line-height: 1;
-  color: #000;
+  color: #2b2b2b;
   white-space: nowrap;
   opacity: 0;
   width: 0;

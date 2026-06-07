@@ -272,7 +272,7 @@ body{
 .txt5{
  	position: relative;
 	font-family: "MyWebFont1";
-	color:#000;
+	color:#2b2b2b;
     font-weight: 150%;
 	padding-top: 3%;
 	padding-left: 5%;
@@ -284,7 +284,7 @@ body{
  	padding-top: 4%;
  	padding-left: 5%;
   font-family: "MyWebFont";
-	color:#000;
+	color:#2b2b2b;
 	font-size: 250%;
   line-height: 150%;
  	}
@@ -301,7 +301,7 @@ body{
   .txt8{
  	position: relative;
 	font-family: "MyWebFont2";
-	color:#000;
+	color:#2b2b2b;
   font-size: 100%;
 	padding-top: 4%;
 	padding-left: 5%;
@@ -378,7 +378,7 @@ li {
 
 li a {
     display: block;
-    color: #000;
+    color: #2b2b2b;
     text-align: center;
     text-decoration: none;
 }
@@ -590,7 +590,7 @@ header {
   font-size: 100%;
   min-height: 90vh;
   padding: 0 2rem 8rem;
-  color: #000;
+  color: #2b2b2b;
   display: flex;
   flex-direction: column;
 }
@@ -659,7 +659,7 @@ height: 100%;
   bottom: auto;
   left: 12px;
   background-color: #fbfaf4;
-  color: #000;
+  color: #2b2b2b;
   text-align: left;
   border-radius: 20px;
   box-shadow: 0 8px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.04);
@@ -703,7 +703,7 @@ height: 100%;
   display: block;
   padding: 0.85rem 1rem;
   border-radius: 12px;
-  color: #000;
+  color: #2b2b2b;
   text-decoration: none;
   transition: background 0.2s ease;
 }
@@ -758,7 +758,7 @@ height: 100%;
   font-size: 100%;
   min-height: 40vh;
   padding: 0 2rem 8rem;
-  color: #000;
+  color: #2b2b2b;
   display: flex;
   flex-direction: column;
 }
@@ -810,13 +810,13 @@ header section h2 {
   padding-top: 6%;
   padding-left: 5%;
   font-family: "MyWebFont";
-  color:#000;
+  color:#2b2b2b;
   font-size: 200%;
   }
     .txt8{
   position: relative;
   font-family: "MyWebFont2";
-  color:#000;
+  color:#2b2b2b;
   font-size: 100%;
   padding-top: 8%;
   padding-left: 5%;

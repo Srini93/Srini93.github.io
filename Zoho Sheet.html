@@ -211,7 +211,7 @@
 }
 
 .Cards {
-  color: #000;
+  color: #2b2b2b;
     display: grid;
     grid-template: "cell cell cell";
     grid-gap: 2rem;
@@ -378,7 +378,7 @@
     left: 12px !important;
     width: auto !important;
     background-color: #fbfaf4 !important;
-    color: #000 !important;
+    color: #2b2b2b !important;
     text-align: center !important;
     border-radius: 20px !important;
     padding: 5rem 2rem 2.5rem !important;
@@ -427,7 +427,7 @@
     display: block !important;
     padding: 0.85rem 1rem !important;
     border-radius: 12px !important;
-    color: #000 !important;
+    color: #2b2b2b !important;
     text-decoration: none !important;
     transition: background 0.2s ease !important;
   }
@@ -470,7 +470,7 @@
     font-size: 14px !important;
     letter-spacing: 0.5px !important;
     text-transform: uppercase !important;
-    color: #000 !important;
+    color: #2b2b2b !important;
     text-decoration: none;
   }
   .desk-menu li a:not(.get-in-touch-btn):hover,
@@ -505,7 +505,7 @@
       0 4px 16px rgba(0, 0, 0, 0.08),
       inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
       0 0 0 1px rgba(255, 255, 255, 0.1) !important;
-    color: #000 !important;
+    color: #2b2b2b !important;
     border-radius: 9999px !important;
     font-size: 13px !important;
     font-weight: 400 !important;
@@ -1957,9 +1957,9 @@ The thought process was to place the function bar in a not disturbing place when
 
 <div style="flex: 1" class="btn-group" >
 
- <a href="https://www.google.co.in/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwir-uai8rHXAhVMuY8KHadPCu8QFggnMAA&url=https%3A%2F%2Fitunes.apple.com%2Fin%2Fapp%2Fonline-spreadsheets-zoho-sheet%2Fid1081348290%3Fmt%3D8&usg=AOvVaw1LWo9TFG9YC7P1BDDSySZf" target="_blank"> <button style="background-color:#000" class="button" >Download on App Store</button></a>
+ <a href="https://www.google.co.in/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&cad=rja&uact=8&ved=0ahUKEwir-uai8rHXAhVMuY8KHadPCu8QFggnMAA&url=https%3A%2F%2Fitunes.apple.com%2Fin%2Fapp%2Fonline-spreadsheets-zoho-sheet%2Fid1081348290%3Fmt%3D8&usg=AOvVaw1LWo9TFG9YC7P1BDDSySZf" target="_blank"> <button style="background-color:#2b2b2b" class="button" >Download on App Store</button></a>
  
- <a href="https://www.google.co.in/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=8&ved=0ahUKEwir-uai8rHXAhVMuY8KHadPCu8QFggyMAI&url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.zoho.sheet.android%26hl%3Den&usg=AOvVaw2u8EJ4hyt8HzZTbeYhDd0g" target="_blank"> <button style="background-color: #000" class="button">Download on Playstore</button></a>
+ <a href="https://www.google.co.in/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&cad=rja&uact=8&ved=0ahUKEwir-uai8rHXAhVMuY8KHadPCu8QFggyMAI&url=https%3A%2F%2Fplay.google.com%2Fstore%2Fapps%2Fdetails%3Fid%3Dcom.zoho.sheet.android%26hl%3Den&usg=AOvVaw2u8EJ4hyt8HzZTbeYhDd0g" target="_blank"> <button style="background-color: #2b2b2b" class="button">Download on Playstore</button></a>
 </div>
 
  <div style="
@@ -2127,7 +2127,7 @@ or contact me below</p>
   
 </nav>
 </div>
-<a style="text-decoration: none; color: #000; text-decoration: underline;" href="mailto:tcsreeni93@gmail.com;"><p style="padding-left:5%; font-size: 120%;letter-spacing: 0.1em;font-family:mywebfont1; color:#000; 
+<a style="text-decoration: none; color: #2b2b2b; text-decoration: underline;" href="mailto:tcsreeni93@gmail.com;"><p style="padding-left:5%; font-size: 120%;letter-spacing: 0.1em;font-family:mywebfont1; color:#2b2b2b; 
  ">tcsreeni93@gmail.com</a> 
 </div>
 
@@ -2198,7 +2198,7 @@ or contact me below</p>
     left: 50%;
     margin-left: -6px;
     border: 6px solid transparent;
-    border-bottom-color: #000;
+    border-bottom-color: #2b2b2b;
   }
   .srini-chat-nav-btn:hover .srini-chat-hovertip,
   .srini-chat-nav-btn:focus-visible .srini-chat-hovertip,
@@ -2301,7 +2301,7 @@ window.onscroll = function() {
   }
 
   var CHAT_API_PUBLIC = 'https://srinilm.onrender.com';
-  var CHATBOT_CACHE_BUST = '33';
+  var CHATBOT_CACHE_BUST = '34';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
@@ -2318,8 +2318,14 @@ window.onscroll = function() {
   function getIframeSrc() {
     var base = getAppUrl();
     var api = resolveChatApiUrl((sidebar && sidebar.getAttribute('data-chat-api')) || window.SRINI_CHAT_API || '');
-    if (api) return base + '?api=' + encodeURIComponent(api) + '&cb=' + CHATBOT_CACHE_BUST;
-    return base + '?cb=' + CHATBOT_CACHE_BUST;
+    var params = [];
+    if (api) params.push('api=' + encodeURIComponent(api));
+    try {
+      params.push('page=' + encodeURIComponent(window.location.pathname));
+      if (document.title) params.push('title=' + encodeURIComponent(document.title));
+    } catch (e) {}
+    params.push('cb=' + CHATBOT_CACHE_BUST);
+    return base + '?' + params.join('&');
   }
 
   function setOpen(open) {

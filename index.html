@@ -65,6 +65,13 @@
       padding-bottom: 4px;
       text-align: left;
       white-space: nowrap;
+      transition:
+        top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        left 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
     }
 
     .logo-srini:hover {
@@ -156,7 +163,7 @@
     }
 
     .floating-nav-item {
-      color: #000;
+      color: #2b2b2b;
       text-decoration: none;
       font-family: 'Space Mono', 'Courier New', 'Monaco', monospace;
       font-size: 13px;
@@ -191,8 +198,8 @@
 
     .floating-nav-btn:hover {
       background: rgba(255, 255, 255, 0.15);
-      color: #000;
-      border-color: #000;
+      color: #2b2b2b;
+      border-color: #2b2b2b;
     }
 
     @media screen and (max-width: 768px) {
@@ -267,7 +274,7 @@
       -webkit-backdrop-filter: blur(24px);
       border: 1px solid rgba(255, 255, 255, 0.3);
       border-radius: 9999px;
-      color: #000 !important;
+      color: #2b2b2b !important;
       text-decoration: none !important;
       font-size: 16px;
       font-weight: 600;
@@ -443,7 +450,7 @@
     
     header .HeaderContent h1,
     header .HeaderContent p {
-      color: #000 !important;
+      color: #2b2b2b !important;
       text-align: left !important;
     }
 
@@ -462,7 +469,7 @@
       font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
       font-weight: 400;
     }
-    
+
     header .HeaderContent h1 a {
       color: #3b65ef !important;
       font-family: 'Fraunces', Georgia, 'Times New Roman', serif !important;
@@ -502,6 +509,7 @@
         transform: none;
         animation: none;
       }
+
     }
 
     /* Hamburger menu - compact dropdown panel */
@@ -516,7 +524,7 @@
     }
 
     .hamburgler-menu-list li a {
-      color: #000 !important;
+      color: #2b2b2b !important;
     }
 
     .hamburgler-backdrop {
@@ -625,7 +633,7 @@
       letter-spacing: 0.5px;
       text-transform: uppercase;
       line-height: 1;
-      color: #000;
+      color: #2b2b2b;
       white-space: nowrap;
       opacity: 0;
       width: 0;
@@ -726,6 +734,141 @@
       text-underline-offset: 0.2em;
     }
 
+    @media screen and (min-width: 769px) {
+      header nav {
+        transition:
+          top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          right 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          background 0.2s ease,
+          box-shadow 0.2s ease,
+          border-color 0.2s ease;
+      }
+
+      body.nav-persistent .logo-srini {
+        position: fixed;
+        top: 28px;
+        left: 32px;
+        transform: none;
+        padding: 14px 16px 12px;
+        border-radius: 9999px;
+        color: #666;
+        background: rgba(255, 255, 255, 0.66);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        box-shadow:
+          0 14px 40px rgba(0, 0, 0, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.65);
+      }
+
+      body.nav-persistent header nav {
+        position: fixed;
+        top: 20px;
+        right: 32px;
+        z-index: 10000;
+        width: 64px;
+        height: 64px;
+        padding: 0;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.62);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        box-shadow:
+          0 14px 40px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        cursor: pointer;
+      }
+
+      body.chat-open.nav-persistent header nav {
+        right: 476px;
+      }
+
+      body.chat-open.nav-persistent.nav-expanded header nav {
+        width: min(560px, calc(100vw - 540px));
+      }
+
+      @media screen and (max-width: 1199px) {
+        body.chat-open.nav-persistent header nav {
+          right: 32px;
+        }
+
+        body.chat-open.nav-persistent.nav-expanded header nav {
+          width: min(560px, calc(100vw - 64px));
+        }
+      }
+
+      body.nav-persistent.nav-expanded header nav {
+        width: min(560px, calc(100vw - 64px));
+        padding: 0 14px;
+        cursor: default;
+      }
+
+      body.nav-persistent header nav::before,
+      body.nav-persistent header nav::after {
+        content: '';
+        position: absolute;
+        right: 21px;
+        width: 22px;
+        height: 2px;
+        border-radius: 9999px;
+        background: #2b2b2b;
+        transition:
+          top 0.25s ease,
+          transform 0.25s ease,
+          opacity 0.2s ease;
+      }
+
+      body.nav-persistent header nav::before {
+        top: 25px;
+      }
+
+      body.nav-persistent header nav::after {
+        top: 37px;
+      }
+
+      body.nav-persistent.nav-expanded header nav::before {
+        top: 31px;
+        transform: rotate(45deg);
+      }
+
+      body.nav-persistent.nav-expanded header nav::after {
+        top: 31px;
+        transform: rotate(-45deg);
+      }
+
+      body.nav-persistent header nav .desk-menu {
+        height: 100%;
+        padding-top: 0 !important;
+        padding-right: 50px;
+        gap: 2px;
+        opacity: 0;
+        transform: translateX(18px);
+        pointer-events: none;
+        transition:
+          opacity 0.22s ease,
+          transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      body.nav-persistent.nav-expanded header nav .desk-menu {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+        transition-delay: 0.08s;
+      }
+
+      body.nav-persistent header nav .desk-menu li a:not(.get-in-touch-btn) {
+        padding: 0 18px !important;
+      }
+
+      body.nav-persistent header nav .get-in-touch-btn {
+        padding: 12px 22px !important;
+      }
+    }
+
     /* Hamburger menu links */
     .hamburgler-menu-list li a {
       font-family: 'Space Mono', 'Courier New', 'Monaco', monospace !important;
@@ -749,7 +892,7 @@
     .archives-title {
       font-family: "MyWebFont";
       font-size: 200%;
-      color: #000;
+      color: #2b2b2b;
       margin-bottom: 3rem;
       padding-left: 0;
     }
@@ -818,7 +961,7 @@
       font-family: "MyWebFont";
       font-size: 28px;
       font-weight: 200;
-      color: #000;
+      color: #2b2b2b;
       margin-bottom: 1rem;
       line-height: 1.3;
     }
@@ -888,7 +1031,7 @@
         inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
         0 0 0 1px rgba(255, 255, 255, 0.1) !important;
       
-      color: #000 !important;
+      color: #2b2b2b !important;
       border-radius: 9999px !important;
       font-size: 13px !important;
       font-weight: 400 !important;
@@ -972,13 +1115,17 @@
     /* Recent Work section title */
     .work-section-title {
       margin: 0;
-      padding: 10% 5% 0;
+      padding: clamp(2rem, 3vw, 3rem) 5% 0;
       font-family: "MyWebFont", Georgia, serif;
       color: var(--srini-color-text-primary);
       font-size: 200%;
       font-weight: 400;
       line-height: 1.1;
       text-align: left;
+    }
+
+    #Selectedworks > .cards-layout:first-of-type {
+      padding-top: 2rem !important;
     }
 
     #Selectedworks .cards-layout-content h2,
@@ -990,7 +1137,7 @@
 
     @media screen and (max-width: 768px) {
       .work-section-title {
-        padding-top: 12%;
+        padding-top: 2rem;
       }
     }
 
@@ -1025,6 +1172,67 @@
       /* Ensure Hamburger is visible */
       .hamburgler-icon-wrapper {
         display: block !important;
+        top: 20px !important;
+        right: 24px !important;
+        width: 64px !important;
+        height: 64px !important;
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.62);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        box-shadow:
+          0 14px 40px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        transition: none !important;
+      }
+
+      .hamburgler-active .hamburgler-icon-wrapper {
+        background: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+
+      .hamburgler-icon {
+        background: transparent !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        transition: none !important;
+      }
+
+      .hamburgler-icon::before {
+        top: -0.35em !important;
+        transition: none !important;
+      }
+
+      .hamburgler-icon::after {
+        top: 0.35em !important;
+        transition: none !important;
+      }
+
+      .hamburgler-menu {
+        transition: none !important;
+      }
+
+      .hamburgler-backdrop {
+        transition: none !important;
+      }
+
+      .hamburgler-active .hamburgler-icon {
+        background: transparent !important;
+        transform: translate(-50%, -50%) rotate(-135deg) !important;
+      }
+
+      .hamburgler-active .hamburgler-icon::before,
+      .hamburgler-active .hamburgler-icon::after {
+        top: 0 !important;
+      }
+
+      .hamburgler-active .hamburgler-icon::before {
+        transform: rotate(90deg) !important;
       }
     }
 
@@ -1282,8 +1490,8 @@
     </nav>
     <div class="frame" style="max-width: 1440px">
       <div class="HeaderContent" style="margin-top: 10%">
-        <p class="hero-text-reveal" style='font-size: 250%; font-family: "MyWebFont"; margin-bottom: 0.75rem; color:#000'> Hello there <span class="wave">👋</span>, </p>
-        <h1 class="hero-text-reveal" style="white-space: inherit;line-height: 1.125; color:#000"> I'm <a href="about.html"
+        <p class="hero-text-reveal" style='font-size: 250%; font-family: "MyWebFont"; margin-bottom: 0.75rem; color:#2b2b2b'> Hello there <span class="wave">👋</span>, </p>
+        <h1 class="hero-text-reveal" style="white-space: inherit;line-height: 1.125; color:#2b2b2b"> I'm <a href="about.html"
             target="_blank" style="color:#3b65ef">Srini</a>, a full-spectrum product designer crafting intuitive AI-driven, agentic experiences and scalable design systems.
         </h1>
         <div class="hero-text-reveal HeaderContent-description" style="color:var(--srini-color-text-secondary)"> Staff Product Designer @ Intuit | Previously @ Norton, Google & Zoho </div>
@@ -1571,9 +1779,9 @@ Designed a white label friendly design system scaling from design to code for fi
           style="color:#3b65ef; text-decoration:none" href="Resume_Srinivasan.pdf" target="_blank">résumé</a>,
         get in touch 👇</p>
       <p style="padding-left: 5%; padding-top: 2%; font-size: 120%; letter-spacing: 0.1em; font-family: 'Space Mono', 'Courier New', 'Monaco', monospace;">
-        <a class="contact-link" style="text-decoration: none; color: #000" href="mailto:tcsreeni93@gmail.com">Email <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="10 6 18 6 18 14"/></svg></a>
+        <a class="contact-link" style="text-decoration: none; color: #2b2b2b" href="mailto:tcsreeni93@gmail.com">Email <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="10 6 18 6 18 14"/></svg></a>
         &nbsp;|&nbsp;
-        <a class="contact-link" target="_blank" href="https://www.linkedin.com/in/srinivasanchakkarapani/" style="text-decoration: none; color: #000">LinkedIn <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="10 6 18 6 18 14"/></svg></a>
+        <a class="contact-link" target="_blank" href="https://www.linkedin.com/in/srinivasanchakkarapani/" style="text-decoration: none; color: #2b2b2b">LinkedIn <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="10 6 18 6 18 14"/></svg></a>
       </p>
       <p class="footertxt" style="max-width: 600px; padding-top: 3rem; color: #9e9e9e;">Designed and Handcoded in San Francisco Bay with <span style="color:#ff2957;"><span class="semibold">♥</span></span> © <span id="current-year"></span></p>
     </div>
@@ -1734,6 +1942,9 @@ Designed a white label friendly design system scaling from design to code for fi
       function animateElements() {
         const elements = document.querySelectorAll('.animate-progressive');
         elements.forEach((element, index) => {
+          if (element.closest('.HeaderContent') && element.style.animationDelay) {
+            return;
+          }
           setTimeout(() => {
             element.classList.add('visible');
           }, index * 200);
@@ -1802,45 +2013,98 @@ Designed a white label friendly design system scaling from design to code for fi
         });
       });
 
-      // Floating Navigation Logic
+      // Collapsed persistent top navigation
       const headerNav = document.querySelector('header nav');
-      const headerContent = document.querySelector('.HeaderContent');
       const floatingNav = document.querySelector('.floating-nav-container');
-      
-      // Add scrolled background to nav when header content is not visible
-      if (headerNav && headerContent) {
-        const headerObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-              headerNav.classList.add('nav-scrolled');
-            } else {
-              headerNav.classList.remove('nav-scrolled');
-            }
-          });
-        }, {
-          threshold: 0,
-          rootMargin: "-80px 0px 0px 0px"
-        });
+      const persistentNavMinWidth = window.matchMedia('(min-width: 769px)');
+      const persistentNavOffset = 140;
 
-        headerObserver.observe(headerContent);
+      function isPersistentNavActive() {
+        return document.body.classList.contains('nav-persistent');
       }
-      
-      if (headerNav && floatingNav) {
-        // Observer to detect when header nav goes out of view
-        const observer = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (!entry.isIntersecting) {
-              floatingNav.classList.add('visible');
-            } else {
-              floatingNav.classList.remove('visible');
-            }
-          });
-        }, {
-          threshold: 0,
-          rootMargin: "-100px 0px 0px 0px"
+
+      function setPersistentNavExpanded(expanded) {
+        document.body.classList.toggle('nav-expanded', expanded);
+        if (headerNav) {
+          headerNav.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+          headerNav.setAttribute('aria-label', expanded ? 'Close site navigation' : 'Open site navigation');
+          if (!expanded && headerNav.contains(document.activeElement)) {
+            document.activeElement.blur();
+            setTimeout(function() {
+              if (headerNav.contains(document.activeElement)) {
+                document.activeElement.blur();
+              }
+            }, 0);
+          }
+        }
+      }
+
+      function updatePersistentNav() {
+        const shouldPersist = persistentNavMinWidth.matches && window.scrollY > persistentNavOffset;
+        document.body.classList.toggle('nav-persistent', shouldPersist);
+        if (headerNav) {
+          headerNav.classList.toggle('nav-scrolled', shouldPersist);
+          headerNav.setAttribute(
+            'aria-label',
+            shouldPersist && document.body.classList.contains('nav-expanded') ? 'Close site navigation' : shouldPersist ? 'Open site navigation' : 'Site navigation'
+          );
+          headerNav.setAttribute('aria-expanded', shouldPersist && document.body.classList.contains('nav-expanded') ? 'true' : 'false');
+          if (shouldPersist) {
+            headerNav.setAttribute('tabindex', '0');
+          } else {
+            headerNav.removeAttribute('tabindex');
+          }
+        }
+        if (!shouldPersist) {
+          setPersistentNavExpanded(false);
+        }
+        if (floatingNav) {
+          floatingNav.classList.remove('visible');
+        }
+      }
+
+      if (headerNav) {
+        headerNav.setAttribute('aria-expanded', 'false');
+        headerNav.addEventListener('click', function(e) {
+          if (!isPersistentNavActive()) return;
+
+          const isExpanded = document.body.classList.contains('nav-expanded');
+          const clickedLinkOrButton = e.target.closest('a, button');
+          const navRect = headerNav.getBoundingClientRect();
+          const clickedCloseArea = isExpanded && e.clientX >= navRect.right - 76;
+
+          if (!isExpanded) {
+            e.preventDefault();
+            e.stopPropagation();
+            setPersistentNavExpanded(true);
+          } else if (clickedCloseArea || !clickedLinkOrButton) {
+            e.preventDefault();
+            e.stopPropagation();
+            setPersistentNavExpanded(false);
+          }
         });
 
-        observer.observe(headerNav);
+        headerNav.addEventListener('keydown', function(e) {
+          if (!isPersistentNavActive()) return;
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setPersistentNavExpanded(!document.body.classList.contains('nav-expanded'));
+          }
+        });
+
+        document.addEventListener('click', function(e) {
+          if (isPersistentNavActive() && !headerNav.contains(e.target)) {
+            setPersistentNavExpanded(false);
+          }
+        });
+
+        $(window).on('keyup', function(e) {
+          if (e.keyCode == 27) setPersistentNavExpanded(false);
+        });
+
+        updatePersistentNav();
+        window.addEventListener('scroll', updatePersistentNav, { passive: true });
+        persistentNavMinWidth.addEventListener('change', updatePersistentNav);
       }
 
     });
@@ -1991,9 +2255,7 @@ Designed a white label friendly design system scaling from design to code for fi
         el._scrambling = false;
         el._scrambleTimer = null;
 
-        // Auto-play on first load
-        el._scrambling = true;
-        el._scrambleTimer = scrambleDecode(el);
+        el.textContent = homeLogoText(el);
 
         el.addEventListener('mouseenter', function () {
           const hoverText = pickHoverGreeting(el);
@@ -2089,7 +2351,7 @@ Designed a white label friendly design system scaling from design to code for fi
       left: 50%;
       margin-left: -6px;
       border: 6px solid transparent;
-      border-bottom-color: #000;
+      border-bottom-color: #2b2b2b;
     }
     .srini-chat-nav-btn:hover .srini-chat-hovertip,
     .srini-chat-nav-btn:focus-visible .srini-chat-hovertip,
@@ -2180,7 +2442,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
   var CHAT_API_PUBLIC = 'https://srinilm.onrender.com';
   /** Bump when deploying chatbot or host chat script changes (cache bust). */
-  var CHATBOT_CACHE_BUST = '33';
+  var CHATBOT_CACHE_BUST = '34';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
