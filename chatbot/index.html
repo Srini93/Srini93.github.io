@@ -1,16 +1,413 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Srini AI</title>
+    <title>Srini AI chat</title>
+    <link rel="dns-prefetch" href="https://sriniai.netlify.app" />
+    <link rel="preconnect" href="https://sriniai.netlify.app" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet" />
-    <script type="module" crossorigin src="assets/index-Dbje-piD.js"></script>
-    <link rel="stylesheet" crossorigin href="assets/index-Dt8MG8cL2.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="/chatbot/assets/index-Ceo5IzNr.js"></script>
+    <link rel="stylesheet" crossorigin href="/chatbot/assets/index-C6bn-kI3.css">
+    <style>
+      /* Gradient sits below header, behind chat content */
+      #root {
+        position: relative;
+        z-index: 1;
+      }
+      #gradient-overlay {
+        position: fixed;
+        left: 0;
+        right: 0;
+        height: 32%;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: opacity 0.5s ease-out;
+        -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 58%, transparent 100%);
+        mask-image: linear-gradient(180deg, #000 0%, #000 58%, transparent 100%);
+      }
+
+      /* Gemini-style flowing color waves */
+      #gradient-overlay::before,
+      #gradient-overlay::after {
+        content: "";
+        position: absolute;
+        top: -25%;
+        height: 140%;
+        filter: blur(22px);
+        will-change: transform, background-position;
+      }
+
+      #gradient-overlay::before {
+        left: -45%;
+        width: 190%;
+        background: linear-gradient(
+          100deg,
+          rgba(59, 130, 246, 0) 0%,
+          rgba(96, 165, 250, 0.2) 22%,
+          rgba(129, 140, 248, 0.16) 48%,
+          rgba(251, 191, 80, 0.13) 72%,
+          rgba(59, 130, 246, 0) 100%
+        );
+        background-size: 220% 100%;
+        animation: gradientWaveA 5.2s ease-in-out infinite;
+      }
+
+      #gradient-overlay::after {
+        left: -35%;
+        width: 170%;
+        background: linear-gradient(
+          90deg,
+          rgba(147, 197, 253, 0) 0%,
+          rgba(147, 197, 253, 0.14) 28%,
+          rgba(253, 200, 120, 0.11) 52%,
+          rgba(167, 139, 250, 0.1) 78%,
+          rgba(147, 197, 253, 0) 100%
+        );
+        background-size: 260% 100%;
+        opacity: 0.9;
+        animation: gradientWaveB 6.8s ease-in-out infinite;
+      }
+
+      #gradient-overlay.active {
+        opacity: 1;
+        transition: opacity 0.18s ease-in;
+      }
+
+      @keyframes gradientWaveA {
+        0%, 100% {
+          transform: translate3d(-6%, 0, 0);
+          background-position: 0% 50%;
+        }
+        50% {
+          transform: translate3d(6%, 0, 0);
+          background-position: 100% 50%;
+        }
+      }
+
+      @keyframes gradientWaveB {
+        0%, 100% {
+          transform: translate3d(5%, 0, 0);
+          background-position: 100% 50%;
+        }
+        50% {
+          transform: translate3d(-5%, 0, 0);
+          background-position: 0% 50%;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #gradient-overlay {
+          transition: opacity 0.3s ease;
+          background: linear-gradient(180deg,
+            rgba(96, 165, 250, 0.16) 0%,
+            rgba(147, 197, 253, 0.1) 30%,
+            rgba(253, 200, 120, 0.06) 50%,
+            rgba(255, 255, 255, 0) 72%
+          );
+          -webkit-mask-image: none;
+          mask-image: none;
+        }
+
+        #gradient-overlay::before,
+        #gradient-overlay::after {
+          display: none;
+        }
+
+        #gradient-overlay.active {
+          animation: gradientPulseSoft 2.8s ease-in-out infinite;
+        }
+
+        @keyframes gradientPulseSoft {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.78; }
+        }
+      }
+
+      .icon-btn--active {
+        color: var(--accent) !important;
+        background: rgba(59, 130, 246, 0.1) !important;
+      }
+
+      /* Voice / read-aloud feature removed for now */
+      .msg-read-btn,
+      button[aria-label="Read responses aloud"] {
+        display: none !important;
+      }
+
+      /* Send: circular button, active once the user has typed */
+      .chat-form__send {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: var(--surface);
+        color: var(--text-muted);
+        opacity: 0.35;
+        cursor: not-allowed;
+        transition:
+          background 0.2s ease,
+          color 0.2s ease,
+          opacity 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .chat-form__send svg {
+        width: 18px;
+        height: 18px;
+        transition: transform 0.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+      }
+
+      .chat-form.has-text .chat-form__send:not(:disabled) {
+        background: #1a1a1a;
+        color: #fff;
+        opacity: 1;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+      }
+
+      .chat-form.has-text .chat-form__send:not(:disabled):hover {
+        background: #333;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+      }
+
+      .chat-form.has-text .chat-form__send:not(:disabled):hover svg {
+        transform: translateY(-2px);
+      }
+
+      .chat-form__send:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+        background: var(--surface);
+        color: var(--text-muted);
+      }
+
+    </style>
   </head>
   <body>
+    <div id="gradient-overlay"></div>
     <div id="root"></div>
+    <script>
+      // Control gradient overlay with minimum display time
+      (function() {
+        const overlay = document.getElementById('gradient-overlay');
+        if (!overlay) return;
+
+        let hideTimeout = null;
+        const MIN_DISPLAY_MS = 1200;
+        let activatedAt = 0;
+
+        function positionBelowHeader() {
+          const header = document.querySelector('.chat-header');
+          if (header) {
+            overlay.style.top = header.getBoundingClientRect().bottom + 'px';
+          }
+        }
+
+        function updateOverlay() {
+          positionBelowHeader();
+          const isResponding = document.body.classList.contains('ai-responding');
+
+          if (isResponding) {
+            if (hideTimeout) {
+              clearTimeout(hideTimeout);
+              hideTimeout = null;
+            }
+            activatedAt = Date.now();
+            overlay.classList.add('active');
+          } else {
+            const elapsed = Date.now() - activatedAt;
+            const remaining = Math.max(0, MIN_DISPLAY_MS - elapsed);
+
+            hideTimeout = setTimeout(() => {
+              overlay.classList.remove('active');
+              hideTimeout = null;
+            }, remaining);
+          }
+        }
+
+        // Watch for class changes on body
+        const observer = new MutationObserver(() => updateOverlay());
+        observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+        // Reposition when header mounts or window resizes
+        const rootObserver = new MutationObserver(() => positionBelowHeader());
+        rootObserver.observe(document.getElementById('root'), { childList: true, subtree: true });
+        window.addEventListener('resize', positionBelowHeader);
+
+        updateOverlay();
+      })();
+
+      // Vintage interaction sounds (warm 8-bit / chiptune palette)
+      (function () {
+        let ctx = null;
+        let master = null;
+
+        function unlockSync() {
+          try {
+            if (!ctx) {
+              ctx = new (window.AudioContext || window.webkitAudioContext)();
+              master = ctx.createGain();
+              master.gain.value = 0.92;
+              master.connect(ctx.destination);
+            }
+            if (ctx.state === 'suspended') {
+              ctx.resume().catch(function () {});
+            }
+          } catch (_) {}
+        }
+
+        function runWhenReady(fn) {
+          unlockSync();
+          if (!ctx || !master) return;
+          if (ctx.state === 'running') {
+            fn();
+            return;
+          }
+          ctx.resume().then(fn).catch(function () {});
+        }
+
+        // Soft triangle/square through a low-pass — retro but easy on the ears
+        function vintageTone(freq, start, dur, volume, opts) {
+          opts = opts || {};
+          if (!ctx || !master) return;
+          const t = ctx.currentTime + start;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const filter = ctx.createBiquadFilter();
+          osc.type = opts.type || 'triangle';
+          osc.frequency.setValueAtTime(freq, t);
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(opts.filter || 2600, t);
+          filter.Q.setValueAtTime(0.7, t);
+          const attack = opts.attack || 0.006;
+          gain.gain.setValueAtTime(0.0001, t);
+          gain.gain.exponentialRampToValueAtTime(Math.max(volume, 0.001), t + attack);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(master);
+          osc.start(t);
+          osc.stop(t + dur + 0.03);
+        }
+
+        function vintageSeq(notes) {
+          notes.forEach(function (n) {
+            vintageTone(n[0], n[1], n[2], n[3], n[4]);
+          });
+        }
+
+        const sounds = {
+          hover: function () {
+            vintageTone(1318.5, 0, 0.028, 0.034, { filter: 3400 });
+          },
+          send: function () {
+            vintageSeq([
+              [392, 0, 0.1, 0.055],
+              [523.25, 0.055, 0.13, 0.048],
+            ]);
+          },
+          select: function () {
+            vintageSeq([
+              [523.25, 0, 0.06, 0.05],
+              [659.25, 0.048, 0.075, 0.042],
+            ]);
+          },
+          answer: function () {
+            vintageSeq([
+              [523.25, 0, 0.1, 0.048],
+              [659.25, 0.085, 0.11, 0.042],
+              [783.99, 0.17, 0.15, 0.036],
+            ]);
+          },
+          click: function () {
+            vintageTone(440, 0, 0.042, 0.04, { type: 'square', filter: 1400 });
+          },
+          think: function () {
+            vintageSeq([
+              [349.23, 0, 0.07, 0.036, { filter: 2200 }],
+              [440, 0.065, 0.09, 0.03, { filter: 2200 }],
+            ]);
+          },
+          error: function () {
+            vintageSeq([
+              [207.65, 0, 0.11, 0.05, { filter: 1800 }],
+              [174.61, 0.095, 0.15, 0.044, { filter: 1600 }],
+            ]);
+          },
+        };
+
+        function play(name) {
+          if (!sounds[name]) return;
+          runWhenReady(function () {
+            sounds[name]();
+          });
+        }
+
+        window.SRINI_CHAT_SOUND = play;
+
+        // Parent portfolio page posts this when the chatbot runs in an iframe.
+        window.addEventListener('message', function (e) {
+          if (e.data === 'srini-chat-sound-send') play('send');
+        });
+
+        ['pointerdown', 'keydown', 'touchstart'].forEach(function (ev) {
+          document.addEventListener(ev, unlockSync, { passive: true, capture: true });
+        });
+
+        var root = document.getElementById('root');
+        if (!root) return;
+
+        root.addEventListener(
+          'pointerdown',
+          function (e) {
+            unlockSync();
+            var btn = e.target.closest('button');
+            if (!btn) return;
+            if (btn.classList.contains('suggestion-row') || btn.classList.contains('msg-suggestion-btn')) {
+              play('select');
+            } else if (btn.classList.contains('chat-form__send')) {
+              play('send');
+            }
+          },
+          true
+        );
+
+        root.addEventListener(
+          'click',
+          function (e) {
+            var btn = e.target.closest('button');
+            if (!btn) return;
+            if (btn.closest('.chat-header')) {
+              play('click');
+            }
+          },
+          true
+        );
+
+        var wasResponding = false;
+        var observer = new MutationObserver(function () {
+          var responding = document.body.classList.contains('ai-responding');
+          if (responding && !wasResponding) play('think');
+          wasResponding = responding;
+        });
+        observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+        var hadError = false;
+        var errorObserver = new MutationObserver(function () {
+          var hasError = !!document.querySelector('.error-msg');
+          if (hasError && !hadError) play('error');
+          hadError = hasError;
+        });
+        errorObserver.observe(root, { childList: true, subtree: true, characterData: true });
+      })();
+    </script>
   </body>
 </html>

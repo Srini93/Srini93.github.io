@@ -259,7 +259,7 @@
     // 10. Inject chatbot sidebar + FAB + JS before </body>, closing the wrap first
     var parentSidebar = document.getElementById('chatbot-sidebar');
     var chatSrc = (parentSidebar && parentSidebar.getAttribute('data-chatbot-src')) || './chatbot/';
-    var chatApi = (parentSidebar && parentSidebar.getAttribute('data-chat-api')) || '';
+    var chatApi = (parentSidebar && parentSidebar.getAttribute('data-chat-api')) || 'https://sriniai.netlify.app';
 
     var chatbotHTML =
       '</div><!-- /site-content-wrap -->' +
