@@ -2189,6 +2189,15 @@ Designed a white label friendly design system scaling from design to code for fi
         return (a != null && String(a).trim() !== '') ? String(a).trim() : 'srini';
       }
 
+      function isScrolledLogoState() {
+        return document.body.classList.contains('nav-persistent');
+      }
+
+      function resetLogoText(el) {
+        stopScramble(el);
+        el.textContent = homeLogoText(el);
+      }
+
       function scrambleDecode(el, targetOverride) {
         stopScramble(el);
         let finalText;
@@ -2258,6 +2267,10 @@ Designed a white label friendly design system scaling from design to code for fi
         el.textContent = homeLogoText(el);
 
         el.addEventListener('mouseenter', function () {
+          if (isScrolledLogoState()) {
+            resetLogoText(el);
+            return;
+          }
           const hoverText = pickHoverGreeting(el);
           stopScramble(el);
           el._scrambling = true;
@@ -2265,6 +2278,10 @@ Designed a white label friendly design system scaling from design to code for fi
         });
 
         el.addEventListener('mouseleave', function () {
+          if (isScrolledLogoState()) {
+            resetLogoText(el);
+            return;
+          }
           const home = homeLogoText(el);
           if (el.textContent.trim() === home) return;
           stopScramble(el);
@@ -2272,6 +2289,11 @@ Designed a white label friendly design system scaling from design to code for fi
           el._scrambleTimer = scrambleDecode(el);
         });
       });
+
+      window.addEventListener('scroll', function () {
+        if (!isScrolledLogoState()) return;
+        document.querySelectorAll('.logo-srini').forEach(resetLogoText);
+      }, { passive: true });
     })();
 
 
