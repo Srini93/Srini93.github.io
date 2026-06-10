@@ -170,6 +170,214 @@
       font-size: 130% !important;
     }
   }
+
+    /* ── Persistent scroll nav (desktop) ── */
+    @media screen and (min-width: 769px) {
+      header nav {
+        transition:
+          top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          right 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          background 0.2s ease,
+          box-shadow 0.2s ease,
+          border-color 0.2s ease;
+      }
+
+      body.nav-persistent .logo-srini {
+        position: fixed;
+        top: 28px;
+        left: 32px;
+        transform: none;
+        padding: 14px 16px 12px;
+        border-radius: 9999px;
+        color: #666;
+        background: rgba(255, 255, 255, 0.66);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        box-shadow:
+          0 14px 40px rgba(0, 0, 0, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.65);
+      }
+
+      body.nav-persistent header nav {
+        position: fixed;
+        top: 20px;
+        right: 32px;
+        z-index: 10000;
+        width: 64px;
+        height: 64px;
+        padding: 0;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.62);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        box-shadow:
+          0 14px 40px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        cursor: pointer;
+      }
+
+      body.nav-persistent.nav-expanded header nav {
+        width: min(560px, calc(100vw - 64px));
+        padding: 0 14px;
+        cursor: default;
+      }
+
+      body.nav-persistent header nav::before,
+      body.nav-persistent header nav::after {
+        content: '';
+        position: absolute;
+        right: 21px;
+        width: 22px;
+        height: 2px;
+        border-radius: 9999px;
+        background: #2b2b2b;
+        transition:
+          top 0.25s ease,
+          transform 0.25s ease,
+          opacity 0.2s ease;
+      }
+
+      body.nav-persistent header nav::before { top: 25px; }
+      body.nav-persistent header nav::after  { top: 37px; }
+
+      body.nav-persistent.nav-expanded header nav::before {
+        top: 31px;
+        transform: rotate(45deg);
+      }
+
+      body.nav-persistent.nav-expanded header nav::after {
+        top: 31px;
+        transform: rotate(-45deg);
+      }
+
+      body.nav-persistent header nav .desk-menu {
+        height: 100%;
+        padding-top: 0 !important;
+        padding-right: 50px;
+        gap: 2px;
+        opacity: 0;
+        transform: translateX(18px);
+        pointer-events: none;
+        transition:
+          opacity 0.22s ease,
+          transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      body.nav-persistent.nav-expanded header nav .desk-menu {
+        opacity: 1;
+        transform: translateX(0);
+        pointer-events: auto;
+        transition-delay: 0.08s;
+      }
+
+      body.nav-persistent header nav .desk-menu li a:not(.get-in-touch-btn) {
+        padding: 0 18px !important;
+      }
+
+      body.nav-persistent header nav .get-in-touch-btn {
+        padding: 12px 22px !important;
+      }
+    }
+
+    /* ── Mobile glass circle hamburger ── */
+    @media screen and (max-width: 768px) {
+      .hamburgler-icon-wrapper {
+        display: block !important;
+        top: 20px !important;
+        right: 24px !important;
+        width: 64px !important;
+        height: 64px !important;
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        border-radius: 9999px;
+        background: rgba(255, 255, 255, 0.62);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        box-shadow:
+          0 14px 40px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        transition:
+          background 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+          border-color 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      .hamburgler-active .hamburgler-icon-wrapper {
+        background: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+      }
+
+      .hamburgler-icon {
+        background: transparent !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      .hamburgler-icon::before {
+        top: -0.35em !important;
+        transition: top 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      .hamburgler-icon::after {
+        top: 0.35em !important;
+        transition: top 0.24s cubic-bezier(0.16, 1, 0.3, 1),
+                    transform 0.32s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      .hamburgler-menu {
+        transform: translateY(-10px) scale(0.97) !important;
+        transform-origin: top right;
+        transition:
+          opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.38s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      .hamburgler-active .hamburgler-menu {
+        transform: translateY(0) scale(1) !important;
+      }
+
+      .hamburgler-backdrop {
+        transition: background 0.3s ease !important;
+      }
+
+      .hamburgler-active .hamburgler-icon {
+        background: transparent !important;
+        transform: translate(-50%, -50%) rotate(-135deg) !important;
+      }
+
+      .hamburgler-active .hamburgler-icon::before,
+      .hamburgler-active .hamburgler-icon::after {
+        top: 0 !important;
+      }
+
+      .hamburgler-active .hamburgler-icon::before {
+        transform: rotate(90deg) !important;
+      }
+
+      .hamburgler-menu-list li {
+        opacity: 0;
+        transform: translateY(6px);
+        transition:
+          opacity 0.22s ease,
+          transform 0.28s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+
+      .hamburgler-active .hamburgler-menu-list li:nth-child(1) { opacity: 1 !important; transform: translateY(0) !important; transition-delay: 0.1s !important; }
+      .hamburgler-active .hamburgler-menu-list li:nth-child(2) { opacity: 1 !important; transform: translateY(0) !important; transition-delay: 0.14s !important; }
+      .hamburgler-active .hamburgler-menu-list li:nth-child(3) { opacity: 1 !important; transform: translateY(0) !important; transition-delay: 0.18s !important; }
+      .hamburgler-active .hamburgler-menu-list li:nth-child(4) { opacity: 1 !important; transform: translateY(0) !important; transition-delay: 0.22s !important; }
+      .hamburgler-active .hamburgler-menu-list li:nth-child(5) { opacity: 1 !important; transform: translateY(0) !important; transition-delay: 0.26s !important; }
+    }
 </style>
 
 <body>
@@ -1022,6 +1230,81 @@ AOS.init({
       function ifEscClose(e){
         if (e.keyCode == 27) closeNav()
       }
+
+      // ── Collapsed persistent top navigation ──
+      var headerNav = document.querySelector('header nav');
+      var persistentNavMinWidth = window.matchMedia('(min-width: 769px)');
+      var persistentNavOffset = 140;
+
+      function isPersistentNavActive() {
+        return document.body.classList.contains('nav-persistent');
+      }
+
+      function setPersistentNavExpanded(expanded) {
+        document.body.classList.toggle('nav-expanded', expanded);
+        if (headerNav) {
+          headerNav.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+          headerNav.setAttribute('aria-label', expanded ? 'Close site navigation' : 'Open site navigation');
+          if (!expanded && headerNav.contains(document.activeElement)) {
+            document.activeElement.blur();
+            setTimeout(function() {
+              if (headerNav.contains(document.activeElement)) document.activeElement.blur();
+            }, 0);
+          }
+        }
+      }
+
+      function updatePersistentNav() {
+        var shouldPersist = persistentNavMinWidth.matches && window.scrollY > persistentNavOffset;
+        document.body.classList.toggle('nav-persistent', shouldPersist);
+        if (headerNav) {
+          headerNav.classList.toggle('nav-scrolled', shouldPersist);
+          headerNav.setAttribute('aria-label',
+            shouldPersist && document.body.classList.contains('nav-expanded') ? 'Close site navigation' :
+            shouldPersist ? 'Open site navigation' : 'Site navigation');
+          headerNav.setAttribute('aria-expanded',
+            shouldPersist && document.body.classList.contains('nav-expanded') ? 'true' : 'false');
+          if (shouldPersist) {
+            headerNav.setAttribute('tabindex', '0');
+          } else {
+            headerNav.removeAttribute('tabindex');
+          }
+        }
+        if (!shouldPersist) setPersistentNavExpanded(false);
+      }
+
+      if (headerNav) {
+        headerNav.setAttribute('aria-expanded', 'false');
+        headerNav.addEventListener('click', function(e) {
+          if (!isPersistentNavActive()) return;
+          var isExpanded = document.body.classList.contains('nav-expanded');
+          var clickedLinkOrButton = e.target.closest('a, button');
+          var navRect = headerNav.getBoundingClientRect();
+          var clickedCloseArea = isExpanded && e.clientX >= navRect.right - 76;
+          if (!isExpanded) {
+            e.preventDefault(); e.stopPropagation();
+            setPersistentNavExpanded(true);
+          } else if (clickedCloseArea || !clickedLinkOrButton) {
+            e.preventDefault(); e.stopPropagation();
+            setPersistentNavExpanded(false);
+          }
+        });
+        headerNav.addEventListener('keydown', function(e) {
+          if (!isPersistentNavActive()) return;
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            setPersistentNavExpanded(!document.body.classList.contains('nav-expanded'));
+          }
+        });
+        document.addEventListener('click', function(e) {
+          if (isPersistentNavActive() && !headerNav.contains(e.target)) setPersistentNavExpanded(false);
+        });
+        $(window).on('keyup', function(e) { if (e.keyCode == 27) setPersistentNavExpanded(false); });
+        updatePersistentNav();
+        window.addEventListener('scroll', updatePersistentNav, { passive: true });
+        persistentNavMinWidth.addEventListener('change', updatePersistentNav);
+      }
+
 
   });
 
