@@ -14,6 +14,8 @@ Applies the standard navigation and chatbot from `index.html` to any other HTML 
 3. Read `index.html` lines 48–108 (logo + nav CSS), 488–948 (hamburger/desk-menu/get-in-touch CSS), 1100–1130 (nav HTML), 1661–1745 (chatbot HTML/CSS/JS) as the source of truth.
 4. Identify what the target page already has so you only add what's missing.
 
+**Chatbot app code:** Do not edit `chatbot/` (built output). UI changes belong in `srini-chatbot/` followed by `npm run build` in that folder. This skill only adds the host-page sidebar, triggers, and iframe loader.
+
 ## Step 1 — Font imports in `<head>`
 
 Ensure these Google Fonts `<link>` tags exist (add if missing, don't duplicate):

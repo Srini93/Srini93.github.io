@@ -1,0 +1,36 @@
+---
+description: Chatbot deploy output is built from srini-chatbot — never edit chatbot/ directly
+globs: chatbot/**,srini-chatbot/**
+alwaysApply: true
+---
+
+# Chatbot source of truth
+
+The embedded chatbot UI lives in two places:
+
+| Path | Role |
+|------|------|
+| `srini-chatbot/` | **Source** — React + TypeScript + Vite. All chatbot UI/logic changes happen here. |
+| `chatbot/` | **Deploy output only** — pre-built static assets served by the portfolio site iframe. |
+
+## Rules
+
+1. **Never edit files under `chatbot/` directly** (including `chatbot/assets/*`, `chatbot/index.html`). Do not patch minified bundles, CSS, or HTML in place.
+2. **To update the chatbot**, change `srini-chatbot/src/**` (or `srini-chatbot/index.html`), then rebuild:
+
+   ```bash
+   cd srini-chatbot && npm run build
+   ```
+
+   Vite writes output to `../chatbot/` (`vite.config.ts` → `build.outDir`).
+
+3. **Portfolio pages** only embed the chatbot via `#chatbot-sidebar` + `data-chatbot-src="./chatbot/"`. Nav/chatbot skills may add or adjust host-page shell (sidebar, triggers, iframe loader) but must not alter `chatbot/` contents.
+4. **Do not merge or hand-resolve conflicts** in `chatbot/` by picking arbitrary sides. Rebuild from `srini-chatbot/` after resolving source conflicts.
+
+## What you may change on host pages
+
+- `#chatbot-sidebar` attributes (`data-chatbot-src`, `data-chat-api`)
+- Host CSS for sidebar width, FAB, `body.chat-open` layout
+- Host JS for iframe lazy-load, `postMessage` close, API URL resolution
+
+Those are portfolio integration concerns, not chatbot app code.
