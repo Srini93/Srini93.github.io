@@ -1139,7 +1139,7 @@
         position: absolute;
         right: 21px;
         width: 22px;
-        height: 2.5px;
+        height: 3px;
         border-radius: 9999px;
         background: #2b2b2b;
         transition:
@@ -1148,16 +1148,18 @@
           opacity 0.2s ease;
       }
 
-      body.nav-persistent header nav::before { top: 25px; }
-      body.nav-persistent header nav::after  { top: 37px; }
+      body.nav-persistent header nav::before {
+        top: 24.5px; }
+      body.nav-persistent header nav::after  {
+        top: 36.5px; }
 
       body.nav-persistent.nav-expanded header nav::before {
-        top: 31px;
+        top: 30.5px;
         transform: rotate(45deg);
       }
 
       body.nav-persistent.nav-expanded header nav::after {
-        top: 31px;
+        top: 30.5px;
         transform: rotate(-45deg);
       }
 
