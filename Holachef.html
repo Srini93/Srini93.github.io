@@ -424,7 +424,7 @@
       body.nav-persistent header nav {
         position: fixed;
         top: 20px;
-        right: 32px;
+        right: 96px;
         z-index: 10000;
         width: 64px;
         height: 64px;
@@ -441,8 +441,16 @@
         cursor: pointer;
       }
 
+      /* Pull chat button out of the pill so it sits to its right */
+      body.nav-persistent:not(.nav-expanded) .srini-chat-nav-li {
+        position: fixed;
+        top: 20px;
+        right: 32px;
+        z-index: 10001;
+      }
+
       body.nav-persistent.nav-expanded header nav {
-        width: min(560px, calc(100vw - 64px));
+        width: min(560px, calc(100vw - 128px));
         padding: 0 14px;
         cursor: default;
       }
