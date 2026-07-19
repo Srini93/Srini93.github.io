@@ -245,16 +245,32 @@
       transform: translateY(0);
     }
 
-    /* Header — smooth reveal keyframes */
-    @keyframes heroCharReveal {
-      from {
+    /* Header — word-by-word glow reveal (shader.se-inspired) */
+    @keyframes heroWordGlow {
+      0% {
         opacity: 0;
-        transform: translateY(0.45em);
+        transform: translateY(0.42em);
+        filter: blur(10px);
+        text-shadow: 0 0 48px rgba(43, 43, 43, 0.45);
       }
-      to {
+      38% {
+        filter: blur(2px);
+        text-shadow: 0 0 16px rgba(43, 43, 43, 0.18);
+      }
+      72% {
+        filter: blur(0.4px);
+        text-shadow: 0 0 4px rgba(43, 43, 43, 0.06);
+      }
+      100% {
         opacity: 1;
         transform: translateY(0);
+        filter: none;
+        text-shadow: none;
       }
+    }
+
+    @keyframes heroSpaceReveal {
+      to { opacity: 1; }
     }
 
     /* (removed) header role animation */
@@ -484,19 +500,21 @@
     header .HeaderContent .hero-word {
       display: inline-block;
       white-space: nowrap;
+      opacity: 0;
+      transform: translateY(0.42em);
+      animation: heroWordGlow 0.72s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: opacity, transform, filter;
     }
 
     header .HeaderContent .hero-char {
       display: inline-block;
-      opacity: 0;
-      transform: translateY(0.45em);
-      animation: heroCharReveal 0.52s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-      will-change: opacity, transform;
     }
 
     header .HeaderContent .hero-char--space {
       display: inline;
       white-space: pre;
+      opacity: 0;
+      animation: heroSpaceReveal 0.01s linear forwards;
     }
 
     header .HeaderContent .hero-char--glyph {
@@ -504,12 +522,13 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      header .HeaderContent .hero-char {
+      header .HeaderContent .hero-word,
+      header .HeaderContent .hero-char--space {
         opacity: 1;
         transform: none;
+        filter: none;
         animation: none;
       }
-
     }
 
     /* Hamburger menu - compact dropdown panel */
@@ -1879,15 +1898,15 @@ Designed a white label friendly design system scaling from design to code for fi
         var reveals = document.querySelectorAll('.HeaderContent .hero-text-reveal');
         if (!reveals.length) return;
 
-        var charDelay = 12;
-        var startDelay = 120;
-        var charIndex = 0;
+        var wordDelay = 75;   // ms gap between each word reveal
+        var startDelay = 100;
+        var wordIndex = 0;
 
-        function onChar(span) {
+        function onWord(span) {
           if (!prefersReduced) {
-            span.style.animationDelay = (startDelay + charIndex * charDelay) + 'ms';
+            span.style.animationDelay = (startDelay + wordIndex * wordDelay) + 'ms';
           }
-          charIndex++;
+          wordIndex++;
         }
 
         function splitNode(node) {
@@ -1908,10 +1927,10 @@ Designed a white label friendly design system scaling from design to code for fi
                   letter.className = 'hero-char';
                   letter.setAttribute('aria-hidden', 'true');
                   letter.textContent = word[w];
-                  onChar(letter);
                   wordWrap.appendChild(letter);
                 }
                 word = '';
+                onWord(wordWrap);
                 frag.appendChild(wordWrap);
               }
 
@@ -1924,7 +1943,10 @@ Designed a white label friendly design system scaling from design to code for fi
                   space.className = 'hero-char hero-char--space';
                   space.setAttribute('aria-hidden', 'true');
                   space.textContent = ' ';
-                  onChar(space);
+                  // spaces inherit timing from surrounding words — reveal with next word
+                  if (!prefersReduced) {
+                    space.style.animationDelay = (startDelay + wordIndex * wordDelay) + 'ms';
+                  }
                   frag.appendChild(space);
                 } else {
                   word += ch;
@@ -1937,12 +1959,21 @@ Designed a white label friendly design system scaling from design to code for fi
                 return;
               }
               if (child.classList.contains('wave')) {
+                // Emoji: animate as a single word unit
                 var wrap = document.createElement('span');
-                wrap.className = 'hero-char hero-char--glyph';
+                wrap.className = 'hero-word hero-char--glyph';
                 wrap.setAttribute('aria-hidden', 'true');
                 child.parentNode.insertBefore(wrap, child);
                 wrap.appendChild(child);
-                onChar(wrap);
+                onWord(wrap);
+              } else if (child.tagName === 'A') {
+                // Inline link (e.g. "Srini"): animate as one word unit — don't split letters
+                var linkWrap = document.createElement('span');
+                linkWrap.className = 'hero-word';
+                linkWrap.setAttribute('aria-hidden', 'true');
+                child.parentNode.insertBefore(linkWrap, child);
+                linkWrap.appendChild(child);
+                onWord(linkWrap);
               } else {
                 splitNode(child);
               }
@@ -1959,7 +1990,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
         var seeMore = document.querySelector('.HeaderContent .see-more-wrapper.animate-progressive');
         if (seeMore && !prefersReduced) {
-          seeMore.style.animationDelay = (startDelay + charIndex * charDelay + 120) + 'ms';
+          seeMore.style.animationDelay = (startDelay + wordIndex * wordDelay + 120) + 'ms';
         }
       }
 
