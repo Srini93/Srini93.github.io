@@ -245,32 +245,10 @@
       transform: translateY(0);
     }
 
-    /* Header — word-by-word glow reveal (shader.se-inspired) */
-    @keyframes heroWordGlow {
-      0% {
-        opacity: 0;
-        transform: translateY(0.42em);
-        filter: blur(10px);
-        text-shadow: 0 0 48px rgba(43, 43, 43, 0.45);
-      }
-      38% {
-        filter: blur(2px);
-        text-shadow: 0 0 16px rgba(43, 43, 43, 0.18);
-      }
-      72% {
-        filter: blur(0.4px);
-        text-shadow: 0 0 4px rgba(43, 43, 43, 0.06);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-        filter: none;
-        text-shadow: none;
-      }
-    }
-
-    @keyframes heroSpaceReveal {
-      to { opacity: 1; }
+    /* Header — shader.se-inspired scramble reveal (JS-driven, no keyframes needed) */
+    @keyframes heroWordFadeUp {
+      from { opacity: 0; transform: translateY(0.25em); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
     /* (removed) header role animation */
@@ -500,10 +478,7 @@
     header .HeaderContent .hero-word {
       display: inline-block;
       white-space: nowrap;
-      opacity: 0;
-      transform: translateY(0.42em);
-      animation: heroWordGlow 0.72s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      will-change: opacity, transform, filter;
+      opacity: 0; /* JS will reveal via scramble */
     }
 
     header .HeaderContent .hero-char {
@@ -513,8 +488,7 @@
     header .HeaderContent .hero-char--space {
       display: inline;
       white-space: pre;
-      opacity: 0;
-      animation: heroSpaceReveal 0.01s linear forwards;
+      opacity: 0; /* JS reveals in sync with surrounding words */
     }
 
     header .HeaderContent .hero-char--glyph {
@@ -524,10 +498,8 @@
     @media (prefers-reduced-motion: reduce) {
       header .HeaderContent .hero-word,
       header .HeaderContent .hero-char--space {
-        opacity: 1;
-        transform: none;
-        filter: none;
-        animation: none;
+        opacity: 1 !important;
+        animation: none !important;
       }
     }
 
@@ -1898,15 +1870,51 @@ Designed a white label friendly design system scaling from design to code for fi
         var reveals = document.querySelectorAll('.HeaderContent .hero-text-reveal');
         if (!reveals.length) return;
 
-        var wordDelay = 75;   // ms gap between each word reveal
-        var startDelay = 100;
+        // shader.se-style: text scramble reveals word by word
+        var SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%&?';
+        var WORD_DELAY    = 85;   // ms between word start times
+        var START_DELAY   = 250;  // ms before first word starts
+        var SCRAMBLE_MS   = 420;  // ms for each word to resolve from scramble to real text
         var wordIndex = 0;
 
-        function onWord(span) {
-          if (!prefersReduced) {
-            span.style.animationDelay = (startDelay + wordIndex * wordDelay) + 'ms';
-          }
-          wordIndex++;
+        function scrambleReveal(el, finalText, startMs) {
+          /* Reveals el.textContent from scrambled chars → finalText */
+          if (prefersReduced) { el.style.opacity = '1'; return; }
+          setTimeout(function () {
+            el.style.opacity = '1';
+            var total = Math.max(1, Math.round(SCRAMBLE_MS / 16));
+            var frame = 0;
+            function tick() {
+              if (frame >= total) { el.textContent = finalText; return; }
+              var progress = frame / total;
+              var out = '';
+              for (var ci = 0; ci < finalText.length; ci++) {
+                /* characters resolve left-to-right, just like shader.se */
+                if (progress > ci / finalText.length) {
+                  out += finalText[ci];
+                } else {
+                  out += SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
+                }
+              }
+              el.textContent = out;
+              frame++;
+              requestAnimationFrame(tick);
+            }
+            requestAnimationFrame(tick);
+          }, startMs);
+        }
+
+        function fadeReveal(el, startMs) {
+          /* Simple fade-up for emoji, links, non-text nodes */
+          if (prefersReduced) { el.style.opacity = '1'; return; }
+          setTimeout(function () {
+            el.style.animation = 'heroWordFadeUp 0.55s cubic-bezier(0.16,1,0.3,1) forwards';
+          }, startMs);
+        }
+
+        function revealSpace(el, startMs) {
+          if (prefersReduced) { el.style.opacity = '1'; return; }
+          setTimeout(function () { el.style.opacity = '1'; }, startMs);
         }
 
         function splitNode(node) {
@@ -1919,19 +1927,15 @@ Designed a white label friendly design system scaling from design to code for fi
 
               function flushWord() {
                 if (!word) return;
-                var wordWrap = document.createElement('span');
-                wordWrap.className = 'hero-word';
-                wordWrap.setAttribute('aria-hidden', 'true');
-                for (var w = 0; w < word.length; w++) {
-                  var letter = document.createElement('span');
-                  letter.className = 'hero-char';
-                  letter.setAttribute('aria-hidden', 'true');
-                  letter.textContent = word[w];
-                  wordWrap.appendChild(letter);
-                }
+                var wordEl = document.createElement('span');
+                wordEl.className = 'hero-word';
+                wordEl.setAttribute('aria-hidden', 'true');
+                wordEl.textContent = word; /* plain text — scramble will replace it */
+                var delay = START_DELAY + wordIndex * WORD_DELAY;
+                scrambleReveal(wordEl, word, delay);
+                wordIndex++;
                 word = '';
-                onWord(wordWrap);
-                frag.appendChild(wordWrap);
+                frag.appendChild(wordEl);
               }
 
               for (var i = 0; i < text.length; i++) {
@@ -1943,10 +1947,8 @@ Designed a white label friendly design system scaling from design to code for fi
                   space.className = 'hero-char hero-char--space';
                   space.setAttribute('aria-hidden', 'true');
                   space.textContent = ' ';
-                  // spaces inherit timing from surrounding words — reveal with next word
-                  if (!prefersReduced) {
-                    space.style.animationDelay = (startDelay + wordIndex * wordDelay) + 'ms';
-                  }
+                  /* reveal space just before next word appears */
+                  revealSpace(space, START_DELAY + wordIndex * WORD_DELAY - 30);
                   frag.appendChild(space);
                 } else {
                   word += ch;
@@ -1959,21 +1961,23 @@ Designed a white label friendly design system scaling from design to code for fi
                 return;
               }
               if (child.classList.contains('wave')) {
-                // Emoji: animate as a single word unit
+                /* Emoji: fade-up (can't scramble Unicode) */
                 var wrap = document.createElement('span');
                 wrap.className = 'hero-word hero-char--glyph';
                 wrap.setAttribute('aria-hidden', 'true');
                 child.parentNode.insertBefore(wrap, child);
                 wrap.appendChild(child);
-                onWord(wrap);
+                fadeReveal(wrap, START_DELAY + wordIndex * WORD_DELAY);
+                wordIndex++;
               } else if (child.tagName === 'A') {
-                // Inline link (e.g. "Srini"): animate as one word unit — don't split letters
+                /* Inline link (e.g. "Srini"): fade-up as a unit (scramble would break the link) */
                 var linkWrap = document.createElement('span');
                 linkWrap.className = 'hero-word';
                 linkWrap.setAttribute('aria-hidden', 'true');
                 child.parentNode.insertBefore(linkWrap, child);
                 linkWrap.appendChild(child);
-                onWord(linkWrap);
+                fadeReveal(linkWrap, START_DELAY + wordIndex * WORD_DELAY);
+                wordIndex++;
               } else {
                 splitNode(child);
               }
@@ -1990,7 +1994,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
         var seeMore = document.querySelector('.HeaderContent .see-more-wrapper.animate-progressive');
         if (seeMore && !prefersReduced) {
-          seeMore.style.animationDelay = (startDelay + wordIndex * wordDelay + 120) + 'ms';
+          seeMore.style.animationDelay = (START_DELAY + wordIndex * WORD_DELAY + 200) + 'ms';
         }
       }
 
