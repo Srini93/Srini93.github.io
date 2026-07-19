@@ -4,11 +4,12 @@
 <link href="images/favi.png" rel="icon" sizes="128x128" type="image/png" />
 
 <meta name="theme-color" content="#000000">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no, viewport-fit=cover">
 
 <!-- MWeb app -->
 <meta name="full-screen" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Srinivasan">
 
@@ -25,7 +26,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-2.css?v=29">
+<link rel="stylesheet" href="style-2.css?v=30">
 <style type="text/css">
    header {
     background: #fff;
@@ -33,7 +34,10 @@
     align-items: center;
     min-height: 65px;
     justify-content: center;
-    padding: 0;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
   }
 
   #logo svg {
@@ -82,7 +86,7 @@
  
 
 <!-- Header -->
-   <header style="padding-top: 2%">
+   <header style="padding-top: calc(2% + env(safe-area-inset-top, 0px))">
 
    <a href="index.html"><div id="logo" style="">  <svg width="393px" height="80px" viewBox="0 0 393 111" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <!-- Generator: Sketch 52.2 (67145) - http://www.bohemiancoding.com/sketch -->

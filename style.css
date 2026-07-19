@@ -1,4 +1,4 @@
-@import url("srini-tokens.css?v=2");
+@import url("srini-tokens.css?v=3");
 /* http://meyerweb.com/eric/tools/css/reset/ 
    v2.0 | 20110126
    License: none (public domain)
@@ -626,7 +626,7 @@ height: 100%;
  .hamburgler-icon-wrapper {
   z-index: 11;
   position: absolute;
-  top: 2rem;
+  top: calc(2rem + env(safe-area-inset-top, 0px));
   right: 2rem;
   height: 26px;
   width: 26px;
@@ -654,7 +654,7 @@ height: 100%;
   opacity: 0;
   pointer-events: none;
   position: fixed;
-  top: 12px;
+  top: max(12px, env(safe-area-inset-top, 0px));
   right: 12px;
   bottom: auto;
   left: 12px;

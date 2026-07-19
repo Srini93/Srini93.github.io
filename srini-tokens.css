@@ -21,8 +21,37 @@
 
   --srini-color-link: #3b65ef;
 
+  /* iOS notch / home indicator (requires viewport-fit=cover) */
+  --srini-safe-top: env(safe-area-inset-top, 0px);
+  --srini-safe-right: env(safe-area-inset-right, 0px);
+  --srini-safe-bottom: env(safe-area-inset-bottom, 0px);
+  --srini-safe-left: env(safe-area-inset-left, 0px);
+
   /* Large displays — scale type like ~120% browser zoom */
   --srini-type-scale: 1;
+}
+
+/*
+ * Extend header background under the iOS status bar / notch.
+ * Nav chrome (logo, hamburger) is offset by the safe-area inset so it
+ * stays tappable below the notch while the header wash fills to the top.
+ */
+@media screen and (max-width: 768px) {
+  header {
+    padding-top: var(--srini-safe-top);
+  }
+
+  .logo-srini {
+    top: calc(2rem + var(--srini-safe-top));
+  }
+
+  .hamburgler-icon-wrapper {
+    top: calc(2rem + var(--srini-safe-top));
+  }
+
+  .hamburgler-menu {
+    top: max(12px, var(--srini-safe-top));
+  }
 }
 
 @media screen and (min-width: 1801px) {
