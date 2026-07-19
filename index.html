@@ -245,10 +245,16 @@
       transform: translateY(0);
     }
 
-    /* Header — shader.se-inspired scramble reveal (JS-driven, no keyframes needed) */
-    @keyframes heroWordFadeUp {
-      from { opacity: 0; transform: translateY(0.25em); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* Header — shader.se line-reveal: each rendered line fades+floats up together */
+    @keyframes heroLineReveal {
+      from {
+        opacity: 0;
+        transform: translateY(0.45em);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     /* (removed) header role animation */
@@ -478,7 +484,10 @@
     header .HeaderContent .hero-word {
       display: inline-block;
       white-space: nowrap;
-      opacity: 0; /* JS will reveal via scramble */
+      /* animation-delay set by JS per line group */
+      opacity: 0;
+      animation: heroLineReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+      will-change: opacity, transform;
     }
 
     header .HeaderContent .hero-char {
@@ -488,7 +497,8 @@
     header .HeaderContent .hero-char--space {
       display: inline;
       white-space: pre;
-      opacity: 0; /* JS reveals in sync with surrounding words */
+      opacity: 0;
+      animation: heroLineReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     header .HeaderContent .hero-char--glyph {
@@ -499,6 +509,7 @@
       header .HeaderContent .hero-word,
       header .HeaderContent .hero-char--space {
         opacity: 1 !important;
+        transform: none !important;
         animation: none !important;
       }
     }
@@ -1870,52 +1881,11 @@ Designed a white label friendly design system scaling from design to code for fi
         var reveals = document.querySelectorAll('.HeaderContent .hero-text-reveal');
         if (!reveals.length) return;
 
-        // shader.se-style: text scramble reveals word by word
-        var SCRAMBLE_CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%&?';
-        var WORD_DELAY    = 85;   // ms between word start times
-        var START_DELAY   = 250;  // ms before first word starts
-        var SCRAMBLE_MS   = 420;  // ms for each word to resolve from scramble to real text
-        var wordIndex = 0;
-
-        function scrambleReveal(el, finalText, startMs) {
-          /* Reveals el.textContent from scrambled chars → finalText */
-          if (prefersReduced) { el.style.opacity = '1'; return; }
-          setTimeout(function () {
-            el.style.opacity = '1';
-            var total = Math.max(1, Math.round(SCRAMBLE_MS / 16));
-            var frame = 0;
-            function tick() {
-              if (frame >= total) { el.textContent = finalText; return; }
-              var progress = frame / total;
-              var out = '';
-              for (var ci = 0; ci < finalText.length; ci++) {
-                /* characters resolve left-to-right, just like shader.se */
-                if (progress > ci / finalText.length) {
-                  out += finalText[ci];
-                } else {
-                  out += SCRAMBLE_CHARS[Math.floor(Math.random() * SCRAMBLE_CHARS.length)];
-                }
-              }
-              el.textContent = out;
-              frame++;
-              requestAnimationFrame(tick);
-            }
-            requestAnimationFrame(tick);
-          }, startMs);
-        }
-
-        function fadeReveal(el, startMs) {
-          /* Simple fade-up for emoji, links, non-text nodes */
-          if (prefersReduced) { el.style.opacity = '1'; return; }
-          setTimeout(function () {
-            el.style.animation = 'heroWordFadeUp 0.55s cubic-bezier(0.16,1,0.3,1) forwards';
-          }, startMs);
-        }
-
-        function revealSpace(el, startMs) {
-          if (prefersReduced) { el.style.opacity = '1'; return; }
-          setTimeout(function () { el.style.opacity = '1'; }, startMs);
-        }
+        // shader.se style: words float up line-by-line (all words on same rendered
+        // line share one delay — so each full line reveals as a unit, not word-by-word)
+        var LINE_DELAY   = 130;  // ms between consecutive rendered lines
+        var START_DELAY  = 180;  // ms before first line starts
+        var allWordSpans = [];   // collect first, assign delays after layout
 
         function splitNode(node) {
           var children = Array.prototype.slice.call(node.childNodes);
@@ -1930,11 +1900,15 @@ Designed a white label friendly design system scaling from design to code for fi
                 var wordEl = document.createElement('span');
                 wordEl.className = 'hero-word';
                 wordEl.setAttribute('aria-hidden', 'true');
-                wordEl.textContent = word; /* plain text — scramble will replace it */
-                var delay = START_DELAY + wordIndex * WORD_DELAY;
-                scrambleReveal(wordEl, word, delay);
-                wordIndex++;
+                for (var w = 0; w < word.length; w++) {
+                  var letter = document.createElement('span');
+                  letter.className = 'hero-char';
+                  letter.setAttribute('aria-hidden', 'true');
+                  letter.textContent = word[w];
+                  wordEl.appendChild(letter);
+                }
                 word = '';
+                allWordSpans.push({ el: wordEl, kind: 'word' });
                 frag.appendChild(wordEl);
               }
 
@@ -1947,8 +1921,7 @@ Designed a white label friendly design system scaling from design to code for fi
                   space.className = 'hero-char hero-char--space';
                   space.setAttribute('aria-hidden', 'true');
                   space.textContent = ' ';
-                  /* reveal space just before next word appears */
-                  revealSpace(space, START_DELAY + wordIndex * WORD_DELAY - 30);
+                  allWordSpans.push({ el: space, kind: 'space' });
                   frag.appendChild(space);
                 } else {
                   word += ch;
@@ -1961,23 +1934,19 @@ Designed a white label friendly design system scaling from design to code for fi
                 return;
               }
               if (child.classList.contains('wave')) {
-                /* Emoji: fade-up (can't scramble Unicode) */
                 var wrap = document.createElement('span');
                 wrap.className = 'hero-word hero-char--glyph';
                 wrap.setAttribute('aria-hidden', 'true');
                 child.parentNode.insertBefore(wrap, child);
                 wrap.appendChild(child);
-                fadeReveal(wrap, START_DELAY + wordIndex * WORD_DELAY);
-                wordIndex++;
+                allWordSpans.push({ el: wrap, kind: 'word' });
               } else if (child.tagName === 'A') {
-                /* Inline link (e.g. "Srini"): fade-up as a unit (scramble would break the link) */
                 var linkWrap = document.createElement('span');
                 linkWrap.className = 'hero-word';
                 linkWrap.setAttribute('aria-hidden', 'true');
                 child.parentNode.insertBefore(linkWrap, child);
                 linkWrap.appendChild(child);
-                fadeReveal(linkWrap, START_DELAY + wordIndex * WORD_DELAY);
-                wordIndex++;
+                allWordSpans.push({ el: linkWrap, kind: 'word' });
               } else {
                 splitNode(child);
               }
@@ -1992,9 +1961,44 @@ Designed a white label friendly design system scaling from design to code for fi
           splitNode(el);
         });
 
-        var seeMore = document.querySelector('.HeaderContent .see-more-wrapper.animate-progressive');
-        if (seeMore && !prefersReduced) {
-          seeMore.style.animationDelay = (START_DELAY + wordIndex * WORD_DELAY + 200) + 'ms';
+        if (!prefersReduced && allWordSpans.length) {
+          // After the DOM has been painted, read the top-offset of each word span
+          // so we can group them by rendered line and stagger per-line.
+          requestAnimationFrame(function () {
+            var lineMap = [];   // [ { top, spans[] } ]
+            var TOLERANCE = 4; // px — words within 4px y-offset are on the same line
+
+            allWordSpans.forEach(function (item) {
+              var top = item.el.getBoundingClientRect().top;
+              var found = null;
+              for (var li = 0; li < lineMap.length; li++) {
+                if (Math.abs(lineMap[li].top - top) <= TOLERANCE) {
+                  found = lineMap[li];
+                  break;
+                }
+              }
+              if (!found) { found = { top: top, spans: [] }; lineMap.push(found); }
+              found.spans.push(item.el);
+            });
+
+            // Sort lines top-to-bottom and assign a shared delay to every span in each line
+            lineMap.sort(function (a, b) { return a.top - b.top; });
+            lineMap.forEach(function (line, lineIdx) {
+              var delay = (START_DELAY + lineIdx * LINE_DELAY) + 'ms';
+              line.spans.forEach(function (span) {
+                span.style.animationDelay = delay;
+              });
+            });
+
+            // "Selected Works" button appears after last line
+            var seeMore = document.querySelector('.HeaderContent .see-more-wrapper.animate-progressive');
+            if (seeMore) {
+              seeMore.style.animationDelay = (START_DELAY + lineMap.length * LINE_DELAY + 80) + 'ms';
+            }
+          });
+        } else if (!prefersReduced) {
+          var seeMore = document.querySelector('.HeaderContent .see-more-wrapper.animate-progressive');
+          if (seeMore) seeMore.style.animationDelay = '400ms';
         }
       }
 
