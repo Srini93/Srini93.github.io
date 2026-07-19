@@ -2,14 +2,14 @@
 <head>
 <title>Norton 360 | Consumer Cyber Safety</title>
 <meta name="theme-color" content="#000000">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no, viewport-fit=cover">
 
 <!-- MWeb app -->
 <meta name="full-screen" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Srinivasan">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
 <!-- MWeb app ends -->
 
@@ -35,7 +35,10 @@
     align-items: center;
     min-height: 65px;
     justify-content: center;
-    padding: 0;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-right: 0;
+    padding-bottom: 0;
+    padding-left: 0;
   }
 
   #logo svg {
@@ -298,7 +301,7 @@
     @media screen and (max-width: 768px) {
       .hamburgler-icon-wrapper {
         display: block !important;
-        top: 20px !important;
+        top: calc(20px + env(safe-area-inset-top, 0px)) !important;
         right: 24px !important;
         width: 64px !important;
         height: 64px !important;
@@ -416,7 +419,7 @@
  
 
 <!-- Header -->
-   <header style="padding-top: 2%">
+   <header style="padding-top: calc(2% + env(safe-area-inset-top, 0px))">
 
 
 

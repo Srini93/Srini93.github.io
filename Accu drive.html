@@ -4,11 +4,12 @@
 <link href="images/favi.png" rel="icon" sizes="128x128" type="image/png" />
 
 <meta name="theme-color" content="#000000">
-<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no, viewport-fit=cover">
 
 <!-- MWeb app -->
 <meta name="full-screen" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Srinivasan">
 
@@ -28,6 +29,16 @@
 <link rel="stylesheet" href="style-2.css">
 
 
+
+<style>
+/* iOS notch: extend header under status bar */
+@media screen and (max-width: 768px) {
+  header { padding-top: env(safe-area-inset-top, 0px) !important; }
+  .hamburgler-icon-wrapper { top: calc(2rem + env(safe-area-inset-top, 0px)) !important; }
+  .logo-srini { top: calc(2rem + env(safe-area-inset-top, 0px)); }
+  .hamburgler-menu { top: max(12px, env(safe-area-inset-top, 0px)) !important; }
+}
+</style>
 </head> 
 
 <style>
@@ -59,7 +70,7 @@ iframe {
     align-items: center;
     min-height: 65px;
     justify-content: center;
-    padding-top: 1%;
+    padding-top: calc(1% + env(safe-area-inset-top, 0px));
   }
 
   #logo svg {
@@ -121,7 +132,7 @@ iframe {
  
 
 <!-- Header -->
-   <header style="padding-top: 2%">
+   <header style="padding-top: calc(2% + env(safe-area-inset-top, 0px))">
    <a href="index.html"><div id="logo" style="">  <svg width="393px" height="80px" viewBox="0 0 393 80" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Group" stroke="#22B16C">
