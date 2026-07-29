@@ -1150,6 +1150,99 @@
       }
     }
 
+    /* AI Labs section */
+    .ai-labs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin: 2rem auto 4rem auto;
+      padding: 0 5%;
+      max-width: 1440px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .ai-lab-card {
+      background: #f7f9ff;
+      border: 1px solid #dde6fb;
+      border-radius: 18px;
+      padding: 2rem 1.75rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      transition: box-shadow 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .ai-lab-card:hover {
+      box-shadow: 0 8px 32px rgba(59, 101, 239, 0.1);
+      border-color: #b8cafe;
+      transform: translateY(-2px);
+    }
+    .ai-lab-card-tag {
+      font-family: 'Space Mono', 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #3b65ef;
+      font-weight: 500;
+    }
+    .ai-lab-card-title {
+      font-family: 'MyWebFont', Georgia, serif;
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1.4;
+      color: var(--srini-color-text-primary);
+      margin: 0;
+    }
+    .ai-lab-card-desc {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--srini-color-text-body, #555);
+      margin: 0;
+      flex: 1;
+    }
+    .ai-lab-card-footer {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+      font-family: 'Space Mono', 'Courier New', monospace;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #aaa;
+    }
+    .ai-lab-card-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #c8d7fb;
+      flex-shrink: 0;
+    }
+    .ai-lab-card-dot.live {
+      background: #4ade80;
+      box-shadow: 0 0 6px rgba(74, 222, 128, 0.5);
+      animation: ai-lab-pulse 2s ease-in-out infinite;
+    }
+    @keyframes ai-lab-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .ai-lab-card-link {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      flex: 1;
+    }
+    @media screen and (max-width: 1024px) {
+      .ai-labs-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media screen and (max-width: 768px) {
+      .ai-labs-grid { grid-template-columns: 1fr; }
+    }
+
     /* Three-column grid for Previous Work */
     .previous-work-grid {
       display: grid !important;
@@ -1743,6 +1836,47 @@ Designed a white label friendly design system scaling from design to code for fi
       </div>
 
       <hr style="width:80%; margin-top: 4rem; margin-bottom: 3rem; border: 0px solid #f1f1f1; border-top-width: 1px;">
+
+      <h2 class="work-section-title">AI Labs</h2>
+
+      <div class="ai-labs-grid">
+
+        <!-- Card 1 -->
+        <div class="ai-lab-card">
+          <div class="ai-lab-card-tag">Experiment · 2025</div>
+          <h3 class="ai-lab-card-title">Portfolio AI Chatbot</h3>
+          <p class="ai-lab-card-desc">A context-aware AI assistant trained on my portfolio and work history. Answers questions about projects, process, and design decisions in real time.</p>
+          <div class="ai-lab-card-footer">
+            <span class="ai-lab-card-dot live"></span>
+            Live
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="ai-lab-card">
+          <div class="ai-lab-card-tag">Prototype · 2025</div>
+          <h3 class="ai-lab-card-title">Design Critique Agent</h3>
+          <p class="ai-lab-card-desc">An LLM-powered agent that evaluates UI screenshots against heuristic principles and generates structured design feedback.</p>
+          <div class="ai-lab-card-footer">
+            <span class="ai-lab-card-dot"></span>
+            In progress
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="ai-lab-card">
+          <div class="ai-lab-card-tag">Research · 2025</div>
+          <h3 class="ai-lab-card-title">Prompt-to-Prototype</h3>
+          <p class="ai-lab-card-desc">Exploring how designers can iterate faster using prompt-driven UI generation — from rough intent to interactive component in under 60 seconds.</p>
+          <div class="ai-lab-card-footer">
+            <span class="ai-lab-card-dot"></span>
+            Coming soon
+          </div>
+        </div>
+
+      </div>
+
+      <hr style="width:80%; margin-top: 1rem; margin-bottom: 3rem; border: 0px solid #f1f1f1; border-top-width: 1px;">
 
       <div style="padding-left: 5%; padding-top: 3%; padding-bottom: 2rem; color: #666; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;">
         Previous Work [2015-2019]
