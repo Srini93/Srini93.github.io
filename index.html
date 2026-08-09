@@ -22,6 +22,7 @@
 <!-- App Icon Ends -->
 
   <link rel="stylesheet" href="style.css?v=29">
+  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=8">
   <style>
     /* Force Light Mode — shared hero/footer wash (matches #contact) */
     :root {
@@ -1133,7 +1134,191 @@
       text-align: left;
     }
 
-    #Selectedworks > .cards-layout:first-of-type {
+    .work-section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0;
+      padding: clamp(2rem, 3vw, 3rem) 5% 0;
+      border-bottom: 1px solid #ececec;
+      margin: 0 5%;
+      padding-left: 0;
+      padding-right: 0;
+      width: auto;
+    }
+
+    .work-section-header .work-section-title {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .work-switch {
+      display: inline-flex;
+      align-items: stretch;
+      gap: 0;
+      position: relative;
+    }
+
+    .work-switch-btn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      padding: 0 0 0.85rem;
+      margin: 0 2rem 0 0;
+      border-radius: 0;
+      font-family: 'Space Mono', 'Courier New', 'Monaco', monospace;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      color: #9e9e9e;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+
+    .work-switch-btn:last-child {
+      margin-right: 0;
+    }
+
+    .work-switch-btn::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: #3b65ef;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .work-switch-btn:hover {
+      color: var(--srini-color-text-primary);
+    }
+
+    .work-switch-btn:focus-visible {
+      outline: 2px solid #3b65ef;
+      outline-offset: 4px;
+    }
+
+    .work-switch-btn.is-active {
+      color: var(--srini-color-text-primary);
+    }
+
+    .work-switch-btn.is-active::after {
+      transform: scaleX(1);
+    }
+
+    /* AI Labs — Gemini write-on text (hover only) */
+    #work-tab-ai-labs {
+      --gemini-red: #ea4335;
+      --gemini-yellow: #fbbc04;
+      --gemini-green: #34a853;
+      --gemini-blue: #4285f4;
+      --gemini-spectrum: linear-gradient(
+        105deg,
+        var(--gemini-red) 0%,
+        var(--gemini-yellow) 28%,
+        var(--gemini-green) 58%,
+        var(--gemini-blue) 100%
+      );
+    }
+
+    @keyframes geminiWriteText {
+      0% {
+        background-size: 0% 100%;
+      }
+      12% {
+        background-size: 0% 100%;
+      }
+      72% {
+        background-size: 100% 100%;
+      }
+      88% {
+        background-size: 100% 100%;
+      }
+      100% {
+        background-size: 0% 100%;
+      }
+    }
+
+    #work-tab-ai-labs:hover {
+      color: transparent;
+      background-image: var(--gemini-spectrum);
+      background-size: 0% 100%;
+      background-repeat: no-repeat;
+      background-position: left center;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: geminiWriteText 1.85s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #work-tab-ai-labs:hover {
+        color: transparent;
+        background-image: var(--gemini-spectrum);
+        background-size: 100% 100%;
+        animation: none;
+      }
+    }
+
+    .work-panel {
+      display: none;
+    }
+
+    .work-panel.is-active {
+      display: block;
+      animation: workPanelIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes workPanelIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .work-section-header {
+        padding-top: 2rem;
+        margin: 0 5%;
+      }
+
+      .work-switch-btn {
+        margin-right: 1.25rem;
+        font-size: 12px;
+        padding-bottom: 0.75rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .work-panel.is-active {
+        animation: none;
+      }
+
+      .work-switch-btn::after {
+        transition: none;
+      }
+    }
+
+    #Selectedworks > .work-panel.is-active > .cards-layout:first-of-type,
+    #Selectedworks > .work-panel.is-active > .frame:first-of-type .cards-layout {
       padding-top: 2rem !important;
     }
 
@@ -1150,98 +1335,7 @@
       }
     }
 
-    /* AI Labs section */
-    .ai-labs-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
-      margin: 2rem auto 4rem auto;
-      padding: 0 5%;
-      max-width: 1440px;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .ai-lab-card {
-      background: #f7f9ff;
-      border: 1px solid #dde6fb;
-      border-radius: 18px;
-      padding: 2rem 1.75rem 1.75rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      transition: box-shadow 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .ai-lab-card:hover {
-      box-shadow: 0 8px 32px rgba(59, 101, 239, 0.1);
-      border-color: #b8cafe;
-      transform: translateY(-2px);
-    }
-    .ai-lab-card-tag {
-      font-family: 'Space Mono', 'Courier New', monospace;
-      font-size: 10px;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #3b65ef;
-      font-weight: 500;
-    }
-    .ai-lab-card-title {
-      font-family: 'MyWebFont', Georgia, serif;
-      font-size: 20px;
-      font-weight: 300;
-      line-height: 1.4;
-      color: var(--srini-color-text-primary);
-      margin: 0;
-    }
-    .ai-lab-card-desc {
-      font-size: 14px;
-      line-height: 1.65;
-      color: var(--srini-color-text-body, #555);
-      margin: 0;
-      flex: 1;
-    }
-    .ai-lab-card-footer {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 0.5rem;
-      font-family: 'Space Mono', 'Courier New', monospace;
-      font-size: 10px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #aaa;
-    }
-    .ai-lab-card-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: #c8d7fb;
-      flex-shrink: 0;
-    }
-    .ai-lab-card-dot.live {
-      background: #4ade80;
-      box-shadow: 0 0 6px rgba(74, 222, 128, 0.5);
-      animation: ai-lab-pulse 2s ease-in-out infinite;
-    }
-    @keyframes ai-lab-pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.4; }
-    }
-    .ai-lab-card-link {
-      text-decoration: none;
-      color: inherit;
-      display: flex;
-      flex-direction: column;
-      gap: 0.75rem;
-      flex: 1;
-    }
-    @media screen and (max-width: 1024px) {
-      .ai-labs-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media screen and (max-width: 768px) {
-      .ai-labs-grid { grid-template-columns: 1fr; }
-    }
+    /* AI Labs folders: vendor/folder-cards/folder-cards.css */
 
     /* Three-column grid for Previous Work */
     .previous-work-grid {
@@ -1639,7 +1733,15 @@
 
   <div class="frame" style="max-width: 1440px">
     <div id="Selectedworks">
-      <h2 class="work-section-title">Recent Work</h2>
+      <div class="work-section-header">
+        <h2 class="work-section-title" id="work-section-heading">Recent Work</h2>
+        <div class="work-switch" role="tablist" aria-label="Work categories">
+          <button type="button" class="work-switch-btn is-active" role="tab" aria-selected="true" aria-controls="work-panel-recent" id="work-tab-recent" data-work-panel="recent">Recent Work</button>
+          <button type="button" class="work-switch-btn" role="tab" aria-selected="false" aria-controls="work-panel-ai-labs" id="work-tab-ai-labs" data-work-panel="ai-labs">AI Labs</button>
+        </div>
+      </div>
+
+      <div class="work-panel is-active" id="work-panel-recent" role="tabpanel" aria-labelledby="work-tab-recent">
 
 <!-- Write your comments here -->
 
@@ -1837,47 +1939,6 @@ Designed a white label friendly design system scaling from design to code for fi
 
       <hr style="width:80%; margin-top: 4rem; margin-bottom: 3rem; border: 0px solid #f1f1f1; border-top-width: 1px;">
 
-      <h2 class="work-section-title">AI Labs</h2>
-
-      <div class="ai-labs-grid">
-
-        <!-- Card 1 -->
-        <div class="ai-lab-card">
-          <div class="ai-lab-card-tag">Experiment · 2025</div>
-          <h3 class="ai-lab-card-title">Portfolio AI Chatbot</h3>
-          <p class="ai-lab-card-desc">A context-aware AI assistant trained on my portfolio and work history. Answers questions about projects, process, and design decisions in real time.</p>
-          <div class="ai-lab-card-footer">
-            <span class="ai-lab-card-dot live"></span>
-            Live
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="ai-lab-card">
-          <div class="ai-lab-card-tag">Prototype · 2025</div>
-          <h3 class="ai-lab-card-title">Design Critique Agent</h3>
-          <p class="ai-lab-card-desc">An LLM-powered agent that evaluates UI screenshots against heuristic principles and generates structured design feedback.</p>
-          <div class="ai-lab-card-footer">
-            <span class="ai-lab-card-dot"></span>
-            In progress
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="ai-lab-card">
-          <div class="ai-lab-card-tag">Research · 2025</div>
-          <h3 class="ai-lab-card-title">Prompt-to-Prototype</h3>
-          <p class="ai-lab-card-desc">Exploring how designers can iterate faster using prompt-driven UI generation — from rough intent to interactive component in under 60 seconds.</p>
-          <div class="ai-lab-card-footer">
-            <span class="ai-lab-card-dot"></span>
-            Coming soon
-          </div>
-        </div>
-
-      </div>
-
-      <hr style="width:80%; margin-top: 1rem; margin-bottom: 3rem; border: 0px solid #f1f1f1; border-top-width: 1px;">
-
       <div style="padding-left: 5%; padding-top: 3%; padding-bottom: 2rem; color: #666; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;">
         Previous Work [2015-2019]
       </div>
@@ -1934,6 +1995,132 @@ Designed a white label friendly design system scaling from design to code for fi
               </p>
             </div>
           </div>
+        </div>
+      </div>
+
+      </div>
+
+      <div class="work-panel" id="work-panel-ai-labs" role="tabpanel" aria-labelledby="work-tab-ai-labs" hidden>
+        <!-- Frosted folders adapted from https://github.com/fayazara/portfolio-site-template -->
+        <div class="ai-labs-folders">
+
+          <button type="button" class="folder" data-folder="chatbot" data-title="Portfolio Chatbot" data-meta="Live · 2025" aria-label="Open Portfolio Chatbot folder">
+            <div class="folder-shell">
+              <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
+                <defs>
+                  <linearGradient id="folder-fill-chatbot" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ffffff"></stop>
+                    <stop offset="1" stop-color="#ffffff"></stop>
+                  </linearGradient>
+                </defs>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="url(#folder-fill-chatbot)"></path>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="none" stroke="white" stroke-opacity="0.8"></path>
+              </svg>
+              <div class="folder-items">
+                <div class="folder-item" data-folder-item data-w="34" data-kind="photo" style="top:5%;width:34%;margin-left:-17%;aspect-ratio:4/5">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/intuit-assist-cover.png" alt="" loading="lazy"></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="36" data-kind="note" style="top:10%;width:36%;margin-left:-18%;aspect-ratio:3/3.8">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Ask about my work</p><p class="folder-note-p">A context-aware assistant trained on portfolio and process — answers in real time from the sparkle chat.</p></div></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="32" data-kind="logo" style="top:4%;width:32%;margin-left:-16%;aspect-ratio:1/1">
+                  <div class="folder-frame"><img class="folder-logo" src="images/Favi.png" alt="Chatbot" loading="lazy"></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="35" data-kind="note" style="top:12%;width:35%;margin-left:-17.5%;aspect-ratio:3/4.2">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Built into this site</p><p class="folder-note-p">Embedded sidebar chatbot with portfolio knowledge, streaming replies, and deep links into case studies.</p></div></div>
+                </div>
+              </div>
+              <div class="folder-flap" data-folder-flap>
+                <div class="folder-flap-inner">
+                  <div class="folder-flap-copy">
+                    <p class="folder-title">Chatbot</p>
+                    <p class="folder-meta">Live · 2025</p>
+                  </div>
+                  <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <button type="button" class="folder" data-folder="midjourney" data-title="Best of Midjourney" data-meta="Experiments" aria-label="Open Best of Midjourney experiments folder">
+            <div class="folder-shell">
+              <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
+                <defs>
+                  <linearGradient id="folder-fill-midjourney" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ffffff"></stop>
+                    <stop offset="1" stop-color="#ffffff"></stop>
+                  </linearGradient>
+                </defs>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="url(#folder-fill-midjourney)"></path>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="none" stroke="white" stroke-opacity="0.8"></path>
+              </svg>
+              <div class="folder-items">
+                <div class="folder-item" data-folder-item data-w="34" data-kind="photo" style="top:5%;width:34%;margin-left:-17%;aspect-ratio:4/5">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/Experiment.jpg" alt="" loading="lazy"></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="44" data-kind="photo" style="top:9%;width:44%;margin-left:-22%;aspect-ratio:4/3">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/yc-fluted-hero.jpg" alt="" loading="lazy"></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="37" data-kind="photo" style="top:4%;width:37%;margin-left:-18.5%;aspect-ratio:1/1">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/richpreview.jpg" alt="" loading="lazy"></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Best of Midjourney</p><p class="folder-note-p">A curated stack of favorite generative experiments — mood, material, and form studies.</p></div></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="32" data-kind="photo" style="top:6%;width:32%;margin-left:-16%;aspect-ratio:3/4">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/Frame%2015.png" alt="" loading="lazy"></figure></div>
+                </div>
+              </div>
+              <div class="folder-flap" data-folder-flap>
+                <div class="folder-flap-inner">
+                  <div class="folder-flap-copy">
+                    <p class="folder-title">Midjourney</p>
+                    <p class="folder-meta">Best of experiments</p>
+                  </div>
+                  <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <button type="button" class="folder" data-folder="prototype" data-title="Prompt-to-Prototype" data-meta="Coming soon · 2025" aria-label="Open Prompt-to-Prototype folder">
+            <div class="folder-shell">
+              <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
+                <defs>
+                  <linearGradient id="folder-fill-prototype" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ffffff"></stop>
+                    <stop offset="1" stop-color="#ffffff"></stop>
+                  </linearGradient>
+                </defs>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="url(#folder-fill-prototype)"></path>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="none" stroke="white" stroke-opacity="0.8"></path>
+              </svg>
+              <div class="folder-items">
+                <div class="folder-item" data-folder-item data-w="37" data-kind="photo" style="top:4%;width:37%;margin-left:-18.5%;aspect-ratio:1/1">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/apistart.png" alt="" loading="lazy"></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Intent → UI</p><p class="folder-note-p">From a rough prompt to an interactive component in under a minute.</p></div></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="36" data-kind="note" style="top:10%;width:36%;margin-left:-18%;aspect-ratio:3/3.8">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Designer loop</p><p class="folder-note-p">Researching how prompt-driven generation fits real product craft.</p></div></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="32" data-kind="note" style="top:6%;width:32%;margin-left:-16%;aspect-ratio:3/5">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Coming soon</p><p class="folder-note-p">Lab notes and demos will land here as the exploration matures.</p></div></div>
+                </div>
+              </div>
+              <div class="folder-flap" data-folder-flap>
+                <div class="folder-flap-inner">
+                  <div class="folder-flap-copy">
+                    <p class="folder-title">Prompt → Prototype</p>
+                    <p class="folder-meta">Coming soon · 2025</p>
+                  </div>
+                  <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+          </button>
+
         </div>
       </div>
 
@@ -2144,6 +2331,60 @@ Designed a white label friendly design system scaling from design to code for fi
       }
 
       initHeroTextReveal();
+
+      function initWorkSwitch() {
+        var switchRoot = document.querySelector('.work-switch');
+        if (!switchRoot) return;
+
+        var buttons = switchRoot.querySelectorAll('.work-switch-btn');
+        var panels = document.querySelectorAll('.work-panel');
+        var heading = document.getElementById('work-section-heading');
+        var titles = {
+          recent: 'Recent Work',
+          'ai-labs': 'AI Labs'
+        };
+
+        function setPanel(panelName) {
+          buttons.forEach(function (btn) {
+            var isActive = btn.getAttribute('data-work-panel') === panelName;
+            btn.classList.toggle('is-active', isActive);
+            btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+
+          panels.forEach(function (panel) {
+            var isActive = panel.id === 'work-panel-' + panelName;
+            panel.classList.toggle('is-active', isActive);
+            panel.hidden = !isActive;
+          });
+
+          if (heading && titles[panelName]) {
+            heading.textContent = titles[panelName];
+          }
+
+          if (panelName === 'ai-labs') {
+            history.replaceState(null, '', '#Selectedworks-ai-labs');
+            requestAnimationFrame(function () {
+              if (window.refreshFolderCards) window.refreshFolderCards();
+            });
+          } else if (window.location.hash === '#Selectedworks-ai-labs' || window.location.hash.indexOf('#folder-') === 0) {
+            history.replaceState(null, '', '#Selectedworks');
+          }
+        }
+
+        buttons.forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            setPanel(btn.getAttribute('data-work-panel'));
+          });
+        });
+
+        if (window.location.hash === '#Selectedworks-ai-labs') {
+          setPanel('ai-labs');
+        } else {
+          setPanel('recent');
+        }
+      }
+
+      initWorkSwitch();
       
       // Progressive Animation
       function animateElements() {
@@ -2771,6 +3012,14 @@ Designed a white label friendly design system scaling from design to code for fi
   </script>
   <script src="ui-sounds.js?v=26"></script>
   <script src="dev-mode.js"></script>
+  <script type="module">
+    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=1';
+    window.refreshFolderCards = refreshFolderCards;
+    initFolderCards();
+    if (document.getElementById('work-panel-ai-labs')?.classList.contains('is-active')) {
+      refreshFolderCards();
+    }
+  </script>
 
 </body>
 
