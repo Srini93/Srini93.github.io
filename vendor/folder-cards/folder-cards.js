@@ -41,16 +41,13 @@ function ensureOverlay() {
   overlay = document.createElement('div');
   overlay.className = 'fstage';
   overlay.innerHTML = `
+    <div class="fstage-backdrop" aria-hidden="true"></div>
     <header class="fstage-bar">
       <div>
         <p class="fstage-title"></p>
         <p class="fstage-meta"></p>
       </div>
-      <button class="fstage-close" type="button" aria-label="Close">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-          <path d="M4 4l8 8M12 4l-8 8" stroke-linecap="round"></path>
-        </svg>
-      </button>
+      <button class="fstage-close" type="button" aria-label="Close"></button>
     </header>
     <p class="fstage-hint">← →</p>`;
   document.body.appendChild(overlay);
@@ -353,8 +350,16 @@ function go(next) {
 }
 
 function requestClose() {
-  if (history.state && history.state.folder) history.back();
-  else closeStage();
+  if (!stage || stage.closing) return;
+  const { slug } = stage;
+  if (location.hash === `#folder-${slug}`) {
+    history.replaceState(
+      null,
+      '',
+      `${location.pathname}${location.search}#Selectedworks-ai-labs`,
+    );
+  }
+  closeStage();
 }
 
 function bindFolder(folder) {
@@ -482,10 +487,23 @@ function bindGlobalOnce() {
   bootstrapped = true;
 
   const overlay = ensureOverlay();
+  if (!overlay.querySelector('.fstage-backdrop')) {
+    overlay.insertAdjacentHTML(
+      'afterbegin',
+      '<div class="fstage-backdrop" aria-hidden="true"></div>',
+    );
+  }
+  const closeBtn = overlay.querySelector('.fstage-close');
+  const backdrop = overlay.querySelector('.fstage-backdrop');
 
-  overlay.addEventListener('click', (event) => {
-    const target = event.target;
-    if (target === overlay || target.closest('.fstage-close')) requestClose();
+  closeBtn?.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    requestClose();
+  });
+
+  backdrop?.addEventListener('click', () => {
+    requestClose();
   });
 
   addEventListener('keydown', (event) => {
