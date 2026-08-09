@@ -408,6 +408,12 @@
   pointer-events: auto;
 }
 
+body:has(.fstage.is-open) .logo-srini {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
 .fstage-bar {
   position: absolute;
   top: 0;

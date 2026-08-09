@@ -22,7 +22,7 @@
 <!-- App Icon Ends -->
 
   <link rel="stylesheet" href="style.css?v=29">
-  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=31">
+  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=32">
   <style>
     /* Force Light Mode — shared hero/footer wash (matches #contact) */
     :root {
@@ -48,6 +48,41 @@
   <link href="https://fonts.googleapis.com/css2?family=Departure+Mono:wght@400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
+    /* Logo Styles */
+    .logo-srini {
+      position: absolute;
+      z-index: 10001;
+      font-family: 'Press Start 2P', 'Courier New', 'Monaco', monospace;
+      font-size: 16px;
+      color: #666;
+      text-decoration: none;
+      letter-spacing: 2px;
+      cursor: pointer;
+      text-transform: uppercase;
+      line-height: 1.5;
+      display: inline-block;
+      padding-bottom: 4px;
+      text-align: left;
+      white-space: nowrap;
+      transition:
+        top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        left 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease,
+        opacity 0.2s ease,
+        visibility 0.2s ease;
+    }
+
+    .logo-srini:hover {
+      text-transform: none;
+    }
+
+    .logo-srini::after {
+      display: none;
+    }
+
     /* Vertically center align with nav items, horizontally align with header text */
     /* Nav has padding-top: 40px and nav items are vertically centered */
     /* Nav items are approximately 48-56px tall, centered at ~64px from top (40px padding + half nav height) */
@@ -58,6 +93,41 @@
     .header-nav-row {
       position: relative;
       z-index: 10;
+    }
+
+    @media screen and (min-width: 1401px) {
+      .logo-srini {
+        top: 64px;
+        transform: translateY(-50%);
+        left: calc((100% - 1440px) / 2 + 4rem);
+      }
+    }
+
+    @media screen and (min-width: 720px) and (max-width: 1400px) {
+      .logo-srini {
+        top: 64px;
+        transform: translateY(-50%);
+        left: 4rem;
+      }
+    }
+
+    @media screen and (max-width: 719px) {
+      .logo-srini {
+        top: 64px;
+        transform: translateY(-50%);
+        left: 0;
+        padding-left: 1rem;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .logo-srini {
+        font-size: 12px;
+        top: calc(2rem + env(safe-area-inset-top, 0px));
+        left: 2rem;
+        letter-spacing: 1px;
+        transform: none;
+      }
     }
 
     @media screen and (min-width: 769px) {
@@ -709,6 +779,23 @@
           background 0.2s ease,
           box-shadow 0.2s ease,
           border-color 0.2s ease;
+      }
+
+      body.nav-persistent .logo-srini {
+        position: fixed;
+        top: 28px;
+        left: 32px;
+        z-index: 10080;
+        transform: none;
+        padding: 14px 16px 12px;
+        border-radius: 9999px;
+        color: #666;
+        background: rgba(255, 255, 255, 0.66);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        box-shadow:
+          0 14px 40px rgba(0, 0, 0, 0.08),
+          inset 0 1px 0 rgba(255, 255, 255, 0.65);
       }
 
       body.nav-persistent header nav {
@@ -1506,6 +1593,10 @@
 
     /* Large displays (1800px+) — ~120% type scale */
     @media screen and (min-width: 1801px) {
+      .logo-srini {
+        font-size: 19px;
+      }
+
       .desk-menu li a:not(.get-in-touch-btn) {
         font-size: 17px !important;
       }
@@ -1644,6 +1735,9 @@
 </svg>
 
   </div>
+
+  <!-- Logo -->
+  <a href="#" class="logo-srini" data-text="srini">srini</a>
 
   <div class="hamburgler-menu">
     <ul class="hamburgler-menu-list">
@@ -2542,6 +2636,186 @@ Designed a white label friendly design system scaling from design to code for fi
       }
 
     });
+
+    // ── Text Scramble Decode Animation on Hover ──
+    (function () {
+      const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*<>[]{}/\\|~^';
+      const DEFAULT_LOGO_HOVER_GREETINGS = [
+        'Hello',
+        'Hi',
+        'Hey',
+        'Welcome',
+        'Howdy',
+        'Greetings',
+        'Salutations',
+        'Hiya',
+        'Yo',
+        'Cheers',
+        'Aloha',
+        'Hola',
+        'Ciao',
+        'Ahoy',
+        'Sup',
+        'Hej',
+        'Hallo',
+        'Bonjour',
+      ];
+      const TICK = 40;
+      const WARMUP = 12;
+      const MIN_EXTRA = 2;
+      const MAX_EXTRA = 5;
+
+      function randChar() {
+        return CHARS[Math.floor(Math.random() * CHARS.length)];
+      }
+
+      function shuffledIndices(len) {
+        const indices = Array.from({ length: len }, (_, i) => i);
+        for (let i = 0; i < indices.length; i++) {
+          const jitter = Math.floor(Math.random() * 5) - 2;
+          const j = Math.max(0, Math.min(indices.length - 1, i + jitter));
+          [indices[i], indices[j]] = [indices[j], indices[i]];
+        }
+        return indices;
+      }
+
+      function stopScramble(el) {
+        if (el._scrambleTimer != null) {
+          clearInterval(el._scrambleTimer);
+          el._scrambleTimer = null;
+        }
+        el._scrambling = false;
+      }
+
+      function hoverGreetingPool(el) {
+        const attr = (el.getAttribute('data-text-hover') || '').trim();
+        if (attr.includes('|')) {
+          return attr.split('|').map(function (s) { return s.trim(); }).filter(Boolean);
+        }
+        return DEFAULT_LOGO_HOVER_GREETINGS;
+      }
+
+      function pickHoverGreeting(el) {
+        const pool = hoverGreetingPool(el);
+        if (!pool.length) return 'Hello';
+        if (pool.length === 1) return pool[0];
+        const last = el._lastHoverGreeting;
+        let pick = pool[Math.floor(Math.random() * pool.length)];
+        let guard = 0;
+        while (pick === last && guard < 40) {
+          pick = pool[Math.floor(Math.random() * pool.length)];
+          guard++;
+        }
+        el._lastHoverGreeting = pick;
+        return pick;
+      }
+
+      function homeLogoText(el) {
+        const a = el.getAttribute('data-text');
+        return (a != null && String(a).trim() !== '') ? String(a).trim() : 'srini';
+      }
+
+      function isScrolledLogoState() {
+        return document.body.classList.contains('nav-persistent');
+      }
+
+      function resetLogoText(el) {
+        stopScramble(el);
+        el.textContent = homeLogoText(el);
+      }
+
+      function scrambleDecode(el, targetOverride) {
+        stopScramble(el);
+        let finalText;
+        if (targetOverride != null) {
+          const t = String(targetOverride).trim();
+          finalText = t.length ? t : homeLogoText(el);
+        } else {
+          finalText = homeLogoText(el);
+        }
+        const len = finalText.length;
+        const locked = new Array(len).fill(false);
+        const display = new Array(len);
+        let tick = 0;
+
+        const order = shuffledIndices(len);
+        const extraTicks = order.map(() =>
+          MIN_EXTRA + Math.floor(Math.random() * (MAX_EXTRA - MIN_EXTRA + 1))
+        );
+
+        const resolveTick = [];
+        let cursor = WARMUP;
+        for (let i = 0; i < order.length; i++) {
+          cursor += extraTicks[i];
+          resolveTick.push(cursor);
+        }
+
+        const interval = setInterval(() => {
+          tick++;
+
+          for (let i = 0; i < order.length; i++) {
+            if (!locked[order[i]] && tick >= resolveTick[i]) {
+              locked[order[i]] = true;
+            }
+          }
+
+          for (let c = 0; c < len; c++) {
+            if (finalText[c] === ' ') {
+              display[c] = ' ';
+            } else if (locked[c]) {
+              display[c] = finalText[c];
+            } else {
+              display[c] = randChar();
+            }
+          }
+
+          el.textContent = display.join('');
+
+          if (locked.every(Boolean)) {
+            clearInterval(interval);
+            el.textContent = finalText;
+            el._scrambling = false;
+          }
+        }, TICK);
+
+        return interval;
+      }
+
+      document.querySelectorAll('.logo-srini').forEach(el => {
+        el._scrambling = false;
+        el._scrambleTimer = null;
+
+        el.textContent = homeLogoText(el);
+
+        el.addEventListener('mouseenter', function () {
+          if (isScrolledLogoState()) {
+            resetLogoText(el);
+            return;
+          }
+          const hoverText = pickHoverGreeting(el);
+          stopScramble(el);
+          el._scrambling = true;
+          el._scrambleTimer = scrambleDecode(el, hoverText);
+        });
+
+        el.addEventListener('mouseleave', function () {
+          if (isScrolledLogoState()) {
+            resetLogoText(el);
+            return;
+          }
+          const home = homeLogoText(el);
+          if (el.textContent.trim() === home) return;
+          stopScramble(el);
+          el._scrambling = true;
+          el._scrambleTimer = scrambleDecode(el);
+        });
+      });
+
+      window.addEventListener('scroll', function () {
+        if (!isScrolledLogoState()) return;
+        document.querySelectorAll('.logo-srini').forEach(resetLogoText);
+      }, { passive: true });
+    })();
 
   </script>
 
