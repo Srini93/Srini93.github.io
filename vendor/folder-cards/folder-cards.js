@@ -8,17 +8,22 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const instant = { duration: 0 };
 const spring = (s) => (reduced ? instant : s);
 
-const openSpring = { type: 'spring', duration: 0.55, bounce: 0.35 };
-const closeSpring = { type: 'spring', duration: 0.3, bounce: 0.1 };
-const focusSpring = { type: 'spring', duration: 0.3, bounce: 0.18 };
-const flingSpring = { type: 'spring', duration: 0.45, bounce: 0.2 };
-const stageSpring = { type: 'spring', duration: 0.55, bounce: 0.18 };
-const homeSpring = { type: 'spring', duration: 0.5, bounce: 0.12 };
-const shutSpring = { type: 'spring', duration: 0.6, bounce: 0.25 };
+const openSpring = { type: 'spring', duration: 0.28, bounce: 0.18 };
+const closeSpring = { type: 'spring', duration: 0.2, bounce: 0.05 };
+const focusSpring = { type: 'spring', duration: 0.2, bounce: 0.12 };
+const flingSpring = { type: 'spring', duration: 0.28, bounce: 0.12 };
+const stageSpring = { type: 'spring', duration: 0.32, bounce: 0.12 };
+const homeSpring = { type: 'spring', duration: 0.3, bounce: 0.08 };
+const shutSpring = { type: 'spring', duration: 0.2, bounce: 0.06 };
 
 const PUSH = 4;
 const SIDE = 0.6;
 const GAP = 0.08;
+/* Keep staged media clear of the title bar + bottom hint */
+const STAGE_TOP = 112;
+const STAGE_BOTTOM = 64;
+const stageSafeH = () => Math.max(240, innerHeight - STAGE_TOP - STAGE_BOTTOM);
+const stageCenterY = () => STAGE_TOP + stageSafeH() / 2;
 
 const tilt = (i) => {
   const n = Math.sin((i + 1) * 127.1) * 43758.5453;
@@ -65,25 +70,94 @@ function baseCenter(c, i) {
   };
 }
 
+/** Lay out stage cards near final size so Motion scale≈1 (keeps photos + type sharp). */
+function sizeStageItems(c, enable) {
+  c.items.forEach((item) => {
+    const kind = item.dataset.kind;
+    if (kind !== 'photo' && kind !== 'note') return;
+
+    if (!enable) {
+      if (item.dataset.foldW != null) {
+        item.style.width = item.dataset.foldW;
+        item.style.height = item.dataset.foldH;
+        item.style.marginLeft = item.dataset.foldMl;
+        item.style.aspectRatio = item.dataset.foldAr;
+        delete item.dataset.foldW;
+        delete item.dataset.foldH;
+        delete item.dataset.foldMl;
+        delete item.dataset.foldAr;
+      }
+      return;
+    }
+
+    item.dataset.foldW = item.style.width;
+    item.dataset.foldH = item.style.height;
+    item.dataset.foldMl = item.style.marginLeft;
+    item.dataset.foldAr = item.style.aspectRatio;
+
+    if (kind === 'photo') {
+      const img = item.querySelector('img');
+      const nw = img?.naturalWidth || 0;
+      const nh = img?.naturalHeight || 0;
+      if (!nw || !nh) return;
+      const maxW = Math.min(innerWidth * 0.78, 980);
+      const maxH = stageSafeH() * 0.92;
+      const scale = Math.min(maxW / nw, maxH / nh);
+      const w = Math.max(1, Math.round(nw * scale));
+      const h = Math.max(1, Math.round(nh * scale));
+      item.style.width = `${w}px`;
+      item.style.height = `${h}px`;
+      item.style.marginLeft = `${-w / 2}px`;
+      item.style.aspectRatio = 'auto';
+      return;
+    }
+
+    /* Notes: readable layout size — avoid transform-upscaling tiny folder type. */
+    const maxW = Math.min(innerWidth * 0.38, 400);
+    const maxH = Math.min(stageSafeH() * 0.85, 520);
+    const ar = 3 / 4.2;
+    let w = maxW;
+    let h = w / ar;
+    if (h > maxH) {
+      h = maxH;
+      w = h * ar;
+    }
+    w = Math.max(1, Math.round(w));
+    h = Math.max(1, Math.round(h));
+    item.style.width = `${w}px`;
+    item.style.height = `${h}px`;
+    item.style.marginLeft = `${-w / 2}px`;
+    item.style.aspectRatio = 'auto';
+  });
+}
+
 function render(opts, stagger = 0) {
   if (!stage) return;
   const { c, active, base } = stage;
-  const unit = Math.min(innerWidth * 0.46, innerHeight * 0.52);
+  const safeH = stageSafeH();
+  const unit = Math.min(innerWidth * 0.78, safeH * 0.92);
 
   const fit = (i) => {
     const item = c.items[i];
-    if (i === active && isNote(c, i)) {
-      return Math.min(
-        (innerWidth * 0.6) / item.offsetWidth,
-        (innerHeight * 0.82) / item.offsetHeight,
+    /*
+     * Photos + notes are pre-sized via sizeStageItems — keep active at 1 so
+     * type and bitmaps aren't transform-upscaled (looks pixelated).
+     */
+    if (item.dataset.kind === 'photo' || item.dataset.kind === 'note') {
+      const s = Math.min(
+        (innerWidth * 0.78) / Math.max(item.offsetWidth, 1),
+        safeH / Math.max(item.offsetHeight, 1),
+        1,
       );
+      return i === active ? s : s * SIDE;
     }
-    const s = unit / Math.max(item.offsetWidth, item.offsetHeight);
+    const s = unit / Math.max(item.offsetWidth, item.offsetHeight, 1);
     return i === active ? s : s * SIDE;
   };
 
   const halfCentre = (fit(active) * c.items[active].offsetWidth) / 2;
   const reach = halfCentre + unit * GAP + (unit * SIDE) / 2;
+  const midY = stageCenterY();
 
   c.items.forEach((item, i) => {
     const d = i - active;
@@ -97,7 +171,7 @@ function render(opts, stagger = 0) {
       item,
       {
         x: x - base[i].x,
-        y: innerHeight / 2 - base[i].y,
+        y: midY - base[i].y,
         scale: fit(i),
         rotate: d === 0 ? 0 : tilt(i),
         opacity: Math.max(0.3, 1 - Math.abs(d) * 0.16),
@@ -107,7 +181,7 @@ function render(opts, stagger = 0) {
   });
 }
 
-function openStage(slug, push) {
+async function openStage(slug, push) {
   const c = controllers.get(slug);
   if (!c || stage) return;
   const overlay = ensureOverlay();
@@ -129,6 +203,31 @@ function openStage(slug, push) {
   overlay.classList.add('is-open');
   document.documentElement.style.overflow = 'hidden';
   c.folder.classList.add('is-stage', 'is-scaled');
+  c.folder.closest('.ai-labs-folders')?.classList.add('is-staging');
+
+  await Promise.all(
+    c.items.map(async (item) => {
+      const img = item.querySelector('img');
+      if (!img) return;
+      if (!img.complete) {
+        await new Promise((resolve) => {
+          img.addEventListener('load', resolve, { once: true });
+          img.addEventListener('error', resolve, { once: true });
+        });
+      }
+      try {
+        await img.decode();
+      } catch {
+        /* ignore decode failures; natural size may still be available */
+      }
+    }),
+  );
+  /* Bail if a close happened while we waited on images. */
+  if (!stage || stage.slug !== slug || stage.closing) return;
+
+  sizeStageItems(c, true);
+  /* Force layout with stage photo sizes before measuring centers / scale. */
+  void c.folder.offsetWidth;
 
   c.items.forEach((item, i) => {
     stage.base[i] = baseCenter(c, i);
@@ -146,7 +245,7 @@ function openStage(slug, push) {
   });
 
   animate(c.flap, { rotateX: -80, opacity: 0 }, spring(flingSpring));
-  render(spring(stageSpring), 0.05);
+  render(spring(stageSpring), 0.02);
 }
 
 async function closeStage() {
@@ -157,10 +256,62 @@ async function closeStage() {
 
   overlay.classList.remove('is-open');
   document.documentElement.style.overflow = '';
+
+  /*
+   * FLIP close: photos are laid out at stage size for sharpness, so restoring
+   * folder % widths would snap. Capture visuals, restore layout, invert with
+   * transform, then spring home — all in one frame before paint.
+   */
+  const first = c.items.map((item) => {
+    const r = item.getBoundingClientRect();
+    const m = new DOMMatrix(getComputedStyle(item).transform);
+    return {
+      cx: r.left + r.width / 2,
+      cy: r.top + r.height / 2,
+      w: Math.max(r.width, 1),
+      rotate: (Math.atan2(m.b, m.a) * 180) / Math.PI,
+      opacity: Number.parseFloat(getComputedStyle(item).opacity) || 1,
+    };
+  });
+
   c.folder.classList.remove('is-scaled');
+  sizeStageItems(c, false);
+
+  c.items.forEach((item) => {
+    animate(item, { x: 0, y: 0, scale: 1, rotate: 0 }, instant);
+  });
+  void c.folder.offsetWidth;
+
+  const last = c.items.map((item) => {
+    const r = item.getBoundingClientRect();
+    return {
+      cx: r.left + r.width / 2,
+      cy: r.top + r.height / 2,
+      w: Math.max(r.width, 1),
+    };
+  });
+
+  c.items.forEach((item, i) => {
+    animate(
+      item,
+      {
+        x: first[i].cx - last[i].cx,
+        y: first[i].cy - last[i].cy,
+        scale: first[i].w / last[i].w,
+        rotate: first[i].rotate,
+        opacity: first[i].opacity,
+      },
+      instant,
+    );
+  });
+  void c.folder.offsetWidth;
 
   const w = c.wrap.offsetWidth;
-  await Promise.all(
+  /* Let the glass flap animate (CSS was forcing it hidden during stage). */
+  c.folder.classList.add('is-closing');
+  animate(c.flap, { rotateX: -80, opacity: 0 }, instant);
+
+  const cardsHome = Promise.all(
     c.items.map(
       (item, i) =>
         animate(
@@ -172,16 +323,24 @@ async function closeStage() {
             scale: 1,
             opacity: 1,
           },
-          { ...spring(homeSpring), delay: Math.abs(c.offset(i)) * 0.03 },
+          { ...spring(homeSpring), delay: Math.abs(c.offset(i)) * 0.012 },
         ).finished,
     ),
   );
 
-  await animate(c.flap, { rotateX: 0, opacity: 1 }, spring(shutSpring)).finished;
+  /* Shut the flap with the cards — not after they finish landing. */
+  const flapShut = animate(
+    c.flap,
+    { rotateX: 0, opacity: 1 },
+    { ...spring(shutSpring), delay: reduced ? 0 : 0.08 },
+  ).finished;
+
+  await Promise.all([cardsHome, flapShut]);
 
   c.deactivate();
   c.items.forEach((item, i) => animate(item, c.closedPct(i), instant));
-  c.folder.classList.remove('is-stage');
+  c.folder.classList.remove('is-stage', 'is-closing');
+  c.folder.closest('.ai-labs-folders')?.classList.remove('is-staging');
   stage = null;
 }
 
@@ -260,7 +419,7 @@ function bindFolder(folder) {
     if (!isOpen) focused = null;
     restack();
     animate(flap, { rotateX: isOpen ? -30 : 0 }, spring(isOpen ? openSpring : closeSpring));
-    apply(spring(isOpen ? openSpring : closeSpring), isOpen ? 0.04 : 0.02);
+    apply(spring(isOpen ? openSpring : closeSpring), isOpen ? 0.012 : 0.008);
   };
 
   controllers.set(slug, {

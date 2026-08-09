@@ -22,7 +22,7 @@
 <!-- App Icon Ends -->
 
   <link rel="stylesheet" href="style.css?v=29">
-  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=8">
+  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=22">
   <style>
     /* Force Light Mode — shared hero/footer wash (matches #contact) */
     :root {
@@ -1146,6 +1146,7 @@
       padding-left: 0;
       padding-right: 0;
       width: auto;
+      scroll-margin-top: 5.5rem;
     }
 
     .work-section-header .work-section-title {
@@ -1317,12 +1318,12 @@
       }
     }
 
-    #Selectedworks > .work-panel.is-active > .cards-layout:first-of-type,
-    #Selectedworks > .work-panel.is-active > .frame:first-of-type .cards-layout {
+    .selected-works > .work-panel.is-active > .cards-layout:first-of-type,
+    .selected-works > .work-panel.is-active > .frame:first-of-type .cards-layout {
       padding-top: 2rem !important;
     }
 
-    #Selectedworks .cards-layout-content h2,
+    .selected-works .cards-layout-content h2,
     .previous-work-item .cards-layout-content h2,
     #contact .txt6,
     .archives-title {
@@ -1732,8 +1733,8 @@
 
 
   <div class="frame" style="max-width: 1440px">
-    <div id="Selectedworks">
-      <div class="work-section-header">
+    <div class="selected-works">
+      <div class="work-section-header" id="Selectedworks">
         <h2 class="work-section-title" id="work-section-heading">Recent Work</h2>
         <div class="work-switch" role="tablist" aria-label="Work categories">
           <button type="button" class="work-switch-btn is-active" role="tab" aria-selected="true" aria-controls="work-panel-recent" id="work-tab-recent" data-work-panel="recent">Recent Work</button>
@@ -2004,7 +2005,7 @@ Designed a white label friendly design system scaling from design to code for fi
         <!-- Frosted folders adapted from https://github.com/fayazara/portfolio-site-template -->
         <div class="ai-labs-folders">
 
-          <button type="button" class="folder" data-folder="chatbot" data-title="Portfolio Chatbot" data-meta="Live · 2025" aria-label="Open Portfolio Chatbot folder">
+          <button type="button" class="folder" data-folder="chatbot" data-title="Proxy Chatbot" data-meta="Built end to end from the ground up" aria-label="Open Proxy Chatbot folder">
             <div class="folder-shell">
               <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
                 <defs>
@@ -2018,23 +2019,23 @@ Designed a white label friendly design system scaling from design to code for fi
               </svg>
               <div class="folder-items">
                 <div class="folder-item" data-folder-item data-w="34" data-kind="photo" style="top:5%;width:34%;margin-left:-17%;aspect-ratio:4/5">
-                  <div class="folder-frame"><figure class="folder-photo"><img src="images/intuit-assist-cover.png" alt="" loading="lazy"></figure></div>
+                  <div class="folder-frame"><figure class="folder-placeholder" aria-label="Image placeholder"><span class="folder-placeholder-label">Img 01</span></figure></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="36" data-kind="note" style="top:10%;width:36%;margin-left:-18%;aspect-ratio:3/3.8">
                   <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Ask about my work</p><p class="folder-note-p">A context-aware assistant trained on portfolio and process — answers in real time from the sparkle chat.</p></div></div>
                 </div>
-                <div class="folder-item" data-folder-item data-w="32" data-kind="logo" style="top:4%;width:32%;margin-left:-16%;aspect-ratio:1/1">
-                  <div class="folder-frame"><img class="folder-logo" src="images/Favi.png" alt="Chatbot" loading="lazy"></div>
+                <div class="folder-item" data-folder-item data-w="32" data-kind="photo" style="top:4%;width:32%;margin-left:-16%;aspect-ratio:1/1">
+                  <div class="folder-frame"><figure class="folder-placeholder" aria-label="Image placeholder"><span class="folder-placeholder-label">Img 02</span></figure></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="35" data-kind="note" style="top:12%;width:35%;margin-left:-17.5%;aspect-ratio:3/4.2">
-                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Built into this site</p><p class="folder-note-p">Embedded sidebar chatbot with portfolio knowledge, streaming replies, and deep links into case studies.</p></div></div>
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">From the ground up</p><p class="folder-note-p">A proxy chatbot designed and built end to end — UI, retrieval, and streaming — then wired into this site.</p></div></div>
                 </div>
               </div>
               <div class="folder-flap" data-folder-flap>
                 <div class="folder-flap-inner">
                   <div class="folder-flap-copy">
-                    <p class="folder-title">Chatbot</p>
-                    <p class="folder-meta">Live · 2025</p>
+                    <p class="folder-title">Proxy Chatbot</p>
+                    <p class="folder-meta">Built end to end from the ground up</p>
                   </div>
                   <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
@@ -2042,7 +2043,7 @@ Designed a white label friendly design system scaling from design to code for fi
             </div>
           </button>
 
-          <button type="button" class="folder" data-folder="midjourney" data-title="Best of Midjourney" data-meta="Experiments" aria-label="Open Best of Midjourney experiments folder">
+          <button type="button" class="folder" data-folder="midjourney" data-title="Image Generation Experiments" data-meta="AI generated image experimentation using SOTA AI models" aria-label="Open Image Generation Experiments folder">
             <div class="folder-shell">
               <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
                 <defs>
@@ -2055,27 +2056,27 @@ Designed a white label friendly design system scaling from design to code for fi
                 <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="none" stroke="white" stroke-opacity="0.8"></path>
               </svg>
               <div class="folder-items">
-                <div class="folder-item" data-folder-item data-w="34" data-kind="photo" style="top:5%;width:34%;margin-left:-17%;aspect-ratio:4/5">
-                  <div class="folder-frame"><figure class="folder-photo"><img src="images/Experiment.jpg" alt="" loading="lazy"></figure></div>
+                <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Image Generation Experiments</p><p class="folder-note-p">AI generated image experimentation using SOTA AI models.</p></div></div>
                 </div>
-                <div class="folder-item" data-folder-item data-w="44" data-kind="photo" style="top:9%;width:44%;margin-left:-22%;aspect-ratio:4/3">
-                  <div class="folder-frame"><figure class="folder-photo"><img src="images/yc-fluted-hero.jpg" alt="" loading="lazy"></figure></div>
+                <div class="folder-item" data-folder-item data-w="34" data-kind="photo" style="top:5%;width:34%;margin-left:-17%;aspect-ratio:1/1">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/01-portrait.png" alt="AI generated portrait study" width="1024" height="1024" loading="eager" decoding="async" fetchpriority="high"></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="44" data-kind="photo" style="top:9%;width:44%;margin-left:-22%;aspect-ratio:16/9">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/03-computer.png" alt="Retro-futuristic computer study" width="1456" height="816" loading="eager" decoding="async"></figure></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="37" data-kind="photo" style="top:4%;width:37%;margin-left:-18.5%;aspect-ratio:1/1">
-                  <div class="folder-frame"><figure class="folder-photo"><img src="images/richpreview.jpg" alt="" loading="lazy"></figure></div>
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/02-mazda.png" alt="Red Mazda CX-5 study" width="1024" height="1024" loading="eager" decoding="async"></figure></div>
                 </div>
-                <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
-                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Best of Midjourney</p><p class="folder-note-p">A curated stack of favorite generative experiments — mood, material, and form studies.</p></div></div>
-                </div>
-                <div class="folder-item" data-folder-item data-w="32" data-kind="photo" style="top:6%;width:32%;margin-left:-16%;aspect-ratio:3/4">
-                  <div class="folder-frame"><figure class="folder-photo"><img src="images/Frame%2015.png" alt="" loading="lazy"></figure></div>
+                <div class="folder-item" data-folder-item data-w="32" data-kind="photo" style="top:6%;width:32%;margin-left:-16%;aspect-ratio:4/3">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/04-mountain.png" alt="Mountain path walking study" width="1232" height="928" loading="eager" decoding="async"></figure></div>
                 </div>
               </div>
               <div class="folder-flap" data-folder-flap>
                 <div class="folder-flap-inner">
                   <div class="folder-flap-copy">
-                    <p class="folder-title">Midjourney</p>
-                    <p class="folder-meta">Best of experiments</p>
+                    <p class="folder-title">Image Generation Experiments</p>
+                    <p class="folder-meta">AI generated image experimentation using SOTA AI models</p>
                   </div>
                   <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
@@ -2083,27 +2084,27 @@ Designed a white label friendly design system scaling from design to code for fi
             </div>
           </button>
 
-          <button type="button" class="folder" data-folder="prototype" data-title="Prompt-to-Prototype" data-meta="Coming soon · 2025" aria-label="Open Prompt-to-Prototype folder">
+          <button type="button" class="folder" data-folder="frameworks" data-title="LLM and Agentic Frameworks" data-meta="Coming soon · 2025" aria-label="Open LLM and Agentic Frameworks folder">
             <div class="folder-shell">
               <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
                 <defs>
-                  <linearGradient id="folder-fill-prototype" x1="0" y1="0" x2="0" y2="1">
+                  <linearGradient id="folder-fill-frameworks" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0" stop-color="#ffffff"></stop>
                     <stop offset="1" stop-color="#ffffff"></stop>
                   </linearGradient>
                 </defs>
-                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="url(#folder-fill-prototype)"></path>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="url(#folder-fill-frameworks)"></path>
                 <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="none" stroke="white" stroke-opacity="0.8"></path>
               </svg>
               <div class="folder-items">
                 <div class="folder-item" data-folder-item data-w="37" data-kind="photo" style="top:4%;width:37%;margin-left:-18.5%;aspect-ratio:1/1">
-                  <div class="folder-frame"><figure class="folder-photo"><img src="images/apistart.png" alt="" loading="lazy"></figure></div>
+                  <div class="folder-frame"><figure class="folder-placeholder" aria-label="Image placeholder"><span class="folder-placeholder-label">Img 01</span></figure></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
-                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Intent → UI</p><p class="folder-note-p">From a rough prompt to an interactive component in under a minute.</p></div></div>
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">LLM and Agentic Frameworks</p><p class="folder-note-p">Exploring agentic stacks, orchestration patterns, and design-system hooks for AI products.</p></div></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="36" data-kind="note" style="top:10%;width:36%;margin-left:-18%;aspect-ratio:3/3.8">
-                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Designer loop</p><p class="folder-note-p">Researching how prompt-driven generation fits real product craft.</p></div></div>
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Designer loop</p><p class="folder-note-p">How frameworks shape craft when models, tools, and UI ship together.</p></div></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="32" data-kind="note" style="top:6%;width:32%;margin-left:-16%;aspect-ratio:3/5">
                   <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Coming soon</p><p class="folder-note-p">Lab notes and demos will land here as the exploration matures.</p></div></div>
@@ -2112,7 +2113,7 @@ Designed a white label friendly design system scaling from design to code for fi
               <div class="folder-flap" data-folder-flap>
                 <div class="folder-flap-inner">
                   <div class="folder-flap-copy">
-                    <p class="folder-title">Prompt → Prototype</p>
+                    <p class="folder-title">LLM and Agentic Frameworks</p>
                     <p class="folder-meta">Coming soon · 2025</p>
                   </div>
                   <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2344,7 +2345,7 @@ Designed a white label friendly design system scaling from design to code for fi
           'ai-labs': 'AI Labs'
         };
 
-        function setPanel(panelName) {
+        function setPanel(panelName, updateHash) {
           buttons.forEach(function (btn) {
             var isActive = btn.getAttribute('data-work-panel') === panelName;
             btn.classList.toggle('is-active', isActive);
@@ -2361,15 +2362,23 @@ Designed a white label friendly design system scaling from design to code for fi
             heading.textContent = titles[panelName];
           }
 
-          if (panelName === 'ai-labs') {
-            history.replaceState(null, '', '#Selectedworks-ai-labs');
+          if (updateHash !== false) {
+            if (panelName === 'ai-labs') {
+              history.replaceState(null, '', '#Selectedworks-ai-labs');
+              requestAnimationFrame(function () {
+                if (window.refreshFolderCards) window.refreshFolderCards();
+              });
+            } else if (window.location.hash === '#Selectedworks-ai-labs' || window.location.hash.indexOf('#folder-') === 0) {
+              history.replaceState(null, '', '#Selectedworks');
+            }
+          } else if (panelName === 'ai-labs') {
             requestAnimationFrame(function () {
               if (window.refreshFolderCards) window.refreshFolderCards();
             });
-          } else if (window.location.hash === '#Selectedworks-ai-labs' || window.location.hash.indexOf('#folder-') === 0) {
-            history.replaceState(null, '', '#Selectedworks');
           }
         }
+
+        window.setWorkPanel = setPanel;
 
         buttons.forEach(function (btn) {
           btn.addEventListener('click', function () {
@@ -2378,9 +2387,9 @@ Designed a white label friendly design system scaling from design to code for fi
         });
 
         if (window.location.hash === '#Selectedworks-ai-labs') {
-          setPanel('ai-labs');
+          setPanel('ai-labs', false);
         } else {
-          setPanel('recent');
+          setPanel('recent', false);
         }
       }
 
@@ -2404,10 +2413,21 @@ Designed a white label friendly design system scaling from design to code for fi
       setTimeout(animateElements, 500);
       // (removed) header role animation
 
-      // Smooth scroll links
-      $('a[href^="#"]').on("click", function () {
+      // Smooth scroll links (Works → Recent Work / AI Labs header)
+      $('a[href^="#"]').on("click", function (e) {
         var id = $(this).attr("href");
-        $('html, body').animate({ scrollTop: $(id).offset().top }, 500);
+        if (!id || id === '#') return;
+        var $target = $(id);
+        if (!$target.length) return;
+        e.preventDefault();
+        if (id === '#Selectedworks' && typeof window.setWorkPanel === 'function') {
+          window.setWorkPanel('recent');
+        }
+        var top = $target.offset().top;
+        $('html, body').animate({ scrollTop: top }, 420);
+        if (history.replaceState) {
+          history.replaceState(null, '', id);
+        }
       });
 
       //Hamburger Menu and Esc events
@@ -3013,7 +3033,7 @@ Designed a white label friendly design system scaling from design to code for fi
   <script src="ui-sounds.js?v=26"></script>
   <script src="dev-mode.js"></script>
   <script type="module">
-    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=1';
+    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=12';
     window.refreshFolderCards = refreshFolderCards;
     initFolderCards();
     if (document.getElementById('work-panel-ai-labs')?.classList.contains('is-active')) {

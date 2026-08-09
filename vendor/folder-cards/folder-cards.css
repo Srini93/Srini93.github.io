@@ -15,10 +15,11 @@
   flex-direction: row;
   flex-wrap: nowrap;
   align-items: stretch;
+  justify-content: center;
   gap: 1rem;
-  margin: 1.5rem 0 3rem;
+  margin: 1.5rem auto 3rem;
   padding: 0.5rem 5% 1.25rem;
-  max-width: none;
+  max-width: 1440px;
   width: 100%;
   max-height: none;
   box-sizing: border-box;
@@ -28,6 +29,13 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
   scrollbar-color: rgba(10, 37, 64, 0.22) transparent;
+}
+
+/* Staged cards fly into the viewport — parent overflow must not clip them */
+.ai-labs-folders.is-staging,
+#work-panel-ai-labs:has(.folder.is-stage),
+.selected-works:has(.folder.is-stage) {
+  overflow: visible;
 }
 
 .ai-labs-folders::-webkit-scrollbar {
@@ -44,10 +52,10 @@
 }
 
 .ai-labs-folders > .folder {
-  flex: 0 0 260px;
-  width: 260px;
-  min-width: 260px;
-  max-width: 260px;
+  flex: 0 0 380px;
+  width: 380px;
+  min-width: 380px;
+  max-width: 380px;
   scroll-snap-align: start;
 }
 
@@ -55,13 +63,14 @@
   .ai-labs-folders {
     gap: 0.85rem;
     padding-bottom: 1rem;
+    justify-content: flex-start;
   }
 
   .ai-labs-folders > .folder {
-    flex: 0 0 220px;
-    width: 220px;
-    min-width: 220px;
-    max-width: 220px;
+    flex: 0 0 300px;
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
   }
 }
 
@@ -172,9 +181,12 @@
   font-size: 0.7rem;
   letter-spacing: 0.04em;
   color: var(--folder-neutral-500);
-  white-space: nowrap;
+  white-space: normal;
+  line-height: 1.35;
   overflow: hidden;
-  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .folder-arrow {
@@ -195,13 +207,13 @@
 
 .folder-photo,
 .folder-note,
-.folder-logo {
+.folder-logo,
+.folder-placeholder {
   height: 100%;
   width: 100%;
   scrollbar-width: none;
 }
 
-.folder-photo,
 .folder-note {
   margin: 0;
   background: white;
@@ -210,27 +222,56 @@
     0 0 0 1px rgb(0 0 0 / 0.05),
     0 2px 4px rgb(0 0 0 / 0.06),
     0 8px 16px rgb(0 0 0 / 0.12);
-  transition: border-radius 450ms var(--folder-ease-in-out);
+  transition: border-radius 220ms var(--folder-ease-out);
 }
 
-.folder-photo {
-  padding: var(--pad);
+/* Clean image tiles — no matte, padding, or masked frame */
+.folder-photo,
+.folder-placeholder {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: var(--radius);
+  box-shadow: none;
+  overflow: visible;
+  transition: border-radius 220ms var(--folder-ease-out);
 }
 
-.folder-photo img {
+.folder-photo img,
+.folder-logo {
   display: block;
   height: 100%;
   width: 100%;
   object-fit: cover;
-  border-radius: calc(var(--radius) - var(--pad));
-  transition: border-radius 450ms var(--folder-ease-in-out);
+  object-position: center;
+  border-radius: var(--radius);
+  background: transparent;
+  /* Prefer full-res decode; avoid soft upscales from tiny folder tiles */
+  image-rendering: auto;
+  -webkit-user-drag: none;
 }
 
 .folder-logo {
   object-fit: contain;
-  filter:
-    drop-shadow(0 2px 3px rgb(0 0 0 / 0.12))
-    drop-shadow(0 8px 14px rgb(0 0 0 / 0.1));
+  filter: none;
+}
+
+.folder-placeholder {
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(145deg, #f3f5f8 0%, #e7ebf2 100%);
+  border: 1px dashed rgba(10, 37, 64, 0.14);
+  box-sizing: border-box;
+}
+
+.folder-placeholder-label {
+  font-family: 'Space Mono', 'Courier New', Monaco, monospace;
+  font-size: 8cqw;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9aa3b2;
+  user-select: none;
 }
 
 .folder-note {
@@ -257,6 +298,24 @@
   color: var(--folder-neutral-600);
 }
 
+/* Stage notes: real rem type at layout size (cqw + transform scale looks pixelated) */
+.folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note {
+  padding: 1.75rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+.folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note-title {
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+}
+
+.folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note-p {
+  margin-top: 0.85rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.55;
+}
+
 /* Stage overlay */
 .fstage {
   position: fixed;
@@ -277,12 +336,28 @@
 
 .fstage-bar {
   position: absolute;
-  inset: 0 0 auto;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: auto;
+  height: auto;
+  min-height: 0;
+  padding: 1.5rem;
+  /* Above staged folder cards (z-index 10050) so title stays readable */
+  z-index: 10060;
+  box-sizing: border-box;
   display: flex;
+  flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 1.5rem;
-  z-index: 2;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  pointer-events: none;
+}
+
+.fstage-bar .fstage-close {
+  pointer-events: auto;
 }
 
 .fstage-title {
@@ -303,6 +378,8 @@
 .fstage-close {
   display: grid;
   place-items: center;
+  flex-shrink: 0;
+  margin-left: auto;
   width: 2rem;
   height: 2rem;
   border: none;
@@ -348,9 +425,32 @@ button.folder.is-stage {
   z-index: 10050;
   transition: none !important;
   transform: none !important;
+  overflow: visible;
 }
 
-.folder.is-stage .folder-flap {
+.folder.is-stage .folder-shell,
+.folder.is-stage .folder-items,
+.folder.is-stage .folder-item,
+.folder.is-stage .folder-frame {
+  overflow: visible;
+}
+
+/* Hide pocket chrome so staged images aren't masked by glass/back */
+.folder.is-stage .folder-back {
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Keep flap Motion-driven while open; allow it to animate during close */
+.folder.is-stage:not(.is-closing) .folder-flap {
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.folder.is-stage.is-closing .folder-flap {
+  visibility: visible;
   pointer-events: none;
 }
 
@@ -360,6 +460,29 @@ button.folder.is-stage {
 
 .folder.is-stage .folder-note {
   overflow-y: auto;
+}
+
+.folder.is-stage .folder-photo,
+.folder.is-stage .folder-placeholder {
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow:
+    0 2px 8px rgb(0 0 0 / 0.08),
+    0 16px 40px rgb(0 0 0 / 0.12);
+}
+
+/* Stage photos: JS sets near-final width/height; keep img filling that box crisply. */
+.folder.is-stage .folder-item[data-kind="photo"] .folder-frame,
+.folder.is-stage .folder-item[data-kind="photo"] .folder-photo {
+  height: 100%;
+  width: 100%;
+}
+
+.folder.is-stage .folder-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
 }
 
 .folder.is-scaled .folder-frame {
