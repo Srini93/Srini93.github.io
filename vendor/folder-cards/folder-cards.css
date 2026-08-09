@@ -408,7 +408,8 @@
   pointer-events: auto;
 }
 
-body:has(.fstage.is-open) .logo-srini {
+body:has(.fstage.is-open) .logo-srini,
+body.folder-stage-open .logo-srini {
   visibility: hidden;
   pointer-events: none;
   opacity: 0;
@@ -435,10 +436,6 @@ body:has(.fstage.is-open) .logo-srini {
   pointer-events: none;
 }
 
-.fstage-bar .fstage-close {
-  pointer-events: auto;
-}
-
 .fstage-title {
   margin: 0;
   font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -458,7 +455,10 @@ body:has(.fstage.is-open) .logo-srini {
   position: fixed;
   top: 20px;
   right: 88px;
-  z-index: 10082;
+  z-index: 10085;
+  display: none;
+  visibility: hidden;
+  pointer-events: none;
   flex-shrink: 0;
   width: 52px;
   height: 52px;
@@ -480,6 +480,13 @@ body:has(.fstage.is-open) .logo-srini {
   transition: transform 160ms var(--folder-ease-out);
 }
 
+body.folder-stage-open .fstage-close,
+body:has(.fstage.is-open) .fstage-close {
+  display: block;
+  visibility: visible;
+  pointer-events: auto;
+}
+
 .fstage-close svg {
   display: none;
 }
@@ -490,10 +497,10 @@ body:has(.fstage.is-open) .logo-srini {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 22px;
-  height: 3px;
-  margin-left: -11px;
-  margin-top: -1.5px;
+  width: 20px;
+  height: 2px;
+  margin-left: -10px;
+  margin-top: -1px;
   border-radius: 9999px;
   background: #2b2b2b;
 }

@@ -34,9 +34,26 @@ const controllers = new Map();
 let stage = null;
 let bootstrapped = false;
 
+function ensureCloseButton() {
+  let closeBtn = document.querySelector('.fstage-close');
+  if (!closeBtn) {
+    closeBtn = document.createElement('button');
+    closeBtn.className = 'fstage-close';
+    closeBtn.type = 'button';
+    closeBtn.setAttribute('aria-label', 'Close');
+    document.body.appendChild(closeBtn);
+  } else if (closeBtn.closest('.fstage')) {
+    document.body.appendChild(closeBtn);
+  }
+  return closeBtn;
+}
+
 function ensureOverlay() {
   let overlay = document.querySelector('.fstage');
-  if (overlay) return overlay;
+  if (overlay) {
+    ensureCloseButton();
+    return overlay;
+  }
 
   overlay = document.createElement('div');
   overlay.className = 'fstage';
@@ -47,10 +64,10 @@ function ensureOverlay() {
         <p class="fstage-title"></p>
         <p class="fstage-meta"></p>
       </div>
-      <button class="fstage-close" type="button" aria-label="Close"></button>
     </header>
     <p class="fstage-hint">← →</p>`;
   document.body.appendChild(overlay);
+  ensureCloseButton();
   return overlay;
 }
 
@@ -198,6 +215,7 @@ async function openStage(slug, push) {
   overlayTitle.textContent = c.folder.dataset.title ?? '';
   overlayMeta.textContent = c.folder.dataset.meta ?? '';
   overlay.classList.add('is-open');
+  document.body.classList.add('folder-stage-open');
   document.documentElement.style.overflow = 'hidden';
   c.folder.classList.add('is-stage', 'is-scaled');
   c.folder.closest('.ai-labs-folders')?.classList.add('is-staging');
@@ -252,6 +270,7 @@ async function closeStage() {
   const overlay = ensureOverlay();
 
   overlay.classList.remove('is-open');
+  document.body.classList.remove('folder-stage-open');
   document.documentElement.style.overflow = '';
 
   /*
@@ -493,18 +512,24 @@ function bindGlobalOnce() {
       '<div class="fstage-backdrop" aria-hidden="true"></div>',
     );
   }
-  const closeBtn = overlay.querySelector('.fstage-close');
+  const closeBtn = ensureCloseButton();
   const backdrop = overlay.querySelector('.fstage-backdrop');
 
-  closeBtn?.addEventListener('click', (event) => {
-    event.preventDefault();
-    event.stopPropagation();
-    requestClose();
-  });
+  if (!closeBtn.dataset.bound) {
+    closeBtn.dataset.bound = '1';
+    closeBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      requestClose();
+    });
+  }
 
-  backdrop?.addEventListener('click', () => {
-    requestClose();
-  });
+  if (!backdrop?.dataset.bound) {
+    backdrop.dataset.bound = '1';
+    backdrop.addEventListener('click', () => {
+      requestClose();
+    });
+  }
 
   addEventListener('keydown', (event) => {
     if (!stage || stage.closing) return;

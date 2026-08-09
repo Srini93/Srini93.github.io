@@ -22,7 +22,7 @@
 <!-- App Icon Ends -->
 
   <link rel="stylesheet" href="style.css?v=29">
-  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=32">
+  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=34">
   <style>
     /* Force Light Mode — shared hero/footer wash (matches #contact) */
     :root {
@@ -818,6 +818,12 @@
         cursor: pointer;
       }
 
+      body.folder-stage-open.nav-persistent header nav,
+      body:has(.fstage.is-open).nav-persistent header nav {
+        visibility: hidden;
+        pointer-events: none;
+      }
+
       /* Chat sits outside the nav pill when scrolled — match nav pill size + gap */
       body.nav-persistent .header-chat-slot {
         position: fixed;
@@ -875,38 +881,50 @@
       body.nav-persistent header nav::after {
         content: '';
         position: absolute;
-        right: 15px;
-        width: 22px;
-        height: 3px;
+        left: 15px;
+        right: auto;
+        height: 2px;
         border-radius: 9999px;
         background: #2b2b2b;
         transition:
           top 0.25s ease,
+          left 0.25s ease,
+          right 0.25s ease,
+          width 0.25s ease,
           transform 0.25s ease,
           opacity 0.2s ease;
       }
 
       body.nav-persistent header nav::before {
-        top: 18.5px;
+        top: 20px;
+        width: 20px;
       }
 
       body.nav-persistent header nav::after {
-        top: 30.5px;
+        top: 28px;
+        width: 14px;
       }
 
       body.nav-persistent.nav-expanded header nav::before {
-        top: 24.5px;
+        top: 24px;
+        left: auto;
+        right: 16px;
+        width: 20px;
         transform: rotate(45deg);
       }
 
       body.nav-persistent.nav-expanded header nav::after {
-        top: 24.5px;
+        top: 24px;
+        left: auto;
+        right: 16px;
+        width: 20px;
         transform: rotate(-45deg);
       }
 
       body.nav-persistent header nav .desk-menu {
         height: 100%;
         padding-top: 0 !important;
+        padding-left: 14px;
         padding-right: 50px;
         gap: 2px;
         opacity: 0;
@@ -2478,8 +2496,10 @@ Designed a white label friendly design system scaling from design to code for fi
         if (id === '#Selectedworks' && typeof window.setWorkPanel === 'function') {
           window.setWorkPanel('recent');
         }
-        var top = $target.offset().top;
-        $('html, body').animate({ scrollTop: top }, 420);
+        var scrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'auto'
+          : 'smooth';
+        $target[0].scrollIntoView({ behavior: scrollBehavior, block: 'start' });
         if (history.replaceState) {
           history.replaceState(null, '', id);
         }
@@ -2591,11 +2611,12 @@ Designed a white label friendly design system scaling from design to code for fi
         headerNav.setAttribute('aria-expanded', 'false');
         headerNav.addEventListener('click', function(e) {
           if (!isPersistentNavActive()) return;
+          if (document.body.classList.contains('folder-stage-open')) return;
 
           const isExpanded = document.body.classList.contains('nav-expanded');
           const clickedLinkOrButton = e.target.closest('a, button');
           const navRect = headerNav.getBoundingClientRect();
-          const clickedCloseArea = isExpanded && e.clientX >= navRect.right - 76;
+          const clickedCloseArea = isExpanded && e.clientX >= navRect.right - 52;
 
           if (!isExpanded) {
             e.preventDefault();
@@ -2619,15 +2640,19 @@ Designed a white label friendly design system scaling from design to code for fi
         document.addEventListener('click', function(e) {
           if (
             isPersistentNavActive() &&
+            !document.body.classList.contains('folder-stage-open') &&
             !headerNav.contains(e.target) &&
-            !(headerChatSlot && headerChatSlot.contains(e.target))
+            !(headerChatSlot && headerChatSlot.contains(e.target)) &&
+            !e.target.closest('.fstage-close')
           ) {
             setPersistentNavExpanded(false);
           }
         });
 
         $(window).on('keyup', function(e) {
-          if (e.keyCode == 27) setPersistentNavExpanded(false);
+          if (e.keyCode == 27 && !document.body.classList.contains('folder-stage-open')) {
+            setPersistentNavExpanded(false);
+          }
         });
 
         updatePersistentNav();
@@ -2865,6 +2890,7 @@ Designed a white label friendly design system scaling from design to code for fi
       }
     }
     .header-chat-slot { display: flex; align-items: center; flex-shrink: 0; overflow: visible; z-index: 2; position: relative; }
+    body.chat-open .header-chat-slot { display: none !important; }
     .srini-chat-hovertip {
       position: absolute;
       top: calc(100% + 10px);
@@ -3101,7 +3127,7 @@ Designed a white label friendly design system scaling from design to code for fi
   <script src="ui-sounds.js?v=26"></script>
   <script src="dev-mode.js"></script>
   <script type="module">
-    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=14';
+    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=15';
     window.refreshFolderCards = refreshFolderCards;
     initFolderCards();
     if (document.getElementById('work-panel-ai-labs')?.classList.contains('is-active')) {
