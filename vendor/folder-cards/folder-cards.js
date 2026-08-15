@@ -65,6 +65,10 @@ function ensureOverlay() {
         <p class="fstage-meta"></p>
       </div>
     </header>
+    <button type="button" class="fstage-try-btn" aria-label="Try the chatbot">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>
+      Try it
+    </button>
     <p class="fstage-hint">← →</p>`;
   document.body.appendChild(overlay);
   ensureCloseButton();
@@ -214,6 +218,13 @@ async function openStage(slug, push) {
 
   overlayTitle.textContent = c.folder.dataset.title ?? '';
   overlayMeta.textContent = c.folder.dataset.meta ?? '';
+
+  // Show/hide "Try it" button for chatbot folder only
+  const tryBtn = overlay.querySelector('.fstage-try-btn');
+  if (tryBtn) {
+    tryBtn.classList.toggle('is-visible', slug === 'chatbot');
+  }
+
   overlay.classList.add('is-open');
   document.body.classList.add('folder-stage-open');
   document.documentElement.style.overflow = 'hidden';
@@ -528,6 +539,21 @@ function bindGlobalOnce() {
     backdrop.dataset.bound = '1';
     backdrop.addEventListener('click', () => {
       requestClose();
+    });
+  }
+
+  const tryBtn = overlay.querySelector('.fstage-try-btn');
+  if (tryBtn && !tryBtn.dataset.bound) {
+    tryBtn.dataset.bound = '1';
+    tryBtn.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      requestClose();
+      // Trigger the chatbot after a short delay to let the folder close
+      setTimeout(() => {
+        const chatTrigger = document.querySelector('.srini-chat-trigger');
+        if (chatTrigger) chatTrigger.click();
+      }, 150);
     });
   }
 
