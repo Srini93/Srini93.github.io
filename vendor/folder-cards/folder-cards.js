@@ -604,6 +604,43 @@ function bindGlobalOnce() {
     event.preventDefault();
   });
 
+  let wheelAccum = 0;
+  let wheelLocked = false;
+  addEventListener(
+    'wheel',
+    (event) => {
+      if (!stage || stage.closing) return;
+
+      const note = event.target.closest?.('.folder.is-stage .folder-note');
+      if (note) {
+        const max = note.scrollHeight - note.clientHeight;
+        if (max > 1) {
+          const atTop = note.scrollTop <= 0;
+          const atBottom = note.scrollTop >= max - 1;
+          if ((event.deltaY < 0 && !atTop) || (event.deltaY > 0 && !atBottom)) return;
+        }
+      }
+
+      event.preventDefault();
+      const primary =
+        Math.abs(event.deltaX) > Math.abs(event.deltaY) ? event.deltaX : event.deltaY;
+      wheelAccum += primary;
+
+      const threshold = 48;
+      if (wheelLocked || Math.abs(wheelAccum) < threshold) return;
+
+      const dir = Math.sign(wheelAccum);
+      wheelAccum = 0;
+      wheelLocked = true;
+      go(stage.active + dir);
+      setTimeout(() => {
+        wheelLocked = false;
+        wheelAccum = 0;
+      }, 420);
+    },
+    { passive: false, capture: true },
+  );
+
   addEventListener('popstate', () => {
     const hash = location.hash.replace(/^#/, '');
     const slug = hash.startsWith('folder-') ? hash.slice(7) : '';
