@@ -19,10 +19,12 @@ const shutSpring = { type: 'spring', duration: 0.2, bounce: 0.06 };
 const PUSH = 4;
 const SIDE = 0.6;
 const GAP = 0.08;
-/* Keep staged media clear of the title bar + bottom hint */
+/* Keep staged media clear of the title bar + bottom chrome */
 const STAGE_TOP = 112;
-const STAGE_BOTTOM = 64;
-const stageSafeH = () => Math.max(240, innerHeight - STAGE_TOP - STAGE_BOTTOM);
+const STAGE_BOTTOM = 72;
+const STAGE_BOTTOM_TRY = 156;
+const stageBottom = () => (stage?.slug === 'chatbot' ? STAGE_BOTTOM_TRY : STAGE_BOTTOM);
+const stageSafeH = () => Math.max(240, innerHeight - STAGE_TOP - stageBottom());
 const stageCenterY = () => STAGE_TOP + stageSafeH() / 2;
 
 const tilt = (i) => {
@@ -48,10 +50,27 @@ function ensureCloseButton() {
   return closeBtn;
 }
 
+function ensureTryButton() {
+  let tryBtn = document.querySelector('.fstage-try-btn');
+  if (!tryBtn) {
+    tryBtn = document.createElement('button');
+    tryBtn.className = 'fstage-try-btn';
+    tryBtn.type = 'button';
+    tryBtn.setAttribute('aria-label', 'Try the chatbot');
+    tryBtn.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>Try it';
+    document.body.appendChild(tryBtn);
+  } else if (tryBtn.closest('.fstage')) {
+    document.body.appendChild(tryBtn);
+  }
+  return tryBtn;
+}
+
 function ensureOverlay() {
   let overlay = document.querySelector('.fstage');
   if (overlay) {
     ensureCloseButton();
+    ensureTryButton();
     return overlay;
   }
 
@@ -65,13 +84,10 @@ function ensureOverlay() {
         <p class="fstage-meta"></p>
       </div>
     </header>
-    <button type="button" class="fstage-try-btn" aria-label="Try the chatbot">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>
-      Try it
-    </button>
     <p class="fstage-hint">← →</p>`;
   document.body.appendChild(overlay);
   ensureCloseButton();
+  ensureTryButton();
   return overlay;
 }
 
@@ -92,7 +108,7 @@ function baseCenter(c, i) {
 function sizeStageItems(c, enable) {
   c.items.forEach((item) => {
     const kind = item.dataset.kind;
-    if (kind !== 'photo' && kind !== 'note') return;
+    if (kind !== 'photo' && kind !== 'note' && kind !== 'video') return;
 
     if (!enable) {
       if (item.dataset.foldW != null) {
@@ -113,13 +129,13 @@ function sizeStageItems(c, enable) {
     item.dataset.foldMl = item.style.marginLeft;
     item.dataset.foldAr = item.style.aspectRatio;
 
-    if (kind === 'photo') {
-      const img = item.querySelector('img');
-      const nw = img?.naturalWidth || 0;
-      const nh = img?.naturalHeight || 0;
+    if (kind === 'photo' || kind === 'video') {
+      const media = kind === 'video' ? item.querySelector('video') : item.querySelector('img');
+      const nw = (kind === 'video' ? media?.videoWidth : media?.naturalWidth) || 0;
+      const nh = (kind === 'video' ? media?.videoHeight : media?.naturalHeight) || 0;
       if (!nw || !nh) return;
-      const maxW = Math.min(innerWidth * 0.78, 980);
-      const maxH = stageSafeH() * 0.92;
+      const maxW = Math.min(innerWidth * (kind === 'video' ? 0.64 : 0.78), kind === 'video' ? 780 : 980);
+      const maxH = stageSafeH() * (kind === 'video' ? 0.88 : 0.92);
       const scale = Math.min(maxW / nw, maxH / nh);
       const w = Math.max(1, Math.round(nw * scale));
       const h = Math.max(1, Math.round(nh * scale));
@@ -161,7 +177,7 @@ function render(opts, stagger = 0) {
      * Photos + notes are pre-sized via sizeStageItems — keep active at 1 so
      * type and bitmaps aren't transform-upscaled (looks pixelated).
      */
-    if (item.dataset.kind === 'photo' || item.dataset.kind === 'note') {
+    if (item.dataset.kind === 'photo' || item.dataset.kind === 'note' || item.dataset.kind === 'video') {
       const s = Math.min(
         (innerWidth * 0.78) / Math.max(item.offsetWidth, 1),
         safeH / Math.max(item.offsetHeight, 1),
@@ -219,11 +235,10 @@ async function openStage(slug, push) {
   overlayTitle.textContent = c.folder.dataset.title ?? '';
   overlayMeta.textContent = c.folder.dataset.meta ?? '';
 
-  // Show/hide "Try it" button for chatbot folder only
-  const tryBtn = overlay.querySelector('.fstage-try-btn');
-  if (tryBtn) {
-    tryBtn.classList.toggle('is-visible', slug === 'chatbot');
-  }
+  const tryBtn = ensureTryButton();
+  const showTry = slug === 'chatbot';
+  tryBtn.classList.toggle('is-visible', showTry);
+  document.body.classList.toggle('folder-stage-try', showTry);
 
   overlay.classList.add('is-open');
   document.body.classList.add('folder-stage-open');
@@ -234,17 +249,33 @@ async function openStage(slug, push) {
   await Promise.all(
     c.items.map(async (item) => {
       const img = item.querySelector('img');
-      if (!img) return;
-      if (!img.complete) {
-        await new Promise((resolve) => {
-          img.addEventListener('load', resolve, { once: true });
-          img.addEventListener('error', resolve, { once: true });
-        });
+      const video = item.querySelector('video');
+      if (img) {
+        if (!img.complete) {
+          await new Promise((resolve) => {
+            img.addEventListener('load', resolve, { once: true });
+            img.addEventListener('error', resolve, { once: true });
+          });
+        }
+        try {
+          await img.decode();
+        } catch {
+          /* ignore decode failures; natural size may still be available */
+        }
+        return;
       }
-      try {
-        await img.decode();
-      } catch {
-        /* ignore decode failures; natural size may still be available */
+      if (video) {
+        if (video.readyState < 1) {
+          await new Promise((resolve) => {
+            video.addEventListener('loadedmetadata', resolve, { once: true });
+            video.addEventListener('error', resolve, { once: true });
+          });
+        }
+        try {
+          await video.play();
+        } catch {
+          /* autoplay may be blocked; still show the frame */
+        }
       }
     }),
   );
@@ -281,8 +312,16 @@ async function closeStage() {
   const overlay = ensureOverlay();
 
   overlay.classList.remove('is-open');
-  document.body.classList.remove('folder-stage-open');
+  document.body.classList.remove('folder-stage-open', 'folder-stage-try');
+  ensureTryButton().classList.remove('is-visible');
   document.documentElement.style.overflow = '';
+  c.items.forEach((item) => {
+    const video = item.querySelector('video');
+    if (video) {
+      video.pause();
+      try { video.currentTime = 0; } catch { /* ignore */ }
+    }
+  });
 
   /*
    * FLIP close: photos are laid out at stage size for sharpness, so restoring
@@ -542,18 +581,17 @@ function bindGlobalOnce() {
     });
   }
 
-  const tryBtn = overlay.querySelector('.fstage-try-btn');
-  if (tryBtn && !tryBtn.dataset.bound) {
+  const tryBtn = ensureTryButton();
+  if (!tryBtn.dataset.bound) {
     tryBtn.dataset.bound = '1';
     tryBtn.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
       requestClose();
-      // Trigger the chatbot after a short delay to let the folder close
       setTimeout(() => {
         const chatTrigger = document.querySelector('.srini-chat-trigger');
         if (chatTrigger) chatTrigger.click();
-      }, 150);
+      }, 280);
     });
   }
 

@@ -22,7 +22,7 @@
 <!-- App Icon Ends -->
 
   <link rel="stylesheet" href="style.css?v=29">
-  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=36">
+  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=38">
   <style>
     /* Force Light Mode — shared hero/footer wash (matches #contact) */
     :root {
@@ -148,12 +148,13 @@
         min-width: 0;
       }
 
-      .header-chat-slot {
+      .desk-menu .header-chat-slot {
         display: flex;
         align-items: center;
         flex-shrink: 0;
-        padding-top: 40px;
-        margin-left: 0.35rem;
+        padding-top: 0;
+        margin-left: 0.2rem;
+        margin-right: 0.35rem;
         position: relative;
         overflow: visible;
         z-index: 2;
@@ -276,11 +277,11 @@
       transform: translateY(0);
     }
 
-    /* Header — shader.se line-reveal: each rendered line fades+floats up together */
-    @keyframes heroLineReveal {
+    /* Header — letters push down from above; wave travels line by line */
+    @keyframes heroSiriWave {
       from {
         opacity: 0;
-        transform: translateY(0.45em);
+        transform: translateY(-1.2em);
       }
       to {
         opacity: 1;
@@ -511,35 +512,37 @@
     /* Header hero reveal — after typography rules so animation isn't overridden */
     header .HeaderContent .hero-text-reveal {
       opacity: 1;
+      overflow: visible;
     }
 
     header .HeaderContent .hero-word {
       display: inline-block;
       white-space: nowrap;
-      /* animation-delay set by JS per line group */
+      overflow: visible;
+    }
+
+    header .HeaderContent .hero-char,
+    header .HeaderContent .hero-char--glyph {
+      display: inline-block;
+      vertical-align: baseline;
+      transform-origin: 50% 100%;
       opacity: 0;
-      animation: heroLineReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation: heroSiriWave 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
       will-change: opacity, transform;
     }
 
-    header .HeaderContent .hero-char {
-      display: inline-block;
-    }
-
     header .HeaderContent .hero-char--space {
-      display: inline;
-      white-space: pre;
-      opacity: 0;
-      animation: heroLineReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    header .HeaderContent .hero-char--glyph {
       display: inline-block;
+      white-space: pre;
+      vertical-align: baseline;
+      opacity: 0;
+      animation: heroSiriWave 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      header .HeaderContent .hero-word,
-      header .HeaderContent .hero-char--space {
+      header .HeaderContent .hero-char,
+      header .HeaderContent .hero-char--space,
+      header .HeaderContent .hero-char--glyph {
         opacity: 1 !important;
         transform: none !important;
         animation: none !important;
@@ -819,22 +822,25 @@
       }
 
       body.folder-stage-open.nav-persistent header nav,
-      body:has(.fstage.is-open).nav-persistent header nav {
+      body:has(.fstage.is-open).nav-persistent header nav,
+      body.folder-stage-open .header-chat-slot,
+      body:has(.fstage.is-open) .header-chat-slot {
         visibility: hidden;
         pointer-events: none;
       }
 
-      /* Chat sits outside the nav pill when scrolled — match nav pill size + gap */
-      body.nav-persistent .header-chat-slot {
+      body.nav-persistent:not(.nav-expanded) .header-nav-row > .header-chat-slot {
         position: fixed;
         top: 20px;
         right: 24px;
         z-index: 10081;
         padding-top: 0;
-        margin-left: 0;
+        margin: 0;
+        width: 52px;
+        height: 52px;
       }
 
-      body.nav-persistent .header-chat-slot .srini-chat-nav-btn {
+      body.nav-persistent:not(.nav-expanded) .header-nav-row > .header-chat-slot .srini-chat-nav-btn {
         width: 52px;
         height: 52px;
         min-width: 52px;
@@ -848,9 +854,32 @@
           inset 0 1px 0 rgba(255, 255, 255, 0.65);
       }
 
-      body.nav-persistent .header-chat-slot .srini-chat-sparkle {
+      body.nav-persistent:not(.nav-expanded) .header-nav-row > .header-chat-slot .srini-chat-sparkle {
         width: 22px;
         height: 22px;
+      }
+
+      body.nav-persistent header nav .desk-menu .header-chat-slot {
+        position: relative;
+        top: auto;
+        right: auto;
+        padding-top: 0;
+        margin-left: 0.15rem;
+        margin-right: 0.35rem;
+        width: auto;
+        height: 100%;
+      }
+
+      body.nav-persistent header nav .desk-menu .srini-chat-nav-btn {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+      }
+
+      body.nav-persistent header nav .desk-menu .srini-chat-sparkle {
+        width: 20px;
+        height: 20px;
       }
 
       body.chat-open.nav-persistent header nav {
@@ -863,7 +892,7 @@
 
       @media screen and (max-width: 1199px) {
         body.chat-open.nav-persistent header nav {
-          right: 88px;
+          right: 24px;
         }
 
         body.chat-open.nav-persistent.nav-expanded header nav {
@@ -872,6 +901,7 @@
       }
 
       body.nav-persistent.nav-expanded header nav {
+        right: 24px;
         width: fit-content;
         min-width: 52px;
         max-width: min(560px, calc(100vw - 128px));
@@ -970,7 +1000,7 @@
       }
 
       body.nav-persistent header nav .desk-menu li:first-child a:not(.get-in-touch-btn) {
-        padding-left: 0 !important;
+        padding-left: 16px !important;
       }
 
       body.nav-persistent header nav .get-in-touch-btn {
@@ -1419,6 +1449,24 @@
       padding-top: 2rem !important;
     }
 
+    .ai-labs-intro {
+      max-width: 38rem;
+      margin: 2.5rem auto 0;
+      padding: 0 5%;
+      font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+      font-size: clamp(0.95rem, 1.4vw, 1.125rem);
+      font-weight: 400;
+      font-optical-sizing: auto;
+      line-height: 1.5;
+      letter-spacing: -0.01em;
+      color: #2b2b2b;
+      text-align: center;
+    }
+
+    #work-panel-ai-labs:has(.ai-labs-intro) .ai-labs-folders {
+      padding-top: 2.25rem;
+    }
+
     .selected-works .cards-layout-content h2,
     .previous-work-item .cards-layout-content h2,
     #contact .txt6,
@@ -1805,13 +1853,13 @@
         <li><a href="index.html#Selectedworks">Works</a></li>
         <li><a href="about.html">About</a></li>
         <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
+        <li class="header-chat-slot">
+          <button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg></button>
+          <span class="srini-chat-hovertip" role="tooltip">Ask about Srini</span>
+        </li>
         <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>
       </ul>
     </nav>
-    <div class="header-chat-slot">
-      <button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg></button>
-      <span class="srini-chat-hovertip" role="tooltip">Ask about Srini</span>
-    </div>
     </div>
     <div class="frame" style="max-width: 1440px">
       <div class="HeaderContent" style="margin-top: 10%">
@@ -2103,10 +2151,11 @@ Designed a white label friendly design system scaling from design to code for fi
       </div>
 
       <div class="work-panel" id="work-panel-ai-labs" role="tabpanel" aria-labelledby="work-tab-ai-labs" hidden>
+        <p class="ai-labs-intro">I use generative AI as a medium for creative experiments — exploring new interactions, visual languages, and systems before they become product.</p>
         <!-- Frosted folders adapted from https://github.com/fayazara/portfolio-site-template -->
         <div class="ai-labs-folders">
 
-          <button type="button" class="folder" data-folder="chatbot" data-title="Proxy Chatbot" data-meta="A RAG-based AI assistant that brings my portfolio to life, answering questions about my work, experience, and expertise with grounded, contextual responses." aria-label="Open Proxy Chatbot folder">
+          <button type="button" class="folder" data-folder="chatbot" data-title="Proxy Chatbot" data-meta="Custom RAG-based solution built from the ground up" aria-label="Open Proxy Chatbot folder">
             <div class="folder-shell">
               <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
                 <defs>
@@ -2119,17 +2168,14 @@ Designed a white label friendly design system scaling from design to code for fi
                 <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="none" stroke="white" stroke-opacity="0.8"></path>
               </svg>
               <div class="folder-items">
+                <div class="folder-item" data-folder-item data-w="44" data-kind="video" style="top:5%;width:44%;margin-left:-22%;aspect-ratio:16/9">
+                  <div class="folder-frame"><figure class="folder-photo folder-video"><video src="images/ai-labs/chatbot/proxy-ai.mp4" muted playsinline loop preload="metadata" aria-label="Proxy chatbot walkthrough"></video></figure></div>
+                </div>
                 <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
                   <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">RAG Architecture</p><p class="folder-note-p">Retrieval-augmented generation indexes portfolio content, grounding every answer in real context about my work.</p></div></div>
                 </div>
-                <div class="folder-item" data-folder-item data-w="38" data-kind="photo" style="top:5%;width:38%;margin-left:-19%;aspect-ratio:16/10">
-                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/chatbot/01-welcome.png" alt="Proxy chatbot welcome screen" width="1024" height="640" loading="eager" decoding="async" fetchpriority="high"><figcaption class="folder-photo-caption">Welcome</figcaption></figure></div>
-                </div>
                 <div class="folder-item" data-folder-item data-w="34" data-kind="note" style="top:10%;width:34%;margin-left:-17%;aspect-ratio:3/3.8">
                   <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">React + TypeScript</p><p class="folder-note-p">Built with Vite, React 19, and TypeScript. Markdown rendering, auto-linkification, and smooth animations.</p></div></div>
-                </div>
-                <div class="folder-item" data-folder-item data-w="40" data-kind="photo" style="top:4%;width:40%;margin-left:-20%;aspect-ratio:16/10">
-                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/chatbot/02-conversation.png" alt="Proxy chatbot conversation view" width="1024" height="640" loading="eager" decoding="async"><figcaption class="folder-photo-caption">Conversation</figcaption></figure></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="32" data-kind="note" style="top:8%;width:32%;margin-left:-16%;aspect-ratio:3/5">
                   <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Context-Aware</p><p class="folder-note-p">Detects which page you're on and tailors suggestions — different prompts for each case study.</p></div></div>
@@ -2139,7 +2185,7 @@ Designed a white label friendly design system scaling from design to code for fi
                 <div class="folder-flap-inner">
                   <div class="folder-flap-copy">
                     <p class="folder-title">Proxy Chatbot</p>
-                    <p class="folder-meta">A RAG-based AI assistant that brings my portfolio to life, answering questions about my work, experience, and expertise with grounded, contextual responses.</p>
+                    <p class="folder-meta">Custom RAG-based solution built from the ground up</p>
                   </div>
                   <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
@@ -2147,7 +2193,7 @@ Designed a white label friendly design system scaling from design to code for fi
             </div>
           </button>
 
-          <button type="button" class="folder" data-folder="midjourney" data-title="Image Generation Experiments" data-meta="AI generated image experimentation using SOTA AI models" aria-label="Open Image Generation Experiments folder">
+          <button type="button" class="folder" data-folder="midjourney" data-title="Image Generation Experiments" data-meta="Image and video generation" aria-label="Open Image Generation Experiments folder">
             <div class="folder-shell">
               <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
                 <defs>
@@ -2161,7 +2207,7 @@ Designed a white label friendly design system scaling from design to code for fi
               </svg>
               <div class="folder-items">
                 <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
-                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Image Generation Experiments</p><p class="folder-note-p">AI generated image experimentation using SOTA AI models.</p></div></div>
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Image Generation Experiments</p><p class="folder-note-p">Image and video generation.</p></div></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="34" data-kind="photo" style="top:5%;width:34%;margin-left:-17%;aspect-ratio:1/1">
                   <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/01-portrait.png" alt="Recreate this image without text" width="1024" height="1024" loading="eager" decoding="async" fetchpriority="high"><figcaption class="folder-photo-caption">Portrait</figcaption></figure></div>
@@ -2180,7 +2226,7 @@ Designed a white label friendly design system scaling from design to code for fi
                 <div class="folder-flap-inner">
                   <div class="folder-flap-copy">
                     <p class="folder-title">Image Generation Experiments</p>
-                    <p class="folder-meta">AI generated image experimentation using SOTA AI models</p>
+                    <p class="folder-meta">Image and video generation</p>
                   </div>
                   <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
@@ -2314,11 +2360,11 @@ Designed a white label friendly design system scaling from design to code for fi
         var reveals = document.querySelectorAll('.HeaderContent .hero-text-reveal');
         if (!reveals.length) return;
 
-        // shader.se style: words float up line-by-line (all words on same rendered
-        // line share one delay — so each full line reveals as a unit, not word-by-word)
-        var LINE_DELAY   = 130;  // ms between consecutive rendered lines
-        var START_DELAY  = 180;  // ms before first line starts
-        var allWordSpans = [];   // collect first, assign delays after layout
+        var LINE_DELAY = 140;
+        var CHAR_DELAY = 8;
+        var START_DELAY = 160;
+        var LINE_TOLERANCE = 4;
+        var allChars = [];
 
         function splitNode(node) {
           var children = Array.prototype.slice.call(node.childNodes);
@@ -2339,9 +2385,9 @@ Designed a white label friendly design system scaling from design to code for fi
                   letter.setAttribute('aria-hidden', 'true');
                   letter.textContent = word[w];
                   wordEl.appendChild(letter);
+                  allChars.push(letter);
                 }
                 word = '';
-                allWordSpans.push({ el: wordEl, kind: 'word' });
                 frag.appendChild(wordEl);
               }
 
@@ -2354,7 +2400,7 @@ Designed a white label friendly design system scaling from design to code for fi
                   space.className = 'hero-char hero-char--space';
                   space.setAttribute('aria-hidden', 'true');
                   space.textContent = ' ';
-                  allWordSpans.push({ el: space, kind: 'space' });
+                  allChars.push(space);
                   frag.appendChild(space);
                 } else {
                   word += ch;
@@ -2368,18 +2414,11 @@ Designed a white label friendly design system scaling from design to code for fi
               }
               if (child.classList.contains('wave')) {
                 var wrap = document.createElement('span');
-                wrap.className = 'hero-word hero-char--glyph';
+                wrap.className = 'hero-char hero-char--glyph';
                 wrap.setAttribute('aria-hidden', 'true');
                 child.parentNode.insertBefore(wrap, child);
                 wrap.appendChild(child);
-                allWordSpans.push({ el: wrap, kind: 'word' });
-              } else if (child.tagName === 'A') {
-                var linkWrap = document.createElement('span');
-                linkWrap.className = 'hero-word';
-                linkWrap.setAttribute('aria-hidden', 'true');
-                child.parentNode.insertBefore(linkWrap, child);
-                linkWrap.appendChild(child);
-                allWordSpans.push({ el: linkWrap, kind: 'word' });
+                allChars.push(wrap);
               } else {
                 splitNode(child);
               }
@@ -2394,45 +2433,40 @@ Designed a white label friendly design system scaling from design to code for fi
           splitNode(el);
         });
 
-        if (!prefersReduced && allWordSpans.length) {
-          // After the DOM has been painted, read the top-offset of each word span
-          // so we can group them by rendered line and stagger per-line.
-          requestAnimationFrame(function () {
-            var lineMap = [];   // [ { top, spans[] } ]
-            var TOLERANCE = 4; // px — words within 4px y-offset are on the same line
+        if (prefersReduced) return;
 
-            allWordSpans.forEach(function (item) {
-              var top = item.el.getBoundingClientRect().top;
-              var found = null;
-              for (var li = 0; li < lineMap.length; li++) {
-                if (Math.abs(lineMap[li].top - top) <= TOLERANCE) {
-                  found = lineMap[li];
-                  break;
-                }
+        requestAnimationFrame(function () {
+          var lineMap = [];
+          allChars.forEach(function (el) {
+            var top = el.getBoundingClientRect().top;
+            var found = null;
+            for (var li = 0; li < lineMap.length; li++) {
+              if (Math.abs(lineMap[li].top - top) <= LINE_TOLERANCE) {
+                found = lineMap[li];
+                break;
               }
-              if (!found) { found = { top: top, spans: [] }; lineMap.push(found); }
-              found.spans.push(item.el);
-            });
-
-            // Sort lines top-to-bottom and assign a shared delay to every span in each line
-            lineMap.sort(function (a, b) { return a.top - b.top; });
-            lineMap.forEach(function (line, lineIdx) {
-              var delay = (START_DELAY + lineIdx * LINE_DELAY) + 'ms';
-              line.spans.forEach(function (span) {
-                span.style.animationDelay = delay;
-              });
-            });
-
-            // "Selected Works" button appears after last line
-            var seeMore = document.querySelector('.HeaderContent .see-more-wrapper.animate-progressive');
-            if (seeMore) {
-              seeMore.style.animationDelay = (START_DELAY + lineMap.length * LINE_DELAY + 80) + 'ms';
             }
+            if (!found) {
+              found = { top: top, chars: [] };
+              lineMap.push(found);
+            }
+            found.chars.push(el);
           });
-        } else if (!prefersReduced) {
+          lineMap.sort(function (a, b) { return a.top - b.top; });
+
+          lineMap.forEach(function (line, lineIdx) {
+            line.chars.forEach(function (el, charIdx) {
+              el.style.animationDelay = (START_DELAY + lineIdx * LINE_DELAY + charIdx * CHAR_DELAY) + 'ms';
+            });
+          });
+
+          var lastLine = lineMap[lineMap.length - 1];
+          var lastDelay = START_DELAY + Math.max(0, lineMap.length - 1) * LINE_DELAY + ((lastLine && lastLine.chars.length) || 0) * CHAR_DELAY;
           var seeMore = document.querySelector('.HeaderContent .see-more-wrapper.animate-progressive');
-          if (seeMore) seeMore.style.animationDelay = '400ms';
-        }
+          if (seeMore) {
+            seeMore.style.animationDelay = (lastDelay + 200) + 'ms';
+          }
+        });
       }
 
       initHeroTextReveal();
@@ -2590,6 +2624,10 @@ Designed a white label friendly design system scaling from design to code for fi
       // Collapsed persistent top navigation
       const headerNav = document.querySelector('header nav');
       const headerChatSlot = document.querySelector('.header-chat-slot');
+      const headerNavRow = document.querySelector('.header-nav-row');
+      const getInTouchItem = document.querySelector('header nav .desk-menu .get-in-touch-btn')
+        ? document.querySelector('header nav .desk-menu .get-in-touch-btn').closest('li')
+        : null;
       const floatingNav = document.querySelector('.floating-nav-container');
       const persistentNavMinWidth = window.matchMedia('(min-width: 769px)');
       const persistentNavOffset = 140;
@@ -2612,6 +2650,20 @@ Designed a white label friendly design system scaling from design to code for fi
             }, 0);
           }
         }
+        syncChatSlotPlacement();
+      }
+
+      function syncChatSlotPlacement() {
+        if (!headerChatSlot || !headerNavRow) return;
+        var persist = document.body.classList.contains('nav-persistent');
+        var expanded = document.body.classList.contains('nav-expanded');
+        if (persist && !expanded) {
+          if (headerChatSlot.parentElement !== headerNavRow) {
+            headerNavRow.appendChild(headerChatSlot);
+          }
+        } else if (getInTouchItem && headerChatSlot.nextElementSibling !== getInTouchItem) {
+          getInTouchItem.parentNode.insertBefore(headerChatSlot, getInTouchItem);
+        }
       }
 
       function updatePersistentNav() {
@@ -2633,6 +2685,7 @@ Designed a white label friendly design system scaling from design to code for fi
         if (!shouldPersist) {
           setPersistentNavExpanded(false);
         }
+        syncChatSlotPlacement();
         if (floatingNav) {
           floatingNav.classList.remove('visible');
         }
@@ -3158,7 +3211,7 @@ Designed a white label friendly design system scaling from design to code for fi
   <script src="ui-sounds.js?v=26"></script>
   <script src="dev-mode.js"></script>
   <script type="module">
-    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=15';
+    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=17';
     window.refreshFolderCards = refreshFolderCards;
     initFolderCards();
     if (document.getElementById('work-panel-ai-labs')?.classList.contains('is-active')) {
