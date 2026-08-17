@@ -829,7 +829,7 @@
         pointer-events: none;
       }
 
-      body.nav-persistent:not(.nav-expanded) .header-nav-row > .header-chat-slot {
+      body.nav-persistent .header-nav-row > .header-chat-slot {
         position: fixed;
         top: 20px;
         right: 24px;
@@ -840,7 +840,7 @@
         height: 52px;
       }
 
-      body.nav-persistent:not(.nav-expanded) .header-nav-row > .header-chat-slot .srini-chat-nav-btn {
+      body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn {
         width: 52px;
         height: 52px;
         min-width: 52px;
@@ -854,32 +854,9 @@
           inset 0 1px 0 rgba(255, 255, 255, 0.65);
       }
 
-      body.nav-persistent:not(.nav-expanded) .header-nav-row > .header-chat-slot .srini-chat-sparkle {
+      body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-sparkle {
         width: 22px;
         height: 22px;
-      }
-
-      body.nav-persistent header nav .desk-menu .header-chat-slot {
-        position: relative;
-        top: auto;
-        right: auto;
-        padding-top: 0;
-        margin-left: 0.15rem;
-        margin-right: 0.35rem;
-        width: auto;
-        height: 100%;
-      }
-
-      body.nav-persistent header nav .desk-menu .srini-chat-nav-btn {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-        min-height: 40px;
-      }
-
-      body.nav-persistent header nav .desk-menu .srini-chat-sparkle {
-        width: 20px;
-        height: 20px;
       }
 
       body.chat-open.nav-persistent header nav {
@@ -887,6 +864,7 @@
       }
 
       body.chat-open.nav-persistent.nav-expanded header nav {
+        right: 476px;
         width: min(560px, calc(100vw - 540px));
       }
 
@@ -901,7 +879,7 @@
       }
 
       body.nav-persistent.nav-expanded header nav {
-        right: 24px;
+        right: 88px;
         width: fit-content;
         min-width: 52px;
         max-width: min(560px, calc(100vw - 128px));
@@ -2656,8 +2634,7 @@ Designed a white label friendly design system scaling from design to code for fi
       function syncChatSlotPlacement() {
         if (!headerChatSlot || !headerNavRow) return;
         var persist = document.body.classList.contains('nav-persistent');
-        var expanded = document.body.classList.contains('nav-expanded');
-        if (persist && !expanded) {
+        if (persist) {
           if (headerChatSlot.parentElement !== headerNavRow) {
             headerNavRow.appendChild(headerChatSlot);
           }
