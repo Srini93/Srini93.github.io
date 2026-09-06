@@ -418,6 +418,87 @@ function go(next) {
   render(spring(stageSpring));
 }
 
+const PEEK_COPY = ['you found this.', 'nice peel.', 'still sticky.', 'keep looking.'];
+const PEEL_HINT = 18;
+
+function bindStickyPeel(note, index) {
+  const frame = note.parentElement;
+  if (!frame || note.dataset.peelBound) return;
+  note.dataset.peelBound = '1';
+
+  const flap = document.createElement('div');
+  flap.className = 'sticky-peel-flap';
+  flap.setAttribute('aria-hidden', 'true');
+  flap.innerHTML = `<span class="sticky-peel-back">${PEEK_COPY[index % PEEK_COPY.length]}</span>`;
+
+  const hit = document.createElement('div');
+  hit.className = 'sticky-peel-hit';
+  hit.setAttribute('aria-hidden', 'true');
+
+  frame.append(flap, hit);
+
+  const setPeel = (px, peeling) => {
+    const size = Math.max(note.offsetWidth, note.offsetHeight, 1);
+    const max = size * 0.62;
+    const next = Math.max(PEEL_HINT, Math.min(max, px));
+    frame.style.setProperty('--peel-px', `${next}px`);
+    note.style.setProperty('--peel-px', `${next}px`);
+    note.classList.toggle('is-peeling', peeling);
+    frame.classList.toggle('is-peeling', peeling);
+    frame.classList.toggle('is-peeled', next > max * 0.42);
+  };
+
+  const release = () => {
+    note.classList.remove('is-peeling');
+    frame.classList.remove('is-peeling');
+    note.classList.add('is-unpeeling');
+    frame.classList.remove('is-peeled');
+    frame.style.setProperty('--peel-px', `${PEEL_HINT}px`);
+    note.style.setProperty('--peel-px', `${PEEL_HINT}px`);
+    const done = () => note.classList.remove('is-unpeeling');
+    note.addEventListener('transitionend', done, { once: true });
+    setTimeout(done, 560);
+  };
+
+  let dragging = false;
+
+  hit.addEventListener('pointerdown', (event) => {
+    if (!note.closest('.folder.is-stage')) return;
+    event.preventDefault();
+    event.stopPropagation();
+    dragging = true;
+    note.classList.remove('is-unpeeling');
+    hit.setPointerCapture(event.pointerId);
+    setPeel(PEEL_HINT + 8, true);
+  });
+
+  hit.addEventListener('pointermove', (event) => {
+    if (!dragging) return;
+    event.preventDefault();
+    const rect = note.getBoundingClientRect();
+    const dist = Math.hypot(rect.right - event.clientX, rect.bottom - event.clientY);
+    setPeel(dist * 1.05, true);
+  });
+
+  const stopDrag = (event) => {
+    if (!dragging) return;
+    dragging = false;
+    try {
+      hit.releasePointerCapture(event.pointerId);
+    } catch {
+      /* already released */
+    }
+    release();
+  };
+
+  hit.addEventListener('pointerup', stopDrag);
+  hit.addEventListener('pointercancel', stopDrag);
+  hit.addEventListener('click', (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+  });
+}
+
 function requestClose() {
   if (!stage || stage.closing) return;
   const { slug } = stage;
@@ -487,6 +568,10 @@ function bindFolder(folder) {
 
   restack();
   apply(instant);
+  items.forEach((item, i) => {
+    const note = item.querySelector('.folder-note');
+    if (note) bindStickyPeel(note, i);
+  });
 
   const setOpen = (isOpen) => {
     expanded = isOpen;
@@ -540,6 +625,7 @@ function bindFolder(folder) {
   folder.addEventListener('focusout', () => !stage && setOpen(false));
 
   folder.addEventListener('click', (event) => {
+    if (event.target.closest('.sticky-peel-hit')) return;
     event.preventDefault();
     if (stage && stage.c === controllers.get(slug) && !stage.closing) {
       const hit = event.target.closest('[data-folder-item]');
