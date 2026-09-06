@@ -131,6 +131,12 @@
   overflow: visible;
 }
 
+.folder:not(.is-stage) .folder-item[data-kind="note"] {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 .folder-flap {
   position: absolute;
   left: 0;
@@ -219,14 +225,179 @@
 }
 
 .folder-note {
+  --sticky-paper: #fff3a3;
+  --sticky-ink: #3d3426;
+  --sticky-mute: #6b5e48;
+  --sticky-tilt: -1.4deg;
+  position: relative;
   margin: 0;
-  background: white;
-  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.42) 0%, transparent 22%),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 10px,
+      rgb(80 50 10 / 0.045) 10px 11px
+    ),
+    var(--sticky-paper);
+  border-radius: 2px 2px 5px 4px;
   box-shadow:
-    0 0 0 1px rgb(0 0 0 / 0.05),
-    0 2px 4px rgb(0 0 0 / 0.06),
-    0 8px 16px rgb(0 0 0 / 0.12);
-  transition: border-radius 220ms var(--folder-ease-out);
+    0 1px 0 rgb(255 255 255 / 0.45) inset,
+    0 1px 1px rgb(80 50 10 / 0.08),
+    0 4px 10px rgb(60 40 10 / 0.12),
+    0 14px 28px rgb(40 28 8 / 0.1);
+  transform: rotate(var(--sticky-tilt));
+  transform-origin: 50% 10%;
+}
+
+.folder-item[data-kind="note"]:nth-child(4n + 1) .folder-note {
+  --sticky-paper: #fff4a8;
+  --sticky-tilt: -1.8deg;
+}
+
+.folder-item[data-kind="note"]:nth-child(4n + 2) .folder-note {
+  --sticky-paper: #ffd6e4;
+  --sticky-tilt: 1.2deg;
+}
+
+.folder-item[data-kind="note"]:nth-child(4n + 3) .folder-note {
+  --sticky-paper: #d4f0c9;
+  --sticky-tilt: -0.9deg;
+}
+
+.folder-item[data-kind="note"]:nth-child(4n + 4) .folder-note {
+  --sticky-paper: #d6e8ff;
+  --sticky-tilt: 1.6deg;
+}
+
+.folder-note::before {
+  content: '';
+  position: absolute;
+  top: 4cqw;
+  left: 50%;
+  z-index: 2;
+  width: 32%;
+  height: 9cqw;
+  transform: translateX(-50%) rotate(-2deg);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.28), rgb(255 255 255 / 0.05)),
+    rgb(255 248 210 / 0.42);
+  border: 1px solid rgb(255 255 255 / 0.38);
+  box-shadow: 0 1px 2px rgb(60 40 10 / 0.12);
+  pointer-events: none;
+}
+
+.folder-note::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+@property --peel-px {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
+.folder-frame {
+  --peel-px: 0px;
+}
+
+.folder.is-stage .folder-frame:has(.folder-note) {
+  --peel-px: 18px;
+}
+
+.folder.is-stage .folder-note {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--peel-px)),
+    calc(100% - var(--peel-px)) 100%,
+    0 100%
+  );
+}
+
+.folder.is-stage .folder-note.is-unpeeling {
+  transition: --peel-px 520ms cubic-bezier(0.22, 1.15, 0.32, 1);
+}
+
+.sticky-peel-hit {
+  display: none;
+}
+
+.folder.is-stage .sticky-peel-hit {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  width: 26%;
+  height: 26%;
+  min-width: 48px;
+  min-height: 48px;
+  cursor: grab;
+  touch-action: none;
+  pointer-events: auto;
+}
+
+.folder.is-stage .sticky-peel-hit:active,
+.folder.is-stage .folder-note.is-peeling ~ .sticky-peel-hit,
+.folder.is-stage .folder-frame:has(.is-peeling) .sticky-peel-hit {
+  cursor: grabbing;
+  width: 42%;
+  height: 42%;
+}
+
+.sticky-peel-flap {
+  display: none;
+}
+
+.folder.is-stage .sticky-peel-flap {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  width: var(--peel-px);
+  height: var(--peel-px);
+  pointer-events: none;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.42) 0 36%, transparent 48%),
+    linear-gradient(135deg, #f6ebc0, #d8bc6c);
+  box-shadow:
+    -3px -3px 8px rgb(40 28 8 / 0.12),
+    inset 1px 1px 0 rgb(255 255 255 / 0.35);
+}
+
+.sticky-peel-back {
+  position: absolute;
+  left: 18%;
+  top: 22%;
+  max-width: 70%;
+  font-family: 'Space Mono', 'Courier New', Monaco, monospace;
+  font-size: clamp(0.55rem, 3.6cqw, 0.72rem);
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  color: rgb(80 60 20 / 0.72);
+  transform: rotate(-45deg);
+  transform-origin: left center;
+  opacity: 0;
+  white-space: nowrap;
+}
+
+.folder.is-stage .folder-frame.is-peeled .sticky-peel-back {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folder.is-stage .folder-note.is-unpeeling {
+    transition: none;
+  }
 }
 
 /* Clean image tiles — no matte, padding, or masked frame */
@@ -335,7 +506,7 @@
 
 .folder-note {
   height: 100%;
-  padding: 8cqw;
+  padding: 14cqw 8cqw 8cqw;
   overflow: hidden;
   box-sizing: border-box;
 }
@@ -346,7 +517,7 @@
   font-size: 7.5cqw;
   font-weight: 600;
   line-height: 1.35;
-  color: var(--folder-neutral-800);
+  color: var(--sticky-ink);
 }
 
 .folder-note-p {
@@ -354,15 +525,21 @@
   font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-size: 4.2cqw;
   line-height: 1.7;
-  color: var(--folder-neutral-600);
+  color: var(--sticky-mute);
 }
 
 /* Stage notes: real rem type at layout size (cqw + transform scale looks pixelated) */
 .folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note {
-  padding: 1.75rem;
+  padding: 2.15rem 1.7rem 1.6rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: geometricPrecision;
+}
+
+.folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note::before {
+  top: 12px;
+  width: 72px;
+  height: 22px;
 }
 
 .folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note-title {
