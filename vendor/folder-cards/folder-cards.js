@@ -419,7 +419,7 @@ function go(next) {
 }
 
 const PEEK_COPY = ['you found this.', 'nice peel.', 'still sticky.', 'keep looking.'];
-const PEEL_HINT = 18;
+const PEEL_HINT = 0;
 
 function bindStickyPeel(note, index) {
   const frame = note.parentElement;

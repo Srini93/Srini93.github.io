@@ -22,7 +22,7 @@
 <!-- App Icon Ends -->
 
   <link rel="stylesheet" href="style.css?v=29">
-  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=43">
+  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=44">
   <style>
     /* Force Light Mode — shared hero/footer wash (matches #contact) */
     :root {
@@ -1428,17 +1428,18 @@
     }
 
     .ai-labs-intro {
-      max-width: 38rem;
-      margin: 2.5rem auto 0;
+      max-width: 48rem;
+      margin: 2rem auto 0;
       padding: 0 5%;
       font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
-      font-size: clamp(0.95rem, 1.4vw, 1.125rem);
+      font-size: 14px;
       font-weight: 400;
       font-optical-sizing: auto;
-      line-height: 1.5;
+      line-height: 1.45;
       letter-spacing: -0.01em;
-      color: #2b2b2b;
+      color: #666;
       text-align: center;
+      text-wrap: pretty;
     }
 
     #work-panel-ai-labs:has(.ai-labs-intro) .ai-labs-folders {
@@ -2129,7 +2130,7 @@ Designed a white label friendly design system scaling from design to code for fi
       </div>
 
       <div class="work-panel" id="work-panel-ai-labs" role="tabpanel" aria-labelledby="work-tab-ai-labs" hidden>
-        <p class="ai-labs-intro">This section showcases how I use generative AI code as a medium for creative experiments — building new interactions, visual languages, and systems before they become product.</p>
+        <p class="ai-labs-intro">This section showcases how I use generative AI code as a medium for creative experiments —<br>building new interactions, visual languages, and systems before they become product.</p>
         <!-- Frosted folders adapted from https://github.com/fayazara/portfolio-site-template -->
         <div class="ai-labs-folders">
 
@@ -2215,7 +2216,7 @@ Designed a white label friendly design system scaling from design to code for fi
             </div>
           </button>
 
-          <button type="button" class="folder" data-folder="genui" data-title="Generative UI [coming soon]" data-meta="Interfaces assembled from models and live context" aria-label="Open Generative UI folder">
+          <button type="button" class="folder" data-folder="genui" data-title="Generative UI [coming soon]" data-meta="Figure — screens built from a description" aria-label="Open Generative UI folder">
             <div class="folder-shell">
               <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
                 <defs>
@@ -2228,24 +2229,21 @@ Designed a white label friendly design system scaling from design to code for fi
                 <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="none" stroke="white" stroke-opacity="0.8"></path>
               </svg>
               <div class="folder-items">
-                <div class="folder-item" data-folder-item data-w="37" data-kind="photo" style="top:4%;width:37%;margin-left:-18.5%;aspect-ratio:1/1">
-                  <div class="folder-frame"><figure class="folder-placeholder" aria-label="Image placeholder"><span class="folder-placeholder-label">Img 01</span></figure></div>
-                </div>
                 <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
-                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Generative UI</p><p class="folder-note-p">Interfaces assembled from models, prompts, and live context — not just static screens.</p></div></div>
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Figure</p><p class="folder-note-p">A studio for building screens from a description. Each workspace is its own interface — a dashboard, a hiring pipeline, a support inbox, a report — not a pile of charts on a shared canvas.</p></div></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="36" data-kind="note" style="top:10%;width:36%;margin-left:-18%;aspect-ratio:3/3.8">
-                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Adaptive layouts</p><p class="folder-note-p">Components that recompose as the task, data, or conversation changes.</p></div></div>
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Prompt to screen</p><p class="folder-note-p">You say what you need. Figure lays out the page using familiar pieces: a headline, numbers, charts, tables, lists, forms, and next steps.</p></div></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="32" data-kind="note" style="top:6%;width:32%;margin-left:-16%;aspect-ratio:3/5">
-                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Coming soon</p><p class="folder-note-p">Prototypes and demos will land here as the exploration matures.</p></div></div>
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Refine &amp; on-brand</p><p class="folder-note-p">Add your own data so charts and tables mean something. Refine the prompt and the same screen updates. Everything stays on-brand, so every workspace feels consistent.</p></div></div>
                 </div>
               </div>
               <div class="folder-flap" data-folder-flap>
                 <div class="folder-flap-inner">
                   <div class="folder-flap-copy">
                     <p class="folder-title">Generative UI [coming soon]</p>
-                    <p class="folder-meta">Interfaces assembled from models and live context</p>
+                    <p class="folder-meta">Figure — screens built from a description</p>
                   </div>
                   <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </div>
@@ -3191,7 +3189,7 @@ Designed a white label friendly design system scaling from design to code for fi
   <script src="ui-sounds.js?v=26"></script>
   <script src="dev-mode.js"></script>
   <script type="module">
-    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=18';
+    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=19';
     window.refreshFolderCards = refreshFolderCards;
     initFolderCards();
     if (document.getElementById('work-panel-ai-labs')?.classList.contains('is-active')) {

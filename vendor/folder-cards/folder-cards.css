@@ -308,7 +308,7 @@
 }
 
 .folder.is-stage .folder-frame:has(.folder-note) {
-  --peel-px: 18px;
+  --peel-px: 0px;
 }
 
 .folder.is-stage .folder-note {
@@ -339,7 +339,7 @@
   height: 26%;
   min-width: 48px;
   min-height: 48px;
-  cursor: grab;
+  cursor: inherit;
   touch-action: none;
   pointer-events: auto;
 }
