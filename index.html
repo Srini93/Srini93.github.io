@@ -2942,25 +2942,61 @@ Designed a white label friendly design system scaling from design to code for fi
       48% { transform: scale(1.13); box-shadow: 0 8px 24px rgba(59, 101, 239, 0.24); }
       100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 101, 239, 0); }
     }
+    @keyframes srini-chat-border-once {
+      0% {
+        opacity: 0;
+        transform: rotate(0deg) scale(0.94);
+      }
+      14% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        transform: rotate(360deg) scale(1.08);
+      }
+    }
     @media (prefers-reduced-motion: no-preference) {
       .srini-chat-trigger.srini-chat-bounce-enter {
         animation: srini-chat-bounce-load 0.9s cubic-bezier(0.45, 0, 0.55, 1) 0.4s 1 both !important;
       }
-      .srini-chat-fab,
-      .srini-chat-nav-btn:not(.srini-chat-attention-stopped) {
+      .header-chat-slot:not(.srini-chat-border-stopped).srini-chat-border-attention::before {
+        animation: srini-chat-border-once 1.75s cubic-bezier(0.45, 0, 0.55, 1) 0.55s 1 forwards;
+      }
+      .srini-chat-fab:not(.srini-chat-attention-stopped) {
         animation: srini-chat-attention 2.75s ease-in-out infinite;
       }
-      .srini-chat-fab:hover,
-      .srini-chat-nav-btn:not(.srini-chat-attention-stopped):hover {
+      .srini-chat-fab:hover {
         animation-play-state: paused;
       }
-      body.chat-open .srini-chat-fab,
-      body.chat-open .srini-chat-nav-btn,
-      .srini-chat-nav-btn.srini-chat-attention-stopped {
+      body.chat-open .srini-chat-fab {
         animation: none !important;
       }
     }
     .header-chat-slot { display: flex; align-items: center; flex-shrink: 0; overflow: visible; z-index: 2; position: relative; }
+    .header-chat-slot::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      padding: 2px;
+      background: conic-gradient(from 0deg, #3b65ef, #a8c0ff, #dce3f8, #7da1f7, #3b65ef);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .header-chat-slot.srini-chat-border-stopped::before,
+    body.chat-open .header-chat-slot::before {
+      animation: none !important;
+      opacity: 0 !important;
+    }
     body.chat-open .header-chat-slot { display: none !important; }
     .srini-chat-hovertip {
       position: absolute;
@@ -3037,7 +3073,8 @@ Designed a white label friendly design system scaling from design to code for fi
       transition: box-shadow 0.25s, transform 0.2s;
       box-sizing: border-box;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
+      z-index: 1;
     }
     .srini-chat-sparkle { width: 26px; height: 26px; flex-shrink: 0; color: #3b65ef; transition: transform 0.2s ease, color 0.2s ease; position: relative; z-index: 1; }
     .srini-chat-nav-btn:hover,
@@ -3145,6 +3182,11 @@ Designed a white label friendly design system scaling from design to code for fi
     t.addEventListener('click', function() {
       if (t.classList.contains('srini-chat-nav-btn')) {
         t.classList.add('srini-chat-attention-stopped');
+        var slot = t.closest('.header-chat-slot');
+        if (slot) {
+          slot.classList.add('srini-chat-border-stopped');
+          slot.classList.remove('srini-chat-border-attention');
+        }
       }
       var isOpen = document.body.classList.contains('chat-open');
       setOpen(!isOpen);
@@ -3154,6 +3196,21 @@ Designed a white label friendly design system scaling from design to code for fi
   window.addEventListener('message', function(e) {
     if (e.data === 'srini-chat-close') setOpen(false);
   });
+
+  function runChatBorderIntro() {
+    var slot = document.querySelector('.header-chat-slot');
+    if (!slot || slot.classList.contains('srini-chat-border-stopped')) return;
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    } catch (err) { return; }
+    slot.classList.add('srini-chat-border-attention');
+    function onBorderEnd(ev) {
+      if (ev.animationName !== 'srini-chat-border-once') return;
+      slot.classList.remove('srini-chat-border-attention');
+      slot.removeEventListener('animationend', onBorderEnd);
+    }
+    slot.addEventListener('animationend', onBorderEnd);
+  }
 
   function runChatBounceIntro() {
     try {
@@ -3170,9 +3227,13 @@ Designed a white label friendly design system scaling from design to code for fi
     });
   }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', runChatBounceIntro);
+    document.addEventListener('DOMContentLoaded', function() {
+      runChatBounceIntro();
+      runChatBorderIntro();
+    });
   } else {
     runChatBounceIntro();
+    runChatBorderIntro();
   }
 
   function openChatFromUrlIfNeeded() {
