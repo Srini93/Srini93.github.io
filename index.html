@@ -22,7 +22,7 @@
 <!-- App Icon Ends -->
 
   <link rel="stylesheet" href="style.css?v=29">
-  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=44">
+  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=49">
   <style>
     /* Force Light Mode — shared hero/footer wash (matches #contact) */
     :root {
@@ -1844,7 +1844,7 @@
       <div class="HeaderContent" style="margin-top: 10%">
         <p class="hero-text-reveal" style='font-size: 250%; font-family: "MyWebFont"; margin-bottom: 0.75rem; color:#2b2b2b'> Hello there <span class="wave">👋</span>, </p>
         <h1 class="hero-text-reveal" style="white-space: inherit;line-height: 1.125; color:#2b2b2b"> I'm <a href="about.html"
-            target="_blank" style="color:#3b65ef">Srini</a>, a full-spectrum product designer crafting intuitive AI-driven, agentic experiences and scalable design systems.
+            target="_blank" style="color:#3b65ef">Srini</a>, a full-spectrum product designer crafting intuitive AI-driven, agentic experiences and agent-ready design systems.
         </h1>
         <div class="hero-text-reveal HeaderContent-description" style="color:var(--srini-color-text-secondary)"> Staff Product Designer @ Intuit | Previously @ Norton, Google & Zoho </div>
         <div class="see-more-wrapper animate-progressive">
@@ -2186,13 +2186,16 @@ Designed a white label friendly design system scaling from design to code for fi
               </svg>
               <div class="folder-items">
                 <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
-                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Image Gen and Video Gen</p><p class="folder-note-p">Explorations made with SOTA image and video generation models from Midjourney and Gemini.</p></div></div>
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Image Gen and Video Gen</p><p class="folder-note-p">Abstract concept explorations using image and video generation models from Midjourney and Gemini.</p></div></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="44" data-kind="photo" style="top:9%;width:44%;margin-left:-22%;aspect-ratio:16/9">
                   <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/03-computer.png" alt="Abstract retro futuristic computer in nature" width="1456" height="816" loading="eager" decoding="async" fetchpriority="high"><figcaption class="folder-photo-caption">Computer</figcaption></figure></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="44" data-kind="video" style="top:7%;width:44%;margin-left:-22%;aspect-ratio:16/9">
                   <div class="folder-frame"><figure class="folder-photo folder-video"><video src="images/ai-labs/midjourney/computer-video.mp4" muted playsinline loop preload="metadata" aria-label="Abstract retro futuristic computer in nature, video generation"></video><figcaption class="folder-photo-caption">Computer (video)</figcaption></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="42" data-kind="photo" style="top:6%;width:42%;margin-left:-21%;aspect-ratio:16/9">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/crystal-ball.png" alt="Crystal ball on a rock in a wildflower meadow at golden hour" width="1024" height="573" loading="lazy" decoding="async"><figcaption class="folder-photo-caption">Crystal Ball</figcaption></figure></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="37" data-kind="photo" style="top:4%;width:37%;margin-left:-18.5%;aspect-ratio:1/1">
                   <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/02-mazda.png" alt="Realistic photo of a red Mazda CX5" width="1024" height="1024" loading="eager" decoding="async"><figcaption class="folder-photo-caption">Mazda</figcaption></figure></div>
@@ -3259,7 +3262,7 @@ Designed a white label friendly design system scaling from design to code for fi
   <script src="ui-sounds.js?v=26"></script>
   <script src="dev-mode.js"></script>
   <script type="module">
-    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=19';
+    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=24';
     window.refreshFolderCards = refreshFolderCards;
     initFolderCards();
     if (document.getElementById('work-panel-ai-labs')?.classList.contains('is-active')) {

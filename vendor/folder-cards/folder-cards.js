@@ -16,6 +16,22 @@ const stageSpring = { type: 'spring', duration: 0.32, bounce: 0.12 };
 const homeSpring = { type: 'spring', duration: 0.3, bounce: 0.08 };
 const shutSpring = { type: 'spring', duration: 0.2, bounce: 0.06 };
 
+const FSTAGE_HINT_INNER = `
+      <span class="fstage-hint-keys">
+        <span class="fstage-hint-group">
+          <span class="fstage-hint-label">Previous</span>
+          <button type="button" class="fstage-key fstage-key-prev" aria-label="Previous item">
+            <span class="fstage-key-cap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+        </span>
+        <span class="fstage-hint-group">
+          <button type="button" class="fstage-key fstage-key-next" aria-label="Next item">
+            <span class="fstage-key-cap"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </button>
+          <span class="fstage-hint-label">Next</span>
+        </span>
+      </span>`;
+
 const PUSH = 4;
 const SIDE = 0.6;
 const GAP = 0.08;
@@ -66,6 +82,22 @@ function ensureTryButton() {
   return tryBtn;
 }
 
+function updateStageHint() {
+  if (!stage || stage.closing) return;
+  const hintPrev = document.querySelector('.fstage-key-prev');
+  const hintNext = document.querySelector('.fstage-key-next');
+  const atStart = stage.active <= 0;
+  const atEnd = stage.active >= stage.c.items.length - 1;
+  if (hintPrev) {
+    hintPrev.disabled = atStart;
+    hintPrev.setAttribute('aria-disabled', atStart ? 'true' : 'false');
+  }
+  if (hintNext) {
+    hintNext.disabled = atEnd;
+    hintNext.setAttribute('aria-disabled', atEnd ? 'true' : 'false');
+  }
+}
+
 function ensureOverlay() {
   let overlay = document.querySelector('.fstage');
   if (overlay) {
@@ -84,7 +116,7 @@ function ensureOverlay() {
         <p class="fstage-meta"></p>
       </div>
     </header>
-    <p class="fstage-hint">← →</p>`;
+    <p class="fstage-hint">${FSTAGE_HINT_INNER}</p>`;
   document.body.appendChild(overlay);
   ensureCloseButton();
   ensureTryButton();
@@ -303,6 +335,7 @@ async function openStage(slug, push) {
 
   animate(c.flap, { rotateX: -80, opacity: 0 }, spring(flingSpring));
   render(spring(stageSpring), 0.02);
+  updateStageHint();
 }
 
 async function closeStage() {
@@ -408,6 +441,7 @@ async function closeStage() {
   c.folder.classList.remove('is-stage', 'is-closing');
   c.folder.closest('.ai-labs-folders')?.classList.remove('is-staging');
   stage = null;
+  updateStageHint();
 }
 
 function go(next) {
@@ -416,6 +450,7 @@ function go(next) {
   if (clamped === stage.active) return;
   stage.active = clamped;
   render(spring(stageSpring));
+  updateStageHint();
 }
 
 const PEEK_COPY = ['you found this.', 'nice peel.', 'still sticky.', 'keep looking.'];
@@ -642,6 +677,7 @@ function bindGlobalOnce() {
   bootstrapped = true;
 
   const overlay = ensureOverlay();
+  document.querySelector('.fstage-nav')?.remove();
   if (!overlay.querySelector('.fstage-backdrop')) {
     overlay.insertAdjacentHTML(
       'afterbegin',
@@ -650,6 +686,31 @@ function bindGlobalOnce() {
   }
   const closeBtn = ensureCloseButton();
   const backdrop = overlay.querySelector('.fstage-backdrop');
+  const hint = overlay.querySelector('.fstage-hint');
+  if (hint && !hint.querySelector('.fstage-key-prev')) {
+    hint.innerHTML = FSTAGE_HINT_INNER;
+  }
+
+  const hintPrev = overlay.querySelector('.fstage-key-prev');
+  const hintNext = overlay.querySelector('.fstage-key-next');
+
+  if (hintPrev && !hintPrev.dataset.bound) {
+    hintPrev.dataset.bound = '1';
+    hintPrev.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      go(stage.active - 1);
+    });
+  }
+
+  if (hintNext && !hintNext.dataset.bound) {
+    hintNext.dataset.bound = '1';
+    hintNext.addEventListener('click', (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      go(stage.active + 1);
+    });
+  }
 
   if (!closeBtn.dataset.bound) {
     closeBtn.dataset.bound = '1';
@@ -668,6 +729,7 @@ function bindGlobalOnce() {
   }
 
   const tryBtn = ensureTryButton();
+
   if (!tryBtn.dataset.bound) {
     tryBtn.dataset.bound = '1';
     tryBtn.addEventListener('click', (event) => {
