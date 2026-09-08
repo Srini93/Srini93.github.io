@@ -66,6 +66,58 @@ function ensureTryButton() {
   return tryBtn;
 }
 
+function setBackdropVideos(sources) {
+  const backdrop = ensureOverlay().querySelector('.fstage-backdrop');
+  if (!backdrop) return;
+
+  backdrop.querySelectorAll('.fstage-backdrop-media, .fstage-backdrop-video').forEach((el) => {
+    const video = el.querySelector('video');
+    if (video) {
+      video.pause();
+      try {
+        video.currentTime = 0;
+      } catch {
+        /* ignore */
+      }
+    }
+    el.remove();
+  });
+
+  const list = (sources || []).filter(Boolean);
+  if (!list.length) {
+    backdrop.classList.remove('has-media');
+    return;
+  }
+
+  const mediaWrap = document.createElement('div');
+  mediaWrap.className = 'fstage-backdrop-media';
+  mediaWrap.setAttribute('aria-hidden', 'true');
+
+  list.forEach((src) => {
+    const cell = document.createElement('div');
+    cell.className = 'fstage-backdrop-video';
+    const video = document.createElement('video');
+    video.src = src;
+    video.muted = true;
+    video.playsInline = true;
+    video.loop = true;
+    video.autoplay = true;
+    video.preload = 'metadata';
+    video.setAttribute('aria-hidden', 'true');
+    cell.appendChild(video);
+    mediaWrap.appendChild(cell);
+  });
+
+  backdrop.prepend(mediaWrap);
+  backdrop.classList.add('has-media');
+
+  mediaWrap.querySelectorAll('video').forEach((video) => {
+    video.play().catch(() => {
+      /* autoplay may be blocked */
+    });
+  });
+}
+
 function ensureOverlay() {
   let overlay = document.querySelector('.fstage');
   if (overlay) {
@@ -235,6 +287,12 @@ async function openStage(slug, push) {
   overlayTitle.textContent = c.folder.dataset.title ?? '';
   overlayMeta.textContent = c.folder.dataset.meta ?? '';
 
+  const backdropVideos = (c.folder.dataset.backdropVideos || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter(Boolean);
+  setBackdropVideos(backdropVideos);
+
   const tryBtn = ensureTryButton();
   const showTry = slug === 'chatbot';
   tryBtn.classList.toggle('is-visible', showTry);
@@ -313,6 +371,7 @@ async function closeStage() {
 
   overlay.classList.remove('is-open');
   document.body.classList.remove('folder-stage-open', 'folder-stage-try');
+  setBackdropVideos([]);
   ensureTryButton().classList.remove('is-visible');
   document.documentElement.style.overflow = '';
   c.items.forEach((item) => {
