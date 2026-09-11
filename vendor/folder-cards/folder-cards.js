@@ -57,28 +57,22 @@ function hydrateFolderMedia(folder) {
     if (video.getAttribute('src')) return;
     video.src = video.dataset.src;
     video.preload = 'metadata';
-    try {
-      video.load();
-    } catch (e) {}
   });
 }
 
-function watchFolderThumbs(folder) {
-  if (!('IntersectionObserver' in window)) {
-    hydrateFolderMedia(folder);
-    return;
-  }
-  const io = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        hydrateFolderMedia(folder);
-        io.disconnect();
-      });
-    },
-    { root: null, rootMargin: '120px 0px', threshold: 0.01 }
-  );
-  io.observe(folder);
+function playFolderVideos(folder) {
+  hydrateFolderMedia(folder);
+  folder.querySelectorAll('video').forEach((video) => {
+    const play = video.play();
+    if (play && play.catch) play.catch(() => {});
+  });
+}
+
+function pauseFolderVideos(folder) {
+  if (folder.classList.contains('is-stage')) return;
+  folder.querySelectorAll('video').forEach((video) => {
+    if (!video.paused) video.pause();
+  });
 }
 
 function ensureCloseButton() {
@@ -634,9 +628,10 @@ function bindFolder(folder) {
 
   restack();
   apply(instant);
-  folder.addEventListener('pointerenter', () => hydrateFolderMedia(folder), { once: true, passive: true });
-  folder.addEventListener('focus', () => hydrateFolderMedia(folder), { once: true });
-  watchFolderThumbs(folder);
+  folder.addEventListener('pointerenter', () => playFolderVideos(folder), { passive: true });
+  folder.addEventListener('pointerleave', () => pauseFolderVideos(folder), { passive: true });
+  folder.addEventListener('focus', () => playFolderVideos(folder));
+  folder.addEventListener('blur', () => pauseFolderVideos(folder));
   items.forEach((item, i) => {
     const note = item.querySelector('.folder-note');
     if (note) bindStickyPeel(note, i);
@@ -810,7 +805,6 @@ export function initFolderCards(root = document) {
 
 export function refreshFolderCards(root = document) {
   root.querySelectorAll('[data-folder]').forEach((folder) => {
-    hydrateFolderMedia(folder);
     const slug = folder.dataset.folder;
     const c = controllers.get(slug);
     if (!c || stage) return;

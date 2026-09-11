@@ -22,7 +22,7 @@
 <!-- App Icon Ends -->
 
   <link rel="stylesheet" href="style.css?v=29">
-  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=51">
+  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=52">
   <style>
     /* Force Light Mode — shared hero/footer wash (matches #contact) */
     :root {
@@ -1705,41 +1705,25 @@
       animation: workPanelIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* Scroll-driven blur reveal — same motion language as Zoho Sheet */
+    /* Scroll reveal — fade/rise only. Blur on image cards janks scroll. */
     .home-scroll-reveal {
       opacity: 0;
-      filter: blur(4px);
-      transform: translate3d(0, 12px, 0);
+      transform: translate3d(0, 10px, 0);
       transition:
-        opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
-        filter 0.55s cubic-bezier(0.25, 1, 0.5, 1),
-        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
-      will-change: opacity, filter, transform;
+        opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .home-scroll-reveal.is-revealed {
       opacity: 1;
-      filter: none;
       transform: none;
-      will-change: auto;
-    }
-
-    /* Filter/transform here clips staged folder cards to the row box. */
-    .ai-labs-folders.home-scroll-reveal,
-    .ai-labs-folders.home-scroll-reveal.is-revealed {
-      opacity: 1 !important;
-      filter: none !important;
-      transform: none !important;
-      will-change: auto !important;
     }
 
     @media (prefers-reduced-motion: reduce) {
       .home-scroll-reveal {
         opacity: 1 !important;
-        filter: none !important;
         transform: none !important;
         transition: none !important;
-        will-change: auto !important;
       }
     }
 
@@ -3828,7 +3812,7 @@ Designed a white label friendly design system scaling from design to code for fi
   <script src="ui-sounds.js?v=26"></script>
   <script src="dev-mode.js"></script>
   <script type="module">
-    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=26';
+    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=27';
     window.refreshFolderCards = refreshFolderCards;
     initFolderCards();
     if (document.getElementById('work-panel-ai-labs')?.classList.contains('is-active')) {
