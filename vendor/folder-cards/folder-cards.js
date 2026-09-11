@@ -52,6 +52,14 @@ const controllers = new Map();
 let stage = null;
 let bootstrapped = false;
 
+function hydrateFolderMedia(folder) {
+  folder.querySelectorAll('video[data-src]').forEach((video) => {
+    if (video.getAttribute('src')) return;
+    video.src = video.dataset.src;
+    video.preload = 'metadata';
+  });
+}
+
 function ensureCloseButton() {
   let closeBtn = document.querySelector('.fstage-close');
   if (!closeBtn) {
@@ -277,6 +285,8 @@ async function openStage(slug, push) {
   document.documentElement.style.overflow = 'hidden';
   c.folder.classList.add('is-stage', 'is-scaled');
   c.folder.closest('.ai-labs-folders')?.classList.add('is-staging');
+
+  hydrateFolderMedia(c.folder);
 
   await Promise.all(
     c.items.map(async (item) => {
@@ -603,6 +613,8 @@ function bindFolder(folder) {
 
   restack();
   apply(instant);
+  folder.addEventListener('pointerenter', () => hydrateFolderMedia(folder), { once: true, passive: true });
+  folder.addEventListener('focus', () => hydrateFolderMedia(folder), { once: true });
   items.forEach((item, i) => {
     const note = item.querySelector('.folder-note');
     if (note) bindStickyPeel(note, i);
