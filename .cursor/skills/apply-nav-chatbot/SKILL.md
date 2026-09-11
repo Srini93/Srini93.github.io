@@ -525,6 +525,23 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
     return base;
   }
 
+  function mountChatIframe() {
+    if (!sidebar || iframeLoaded) return;
+    var iframe = document.createElement('iframe');
+    iframe.title = 'Proxy chat';
+    iframe.src = getIframeSrc();
+    iframe.setAttribute('loading', 'eager');
+    sidebar.appendChild(iframe);
+    iframeLoaded = true;
+  }
+
+  function warmupChatIframe() {
+    try {
+      if (window.matchMedia('(prefers-reduced-data: reduce)').matches) return;
+    } catch (err) {}
+    mountChatIframe();
+  }
+
   function setOpen(open) {
     var isOpen = !!open;
     document.body.classList.toggle('chat-open', isOpen);
@@ -533,16 +550,12 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
       t.setAttribute('aria-label', isOpen ? 'Close AI chat' : 'Open AI chat');
       t.setAttribute('aria-expanded', isOpen);
     });
-    if (isOpen && sidebar && !iframeLoaded) {
-      var iframe = document.createElement('iframe');
-      iframe.title = 'Srini AI chat';
-      iframe.src = getIframeSrc();
-      sidebar.appendChild(iframe);
-      iframeLoaded = true;
-    }
+    if (isOpen) mountChatIframe();
   }
 
   triggers.forEach(function(t) {
+    t.addEventListener('pointerenter', warmupChatIframe, { once: true, passive: true });
+    t.addEventListener('focus', warmupChatIframe, { once: true });
     t.addEventListener('click', function() {
       var isOpen = document.body.classList.contains('chat-open');
       setOpen(!isOpen);
@@ -552,6 +565,17 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
   window.addEventListener('message', function(e) {
     if (e.data === 'srini-chat-close') setOpen(false);
   });
+
+  function scheduleChatWarmup() {
+    var run = function() { warmupChatIframe(); };
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(run, { timeout: 2500 });
+    } else {
+      setTimeout(run, 1400);
+    }
+  }
+  if (document.readyState === 'complete') scheduleChatWarmup();
+  else window.addEventListener('load', scheduleChatWarmup);
 })();
 </script>
 ```

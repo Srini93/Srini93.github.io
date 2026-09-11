@@ -262,7 +262,7 @@
 
   // ─── Nav / chatbot injection for decrypted content ──────────────────
   var PP_CHAT_API = 'https://sriniai.netlify.app';
-  var PP_CHAT_CACHE_BUST = '36';
+  var PP_CHAT_CACHE_BUST = '37';
 
   function ppUpgradeChatIntegration(html) {
     html = html.replace(/https:\/\/srinilm\.onrender\.com\/?/gi, PP_CHAT_API);
@@ -311,11 +311,15 @@
       '";' +
       'function resolveChatApiUrl(raw){var s=(raw||"").trim();if(!s)return"";try{var u=new URL(s);if(u.hostname==="localhost"||u.hostname==="127.0.0.1"){var pageHost=window.location.hostname||"";if(pageHost!=="localhost"&&pageHost!=="127.0.0.1")return CHAT_API_PUBLIC;}if(u.hostname==="srinilm.onrender.com")return CHAT_API_PUBLIC;}catch(e){}return s.replace(/\\/$/,"");}' +
       'function getIframeSrc(){var base=getAppUrl();var api=resolveChatApiUrl((sidebar&&sidebar.getAttribute("data-chat-api"))||window.SRINI_CHAT_API||"");var params=[];if(api)params.push("api="+encodeURIComponent(api));try{var pagePath=window.SRINI_CHAT_PAGE_PATH||window.location.pathname;params.push("page="+encodeURIComponent(pagePath));if(document.title)params.push("title="+encodeURIComponent(document.title));}catch(e){}params.push("cb="+CHATBOT_CACHE_BUST);return base+"?"+params.join("&");}' +
-      'function setOpen(open){var isOpen=!!open;document.body.classList.toggle("chat-open",isOpen);if(sidebar)sidebar.setAttribute("aria-hidden",!isOpen);triggers.forEach(function(t){t.setAttribute("aria-label",isOpen?"Close AI chat":"Open AI chat");t.setAttribute("aria-expanded",isOpen);});if(isOpen&&sidebar&&!iframeLoaded){var iframe=document.createElement("iframe");iframe.title="Proxy chat";iframe.src=getIframeSrc();sidebar.appendChild(iframe);iframeLoaded=true;}}' +
-      'triggers.forEach(function(t){t.addEventListener("click",function(){if(t.classList.contains("srini-chat-nav-btn")){t.classList.add("srini-chat-attention-stopped");var slot=t.closest(".header-chat-slot");if(slot){slot.classList.add("srini-chat-border-stopped");slot.classList.remove("srini-chat-border-attention");}}setOpen(!document.body.classList.contains("chat-open"));});});' +
+      'function mountChatIframe(){if(!sidebar||iframeLoaded)return;var iframe=document.createElement("iframe");iframe.title="Proxy chat";iframe.src=getIframeSrc();iframe.setAttribute("loading","eager");sidebar.appendChild(iframe);iframeLoaded=true;}' +
+      'function warmupChatIframe(){try{if(window.matchMedia("(prefers-reduced-data: reduce)").matches)return;}catch(e){}mountChatIframe();}' +
+      'function scheduleChatWarmup(){var run=function(){warmupChatIframe();};if("requestIdleCallback"in window){requestIdleCallback(run,{timeout:2500});}else{setTimeout(run,1400);}}' +
+      'function setOpen(open){var isOpen=!!open;document.body.classList.toggle("chat-open",isOpen);if(sidebar)sidebar.setAttribute("aria-hidden",!isOpen);triggers.forEach(function(t){t.setAttribute("aria-label",isOpen?"Close AI chat":"Open AI chat");t.setAttribute("aria-expanded",isOpen);});if(isOpen)mountChatIframe();}' +
+      'triggers.forEach(function(t){t.addEventListener("pointerenter",warmupChatIframe,{once:true,passive:true});t.addEventListener("focus",warmupChatIframe,{once:true});t.addEventListener("click",function(){if(t.classList.contains("srini-chat-nav-btn")){t.classList.add("srini-chat-attention-stopped");var slot=t.closest(".header-chat-slot");if(slot){slot.classList.add("srini-chat-border-stopped");slot.classList.remove("srini-chat-border-attention");}}setOpen(!document.body.classList.contains("chat-open"));});});' +
       'window.addEventListener("message",function(e){if(e.data==="srini-chat-close")setOpen(false);});' +
       'function runChatBounceIntro(){try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;}catch(x){return;}triggers.forEach(function(t){t.classList.add("srini-chat-bounce-enter");function onEnd(ev){if(ev.animationName!=="srini-chat-bounce-load")return;t.classList.remove("srini-chat-bounce-enter");t.removeEventListener("animationend",onEnd);}t.addEventListener("animationend",onEnd);});}' +
       'if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",runChatBounceIntro);}else{runChatBounceIntro();}' +
+      'if(document.readyState==="complete"){scheduleChatWarmup();}else{window.addEventListener("load",scheduleChatWarmup);}' +
       '})();' +
       '<\/script>'
     );

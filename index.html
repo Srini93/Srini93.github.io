@@ -2033,6 +2033,9 @@
     content="Digital product designer focused on crafting and shipping superlative products that impact people at scale." />
   <meta property="og:description"
     content="A digital product designer who solves complex problems with <br>simple and intuitive interfaces." />
+  <link rel="preconnect" href="https://sriniai.netlify.app" crossorigin />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
   <script async src="https://cdn.amplitude.com/script/4cdba9bcfab0ed83708e9b2b558d9bac.js" onload="window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));window.amplitude.init('4cdba9bcfab0ed83708e9b2b558d9bac', {fetchRemoteConfig:true,autocapture:{attribution:true,fileDownloads:true,formInteractions:true,pageViews:true,sessions:true,elementInteractions:true,networkTracking:true,webVitals:true,frustrationInteractions:{thrashedCursor:true,errorClicks:true,deadClicks:true,rageClicks:true}}});"></script>
 </head>
 
@@ -3500,7 +3503,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
   var CHAT_API_PUBLIC = 'https://sriniai.netlify.app';
   /** Bump when deploying chatbot or host chat script changes (cache bust). */
-  var CHATBOT_CACHE_BUST = '36';
+  var CHATBOT_CACHE_BUST = '37';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
@@ -3527,6 +3530,32 @@ Designed a white label friendly design system scaling from design to code for fi
     return base + '?' + params.join('&');
   }
 
+  function mountChatIframe() {
+    if (!sidebar || iframeLoaded) return;
+    var iframe = document.createElement('iframe');
+    iframe.title = 'Proxy chat';
+    iframe.src = getIframeSrc();
+    iframe.setAttribute('loading', 'eager');
+    sidebar.appendChild(iframe);
+    iframeLoaded = true;
+  }
+
+  function warmupChatIframe() {
+    try {
+      if (window.matchMedia('(prefers-reduced-data: reduce)').matches) return;
+    } catch (err) {}
+    mountChatIframe();
+  }
+
+  function scheduleChatWarmup() {
+    var run = function() { warmupChatIframe(); };
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(run, { timeout: 2500 });
+    } else {
+      setTimeout(run, 1400);
+    }
+  }
+
   function setOpen(open) {
     var isOpen = !!open;
     document.body.classList.toggle('chat-open', isOpen);
@@ -3535,16 +3564,12 @@ Designed a white label friendly design system scaling from design to code for fi
       t.setAttribute('aria-label', isOpen ? 'Close AI chat' : 'Open AI chat');
       t.setAttribute('aria-expanded', isOpen);
     });
-    if (isOpen && sidebar && !iframeLoaded) {
-      var iframe = document.createElement('iframe');
-      iframe.title = 'Proxy chat';
-      iframe.src = getIframeSrc();
-      sidebar.appendChild(iframe);
-      iframeLoaded = true;
-    }
+    if (isOpen) mountChatIframe();
   }
 
   triggers.forEach(function(t) {
+    t.addEventListener('pointerenter', warmupChatIframe, { once: true, passive: true });
+    t.addEventListener('focus', warmupChatIframe, { once: true });
     t.addEventListener('click', function() {
       if (t.classList.contains('srini-chat-nav-btn') || t.classList.contains('hero-cta--chat')) {
         t.classList.add('srini-chat-attention-stopped');
@@ -3626,6 +3651,11 @@ Designed a white label friendly design system scaling from design to code for fi
     document.addEventListener('DOMContentLoaded', openChatFromUrlIfNeeded);
   } else {
     openChatFromUrlIfNeeded();
+  }
+  if (document.readyState === 'complete') {
+    scheduleChatWarmup();
+  } else {
+    window.addEventListener('load', scheduleChatWarmup);
   }
 })();
   </script>
