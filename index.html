@@ -1719,9 +1719,18 @@
 
     .home-scroll-reveal.is-revealed {
       opacity: 1;
-      filter: blur(0);
-      transform: translate3d(0, 0, 0);
+      filter: none;
+      transform: none;
       will-change: auto;
+    }
+
+    /* Filter/transform here clips staged folder cards to the row box. */
+    .ai-labs-folders.home-scroll-reveal,
+    .ai-labs-folders.home-scroll-reveal.is-revealed {
+      opacity: 1 !important;
+      filter: none !important;
+      transform: none !important;
+      will-change: auto !important;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -2883,7 +2892,6 @@ Designed a white label friendly design system scaling from design to code for fi
           '.previous-work-label',
           '.previous-work-item',
           '.ai-labs-intro',
-          '.ai-labs-folders',
           '#contact > .frame'
         ].join(','));
         var blocks = Array.prototype.slice.call(nodes);
