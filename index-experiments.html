@@ -1734,7 +1734,32 @@ Designed a white label friendly design system scaling from design to code for fi
       // ── Collapsed persistent top navigation ──
       var headerNav = document.querySelector('header nav');
       var persistentNavMinWidth = window.matchMedia('(min-width: 769px)');
-      var persistentNavOffset = 140;
+      function hasScrolledPastHeader() {
+        var header = document.querySelector('header');
+        if (!header) return window.scrollY > 140;
+
+        if (header.querySelector('.HeaderContent')) {
+          return header.getBoundingClientRect().bottom <= 0;
+        }
+
+        var hero = document.getElementById('about');
+        if (hero) {
+          return hero.getBoundingClientRect().bottom <= 0;
+        }
+
+        var anchor =
+          document.querySelector('.header-nav-row') ||
+          document.querySelector('header nav') ||
+          header;
+        var rect = anchor.getBoundingClientRect();
+        if (rect.height > 0 && !document.body.classList.contains('nav-persistent')) {
+          anchor.dataset.persistAtScrollY = String(window.scrollY + rect.bottom);
+        }
+        if (document.body.classList.contains('nav-persistent') && anchor.dataset.persistAtScrollY) {
+          return window.scrollY >= parseFloat(anchor.dataset.persistAtScrollY, 10);
+        }
+        return rect.bottom <= 0;
+      }
 
       function isPersistentNavActive() {
         return document.body.classList.contains('nav-persistent');
@@ -1755,7 +1780,7 @@ Designed a white label friendly design system scaling from design to code for fi
       }
 
       function updatePersistentNav() {
-        var shouldPersist = persistentNavMinWidth.matches && window.scrollY > persistentNavOffset;
+        var shouldPersist = persistentNavMinWidth.matches && hasScrolledPastHeader();
         document.body.classList.toggle('nav-persistent', shouldPersist);
         if (headerNav) {
           headerNav.classList.toggle('nav-scrolled', shouldPersist);
@@ -2196,7 +2221,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
   var CHAT_API_PUBLIC = 'https://sriniai.netlify.app';
   /** Bump when deploying chatbot or host chat script changes (cache bust). */
-  var CHATBOT_CACHE_BUST = '34';
+  var CHATBOT_CACHE_BUST = '36';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';

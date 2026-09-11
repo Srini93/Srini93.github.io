@@ -27,7 +27,6 @@
   --srini-safe-bottom: env(safe-area-inset-bottom, 0px);
   --srini-safe-left: env(safe-area-inset-left, 0px);
 
-  /* Large displays — scale type like ~120% browser zoom */
   --srini-type-scale: 1;
 }
 
@@ -54,10 +53,3 @@
   }
 }
 
-@media screen and (min-width: 1801px) {
-  :root {
-    --srini-type-scale: 1.2;
-    --srini-body-font-size: 18px;
-    --srini-body-line-height: 30px;
-  }
-}

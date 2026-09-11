@@ -2,20 +2,1720 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Srini AI chat</title>
-    <link rel="dns-prefetch" href="https://sriniai.netlify.app" />
-    <link rel="preconnect" href="https://sriniai.netlify.app" crossorigin />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Proxy AI</title>
+    <meta name="application-name" content="Proxy AI" />
+    <meta name="apple-mobile-web-app-title" content="Proxy AI" />
+    <meta name="theme-color" content="#3b65ef" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" sizes="any" />
+    <link rel="icon" href="./assets/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon-120.png" sizes="120x120" />
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon-152.png" sizes="152x152" />
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon-167.png" sizes="167x167" />
+    <link rel="apple-touch-icon" href="./assets/apple-touch-icon.png" sizes="180x180" />
+    <link rel="manifest" href="./assets/manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="./assets/index-D5yj4u-4.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-C16QrFCa.css">
+    <script type="module" crossorigin src="./assets/index-Ceo5IzNr.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-C6bn-kI3.css">
+    <style>
+      /* Gradient sits behind chat content, full width from top */
+      #root {
+        position: relative;
+        z-index: 1;
+      }
+      #gradient-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 38%;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition: opacity 0.35s ease;
+        -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 58%, transparent 100%);
+        mask-image: linear-gradient(180deg, #000 0%, #000 58%, transparent 100%);
+      }
+
+      #gradient-overlay.welcome {
+        opacity: 1;
+      }
+
+      /* Gemini-style flowing color waves */
+      #gradient-overlay::before,
+      #gradient-overlay::after {
+        content: "";
+        position: absolute;
+        top: -25%;
+        height: 140%;
+        filter: blur(22px);
+        will-change: transform, background-position;
+      }
+
+      #gradient-overlay::before {
+        left: -45%;
+        width: 190%;
+        background: linear-gradient(
+          100deg,
+          rgba(59, 130, 246, 0) 0%,
+          rgba(96, 165, 250, 0.2) 22%,
+          rgba(129, 140, 248, 0.16) 48%,
+          rgba(251, 191, 80, 0.13) 72%,
+          rgba(59, 130, 246, 0) 100%
+        );
+        background-size: 220% 100%;
+        background-position: 50% 50%;
+        transform: translate3d(0, 0, 0);
+      }
+
+      #gradient-overlay::after {
+        left: -35%;
+        width: 170%;
+        background: linear-gradient(
+          90deg,
+          rgba(147, 197, 253, 0) 0%,
+          rgba(147, 197, 253, 0.14) 28%,
+          rgba(253, 200, 120, 0.11) 52%,
+          rgba(167, 139, 250, 0.1) 78%,
+          rgba(147, 197, 253, 0) 100%
+        );
+        background-size: 260% 100%;
+        opacity: 0.9;
+        background-position: 50% 50%;
+        transform: translate3d(0, 0, 0);
+      }
+
+      #gradient-overlay.active {
+        opacity: 1;
+        transition: opacity 0.18s ease-in;
+      }
+
+      #gradient-overlay.active::before {
+        animation: gradientWaveA 3.8s cubic-bezier(0.42, 1.35, 0.52, 1) infinite;
+      }
+
+      #gradient-overlay.active::after {
+        animation: gradientWaveB 4.6s cubic-bezier(0.38, 1.28, 0.55, 1) infinite;
+      }
+
+      @keyframes gradientWaveA {
+        0%, 100% {
+          transform: translate3d(-8%, 3%, 0) scale(1);
+          background-position: 0% 50%;
+        }
+        32% {
+          transform: translate3d(11%, -4%, 0) scale(1.05);
+          background-position: 92% 50%;
+        }
+        48% {
+          transform: translate3d(7%, -1%, 0) scale(1.02);
+          background-position: 108% 50%;
+        }
+        68% {
+          transform: translate3d(-3%, 2%, 0) scale(1.03);
+          background-position: 55% 50%;
+        }
+      }
+
+      @keyframes gradientWaveB {
+        0%, 100% {
+          transform: translate3d(7%, -2%, 0) scale(1);
+          background-position: 100% 50%;
+        }
+        28% {
+          transform: translate3d(-10%, 4%, 0) scale(1.04);
+          background-position: 8% 50%;
+        }
+        44% {
+          transform: translate3d(-6%, 1%, 0) scale(1.01);
+          background-position: -6% 50%;
+        }
+        72% {
+          transform: translate3d(4%, -3%, 0) scale(1.03);
+          background-position: 62% 50%;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        #gradient-overlay {
+          transition: opacity 0.3s ease;
+          background: linear-gradient(180deg,
+            rgba(96, 165, 250, 0.16) 0%,
+            rgba(147, 197, 253, 0.1) 30%,
+            rgba(253, 200, 120, 0.06) 50%,
+            rgba(255, 255, 255, 0) 72%
+          );
+          -webkit-mask-image: none;
+          mask-image: none;
+        }
+
+        #gradient-overlay::before,
+        #gradient-overlay::after {
+          display: none;
+        }
+
+        #gradient-overlay.welcome,
+        #gradient-overlay.active {
+          opacity: 0.9;
+        }
+
+        .welcome-avatar {
+          animation: none !important;
+          opacity: 1;
+          transform: none;
+        }
+
+        .welcome-heading {
+          animation: none !important;
+          opacity: 1;
+          transform: none;
+        }
+      }
+
+      .icon-btn--active {
+        color: var(--accent) !important;
+        background: rgba(59, 130, 246, 0.1) !important;
+      }
+
+      .font-a11y-btn__glyph {
+        font-family: var(--font, "DM Sans", system-ui, sans-serif);
+        font-size: 15px;
+        font-weight: 700;
+        line-height: 1;
+        letter-spacing: -0.03em;
+        user-select: none;
+      }
+
+      /* Font accessibility — text size slider */
+      html {
+        --a11y-font-scale: 1;
+      }
+
+      html[data-a11y-font] .msg-row .msg-bubble,
+      html[data-a11y-font] .chat-form__input,
+      html[data-a11y-font] .suggestion-row,
+      html[data-a11y-font] .msg-suggestion-btn,
+      html[data-a11y-font] .adplist-booking,
+      html[data-a11y-font] .info-tooltip {
+        font-size: calc(16px * var(--a11y-font-scale));
+      }
+
+      html[data-a11y-font] .welcome-heading {
+        font-size: calc(26px * var(--a11y-font-scale));
+      }
+
+      .font-a11y-panel {
+        position: absolute;
+        top: calc(100% + 4px);
+        right: 16px;
+        left: auto;
+        width: min(260px, calc(100vw - 32px));
+        z-index: 40;
+        padding: 16px 18px;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        background: var(--bg, #fff);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 14px;
+        line-height: 1.4;
+        color: var(--text, #1a1a1a);
+        display: none;
+      }
+
+      .font-a11y-panel.visible {
+        display: block;
+      }
+
+      .font-a11y-panel__title {
+        margin: 0 0 12px;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--text, #1a1a1a);
+      }
+
+      .font-a11y-panel__slider-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .font-a11y-panel__size-icon {
+        flex-shrink: 0;
+        font-weight: 600;
+        color: var(--text-secondary, #6b6b6b);
+        line-height: 1;
+        user-select: none;
+      }
+
+      .font-a11y-panel__size-icon--sm {
+        font-size: 13px;
+      }
+
+      .font-a11y-panel__size-icon--lg {
+        font-size: 19px;
+      }
+
+      .font-a11y-panel__slider {
+        flex: 1;
+        min-width: 0;
+        height: 4px;
+        margin: 0;
+        appearance: none;
+        -webkit-appearance: none;
+        border-radius: 999px;
+        background: linear-gradient(
+          to right,
+          var(--accent, #3b65ef) 0%,
+          var(--accent, #3b65ef) var(--a11y-slider-fill, 0%),
+          var(--border, #e8e8e8) var(--a11y-slider-fill, 0%),
+          var(--border, #e8e8e8) 100%
+        );
+        cursor: pointer;
+      }
+
+      .font-a11y-panel__slider::-webkit-slider-runnable-track {
+        height: 4px;
+        border-radius: 999px;
+        background: transparent;
+      }
+
+      .font-a11y-panel__slider::-webkit-slider-thumb {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        margin-top: -7px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        background: var(--accent, #3b65ef);
+        box-shadow: 0 1px 4px rgba(59, 101, 239, 0.35);
+        cursor: pointer;
+      }
+
+      .font-a11y-panel__slider::-moz-range-track {
+        height: 4px;
+        border-radius: 999px;
+        background: var(--border, #e8e8e8);
+      }
+
+      .font-a11y-panel__slider::-moz-range-progress {
+        height: 4px;
+        border-radius: 999px;
+        background: var(--accent, #3b65ef);
+      }
+
+      .font-a11y-panel__slider::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        background: var(--accent, #3b65ef);
+        box-shadow: 0 1px 4px rgba(59, 101, 239, 0.35);
+        cursor: pointer;
+      }
+
+      .font-a11y-panel__value {
+        margin-top: 10px;
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-secondary, #6b6b6b);
+        text-align: center;
+      }
+
+      .info-tooltip {
+        position: absolute !important;
+        top: calc(100% + 4px) !important;
+        left: 16px !important;
+        right: auto !important;
+        width: min(360px, calc(100vw - 40px));
+        z-index: 40;
+        border-radius: 14px;
+        padding: 16px 18px;
+        font-size: 15px;
+        line-height: 1.5;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      }
+
+      .info-tooltip::before {
+        left: var(--tooltip-arrow-left, 24px);
+      }
+
+      /* Header — liquid glass pill (neutral on plain bg, translucent when gradient shows) */
+      .chat-header {
+        position: relative;
+        isolation: isolate;
+        overflow: visible;
+        z-index: 20;
+        margin: 12px 16px 0;
+        padding: 12px 16px !important;
+        border: 1px solid rgba(0, 0, 0, 0.07) !important;
+        border-radius: 46px;
+        background: rgba(255, 255, 255, 0.68);
+        backdrop-filter: blur(20px) saturate(150%);
+        -webkit-backdrop-filter: blur(20px) saturate(150%);
+        box-shadow:
+          0 2px 10px rgba(0, 0, 0, 0.05),
+          0 1px 3px rgba(0, 0, 0, 0.03),
+          inset 0 1px 0 rgba(255, 255, 255, 0.88);
+        transition:
+          background 0.35s ease,
+          border-color 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+
+      .chat-header::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.42) 0%,
+          rgba(255, 255, 255, 0.08) 42%,
+          transparent 72%
+        );
+        z-index: 0;
+      }
+
+      .chat-header::after {
+        content: none;
+        display: none;
+      }
+
+      html.gradient-bg .chat-header {
+        background: rgba(255, 255, 255, 0.24);
+        border-color: rgba(255, 255, 255, 0.58) !important;
+        backdrop-filter: blur(32px) saturate(195%);
+        -webkit-backdrop-filter: blur(32px) saturate(195%);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.72),
+          inset 0 -1px 0 rgba(255, 255, 255, 0.14);
+      }
+
+      html.gradient-bg .chat-header::before {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.52) 0%,
+          rgba(255, 255, 255, 0.1) 38%,
+          transparent 64%
+        );
+      }
+
+      .chat-header > :not(.info-tooltip):not(.font-a11y-panel) {
+        position: relative;
+        z-index: 1;
+      }
+
+      .chat-header .icon-btn {
+        color: rgba(26, 26, 26, 0.88);
+      }
+
+      .chat-header .icon-btn:hover {
+        color: #1a1a1a;
+        background: rgba(118, 118, 128, 0.12);
+      }
+
+      .chat-header .icon-btn--active {
+        color: #1a1a1a !important;
+        background: rgba(118, 118, 128, 0.14) !important;
+      }
+
+      /* Standalone (direct) view — hide iframe close control */
+      html.standalone .chat-header button[aria-label="Close"] {
+        display: none !important;
+      }
+
+      /*
+       * iOS home-screen / installed PWA: draw under the status bar & Dynamic Island
+       * so the header glass background fills that region. Content stays clear via
+       * safe-area-inset-top padding. html.pwa-standalone covers navigator.standalone
+       * on older iOS; the media query covers modern installed PWAs.
+       */
+      @media (display-mode: standalone), (display-mode: fullscreen) {
+        .chat-header {
+          margin-top: 0;
+          margin-left: 0;
+          margin-right: 0;
+          border-radius: 0;
+          border-top: none !important;
+          border-left: none !important;
+          border-right: none !important;
+          padding-top: calc(12px + constant(safe-area-inset-top)) !important;
+          padding-top: calc(12px + env(safe-area-inset-top, 0px)) !important;
+          padding-left: max(16px, env(safe-area-inset-left, 0px)) !important;
+          padding-right: max(16px, env(safe-area-inset-right, 0px)) !important;
+        }
+      }
+
+      html.pwa-standalone .chat-header {
+        margin-top: 0;
+        margin-left: 0;
+        margin-right: 0;
+        border-radius: 0;
+        border-top: none !important;
+        border-left: none !important;
+        border-right: none !important;
+        padding-top: calc(12px + constant(safe-area-inset-top)) !important;
+        padding-top: calc(12px + env(safe-area-inset-top, 0px)) !important;
+        padding-left: max(16px, env(safe-area-inset-left, 0px)) !important;
+        padding-right: max(16px, env(safe-area-inset-right, 0px)) !important;
+      }
+
+      /* Proxy brand avatar — flat circle + sparkle */
+      .msg-avatar {
+        background: url("assets/proxy-avatar.svg") center / cover no-repeat !important;
+        border-radius: 50% !important;
+        animation: none !important;
+        box-shadow: none !important;
+      }
+
+      @keyframes welcomeAvatarIn {
+        0% {
+          opacity: 0;
+          transform: scale(0.72);
+        }
+        55% {
+          opacity: 1;
+          transform: scale(1.14);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .welcome-avatar {
+        background: url("assets/proxy-avatar.svg") center / cover no-repeat !important;
+        border-radius: 50% !important;
+        box-shadow: none !important;
+        width: 64px;
+        height: 64px;
+        flex-shrink: 0;
+        align-self: flex-start;
+        margin: 0 auto 48px 0;
+        animation: welcomeAvatarIn 0.65s cubic-bezier(0.34, 1.25, 0.64, 1) both;
+      }
+
+      .welcome-heading {
+        opacity: 0;
+        transform: translate3d(0, 12px, 0);
+        animation: 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards staggerIn;
+      }
+
+      .msg-row.bot .msg-avatar {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      /* Alpha badge next to header title */
+      .header-title::after {
+        content: "Alpha";
+        display: inline-flex;
+        align-items: center;
+        margin-left: 6px;
+        padding: 2px 6px;
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: none;
+        letter-spacing: 0.02em;
+        color: rgba(60, 60, 67, 0.78);
+        background: rgba(118, 118, 128, 0.12);
+        border: none;
+        border-radius: 4px;
+        vertical-align: middle;
+      }
+
+      .header-alpha {
+        height: 18px;
+        padding: 0 6px;
+        margin-left: 4px;
+        border-radius: 4px;
+        background: rgba(118, 118, 128, 0.12);
+        box-shadow: none;
+        color: rgba(60, 60, 67, 0.78);
+        font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.02em;
+      }
+
+      /* Voice / read-aloud feature removed for now */
+      .msg-read-btn,
+      button[aria-label="Read responses aloud"] {
+        display: none !important;
+      }
+
+      /* Chat form — input and send button as separate controls */
+      .chat-form {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        padding: 0 !important;
+        gap: 12px !important;
+      }
+
+      .chat-form:focus-within {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+      }
+
+      .chat-form__input {
+        background: var(--surface) !important;
+        border: 1px solid var(--border) !important;
+        border-radius: 28px !important;
+        padding: 16px 20px !important;
+        min-height: 56px;
+        box-sizing: border-box;
+        transition:
+          border-color 0.25s ease,
+          box-shadow 0.25s ease,
+          background 0.25s ease;
+      }
+
+      .chat-form:focus-within .chat-form__input {
+        border-color: var(--border) !important;
+        background: #fff !important;
+        box-shadow: 0 0 0 3px rgba(59, 101, 239, 0.12) !important;
+      }
+
+      /* Send: circular button, active once the user has typed */
+      .chat-form__send {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(118, 118, 128, 0.16);
+        color: rgba(60, 60, 67, 0.45);
+        opacity: 1;
+        cursor: not-allowed;
+        transition:
+          background 0.2s ease,
+          color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .chat-form__send svg {
+        width: 18px;
+        height: 18px;
+        transition: transform 0.2s cubic-bezier(0.34, 1.2, 0.64, 1);
+      }
+
+      .chat-form.has-text .chat-form__send:not(:disabled) {
+        background: #1a1a1a;
+        color: #fff;
+        opacity: 1;
+        cursor: pointer;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+      }
+
+      .chat-form.has-text .chat-form__send:not(:disabled):hover {
+        background: #333;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
+      }
+
+      .chat-form.has-text .chat-form__send:not(:disabled):hover svg {
+        transform: translateY(-2px);
+      }
+
+      .chat-form__send:disabled {
+        opacity: 1;
+        cursor: not-allowed;
+        background: rgba(118, 118, 128, 0.16);
+        color: rgba(60, 60, 67, 0.45);
+        box-shadow: none;
+      }
+
+
+      /* ADPList card — modern glass-inspired design aligned with chatbot typography */
+      .adplist-widget-row {
+        margin: 16px 0 0;
+        width: 100%;
+        max-width: 100%;
+        font-family: "DM Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+        animation: adplistCardIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      .msg-content > .adplist-widget-row {
+        margin-left: 0;
+        margin-right: 0;
+      }
+
+      .msg-row.bot .msg-content.msg-content--adplist {
+        flex: 1 1 auto;
+        max-width: none;
+        min-width: 0;
+      }
+
+      @keyframes adplistCardIn {
+        from {
+          opacity: 0;
+          transform: translateY(12px) scale(0.98);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+        }
+      }
+
+      .adplist-booking {
+        position: relative;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-radius: 16px;
+        background: unset;
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        padding: 20px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        overflow: hidden;
+      }
+
+      .adplist-booking__section {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .adplist-booking__section--first {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+      }
+
+      .adplist-booking__section-label {
+        margin: 0 0 12px;
+        font-size: 12px;
+        font-weight: 500;
+        color: rgba(255, 255, 255, 1);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .adplist-booking__slots {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .adplist-booking__slot {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 10px 14px;
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        background: #fff;
+        color: var(--text, #18181b);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .adplist-booking__slot:hover {
+        border-color: rgba(99, 102, 241, 0.3);
+        box-shadow: 0 2px 6px rgba(99, 102, 241, 0.1);
+        background: rgba(99, 102, 241, 0.04);
+      }
+
+      .adplist-booking__slot-icon {
+        font-size: 14px;
+        line-height: 1;
+        opacity: 0.85;
+      }
+
+      .adplist-booking__reviews-wrapper {
+        position: relative;
+      }
+
+      .adplist-booking__reviews {
+        display: flex;
+        gap: 12px;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        margin: 0 -4px;
+        padding-left: 4px;
+        padding-right: 4px;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .adplist-booking__reviews::-webkit-scrollbar {
+        height: 4px;
+      }
+
+      .adplist-booking__reviews::-webkit-scrollbar-track {
+        background: rgba(0, 0, 0, 0.03);
+        border-radius: 2px;
+      }
+
+      .adplist-booking__reviews::-webkit-scrollbar-thumb {
+        background: rgba(99, 102, 241, 0.25);
+        border-radius: 2px;
+      }
+
+      .adplist-booking__scroll-btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: 1px solid rgba(0, 0, 0, 0.08);
+        background: #fff;
+        color: var(--text, #18181b);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 2;
+        transition: background 0.15s ease, box-shadow 0.15s ease, opacity 0.15s ease;
+        opacity: 0.9;
+      }
+
+      .adplist-booking__scroll-btn:hover {
+        background: #f5f5f5;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        opacity: 1;
+      }
+
+      .adplist-booking__scroll-btn--left {
+        left: -12px;
+      }
+
+      .adplist-booking__scroll-btn--right {
+        right: -12px;
+      }
+
+      .adplist-booking__scroll-btn svg {
+        width: 16px;
+        height: 16px;
+      }
+
+      .adplist-booking__scroll-btn--hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .adplist-review-card {
+        flex: 0 0 min(280px, 85vw);
+        scroll-snap-align: start;
+        border: 1px solid rgba(0, 0, 0, 0.05);
+        border-radius: 14px;
+        background: #fff;
+        padding: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        min-height: 180px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        position: relative;
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+      }
+
+      .adplist-review-card:hover {
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        transform: translateY(-2px);
+      }
+
+      .adplist-review-card::before {
+        content: """;
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        font-size: 40px;
+        line-height: 1;
+        color: rgba(99, 102, 241, 0.08);
+        font-family: Georgia, "Times New Roman", serif;
+        pointer-events: none;
+      }
+
+      .adplist-review-card__header {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .adplist-review-card__avatar {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        object-fit: cover;
+        flex-shrink: 0;
+        background: linear-gradient(135deg, #f0f0ff, #e8e8ff);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+      }
+
+      .adplist-review-card__avatar--fallback {
+        display: grid;
+        place-items: center;
+        font-size: 13px;
+        font-weight: 600;
+        color: #6366f1;
+      }
+
+      .adplist-review-card__name {
+        margin: 0;
+        font-size: 14px;
+        font-weight: 900;
+        color: var(--text, #18181b);
+        letter-spacing: -0.01em;
+      }
+
+      .adplist-review-card__meta {
+        margin: 2px 0 0;
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--text-muted, #71717a);
+        line-height: 1.3;
+      }
+
+      .adplist-review-card__text {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.55;
+        color: var(--text, #18181b);
+        flex: 1;
+        font-weight: 400;
+      }
+
+      .adplist-review-card__tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+
+      .adplist-review-card__tag {
+        font-size: 13px;
+        font-weight: 500;
+        padding: 4px 8px;
+        border-radius: 6px;
+        background: rgba(97, 134, 219, 0.06);
+        color: rgba(48, 48, 48, 1);
+      }
+
+      .adplist-review-card__date {
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--text-muted, #71717a);
+      }
+
+      .adplist-booking__footer {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(0, 0, 0, 0.05);
+      }
+
+      .adplist-booking__footer--first {
+        margin-top: 0;
+        padding-top: 0;
+        border-top: none;
+      }
+
+      .adplist-booking__cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        width: fit-content;
+        padding: 12px 20px;
+        border-radius: 10px;
+        background: #18181b;
+        color: #fff;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        letter-spacing: -0.01em;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        transition: background 0.15s ease, box-shadow 0.15s ease;
+      }
+
+      .adplist-booking__cta:hover {
+        background: #27272a;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+      }
+
+      .adplist-booking__cta:active {
+        background: #18181b;
+      }
+
+      .adplist-booking__note {
+        margin: 0;
+        font-size: 13px;
+        font-weight: 400;
+        color: var(--text-muted, #71717a);
+        line-height: 1.4;
+      }
+
+      @media (max-width: 768px) {
+        .adplist-widget-row {
+          max-width: 100%;
+        }
+
+        .adplist-booking {
+          padding: 16px;
+        }
+
+        .adplist-booking__header {
+          gap: 12px;
+        }
+
+        .adplist-booking__avatar {
+          width: 48px;
+          height: 48px;
+        }
+
+        .adplist-booking__title {
+          font-size: 16px;
+        }
+
+        .adplist-review-card {
+          flex: 0 0 min(260px, 80vw);
+          padding: 14px;
+        }
+      }
+
+    </style>
+    <script>
+      (function () {
+        if (window.self === window.top) {
+          document.documentElement.classList.add('standalone');
+        }
+        // iOS home-screen PWAs set navigator.standalone; also cover display-mode.
+        var isPwa =
+          window.navigator.standalone === true ||
+          (window.matchMedia &&
+            (window.matchMedia('(display-mode: standalone)').matches ||
+              window.matchMedia('(display-mode: fullscreen)').matches));
+        if (isPwa) {
+          document.documentElement.classList.add('pwa-standalone');
+        }
+      })();
+    </script>
   </head>
   <body>
+    <div id="gradient-overlay"></div>
     <div id="root"></div>
+    <script>
+      // Gradient: static on welcome screen, animated while responding, hidden after first prompt
+      (function() {
+        const overlay = document.getElementById('gradient-overlay');
+        if (!overlay) return;
+
+        function isWelcomeScreen() {
+          return !!document.querySelector('.welcome') && !document.querySelector('#messages .msg-row.user');
+        }
+
+        function updateOverlay() {
+          const isResponding = document.body.classList.contains('ai-responding');
+          const showWelcome = isWelcomeScreen();
+          overlay.classList.toggle('welcome', showWelcome && !isResponding);
+          overlay.classList.toggle('active', isResponding);
+          const hasGradient = (showWelcome && !isResponding) || isResponding;
+          document.documentElement.classList.toggle('gradient-bg', hasGradient);
+        }
+
+        // Watch for class changes on body
+        const observer = new MutationObserver(() => updateOverlay());
+        observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+        // Update when messages change
+        const root = document.getElementById('root');
+        const rootObserver = new MutationObserver(() => updateOverlay());
+        if (root) {
+          rootObserver.observe(root, { childList: true, subtree: true });
+        }
+
+        updateOverlay();
+      })();
+
+      // Vintage interaction sounds (warm 8-bit / chiptune palette)
+      (function () {
+        let ctx = null;
+        let master = null;
+
+        function unlockSync() {
+          try {
+            if (!ctx) {
+              ctx = new (window.AudioContext || window.webkitAudioContext)();
+              master = ctx.createGain();
+              master.gain.value = 0.92;
+              master.connect(ctx.destination);
+            }
+            if (ctx.state === 'suspended') {
+              ctx.resume().catch(function () {});
+            }
+          } catch (_) {}
+        }
+
+        function runWhenReady(fn) {
+          unlockSync();
+          if (!ctx || !master) return;
+          if (ctx.state === 'running') {
+            fn();
+            return;
+          }
+          ctx.resume().then(fn).catch(function () {});
+        }
+
+        // Soft triangle/square through a low-pass — retro but easy on the ears
+        function vintageTone(freq, start, dur, volume, opts) {
+          opts = opts || {};
+          if (!ctx || !master) return;
+          const t = ctx.currentTime + start;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          const filter = ctx.createBiquadFilter();
+          osc.type = opts.type || 'triangle';
+          osc.frequency.setValueAtTime(freq, t);
+          filter.type = 'lowpass';
+          filter.frequency.setValueAtTime(opts.filter || 2600, t);
+          filter.Q.setValueAtTime(0.7, t);
+          const attack = opts.attack || 0.006;
+          gain.gain.setValueAtTime(0.0001, t);
+          gain.gain.exponentialRampToValueAtTime(Math.max(volume, 0.001), t + attack);
+          gain.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+          osc.connect(filter);
+          filter.connect(gain);
+          gain.connect(master);
+          osc.start(t);
+          osc.stop(t + dur + 0.03);
+        }
+
+        function vintageSeq(notes) {
+          notes.forEach(function (n) {
+            vintageTone(n[0], n[1], n[2], n[3], n[4]);
+          });
+        }
+
+        const sounds = {
+          hover: function () {
+            vintageTone(1318.5, 0, 0.028, 0.034, { filter: 3400 });
+          },
+          send: function () {
+            vintageSeq([
+              [392, 0, 0.1, 0.055],
+              [523.25, 0.055, 0.13, 0.048],
+            ]);
+          },
+          select: function () {
+            vintageSeq([
+              [523.25, 0, 0.06, 0.05],
+              [659.25, 0.048, 0.075, 0.042],
+            ]);
+          },
+          answer: function () {
+            vintageSeq([
+              [523.25, 0, 0.1, 0.048],
+              [659.25, 0.085, 0.11, 0.042],
+              [783.99, 0.17, 0.15, 0.036],
+            ]);
+          },
+          click: function () {
+            vintageTone(440, 0, 0.042, 0.04, { type: 'square', filter: 1400 });
+          },
+          think: function () {
+            vintageSeq([
+              [349.23, 0, 0.07, 0.036, { filter: 2200 }],
+              [440, 0.065, 0.09, 0.03, { filter: 2200 }],
+            ]);
+          },
+          error: function () {
+            vintageSeq([
+              [207.65, 0, 0.11, 0.05, { filter: 1800 }],
+              [174.61, 0.095, 0.15, 0.044, { filter: 1600 }],
+            ]);
+          },
+        };
+
+        function play(name) {
+          if (!sounds[name]) return;
+          runWhenReady(function () {
+            sounds[name]();
+          });
+        }
+
+        window.SRINI_CHAT_SOUND = play;
+
+        // Parent portfolio page posts this when the chatbot runs in an iframe.
+        window.addEventListener('message', function (e) {
+          if (e.data === 'srini-chat-sound-send') play('send');
+        });
+
+        ['pointerdown', 'keydown', 'touchstart'].forEach(function (ev) {
+          document.addEventListener(ev, unlockSync, { passive: true, capture: true });
+        });
+
+        var root = document.getElementById('root');
+        if (!root) return;
+
+        root.addEventListener(
+          'pointerdown',
+          function (e) {
+            unlockSync();
+            var btn = e.target.closest('button');
+            if (!btn) return;
+            if (btn.classList.contains('suggestion-row') || btn.classList.contains('msg-suggestion-btn')) {
+              play('select');
+            } else if (btn.classList.contains('chat-form__send')) {
+              play('send');
+            }
+          },
+          true
+        );
+
+        root.addEventListener(
+          'click',
+          function (e) {
+            var btn = e.target.closest('button');
+            if (!btn) return;
+            if (btn.closest('.chat-header')) {
+              play('click');
+            }
+          },
+          true
+        );
+
+        var wasResponding = false;
+        var observer = new MutationObserver(function () {
+          var responding = document.body.classList.contains('ai-responding');
+          if (responding && !wasResponding) play('think');
+          wasResponding = responding;
+        });
+        observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+        var hadError = false;
+        var errorObserver = new MutationObserver(function () {
+          var hasError = !!document.querySelector('.error-msg');
+          if (hasError && !hadError) play('error');
+          hadError = hasError;
+        });
+        errorObserver.observe(root, { childList: true, subtree: true, characterData: true });
+      })();
+
+      // ADPList rich cards — rendered when chat API returns adplist payload
+      (function () {
+        function escapeHtml(value) {
+          return String(value || '')
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+        }
+
+        function renderReviewCard(review) {
+          const tags = Array.isArray(review.tags)
+            ? review.tags.slice(0, 3).map((tag) => `<span class="adplist-review-card__tag">${escapeHtml(tag)}</span>`).join('')
+            : '';
+          return (
+            `<article class="adplist-review-card">` +
+            `<div class="adplist-review-card__header"><div>` +
+            `<p class="adplist-review-card__name">${escapeHtml(review.reviewer_name)}</p>` +
+            `</div></div>` +
+            `<p class="adplist-review-card__text">${escapeHtml(review.text)}</p>` +
+            (tags ? `<div class="adplist-review-card__tags">${tags}</div>` : '') +
+            (review.date_display ? `<div class="adplist-review-card__date">${escapeHtml(review.date_display)}</div>` : '') +
+            `</article>`
+          );
+        }
+
+        function buildAdplistHtml(data) {
+          const showSlots = data.show_slots === true;
+          const showReviews = data.show_reviews === true;
+          const slots = showSlots && Array.isArray(data.slots) ? data.slots.slice(0, 6) : [];
+          const reviews = showReviews && Array.isArray(data.reviews) ? data.reviews.slice(0, 4) : [];
+
+          // Reviews section with scroll arrows
+          const reviewsHtml = reviews.length
+            ? `<div class="adplist-booking__section adplist-booking__section--first"><p class="adplist-booking__section-label">What mentees say</p><div class="adplist-booking__reviews-wrapper"><button class="adplist-booking__scroll-btn adplist-booking__scroll-btn--left adplist-booking__scroll-btn--hidden" aria-label="Scroll left"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></button><div class="adplist-booking__reviews">${reviews.map(renderReviewCard).join('')}</div><button class="adplist-booking__scroll-btn adplist-booking__scroll-btn--right" aria-label="Scroll right"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg></button></div></div>`
+            : '';
+
+          // Slots section
+          let slotsHtml = '';
+          if (showSlots) {
+            if (data.on_break) {
+              slotsHtml = `<div class="adplist-booking__section adplist-booking__section--first"><p class="adplist-booking__note">Srini is on break on ADPList right now. You can still view his profile and check back later.</p></div>`;
+            } else if (slots.length) {
+              slotsHtml =
+                `<div class="adplist-booking__section${!showReviews ? ' adplist-booking__section--first' : ''}"><p class="adplist-booking__section-label">Available times</p><div class="adplist-booking__slots">${slots
+                  .map(
+                    (slot) => {
+                      const slotUrl = `https://adplist.org/mentors/${encodeURIComponent(slot.mentor_slug || data.mentor_slug)}`;
+                      return `<a class="adplist-booking__slot" href="${escapeHtml(slotUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(slot.slot_local_display)}</a>`;
+                    },
+                  )
+                  .join('')}</div></div>`;
+            } else {
+              slotsHtml = `<div class="adplist-booking__section${!showReviews ? ' adplist-booking__section--first' : ''}"><p class="adplist-booking__note">No open slots in the next two weeks. Visit ADPList to request a session when new times open up.</p></div>`;
+            }
+          }
+
+          // CTA button text based on context
+          const ctaText = showSlots && slots.length ? 'Book on ADPList →' : 'View on ADPList →';
+
+          return (
+            `<div class="adplist-booking">` +
+            reviewsHtml +
+            slotsHtml +
+            `<div class="adplist-booking__footer${!showReviews && !showSlots ? ' adplist-booking__footer--first' : ''}">` +
+            `<a class="adplist-booking__cta" href="${escapeHtml(data.booking_url || data.profile_url)}" target="_blank" rel="noopener noreferrer">${ctaText}</a>` +
+            `</div></div>`
+          );
+        }
+
+        function applyCompanionText(data) {
+          const lastBot = Array.from(document.querySelectorAll('.msg-row.bot')).pop();
+          const msgMd = lastBot?.querySelector('.msg-bubble .msg-md');
+          if (!msgMd || !data?.companion_answer) return;
+          msgMd.innerHTML = `<p>${escapeHtml(data.companion_answer)}</p>`;
+          msgMd.classList.remove('msg-md--streaming');
+        }
+
+        function mountAdplistWidget(data) {
+          const lastBot = Array.from(document.querySelectorAll('.msg-row.bot')).pop();
+          const msgContent = lastBot?.querySelector('.msg-content');
+          if (!msgContent || !data) return false;
+          if (lastBot.querySelector('.msg-md--streaming')) return false;
+
+          document.querySelectorAll('.adplist-widget-row').forEach((node) => node.remove());
+
+          applyCompanionText(data);
+
+          const row = document.createElement('div');
+          row.className = 'adplist-widget-row';
+          row.innerHTML = buildAdplistHtml(data);
+          msgContent.classList.add('msg-content--adplist');
+
+          const suggestions = msgContent.querySelector('.msg-suggestions');
+          if (suggestions) {
+            msgContent.insertBefore(row, suggestions);
+          } else {
+            msgContent.appendChild(row);
+          }
+
+          row.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          window.SRINI_CHAT_SOUND?.('answer');
+
+          // Attach scroll button handlers
+          const reviewsContainer = row.querySelector('.adplist-booking__reviews');
+          const leftBtn = row.querySelector('.adplist-booking__scroll-btn--left');
+          const rightBtn = row.querySelector('.adplist-booking__scroll-btn--right');
+          if (reviewsContainer && leftBtn && rightBtn) {
+            const scrollAmount = 300;
+
+            function updateScrollButtons() {
+              const { scrollLeft, scrollWidth, clientWidth } = reviewsContainer;
+              const hasOverflow = scrollWidth > clientWidth + 1;
+              const atStart = scrollLeft <= 1;
+              const atEnd = scrollLeft + clientWidth >= scrollWidth - 1;
+              leftBtn.classList.toggle('adplist-booking__scroll-btn--hidden', atStart);
+              rightBtn.classList.toggle('adplist-booking__scroll-btn--hidden', !hasOverflow || atEnd);
+            }
+
+            leftBtn.addEventListener('click', () => {
+              reviewsContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+            });
+            rightBtn.addEventListener('click', () => {
+              reviewsContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+            });
+
+            reviewsContainer.addEventListener('scroll', updateScrollButtons);
+            updateScrollButtons();
+            requestAnimationFrame(updateScrollButtons);
+          }
+
+          return true;
+        }
+
+        function scheduleAdplistWidget(data) {
+          if (!data) return;
+
+          let attempts = 0;
+          let observer = null;
+          let timer = null;
+
+          function cleanup() {
+            if (observer) observer.disconnect();
+            if (timer) clearInterval(timer);
+            observer = null;
+            timer = null;
+          }
+
+          function tryMount() {
+            const lastBot = Array.from(document.querySelectorAll('.msg-row.bot')).pop();
+            if (!lastBot) return false;
+            if (lastBot.querySelector('.msg-md--streaming')) return false;
+            if (mountAdplistWidget(data)) {
+              cleanup();
+              return true;
+            }
+            return false;
+          }
+
+          function startWatching() {
+            if (tryMount()) return;
+
+            const messages = document.getElementById('messages');
+            if (messages) {
+              observer = new MutationObserver(() => {
+                tryMount();
+              });
+              observer.observe(messages, { childList: true, subtree: true, characterData: true });
+            }
+
+            timer = setInterval(() => {
+              attempts += 1;
+              if (tryMount() || attempts >= 80) cleanup();
+            }, 50);
+          }
+
+          requestAnimationFrame(() => {
+            requestAnimationFrame(startWatching);
+          });
+        }
+
+        function captureAdplistFromStream(response) {
+          if (!response.ok || !response.body) return response;
+          const [forApp, forTap] = response.body.tee();
+          const reader = forTap.getReader();
+          const decoder = new TextDecoder();
+          let buffer = '';
+
+          (async () => {
+            try {
+              while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                buffer += decoder.decode(value, { stream: true });
+                const lines = buffer.split('\n');
+                buffer = lines.pop() || '';
+                for (const line of lines) {
+                  if (!line.startsWith('data: ')) continue;
+                  const payload = line.slice(6).trim();
+                  if (!payload || payload === '[DONE]') continue;
+                  try {
+                    const event = JSON.parse(payload);
+                    if (event.type === 'done' && event.adplist) {
+                      scheduleAdplistWidget(event.adplist);
+                    }
+                  } catch (_) {}
+                }
+              }
+            } catch (_) {}
+          })();
+
+          return new Response(forApp, {
+            status: response.status,
+            statusText: response.statusText,
+            headers: response.headers,
+          });
+        }
+
+        async function captureAdplistFromJson(response) {
+          if (!response.ok) return response;
+          try {
+            const body = await response.clone().json();
+            if (body && body.adplist) {
+              scheduleAdplistWidget(body.adplist);
+            }
+          } catch (_) {}
+          return response;
+        }
+
+        function isChatPost(url, method) {
+          if (method.toUpperCase() !== 'POST') return null;
+          if (url.includes('/chat/stream')) return 'stream';
+          if (/\/chat(\?|$)/.test(url) && !url.includes('/chat/stream')) return 'json';
+          return null;
+        }
+
+        const originalFetch = window.fetch.bind(window);
+        window.fetch = async function (input, init) {
+          const url = typeof input === 'string' ? input : input?.url || '';
+          const method = (init && init.method) || (typeof input !== 'string' && input?.method) || 'GET';
+          const chatKind = isChatPost(url, method);
+          const response = await originalFetch(input, init);
+          if (chatKind === 'stream') return captureAdplistFromStream(response);
+          if (chatKind === 'json') return captureAdplistFromJson(response);
+          return response;
+        };
+      })();
+
+      // Show follow-up suggestion chips only on the latest bot reply
+      (function () {
+        function keepSuggestionsOnLastBotOnly() {
+          const botRows = document.querySelectorAll('#messages .msg-row.bot');
+          botRows.forEach((row, index) => {
+            const suggestions = row.querySelector('.msg-suggestions');
+            if (!suggestions) return;
+            suggestions.hidden = index !== botRows.length - 1;
+          });
+        }
+
+        const messages = document.getElementById('messages');
+        if (!messages) return;
+
+        keepSuggestionsOnLastBotOnly();
+        new MutationObserver(keepSuggestionsOnLastBotOnly).observe(messages, {
+          childList: true,
+          subtree: true,
+        });
+      })();
+
+      // Font accessibility — text size slider
+      (function () {
+        var STORAGE_KEY = 'srini-chat-font-a11y';
+        var MIN = 100;
+        var MAX = 150;
+        var DEFAULT = 100;
+        var STEP = 5;
+
+        function loadFontScale() {
+          try {
+            var saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+            if (typeof saved.fontScale === 'number') {
+              return Math.min(MAX, Math.max(MIN, saved.fontScale));
+            }
+            if (saved.size === 'large') return 115;
+            if (saved.size === 'xlarge') return 125;
+            return DEFAULT;
+          } catch (_) {
+            return DEFAULT;
+          }
+        }
+
+        function saveFontScale(scale) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({ fontScale: scale }));
+          } catch (_) {}
+        }
+
+        function sliderFillPercent(scale) {
+          return ((scale - MIN) / (MAX - MIN)) * 100 + '%';
+        }
+
+        function applyFontScale(scale) {
+          var html = document.documentElement;
+          var value = scale / 100;
+          html.style.setProperty('--a11y-font-scale', String(value));
+          if (scale === DEFAULT) {
+            html.removeAttribute('data-a11y-font');
+          } else {
+            html.setAttribute('data-a11y-font', 'true');
+          }
+        }
+
+        var fontScale = loadFontScale();
+        applyFontScale(fontScale);
+
+        var mounted = false;
+        var panel = null;
+        var toggleBtn = null;
+        var slider = null;
+        var valueLabel = null;
+
+        function closePanel() {
+          if (!panel) return;
+          panel.classList.remove('visible');
+          if (toggleBtn) toggleBtn.setAttribute('aria-expanded', 'false');
+        }
+
+        function positionHeaderPopup(anchor, popup, options) {
+          if (!anchor || !popup) return;
+          var header = anchor.closest('.chat-header');
+          if (!header) return;
+          var gap = (options && options.gap) || 4;
+          var headerRect = header.getBoundingClientRect();
+          var anchorRect = anchor.getBoundingClientRect();
+          popup.style.top = anchorRect.bottom - headerRect.top + gap + 'px';
+
+          if (options && options.align === 'right') {
+            popup.style.left = 'auto';
+            popup.style.right = headerRect.right - anchorRect.right + 'px';
+            return;
+          }
+
+          var popupWidth = popup.offsetWidth || popup.getBoundingClientRect().width || 260;
+          var idealLeft =
+            anchorRect.left - headerRect.left + anchorRect.width / 2 - popupWidth / 2;
+          var maxLeft = Math.max(8, headerRect.width - popupWidth - 8);
+          var left = Math.min(Math.max(8, idealLeft), maxLeft);
+          popup.style.left = left + 'px';
+          popup.style.right = 'auto';
+
+          if (options && options.arrow) {
+            var arrowLeft =
+              anchorRect.left - headerRect.left + anchorRect.width / 2 - left - 6;
+            popup.style.setProperty('--tooltip-arrow-left', arrowLeft + 'px');
+          }
+        }
+
+        function positionFontPanel() {
+          if (!panel || !toggleBtn || !panel.classList.contains('visible')) return;
+          positionHeaderPopup(toggleBtn, panel, { align: 'right', gap: 4 });
+        }
+
+        function positionInfoTooltip() {
+          var header = document.querySelector('.chat-header');
+          var infoBtn = header && header.querySelector('button[aria-label="Info"]');
+          var tooltip = header && header.querySelector('.info-tooltip.visible');
+          if (!infoBtn || !tooltip) return;
+          positionHeaderPopup(infoBtn, tooltip, { arrow: true, gap: 4 });
+        }
+
+        function handleDocumentClick(e) {
+          if (!panel || !panel.classList.contains('visible')) return;
+          if (panel.contains(e.target) || (toggleBtn && toggleBtn.contains(e.target))) return;
+          closePanel();
+        }
+
+        function openPanel() {
+          if (!panel || !toggleBtn) return;
+          var infoTooltip = document.querySelector('.info-tooltip.visible');
+          if (infoTooltip) infoTooltip.classList.remove('visible');
+          panel.classList.add('visible');
+          toggleBtn.setAttribute('aria-expanded', 'true');
+          requestAnimationFrame(positionFontPanel);
+        }
+
+        function syncSlider() {
+          if (!slider || !valueLabel) return;
+          slider.value = String(fontScale);
+          valueLabel.textContent = fontScale + '%';
+          slider.style.setProperty('--a11y-slider-fill', sliderFillPercent(fontScale));
+          if (toggleBtn) {
+            toggleBtn.classList.toggle('icon-btn--active', fontScale !== DEFAULT);
+          }
+        }
+
+        function setFontScale(scale) {
+          fontScale = Math.min(MAX, Math.max(MIN, Math.round(scale / STEP) * STEP));
+          applyFontScale(fontScale);
+          saveFontScale(fontScale);
+          syncSlider();
+        }
+
+        function buildPanel() {
+          panel = document.createElement('div');
+          panel.className = 'font-a11y-panel';
+          panel.id = 'font-a11y-panel';
+          panel.setAttribute('role', 'dialog');
+          panel.setAttribute('aria-label', 'Text size settings');
+          panel.innerHTML =
+            '<p class="font-a11y-panel__title">Text size</p>' +
+            '<div class="font-a11y-panel__slider-row">' +
+              '<span class="font-a11y-panel__size-icon font-a11y-panel__size-icon--sm" aria-hidden="true">A</span>' +
+              '<input type="range" class="font-a11y-panel__slider" min="' + MIN + '" max="' + MAX + '" step="' + STEP + '" value="' + fontScale + '" aria-label="Text size" aria-valuemin="' + MIN + '" aria-valuemax="' + MAX + '" aria-valuenow="' + fontScale + '" aria-valuetext="' + fontScale + ' percent">' +
+              '<span class="font-a11y-panel__size-icon font-a11y-panel__size-icon--lg" aria-hidden="true">A</span>' +
+            '</div>' +
+            '<p class="font-a11y-panel__value" aria-live="polite">' + fontScale + '%</p>';
+
+          slider = panel.querySelector('.font-a11y-panel__slider');
+          valueLabel = panel.querySelector('.font-a11y-panel__value');
+
+          slider.addEventListener('input', function () {
+            setFontScale(Number(slider.value));
+            slider.setAttribute('aria-valuenow', String(fontScale));
+            slider.setAttribute('aria-valuetext', fontScale + ' percent');
+          });
+
+          panel.addEventListener('click', function (e) {
+            e.stopPropagation();
+          });
+
+          return panel;
+        }
+
+        function mountFontA11y() {
+          if (mounted) return;
+          var header = document.querySelector('.chat-header');
+          var headerRight = document.querySelector('.header-right');
+          var resetBtn = headerRight && headerRight.querySelector('button[aria-label="Reset conversation"]');
+          if (!header || !headerRight || !resetBtn) return;
+
+          toggleBtn = document.createElement('button');
+          toggleBtn.type = 'button';
+          toggleBtn.className = 'icon-btn font-a11y-btn';
+          toggleBtn.setAttribute('aria-label', 'Text size settings');
+          toggleBtn.setAttribute('aria-expanded', 'false');
+          toggleBtn.setAttribute('aria-controls', 'font-a11y-panel');
+          toggleBtn.innerHTML =
+            '<span class="font-a11y-btn__glyph" aria-hidden="true">Aa</span>';
+
+          toggleBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            if (panel.classList.contains('visible')) closePanel();
+            else openPanel();
+          });
+
+          panel = buildPanel();
+          header.appendChild(panel);
+          headerRight.insertBefore(toggleBtn, resetBtn);
+
+          var infoBtn = header.querySelector('button[aria-label="Info"]');
+          if (infoBtn) {
+            infoBtn.addEventListener('click', function () {
+              closePanel();
+              requestAnimationFrame(function () {
+                requestAnimationFrame(positionInfoTooltip);
+              });
+            });
+          }
+
+          var infoTooltip = header.querySelector('.info-tooltip');
+          if (infoTooltip) {
+            new MutationObserver(function () {
+              if (infoTooltip.classList.contains('visible')) positionInfoTooltip();
+            }).observe(infoTooltip, { attributes: true, attributeFilter: ['class'] });
+          }
+
+          window.addEventListener('resize', function () {
+            positionFontPanel();
+            positionInfoTooltip();
+          });
+
+          document.addEventListener('click', handleDocumentClick);
+          document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') closePanel();
+          });
+
+          syncSlider();
+          mounted = true;
+        }
+
+        var root = document.getElementById('root');
+        if (root) {
+          new MutationObserver(mountFontA11y).observe(root, { childList: true, subtree: true });
+        }
+        mountFontA11y();
+      })();
+
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js").catch(() => {});
+        });
+      }
+    </script>
   </body>
 </html>

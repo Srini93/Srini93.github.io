@@ -1,9 +1,32 @@
 /* Persistent scroll nav — matches index.html nav-scrolled + header-chat-slot layout */
 
+@keyframes persistentChromeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -10px, 0) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  @keyframes persistentChromeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
 header nav,
 .header-nav-row {
   position: relative;
   z-index: 10;
+}
+
+a.logo-srini {
+  z-index: 10090 !important;
+  pointer-events: auto !important;
 }
 
 @media screen and (min-width: 769px) {
@@ -16,6 +39,12 @@ header nav,
     min-width: 0;
     box-sizing: border-box;
     z-index: 10002;
+    pointer-events: none;
+  }
+
+  .header-nav-row nav,
+  .header-nav-row .header-chat-slot {
+    pointer-events: auto;
   }
 
   .header-nav-row nav {
@@ -39,22 +68,30 @@ header nav,
 @media screen and (min-width: 769px) {
   header nav {
     transition:
-      top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-      right 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-      width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-      height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-      padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-      background 0.2s ease,
-      box-shadow 0.2s ease,
-      border-color 0.2s ease;
+      top 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      right 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      width 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      padding 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      border-radius 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+      background 0.3s ease,
+      box-shadow 0.3s ease,
+      border-color 0.3s ease;
   }
 
   body.nav-persistent .logo-srini {
+    animation: persistentChromeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
     position: fixed;
     top: 28px;
     left: 32px;
     z-index: 10080;
     transform: none;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    white-space: nowrap;
     padding: 14px 16px 12px;
     border-radius: 9999px;
     color: #666;
@@ -84,6 +121,12 @@ header nav,
       0 14px 40px rgba(0, 0, 0, 0.1),
       inset 0 1px 0 rgba(255, 255, 255, 0.65);
     cursor: pointer;
+    animation: persistentChromeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+  }
+
+  body.nav-persistent .header-nav-row > .header-chat-slot,
+  body.nav-persistent .desk-menu .header-chat-slot {
+    animation: persistentChromeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
   }
 
   body.nav-persistent .header-nav-row > .header-chat-slot {
@@ -126,14 +169,16 @@ header nav,
     width: min(560px, calc(100vw - 540px));
   }
 
-  @media screen and (max-width: 1199px) {
-    body.chat-open.nav-persistent header nav {
-      right: 24px;
-    }
+  /* Case study headers use 100vw breakout; keep them out of the chat panel. */
+  body.chat-open .frame #site-content-wrap > header,
+  body.chat-open #site-content-wrap > header {
+    width: auto !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+  }
 
-    body.chat-open.nav-persistent.nav-expanded header nav {
-      width: min(560px, calc(100vw - 128px));
-    }
+  body.chat-open .chatbot-sidebar {
+    z-index: 10120 !important;
   }
 
   body.nav-persistent.nav-expanded header nav {

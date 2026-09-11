@@ -1,36 +1,32 @@
 ---
-description: Chatbot deploy output is built from srini-chatbot — never edit chatbot/ directly
+description: Embedded Proxy chatbot comes from GitHub Srini93/srini-chatbot — do not wipe chatbot/ with the local Vite app
 globs: chatbot/**,srini-chatbot/**
 alwaysApply: true
 ---
 
 # Chatbot source of truth
 
-The embedded chatbot UI lives in two places:
+The embedded **Proxy** UI in the portfolio iframe is a **pre-built static app** from GitHub, not the local Vite tree.
 
 | Path | Role |
 |------|------|
-| `srini-chatbot/` | **Source** — React + TypeScript + Vite. All chatbot UI/logic changes happen here. |
-| `chatbot/` | **Deploy output only** — pre-built static assets served by the portfolio site iframe. |
+| [Srini93/srini-chatbot](https://github.com/Srini93/srini-chatbot) | **Source of the live Proxy UI** — production build at repo root (`index.html`, `assets/`, `sw.js`). |
+| `chatbot/` | **Deploy copy** served by the portfolio iframe (`data-chatbot-src="./chatbot/"`). Synced from that GitHub repo with relative path fixes. |
+| `srini-chatbot/` | **Legacy Vite app** (older UI). Do not treat this as Proxy source. |
 
 ## Rules
 
-1. **Never edit files under `chatbot/` directly** (including `chatbot/assets/*`, `chatbot/index.html`). Do not patch minified bundles, CSS, or HTML in place.
-2. **To update the chatbot**, change `srini-chatbot/src/**` (or `srini-chatbot/index.html`), then rebuild:
-
-   ```bash
-   cd srini-chatbot && npm run build
-   ```
-
-   Vite writes output to `../chatbot/` (`vite.config.ts` → `build.outDir`).
-
-3. **Portfolio pages** only embed the chatbot via `#chatbot-sidebar` + `data-chatbot-src="./chatbot/"`. Nav/chatbot skills may add or adjust host-page shell (sidebar, triggers, iframe loader) but must not alter `chatbot/` contents.
-4. **Do not merge or hand-resolve conflicts** in `chatbot/` by picking arbitrary sides. Rebuild from `srini-chatbot/` after resolving source conflicts.
+1. **Do not run** `cd srini-chatbot && npm run build` to “update Proxy”. Vite `emptyOutDir: true` **deletes** `chatbot/` and replaces Proxy with the old app.
+2. **To refresh Proxy**, clone/copy from `https://github.com/Srini93/srini-chatbot` into `chatbot/`, then rewrite root-absolute URLs for the iframe subpath:
+   - `/assets/…` → `./assets/…` in `chatbot/index.html` and `chatbot/assets/manifest.webmanifest`
+   - `register("/sw.js")` → `register("./sw.js")`
+   - Manifest `start_url` / `scope` / `id`: `/` → `./`
+3. **Never hand-edit** minified files under `chatbot/assets/` except those path rewrites after a sync.
+4. **Portfolio pages** only embed via `#chatbot-sidebar` + `data-chatbot-src="./chatbot/"`. Host CSS/JS for sidebar, FAB, and iframe loader is allowed. After a Proxy sync, bump `CHATBOT_CACHE_BUST` (and `PP_CHAT_CACHE_BUST` in `password-protect.js`).
+5. UI/logic changes for the **current Proxy** belong in the GitHub repo, not in `srini-chatbot/src/**`, unless that tree is explicitly replaced with the GitHub source.
 
 ## What you may change on host pages
 
 - `#chatbot-sidebar` attributes (`data-chatbot-src`, `data-chat-api`)
 - Host CSS for sidebar width, FAB, `body.chat-open` layout
 - Host JS for iframe lazy-load, `postMessage` close, API URL resolution
-
-Those are portfolio integration concerns, not chatbot app code.

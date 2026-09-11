@@ -47,6 +47,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Departure+Mono:wght@400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     /* Logo Styles */
     .logo-srini {
@@ -65,14 +66,16 @@
       text-align: left;
       white-space: nowrap;
       transition:
-        top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-        left 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-        padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-        color 0.2s ease,
-        background 0.2s ease,
-        box-shadow 0.2s ease,
-        opacity 0.2s ease,
-        visibility 0.2s ease;
+        top 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        left 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        padding 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        border-radius 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .logo-srini:hover {
@@ -89,7 +92,7 @@
     /* HeaderContent has padding: 0 4rem (64px) on screens >= 720px */
     /* Header text is inside centered frame with max-width 1400px */
     header nav,
-    header .see-more,
+    .hero-cta-row,
     .header-nav-row {
       position: relative;
       z-index: 10;
@@ -149,15 +152,40 @@
       }
 
       .desk-menu .header-chat-slot {
+        display: none !important;
+      }
+
+      .header-nav-row > .header-chat-slot {
         display: flex;
         align-items: center;
         flex-shrink: 0;
-        padding-top: 0;
-        margin-left: 0.2rem;
-        margin-right: 0.35rem;
         position: relative;
-        overflow: visible;
+        overflow: hidden;
         z-index: 2;
+        width: 0;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translate3d(0, -8px, 0) scale(0.94);
+        transition:
+          opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          visibility 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      body.nav-persistent .header-nav-row > .header-chat-slot {
+        width: 52px;
+        min-width: 52px;
+        overflow: visible;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translate3d(0, 0, 0) scale(1);
+        transition-delay: 0.08s;
       }
     }
 
@@ -412,12 +440,14 @@
     header {
       position: relative;
       overflow: visible;
-      min-height: 75vh;
+      min-height: 100vh;
+      min-height: 100dvh;
       padding-top: env(safe-area-inset-top, 0px);
       padding-bottom: 8rem;
       display: flex;
       flex-direction: column;
       background: var(--srini-hero-footer-gradient);
+      box-sizing: border-box;
     }
 
     /* Stripe-style animated gradient — https://github.com/thelevicole/stripe-gradient */
@@ -448,28 +478,32 @@
 
     @media screen and (max-width: 1440px) {
       header {
-        min-height: 70vh;
+        min-height: 100vh;
+        min-height: 100dvh;
         padding-bottom: 8rem;
       }
     }
 
     @media screen and (max-width: 1024px) {
       header {
-        min-height: 65vh;
+        min-height: 100vh;
+        min-height: 100dvh;
         padding-bottom: 6rem;
       }
     }
 
     @media screen and (max-width: 768px) {
       header {
-        min-height: 85vh;
+        min-height: 100vh;
+        min-height: 100svh;
         padding-bottom: 6rem;
       }
     }
 
     @media screen and (max-width: 480px) {
       header {
-        min-height: 80vh;
+        min-height: 100vh;
+        min-height: 100svh;
         padding-bottom: 5rem;
       }
     }
@@ -577,25 +611,95 @@
       pointer-events: auto;
     }
 
-    /* Chevron down arrow at bottom of header - centered */
-    .see-more-wrapper {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      margin-top: 3rem;
+    /* Hero dual CTAs — liquid glass + Proxy chat */
+    @keyframes heroCtaEnter {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 14px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
     }
 
-    .see-more {
-      display: flex !important;
+    @keyframes persistentChromeIn {
+      from {
+        opacity: 0;
+        transform: translate3d(0, -10px, 0) scale(0.94);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 0;
-      width: 48px;
-      height: 48px;
-      padding: 0;
+      gap: 0.85rem;
+      width: 100%;
+      margin-top: 5rem;
+      padding-top: 10px;
+      opacity: 0;
+      animation: heroCtaEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform, opacity;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      @keyframes persistentChromeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      .hero-cta-row {
+        animation: fadeInUp 0.6s ease forwards;
+        will-change: auto;
+      }
+
+      body.nav-persistent .logo-srini,
+      body.nav-persistent header nav,
+      body.nav-persistent .header-nav-row > .header-chat-slot {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    .hero-cta {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 48px;
+      padding: 14px 26px;
       border-radius: 9999px;
-      
-      /* Liquid Glass Effect - enhanced */
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      line-height: 1.2;
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+        padding 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      -webkit-tap-highlight-color: transparent;
+      overflow: hidden;
+    }
+
+    .hero-cta--primary {
+      color: #000 !important;
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      font-weight: 400 !important;
       background: linear-gradient(
         135deg,
         rgba(255, 255, 255, 0.4) 0%,
@@ -605,31 +709,15 @@
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       border: 1px solid rgba(255, 255, 255, 0.5);
-      box-shadow: 
+      box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.6),
         inset 0 -1px 0 rgba(255, 255, 255, 0.2);
-      
-      /* Apple iOS spring animation timing */
-      transition: 
-        width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-        padding 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-        gap 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-        background 0.3s ease,
-        box-shadow 0.3s ease,
-        transform 0.2s ease,
-        border-color 0.3s ease;
-      
-      opacity: 1 !important;
-      animation: bounce-slow 2.5s infinite ease-in-out !important;
-      text-decoration: none;
-      overflow: hidden;
     }
 
-    .see-more:hover {
-      width: 220px;
-      gap: 10px;
-      padding: 0 24px;
+    .hero-cta--primary:hover,
+    .hero-cta--primary:focus-visible {
+      color: #000 !important;
       background: linear-gradient(
         135deg,
         rgba(255, 255, 255, 0.5) 0%,
@@ -637,57 +725,141 @@
         rgba(255, 255, 255, 0.4) 100%
       );
       border-color: rgba(255, 255, 255, 0.7);
-      box-shadow: 
+      box-shadow:
         0 12px 40px rgba(0, 0, 0, 0.15),
         inset 0 1px 0 rgba(255, 255, 255, 0.8),
         inset 0 -1px 0 rgba(255, 255, 255, 0.3);
-      animation: none !important;
-      transform: scale(1.02);
+      transform: scale(1.06);
+      padding: 16px 30px;
     }
 
-    .see-more:active {
-      transform: scale(0.97);
-    }
-
-    .see-more svg {
-      opacity: 1 !important;
+    .hero-cta-chevron {
       flex-shrink: 0;
+      width: 18px;
+      height: 18px;
       display: block;
-      width: 20px;
-      height: 20px;
-      margin-top: -1px; /* Optical alignment adjustment */
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .see-more:hover svg {
-      transform: translateY(3px);
+    .hero-cta--primary .hero-cta-chevron {
+      color: #000;
     }
 
-    .see-more-text {
-      font-family: 'Space Mono', 'Courier New', 'Monaco', monospace;
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      line-height: 1;
+    header .HeaderContent a.hero-cta--primary .hero-cta-primary-label {
+      font-family: inherit !important;
+      font-weight: 400 !important;
+    }
+
+    @media (min-width: 769px) {
+      .hero-cta--primary {
+        gap: 0;
+      }
+
+      .hero-cta--primary .hero-cta-chevron {
+        width: 0;
+        min-width: 0;
+        opacity: 0;
+        overflow: hidden;
+        transition:
+          width 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.2s ease,
+          transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .hero-cta--primary:hover,
+      .hero-cta--primary:focus-visible {
+        gap: 0.5rem;
+      }
+
+      .hero-cta--primary:hover .hero-cta-chevron,
+      .hero-cta--primary:focus-visible .hero-cta-chevron {
+        width: 18px;
+        opacity: 1;
+        transform: translateY(3px);
+      }
+    }
+
+    .hero-cta--chat {
       color: #2b2b2b;
-      white-space: nowrap;
-      opacity: 0;
-      width: 0;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      padding-top: 1px; /* Compensate for font baseline */
-      transition: 
-        opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-        width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      transition-delay: 0s;
+      background: #eaeefb;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      box-shadow: 0 4px 16px rgba(59, 101, 239, 0.1);
+      text-transform: none;
+      overflow: visible;
+      position: relative;
+      z-index: 1;
+      transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+        padding 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .see-more:hover .see-more-text {
-      opacity: 1;
-      width: auto;
-      transition-delay: 0.1s;
+    .hero-cta-chat-label {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .hero-cta-chat-prefix {
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      text-transform: none;
+    }
+
+    .hero-cta-proxy-icon {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      color: #3b65ef;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .hero-cta-proxy-name {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      color: #3d3d3d;
+    }
+
+    .hero-cta--chat:hover,
+    .hero-cta--chat:focus-visible {
+      color: #fff;
+      background: #3b65ef;
+      border-color: rgba(255, 255, 255, 0.65);
+      box-shadow: 0 2px 12px rgba(59, 101, 239, 0.22);
+      transform: scale(1.06);
+      padding: 16px 30px;
+    }
+
+    .hero-cta--chat:hover .hero-cta-proxy-icon,
+    .hero-cta--chat:focus-visible .hero-cta-proxy-icon {
+      color: #fff;
+      transform: scale(1.12);
+    }
+
+    .hero-cta--chat:hover .hero-cta-chat-prefix,
+    .hero-cta--chat:focus-visible .hero-cta-chat-prefix,
+    .hero-cta--chat:hover .hero-cta-proxy-name,
+    .hero-cta--chat:focus-visible .hero-cta-proxy-name {
+      color: #fff;
+    }
+
+    .hero-cta:active {
+      transform: scale(0.98);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-cta--primary:hover .hero-cta-chevron,
+      .hero-cta--primary:focus-visible .hero-cta-chevron {
+        transform: none;
+      }
     }
 
     @keyframes bounce-slow {
@@ -698,6 +870,84 @@
       50% {
         transform: translateY(8px);
         opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-cta-row {
+        justify-content: center;
+        margin-top: 5.25rem;
+        gap: 0;
+      }
+
+      .hero-cta--chat {
+        display: none !important;
+      }
+
+      .hero-cta--primary {
+        display: flex !important;
+        gap: 0;
+        width: 48px;
+        height: 48px;
+        min-height: 48px;
+        padding: 0 !important;
+        overflow: hidden;
+        animation: bounce-slow 2.5s ease-in-out 1.4s infinite !important;
+        transition:
+          width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+          padding 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+          gap 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+          background 0.3s ease,
+          box-shadow 0.3s ease,
+          transform 0.2s ease,
+          border-color 0.3s ease;
+      }
+
+      .hero-cta--primary .hero-cta-primary-label {
+        font-family: 'Space Mono', 'Courier New', Monaco, monospace;
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        line-height: 1;
+        color: #2b2b2b;
+        white-space: nowrap;
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        padding-top: 1px;
+        transition:
+          opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+          width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .hero-cta--primary:hover,
+      .hero-cta--primary:focus-visible {
+        width: 232px;
+        gap: 10px;
+        padding: 0 26px !important;
+        animation: none !important;
+        transform: scale(1.06);
+      }
+
+      .hero-cta--primary:hover .hero-cta-primary-label,
+      .hero-cta--primary:focus-visible .hero-cta-primary-label {
+        opacity: 1;
+        width: auto;
+        transition-delay: 0.1s;
+      }
+
+      .hero-cta--primary .hero-cta-chevron {
+        width: 20px;
+        height: 20px;
+        margin-top: -1px;
+        color: #000;
+      }
+
+      .hero-cta--primary:active {
+        transform: scale(0.97);
       }
     }
 
@@ -774,14 +1024,17 @@
     @media screen and (min-width: 769px) {
       header nav {
         transition:
-          top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          right 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          background 0.2s ease,
-          box-shadow 0.2s ease,
-          border-color 0.2s ease;
+          top 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          right 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          width 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          padding 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          border-radius 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          background 0.3s ease,
+          box-shadow 0.3s ease,
+          border-color 0.3s ease;
       }
 
       body.nav-persistent .logo-srini {
@@ -790,6 +1043,11 @@
         left: 32px;
         z-index: 10080;
         transform: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        white-space: nowrap;
+        animation: persistentChromeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         padding: 14px 16px 12px;
         border-radius: 9999px;
         color: #666;
@@ -819,6 +1077,7 @@
           0 14px 40px rgba(0, 0, 0, 0.1),
           inset 0 1px 0 rgba(255, 255, 255, 0.65);
         cursor: pointer;
+        animation: persistentChromeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
       }
 
       body.folder-stage-open.nav-persistent header nav,
@@ -866,16 +1125,6 @@
       body.chat-open.nav-persistent.nav-expanded header nav {
         right: 476px;
         width: min(560px, calc(100vw - 540px));
-      }
-
-      @media screen and (max-width: 1199px) {
-        body.chat-open.nav-persistent header nav {
-          right: 24px;
-        }
-
-        body.chat-open.nav-persistent.nav-expanded header nav {
-          width: min(560px, calc(100vw - 128px));
-        }
       }
 
       body.nav-persistent.nav-expanded header nav {
@@ -990,7 +1239,7 @@
     /* Hamburger menu links */
     .hamburgler-menu-list li a {
       font-family: 'Space Mono', 'Courier New', 'Monaco', monospace !important;
-      font-size: 16px !important;
+      font-size: 14px !important;
       letter-spacing: 0.5px !important;
       text-transform: uppercase !important;
     }
@@ -1664,25 +1913,8 @@
       transform: translate(3px, -3px);
     }
 
-    /* Large displays (1800px+) — ~120% type scale */
+    /* Large displays (1800px+) — ~120% type scale (body/content; header nav stays base size) */
     @media screen and (min-width: 1801px) {
-      .logo-srini {
-        font-size: 19px;
-      }
-
-      .desk-menu li a:not(.get-in-touch-btn) {
-        font-size: 17px !important;
-      }
-
-      .hamburgler-menu-list li a {
-        font-size: 19px !important;
-      }
-
-      .get-in-touch-btn {
-        font-size: 16px !important;
-        padding: 17px 34px !important;
-      }
-
       header .HeaderContent > p.hero-text-reveal {
         font-size: 300% !important;
       }
@@ -1695,8 +1927,9 @@
         font-size: 22px !important;
       }
 
-      .see-more-text {
-        font-size: 14px !important;
+      .hero-cta {
+        font-size: 16px !important;
+        padding: 14px 28px !important;
       }
 
       .work-section-title {
@@ -1827,15 +2060,15 @@
     </div>
     <div id="hamburgler" class="hamburgler-icon-wrapper"> <span class="hamburgler-icon"></span> </div>
     <div class="header-nav-row">
+    <div class="header-chat-slot">
+      <button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg></button>
+      <span class="srini-chat-hovertip" role="tooltip">Ask about Srini</span>
+    </div>
     <nav>
       <ul class="desk-menu">
         <li><a href="index.html#Selectedworks">Works</a></li>
         <li><a href="about.html">About</a></li>
         <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
-        <li class="header-chat-slot">
-          <button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg></button>
-          <span class="srini-chat-hovertip" role="tooltip">Ask about Srini</span>
-        </li>
         <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>
       </ul>
     </nav>
@@ -1847,13 +2080,17 @@
             target="_blank" style="color:#3b65ef">Srini</a>, a full-spectrum product designer crafting intuitive AI-driven, agentic experiences and agent-ready design systems.
         </h1>
         <div class="hero-text-reveal HeaderContent-description" style="color:var(--srini-color-text-secondary)"> Staff Product Designer @ Intuit | Previously @ Norton, Google & Zoho </div>
-        <div class="see-more-wrapper animate-progressive">
-          <a href="#Selectedworks" class="see-more" aria-label="Scroll to work section">
-            <span class="see-more-text">Selected Works</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 9L12 15L18 9" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <div class="hero-cta-row">
+          <a href="#Selectedworks" class="hero-cta hero-cta--primary" aria-label="Scroll to selected works">
+            <span class="hero-cta-primary-label">Selected Works</span>
+            <svg class="hero-cta-chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </a>
+          <button type="button" class="hero-cta hero-cta--chat srini-chat-trigger" aria-label="Ask Proxy" aria-expanded="false">
+            <svg class="hero-cta-proxy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>
+            <span class="hero-cta-chat-label"><span class="hero-cta-chat-prefix">Ask</span><span class="hero-cta-proxy-name">Proxy</span></span>
+          </button>
         </div>
       </div>
     </div>
@@ -2236,7 +2473,7 @@ Designed a white label friendly design system scaling from design to code for fi
               </svg>
               <div class="folder-items">
                 <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
-                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Figure</p><p class="folder-note-p">Built for brand-specific data visualization — dashboards, reports, and workspaces that stay on-brand, not generic charts on a shared canvas.</p></div></div>
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Figure</p><p class="folder-note-p">Figure is a generative UI experiment: describe a dashboard, report, or workspace and get on-brand data views—not generic charts dropped on a shared canvas.</p></div></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="44" data-kind="video" style="top:5%;width:44%;margin-left:-22%;aspect-ratio:16/9">
                   <div class="folder-frame"><figure class="folder-photo folder-video"><video src="images/ai-labs/genui/figure.mp4" muted playsinline loop preload="metadata" aria-label="Figure generative UI walkthrough"></video><figcaption class="folder-photo-caption">Figure</figcaption></figure></div>
@@ -2400,7 +2637,7 @@ Designed a white label friendly design system scaling from design to code for fi
               flushWord();
               child.parentNode.replaceChild(frag, child);
             } else if (child.nodeType === 1) {
-              if (child.classList.contains('see-more') || child.classList.contains('see-more-text')) {
+              if (child.classList.contains('see-more') || child.classList.contains('see-more-text') || child.classList.contains('hero-cta')) {
                 return;
               }
               if (child.classList.contains('wave')) {
@@ -2453,9 +2690,9 @@ Designed a white label friendly design system scaling from design to code for fi
 
           var lastLine = lineMap[lineMap.length - 1];
           var lastDelay = START_DELAY + Math.max(0, lineMap.length - 1) * LINE_DELAY + ((lastLine && lastLine.chars.length) || 0) * CHAR_DELAY;
-          var seeMore = document.querySelector('.HeaderContent .see-more-wrapper.animate-progressive');
-          if (seeMore) {
-            seeMore.style.animationDelay = (lastDelay + 200) + 'ms';
+          var heroCtaRow = document.querySelector('.HeaderContent .hero-cta-row');
+          if (heroCtaRow) {
+            heroCtaRow.style.animationDelay = (lastDelay + 220) + 'ms';
           }
         });
       }
@@ -2542,24 +2779,59 @@ Designed a white label friendly design system scaling from design to code for fi
       setTimeout(animateElements, 500);
       // (removed) header role animation
 
+      function scrollToPageSection(targetEl, opts) {
+        if (!targetEl) return;
+        var behavior = (opts && opts.behavior) || (window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
+        var headerEl = document.querySelector('header');
+        var headerHeight = headerEl ? headerEl.offsetHeight : 0;
+        var navClearance = window.matchMedia('(min-width: 769px)').matches ? 88 : 16;
+        var targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset;
+        var scrollTop = Math.max(headerHeight + 1, targetTop - navClearance);
+        window.scrollTo({ top: scrollTop, behavior: behavior });
+      }
+
+      function navigateToSelectedWorks(opts) {
+        var target = document.getElementById('Selectedworks');
+        if (!target) return;
+        if (typeof window.setWorkPanel === 'function') {
+          window.setWorkPanel('recent');
+        }
+        scrollToPageSection(target, opts);
+        if (history.replaceState) {
+          history.replaceState(null, '', '#Selectedworks');
+        }
+      }
+
       // Smooth scroll links (Works → Recent Work / AI Labs header)
-      $('a[href^="#"]').on("click", function (e) {
-        var id = $(this).attr("href");
+      $('a[href^="#"]').on('click', function (e) {
+        var id = $(this).attr('href');
         if (!id || id === '#') return;
+        if (id === '#Selectedworks') {
+          e.preventDefault();
+          navigateToSelectedWorks();
+          return;
+        }
         var $target = $(id);
         if (!$target.length) return;
         e.preventDefault();
-        if (id === '#Selectedworks' && typeof window.setWorkPanel === 'function') {
-          window.setWorkPanel('recent');
-        }
-        var scrollBehavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-          ? 'auto'
-          : 'smooth';
-        $target[0].scrollIntoView({ behavior: scrollBehavior, block: 'start' });
+        scrollToPageSection($target[0]);
         if (history.replaceState) {
           history.replaceState(null, '', id);
         }
       });
+
+      $('a[href="#Selectedworks"], a[href="index.html#Selectedworks"], a[href$="index.html#Selectedworks"]').on('click', function (e) {
+        if (!document.getElementById('Selectedworks')) return;
+        e.preventDefault();
+        navigateToSelectedWorks();
+      });
+
+      if (window.location.hash === '#Selectedworks' || window.location.hash === '#Selectedworks-ai-labs') {
+        requestAnimationFrame(function () {
+          var target = document.getElementById('Selectedworks');
+          if (target) scrollToPageSection(target, { behavior: 'auto' });
+        });
+      }
 
       //Hamburger Menu and Esc events
       $('#hamburgler').on('click', checkNav);
@@ -2614,14 +2886,48 @@ Designed a white label friendly design system scaling from design to code for fi
 
       // Collapsed persistent top navigation
       const headerNav = document.querySelector('header nav');
-      const headerChatSlot = document.querySelector('.header-chat-slot');
+      const headerChatSlot = document.querySelector('.header-nav-row > .header-chat-slot');
       const headerNavRow = document.querySelector('.header-nav-row');
-      const getInTouchItem = document.querySelector('header nav .desk-menu .get-in-touch-btn')
-        ? document.querySelector('header nav .desk-menu .get-in-touch-btn').closest('li')
-        : null;
+      const getInTouchItem = null;
       const floatingNav = document.querySelector('.floating-nav-container');
       const persistentNavMinWidth = window.matchMedia('(min-width: 769px)');
-      const persistentNavOffset = 140;
+      let headerChatBorderIntroPlayed = false;
+
+      const persistOffThreshold = 56;
+
+      function isPastScrollThreshold(bottom) {
+        if (document.body.classList.contains('nav-persistent')) {
+          return bottom <= persistOffThreshold;
+        }
+        return bottom <= 0;
+      }
+
+      function hasScrolledPastHeader() {
+        const header = document.querySelector('header');
+        if (!header) return window.scrollY > 140;
+
+        if (header.querySelector('.HeaderContent')) {
+          return isPastScrollThreshold(header.getBoundingClientRect().bottom);
+        }
+
+        const hero = document.getElementById('about');
+        if (hero) {
+          return isPastScrollThreshold(hero.getBoundingClientRect().bottom);
+        }
+
+        const anchor =
+          document.querySelector('.header-nav-row') ||
+          document.querySelector('header nav') ||
+          header;
+        const rect = anchor.getBoundingClientRect();
+        if (rect.height > 0 && !document.body.classList.contains('nav-persistent')) {
+          anchor.dataset.persistAtScrollY = String(window.scrollY + rect.bottom);
+        }
+        if (document.body.classList.contains('nav-persistent') && anchor.dataset.persistAtScrollY) {
+          return window.scrollY >= parseFloat(anchor.dataset.persistAtScrollY, 10);
+        }
+        return isPastScrollThreshold(rect.bottom);
+      }
 
       function isPersistentNavActive() {
         return document.body.classList.contains('nav-persistent');
@@ -2645,19 +2951,11 @@ Designed a white label friendly design system scaling from design to code for fi
       }
 
       function syncChatSlotPlacement() {
-        if (!headerChatSlot || !headerNavRow) return;
-        var persist = document.body.classList.contains('nav-persistent');
-        if (persist) {
-          if (headerChatSlot.parentElement !== headerNavRow) {
-            headerNavRow.appendChild(headerChatSlot);
-          }
-        } else if (getInTouchItem && headerChatSlot.nextElementSibling !== getInTouchItem) {
-          getInTouchItem.parentNode.insertBefore(headerChatSlot, getInTouchItem);
-        }
+        /* Chat icon stays in header-nav-row; CSS shows it only when nav-persistent. */
       }
 
       function updatePersistentNav() {
-        const shouldPersist = persistentNavMinWidth.matches && window.scrollY > persistentNavOffset;
+        const shouldPersist = persistentNavMinWidth.matches && hasScrolledPastHeader();
         document.body.classList.toggle('nav-persistent', shouldPersist);
         if (headerNav) {
           headerNav.classList.toggle('nav-scrolled', shouldPersist);
@@ -2674,6 +2972,10 @@ Designed a white label friendly design system scaling from design to code for fi
         }
         if (!shouldPersist) {
           setPersistentNavExpanded(false);
+        }
+        if (shouldPersist && !headerChatBorderIntroPlayed) {
+          headerChatBorderIntroPlayed = true;
+          window.dispatchEvent(new CustomEvent('srini:header-chat-visible'));
         }
         syncChatSlotPlacement();
         if (floatingNav) {
@@ -2731,6 +3033,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
         updatePersistentNav();
         window.addEventListener('scroll', updatePersistentNav, { passive: true });
+        window.addEventListener('resize', updatePersistentNav, { passive: true });
         persistentNavMinWidth.addEventListener('change', updatePersistentNav);
       }
 
@@ -2975,12 +3278,18 @@ Designed a white label friendly design system scaling from design to code for fi
         animation: none !important;
       }
     }
-    .header-chat-slot { display: flex; align-items: center; flex-shrink: 0; overflow: visible; z-index: 2; position: relative; }
+    .header-chat-slot {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      overflow: visible;
+      z-index: 2;
+      position: relative;
+    }
     .header-chat-slot::before {
       content: '';
       position: absolute;
       inset: -3px;
-      border-radius: 50%;
       padding: 2px;
       background: conic-gradient(from 0deg, #3b65ef, #a8c0ff, #dce3f8, #7da1f7, #3b65ef);
       -webkit-mask:
@@ -2994,6 +3303,9 @@ Designed a white label friendly design system scaling from design to code for fi
       opacity: 0;
       pointer-events: none;
       z-index: 0;
+    }
+    .header-chat-slot::before {
+      border-radius: 50%;
     }
     .header-chat-slot.srini-chat-border-stopped::before,
     body.chat-open .header-chat-slot::before {
@@ -3137,7 +3449,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
   var CHAT_API_PUBLIC = 'https://sriniai.netlify.app';
   /** Bump when deploying chatbot or host chat script changes (cache bust). */
-  var CHATBOT_CACHE_BUST = '34';
+  var CHATBOT_CACHE_BUST = '36';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
@@ -3200,12 +3512,12 @@ Designed a white label friendly design system scaling from design to code for fi
     if (e.data === 'srini-chat-close') setOpen(false);
   });
 
-  function runChatBorderIntro() {
-    var slot = document.querySelector('.header-chat-slot');
+  function startChatBorderIntro(slot) {
     if (!slot || slot.classList.contains('srini-chat-border-stopped')) return;
     try {
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     } catch (err) { return; }
+
     slot.classList.add('srini-chat-border-attention');
     function onBorderEnd(ev) {
       if (ev.animationName !== 'srini-chat-border-once') return;
@@ -3214,6 +3526,12 @@ Designed a white label friendly design system scaling from design to code for fi
     }
     slot.addEventListener('animationend', onBorderEnd);
   }
+
+  window.addEventListener('srini:header-chat-visible', function() {
+    setTimeout(function() {
+      startChatBorderIntro(document.querySelector('.header-nav-row > .header-chat-slot'));
+    }, 550);
+  });
 
   function runChatBounceIntro() {
     try {
@@ -3230,13 +3548,9 @@ Designed a white label friendly design system scaling from design to code for fi
     });
   }
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', function() {
-      runChatBounceIntro();
-      runChatBorderIntro();
-    });
+    document.addEventListener('DOMContentLoaded', runChatBounceIntro);
   } else {
     runChatBounceIntro();
-    runChatBorderIntro();
   }
 
   function openChatFromUrlIfNeeded() {

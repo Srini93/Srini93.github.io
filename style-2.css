@@ -1189,6 +1189,39 @@ header {
   text-align: center;
 }
 
+@media screen and (min-width: 769px) {
+  body.chat-open .chatbot-sidebar {
+    z-index: 10120 !important;
+  }
+
+  body.chat-open .frame #site-content-wrap > header,
+  body.chat-open #site-content-wrap > header {
+    width: auto !important;
+    max-width: none !important;
+    margin-inline: 0 !important;
+  }
+
+  .header-nav-row {
+    pointer-events: none;
+  }
+
+  .header-nav-row nav,
+  .header-nav-row .header-chat-slot {
+    pointer-events: auto;
+  }
+}
+
+a.logo-srini {
+  z-index: 10090 !important;
+  pointer-events: auto !important;
+}
+
+header a[href="index.html"]:has(#logo) {
+  position: relative;
+  z-index: 10090;
+  pointer-events: auto;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .case-study-image-block {
     transition: none;

@@ -29,6 +29,7 @@
 <!-- Mobile icons ends here -->
 
 <link rel="stylesheet" href="style-3.css?v=24">
+<link rel="stylesheet" href="vendor/persistent-nav.css?v=8">
 <style>
   /* Force Light Mode */
   html {
@@ -190,7 +191,7 @@
     list-style-type: none !important;
     position: static !important;
     transform: none !important;
-    font-size: 110% !important;
+    
     overflow: visible !important;
   }
   .hamburgler-active .hamburgler-menu-list {
@@ -261,7 +262,7 @@
   /* Hamburger menu links */
   .hamburgler-menu-list li a {
     font-family: 'Space Mono', 'Courier New', 'Monaco', monospace !important;
-    font-size: 16px !important;
+    font-size: 14px !important;
     letter-spacing: 0.5px !important;
     text-transform: uppercase !important;
   }
@@ -356,7 +357,7 @@
     ul.hamburgler-menu-list { display: flex !important; flex-direction: column !important; overflow: visible !important; }
     .hamburgler-menu-list li { display: block !important; float: none !important; }
     header { padding-bottom: 0 !important; }
-    .srini-chat-nav-li { display: none !important; }
+    .header-chat-slot { display: none !important; }
   }
   @media screen and (max-width: 601px) {
     .desk-menu { display: none !important; }
@@ -892,129 +893,6 @@
     transform: translate(3px, -3px);
   }
 
-    /* ── Persistent scroll nav (desktop) ── */
-    @media screen and (min-width: 769px) {
-      header nav {
-        transition:
-          top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          right 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          background 0.2s ease,
-          box-shadow 0.2s ease,
-          border-color 0.2s ease;
-      }
-
-      body.nav-persistent .logo-srini {
-        position: fixed;
-        top: 28px;
-        left: 32px;
-        transform: none;
-        padding: 14px 16px 12px;
-        border-radius: 9999px;
-        color: #666;
-        background: rgba(255, 255, 255, 0.66);
-        backdrop-filter: blur(24px) saturate(180%);
-        -webkit-backdrop-filter: blur(24px) saturate(180%);
-        box-shadow:
-          0 14px 40px rgba(0, 0, 0, 0.08),
-          inset 0 1px 0 rgba(255, 255, 255, 0.65);
-      }
-
-      body.nav-persistent header nav {
-        position: fixed;
-        top: 20px;
-        right: 96px;
-        z-index: 10000;
-        width: 64px;
-        height: 64px;
-        padding: 0;
-        overflow: hidden;
-        border: 1px solid rgba(255, 255, 255, 0.55);
-        border-radius: 9999px;
-        background: rgba(255, 255, 255, 0.62);
-        backdrop-filter: blur(24px) saturate(180%);
-        -webkit-backdrop-filter: blur(24px) saturate(180%);
-        box-shadow:
-          0 14px 40px rgba(0, 0, 0, 0.1),
-          inset 0 1px 0 rgba(255, 255, 255, 0.65);
-        cursor: pointer;
-      }
-
-      /* Pull chat button out of the pill so it sits to its right */
-      body.nav-persistent:not(.nav-expanded) .srini-chat-nav-li {
-        position: fixed;
-        top: 20px;
-        right: 32px;
-        z-index: 10001;
-      }
-
-      body.nav-persistent.nav-expanded header nav {
-        width: min(560px, calc(100vw - 128px));
-        padding: 0 14px;
-        cursor: default;
-      }
-
-      body.nav-persistent header nav::before,
-      body.nav-persistent header nav::after {
-        content: '';
-        position: absolute;
-        right: 21px;
-        width: 22px;
-        height: 3px;
-        border-radius: 9999px;
-        background: #2b2b2b;
-        transition:
-          top 0.25s ease,
-          transform 0.25s ease,
-          opacity 0.2s ease;
-      }
-
-      body.nav-persistent header nav::before {
-        top: 24.5px; }
-      body.nav-persistent header nav::after  {
-        top: 36.5px; }
-
-      body.nav-persistent.nav-expanded header nav::before {
-        top: 30.5px;
-        transform: rotate(45deg);
-      }
-
-      body.nav-persistent.nav-expanded header nav::after {
-        top: 30.5px;
-        transform: rotate(-45deg);
-      }
-
-      body.nav-persistent header nav .desk-menu {
-        height: 100%;
-        padding-top: 0 !important;
-        padding-right: 50px;
-        gap: 2px;
-        opacity: 0;
-        transform: translateX(18px);
-        pointer-events: none;
-        transition:
-          opacity 0.22s ease,
-          transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-      }
-
-      body.nav-persistent.nav-expanded header nav .desk-menu {
-        opacity: 1;
-        transform: translateX(0);
-        pointer-events: auto;
-        transition-delay: 0.08s;
-      }
-
-      body.nav-persistent header nav .desk-menu li a:not(.get-in-touch-btn) {
-        padding: 0 18px !important;
-      }
-
-      body.nav-persistent header nav .get-in-touch-btn {
-        padding: 12px 22px !important;
-      }
-    }
-
     /* ── Mobile glass circle hamburger ── */
     @media screen and (max-width: 768px) {
       .hamburgler-icon-wrapper {
@@ -1117,15 +995,20 @@
   <div id="hamburgler" class="hamburgler-icon-wrapper">
     <span class="hamburgler-icon"></span>
   </div>
+  <div class="header-nav-row">
   <nav>
     <ul class="desk-menu">
       <li><a href="index.html#Selectedworks">Works</a></li>
       <li><a href="about.html">About</a></li>
       <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
-      <li class="srini-chat-nav-li"><button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><span class="srini-chat-hovertip" role="tooltip" style="opacity:0;visibility:hidden;pointer-events:none">Ask about Srini</span><svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg></button></li>
+      <li class="header-chat-slot">
+        <button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg></button>
+        <span class="srini-chat-hovertip" role="tooltip">Ask about Srini</span>
+      </li>
       <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>
     </ul>
   </nav>
+  </div>
 </header>
 
         
@@ -1234,7 +1117,7 @@
   <span class="srini-chat-hovertip" role="tooltip" style="opacity:0;visibility:hidden;pointer-events:none">Ask about Srini</span>
   <svg class="srini-chat-fab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>
 </button>
-<div id="chatbot-sidebar" class="chatbot-sidebar" data-chatbot-src="./chatbot/" data-chat-api="https://srinilm.onrender.com" aria-hidden="true"></div>
+<div id="chatbot-sidebar" class="chatbot-sidebar" data-chatbot-src="./chatbot/" data-chat-api="https://sriniai.netlify.app" aria-hidden="true"></div>
 
 <style>
   #site-content-wrap { transition: margin-right 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
@@ -1245,7 +1128,12 @@
     background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.06); border-radius: 16px;
   }
   body.chat-open .chatbot-sidebar { width: 420px; }
+  @media screen and (min-width: 769px) {
+    body.chat-open .chatbot-sidebar { z-index: 10120 !important; }
+  }
   .chatbot-sidebar iframe { width: 100%; height: 100%; border: none; display: block; border-radius: 16px; }
+  .header-chat-slot { display: flex; align-items: center; flex-shrink: 0; overflow: visible; z-index: 2; position: relative; }
+  body.chat-open .header-chat-slot { display: none !important; }
   @keyframes srini-chat-attention {
     0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 101, 239, 0); }
     35% { transform: scale(1.12); box-shadow: 0 8px 24px rgba(59, 101, 239, 0.28); }
@@ -1264,7 +1152,7 @@
     .srini-chat-fab:hover { animation-play-state: paused; }
     body.chat-open .srini-chat-fab { animation: none !important; }
   }
-  .srini-chat-nav-li { display: flex; align-items: center; overflow: visible; z-index: 2; }
+  .header-chat-slot { display: flex; align-items: center; overflow: visible; z-index: 2; }
   .srini-chat-hovertip {
     position: absolute;
     top: calc(100% + 10px);
@@ -1327,7 +1215,7 @@
     }
     .srini-chat-fab { display: flex; top: auto; bottom: 24px; right: 24px; width: 75px; height: 75px; }
     .srini-chat-fab-icon { width: 32px; height: 32px; }
-    .srini-chat-nav-li { display: none !important; }
+    .header-chat-slot { display: none !important; }
     body.chat-open #site-content-wrap { margin-right: 0; }
     .chatbot-sidebar { top: 0; right: 0; bottom: 0; left: 0; width: 100% !important; height: 100%; border-radius: 0; z-index: 10003; transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
     body.chat-open .chatbot-sidebar { transform: translateY(0); }
@@ -1378,83 +1266,9 @@
 
     function ifEscClose(e) { if (e.keyCode == 27) closeNav() }
 
-      // ── Collapsed persistent top navigation ──
-      var headerNav = document.querySelector('header nav');
-      var persistentNavMinWidth = window.matchMedia('(min-width: 769px)');
-      var persistentNavOffset = 140;
-
-      function isPersistentNavActive() {
-        return document.body.classList.contains('nav-persistent');
-      }
-
-      function setPersistentNavExpanded(expanded) {
-        document.body.classList.toggle('nav-expanded', expanded);
-        if (headerNav) {
-          headerNav.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-          headerNav.setAttribute('aria-label', expanded ? 'Close site navigation' : 'Open site navigation');
-          if (!expanded && headerNav.contains(document.activeElement)) {
-            document.activeElement.blur();
-            setTimeout(function() {
-              if (headerNav.contains(document.activeElement)) document.activeElement.blur();
-            }, 0);
-          }
-        }
-      }
-
-      function updatePersistentNav() {
-        var shouldPersist = persistentNavMinWidth.matches && window.scrollY > persistentNavOffset;
-        document.body.classList.toggle('nav-persistent', shouldPersist);
-        if (headerNav) {
-          headerNav.classList.toggle('nav-scrolled', shouldPersist);
-          headerNav.setAttribute('aria-label',
-            shouldPersist && document.body.classList.contains('nav-expanded') ? 'Close site navigation' :
-            shouldPersist ? 'Open site navigation' : 'Site navigation');
-          headerNav.setAttribute('aria-expanded',
-            shouldPersist && document.body.classList.contains('nav-expanded') ? 'true' : 'false');
-          if (shouldPersist) {
-            headerNav.setAttribute('tabindex', '0');
-          } else {
-            headerNav.removeAttribute('tabindex');
-          }
-        }
-        if (!shouldPersist) setPersistentNavExpanded(false);
-      }
-
-      if (headerNav) {
-        headerNav.setAttribute('aria-expanded', 'false');
-        headerNav.addEventListener('click', function(e) {
-          if (!isPersistentNavActive()) return;
-          var isExpanded = document.body.classList.contains('nav-expanded');
-          var clickedLinkOrButton = e.target.closest('a, button');
-          var navRect = headerNav.getBoundingClientRect();
-          var clickedCloseArea = isExpanded && e.clientX >= navRect.right - 76;
-          if (!isExpanded) {
-            e.preventDefault(); e.stopPropagation();
-            setPersistentNavExpanded(true);
-          } else if (clickedCloseArea || !clickedLinkOrButton) {
-            e.preventDefault(); e.stopPropagation();
-            setPersistentNavExpanded(false);
-          }
-        });
-        headerNav.addEventListener('keydown', function(e) {
-          if (!isPersistentNavActive()) return;
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            setPersistentNavExpanded(!document.body.classList.contains('nav-expanded'));
-          }
-        });
-        document.addEventListener('click', function(e) {
-          if (isPersistentNavActive() && !headerNav.contains(e.target)) setPersistentNavExpanded(false);
-        });
-        $(window).on('keyup', function(e) { if (e.keyCode == 27) setPersistentNavExpanded(false); });
-        updatePersistentNav();
-        window.addEventListener('scroll', updatePersistentNav, { passive: true });
-        persistentNavMinWidth.addEventListener('change', updatePersistentNav);
-      }
-
-
   });
 </script>
+<script src="vendor/persistent-nav.js?v=6"></script>
 
 <script>
 (function() {
@@ -1467,8 +1281,8 @@
     return (typeof window.CHATBOT_APP_URL !== 'undefined' ? window.CHATBOT_APP_URL : (src || './chatbot/')).replace(/\/$/, '') + '/';
   }
 
-  var CHAT_API_PUBLIC = 'https://srinilm.onrender.com';
-  var CHATBOT_CACHE_BUST = '34';
+  var CHAT_API_PUBLIC = 'https://sriniai.netlify.app';
+  var CHATBOT_CACHE_BUST = '36';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
@@ -1478,6 +1292,7 @@
         var pageHost = window.location.hostname || '';
         if (pageHost !== 'localhost' && pageHost !== '127.0.0.1') return CHAT_API_PUBLIC;
       }
+      if (u.hostname === 'srinilm.onrender.com') return CHAT_API_PUBLIC;
     } catch (e) {}
     return s.replace(/\/$/, '');
   }
@@ -1488,7 +1303,7 @@
     var params = [];
     if (api) params.push('api=' + encodeURIComponent(api));
     try {
-      params.push('page=' + encodeURIComponent(window.location.pathname));
+      params.push('page=' + encodeURIComponent(window.SRINI_CHAT_PAGE_PATH || window.location.pathname));
       if (document.title) params.push('title=' + encodeURIComponent(document.title));
     } catch (e) {}
     params.push('cb=' + CHATBOT_CACHE_BUST);
@@ -1514,6 +1329,14 @@
 
   triggers.forEach(function(t) {
     t.addEventListener('click', function() {
+      if (t.classList.contains('srini-chat-nav-btn')) {
+        t.classList.add('srini-chat-attention-stopped');
+        var slot = t.closest('.header-chat-slot');
+        if (slot) {
+          slot.classList.add('srini-chat-border-stopped');
+          slot.classList.remove('srini-chat-border-attention');
+        }
+      }
       var isOpen = document.body.classList.contains('chat-open');
       setOpen(!isOpen);
     });

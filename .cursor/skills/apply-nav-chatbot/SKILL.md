@@ -174,7 +174,7 @@ header nav {
   list-style-type: none !important;
   position: static !important;
   transform: none !important;
-  font-size: 110% !important;
+  
   overflow: visible !important;
 }
 .hamburgler-active .hamburgler-menu-list {
@@ -248,7 +248,7 @@ header nav {
 /* Hamburger menu links */
 .hamburgler-menu-list li a {
   font-family: 'Space Mono', 'Courier New', 'Monaco', monospace !important;
-  font-size: 16px !important;
+  font-size: 14px !important;
   letter-spacing: 0.5px !important;
   text-transform: uppercase !important;
 }

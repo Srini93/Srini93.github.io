@@ -11,9 +11,47 @@
       ? document.querySelector('header nav .desk-menu .get-in-touch-btn').closest('li')
       : null;
     var persistentNavMinWidth = window.matchMedia('(min-width: 769px)');
-    var persistentNavOffset = 140;
 
     if (!headerNav) return;
+
+    var persistOffThreshold = 56;
+
+    function isPastScrollThreshold(bottom) {
+      if (document.body.classList.contains('nav-persistent')) {
+        return bottom <= persistOffThreshold;
+      }
+      return bottom <= 0;
+    }
+
+    function hasScrolledPastHeader() {
+      var header = document.querySelector('header');
+      if (!header) return window.scrollY > 140;
+
+      /* Homepage — hero lives inside <header>; wait until the whole header scrolls off. */
+      if (header.querySelector('.HeaderContent')) {
+        return isPastScrollThreshold(header.getBoundingClientRect().bottom);
+      }
+
+      /* Case studies — thin nav header + #about hero below; wait until hero scrolls off. */
+      var hero = document.getElementById('about');
+      if (hero) {
+        return isPastScrollThreshold(hero.getBoundingClientRect().bottom);
+      }
+
+      /* Nav-only pages — track in-flow nav; fixed nav collapses the row so cache scrollY. */
+      var anchor =
+        document.querySelector('.header-nav-row') ||
+        document.querySelector('header nav') ||
+        header;
+      var rect = anchor.getBoundingClientRect();
+      if (rect.height > 0 && !document.body.classList.contains('nav-persistent')) {
+        anchor.dataset.persistAtScrollY = String(window.scrollY + rect.bottom);
+      }
+      if (document.body.classList.contains('nav-persistent') && anchor.dataset.persistAtScrollY) {
+        return window.scrollY >= parseFloat(anchor.dataset.persistAtScrollY, 10);
+      }
+      return isPastScrollThreshold(rect.bottom);
+    }
 
     function isPersistentNavActive() {
       return document.body.classList.contains('nav-persistent');
@@ -45,7 +83,7 @@
     }
 
     function updatePersistentNav() {
-      var shouldPersist = persistentNavMinWidth.matches && window.scrollY > persistentNavOffset;
+      var shouldPersist = persistentNavMinWidth.matches && hasScrolledPastHeader();
       document.body.classList.toggle('nav-persistent', shouldPersist);
       headerNav.classList.toggle('nav-scrolled', shouldPersist);
       headerNav.setAttribute(
@@ -113,6 +151,7 @@
 
     updatePersistentNav();
     window.addEventListener('scroll', updatePersistentNav, { passive: true });
+    window.addEventListener('resize', updatePersistentNav, { passive: true });
     persistentNavMinWidth.addEventListener('change', updatePersistentNav);
   }
 

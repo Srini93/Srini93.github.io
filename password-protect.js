@@ -97,7 +97,7 @@
     '<iframe id="pp-contentFrame" style="display:none" allowfullscreen></iframe>' +
     '<div id="pp-dialogWrap">' +
     // Logo
-    '<a href="' + ppP + 'index.html" class="pp-logo-srini" data-text="srini">srini</a>' +
+    '<a href="' + ppP + 'index.html" class="pp-logo-srini" data-text="srini" target="_top">srini</a>' +
     // Hamburger menu overlay (mobile)
     '<div class="pp-hamburgler-menu">' +
     '  <ul class="pp-hamburgler-menu-list">' +
@@ -261,7 +261,83 @@
   }
 
   // ─── Nav / chatbot injection for decrypted content ──────────────────
+  var PP_CHAT_API = 'https://sriniai.netlify.app';
+  var PP_CHAT_CACHE_BUST = '36';
+
+  function ppUpgradeChatIntegration(html) {
+    html = html.replace(/https:\/\/srinilm\.onrender\.com\/?/gi, PP_CHAT_API);
+    html = html.replace(/data-chat-api=["'][^"']*["']/gi, 'data-chat-api="' + PP_CHAT_API + '"');
+    html = html.replace(/CHATBOT_CACHE_BUST\s*=\s*['"]\d+['"]/g, "CHATBOT_CACHE_BUST = '" + PP_CHAT_CACHE_BUST + "'");
+    html = html.replace(/params\.push\(['"]cb=\d+['"]\)/g, "params.push('cb=" + PP_CHAT_CACHE_BUST + "')");
+    html = html.replace(/persistent-nav\.(css|js)\?v=\d+/g, 'persistent-nav.$1?v=8');
+    html = html.replace(/style-2\.css(\?v=\d+)?/g, 'style-2.css?v=38');
+    return html;
+  }
+
+  /** Remove stale inline chat loaders baked into old encrypted payloads. */
+  function ppStripLegacyChatLoader(html) {
+    return html.replace(
+      /<script(?:\s[^>]*)?>\s*\(function\s*\(\)\s*\{[\s\S]*?chatbot-sidebar[\s\S]*?iframeLoaded[\s\S]*?\}\)\(\);\s*<\/script>/gi,
+      ''
+    );
+  }
+
+  /** Ensure sidebar attrs are current and drop any pre-loaded iframe from old payloads. */
+  function ppResetChatSidebar(html) {
+    return html.replace(
+      /(<div\b[^>]*\bid\s*=\s*["']chatbot-sidebar["'][^>]*>)([\s\S]*?)(<\/div>)/i,
+      function (_, open, inner, close) {
+        var hasIframe = /<iframe/i.test(inner);
+        if (!hasIframe && !/\S/.test(inner)) return open + close;
+        return open + close;
+      }
+    );
+  }
+
+  /** Same loader as index.html / case-study plain pages (API, cache bust, page context). */
+  function ppGetCanonicalChatLoaderScript() {
+    return (
+      '<script>' +
+      '(function(){' +
+      'var sidebar=document.getElementById("chatbot-sidebar");' +
+      'var triggers=document.querySelectorAll(".srini-chat-trigger");' +
+      'var iframeLoaded=false;' +
+      'function getAppUrl(){var src=sidebar&&sidebar.getAttribute("data-chatbot-src");return(typeof window.CHATBOT_APP_URL!=="undefined"?window.CHATBOT_APP_URL:(src||"./chatbot/")).replace(/\\/$/,"")+"/";}' +
+      'var CHAT_API_PUBLIC="' +
+      PP_CHAT_API +
+      '";' +
+      'var CHATBOT_CACHE_BUST="' +
+      PP_CHAT_CACHE_BUST +
+      '";' +
+      'function resolveChatApiUrl(raw){var s=(raw||"").trim();if(!s)return"";try{var u=new URL(s);if(u.hostname==="localhost"||u.hostname==="127.0.0.1"){var pageHost=window.location.hostname||"";if(pageHost!=="localhost"&&pageHost!=="127.0.0.1")return CHAT_API_PUBLIC;}if(u.hostname==="srinilm.onrender.com")return CHAT_API_PUBLIC;}catch(e){}return s.replace(/\\/$/,"");}' +
+      'function getIframeSrc(){var base=getAppUrl();var api=resolveChatApiUrl((sidebar&&sidebar.getAttribute("data-chat-api"))||window.SRINI_CHAT_API||"");var params=[];if(api)params.push("api="+encodeURIComponent(api));try{var pagePath=window.SRINI_CHAT_PAGE_PATH||window.location.pathname;params.push("page="+encodeURIComponent(pagePath));if(document.title)params.push("title="+encodeURIComponent(document.title));}catch(e){}params.push("cb="+CHATBOT_CACHE_BUST);return base+"?"+params.join("&");}' +
+      'function setOpen(open){var isOpen=!!open;document.body.classList.toggle("chat-open",isOpen);if(sidebar)sidebar.setAttribute("aria-hidden",!isOpen);triggers.forEach(function(t){t.setAttribute("aria-label",isOpen?"Close AI chat":"Open AI chat");t.setAttribute("aria-expanded",isOpen);});if(isOpen&&sidebar&&!iframeLoaded){var iframe=document.createElement("iframe");iframe.title="Proxy chat";iframe.src=getIframeSrc();sidebar.appendChild(iframe);iframeLoaded=true;}}' +
+      'triggers.forEach(function(t){t.addEventListener("click",function(){if(t.classList.contains("srini-chat-nav-btn")){t.classList.add("srini-chat-attention-stopped");var slot=t.closest(".header-chat-slot");if(slot){slot.classList.add("srini-chat-border-stopped");slot.classList.remove("srini-chat-border-attention");}}setOpen(!document.body.classList.contains("chat-open"));});});' +
+      'window.addEventListener("message",function(e){if(e.data==="srini-chat-close")setOpen(false);});' +
+      'function runChatBounceIntro(){try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;}catch(x){return;}triggers.forEach(function(t){t.classList.add("srini-chat-bounce-enter");function onEnd(ev){if(ev.animationName!=="srini-chat-bounce-load")return;t.classList.remove("srini-chat-bounce-enter");t.removeEventListener("animationend",onEnd);}t.addEventListener("animationend",onEnd);});}' +
+      'if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",runChatBounceIntro);}else{runChatBounceIntro();}' +
+      '})();' +
+      '<\/script>'
+    );
+  }
+
+  function ppSyncChatIntegration(html) {
+    html = ppResetChatSidebar(html);
+    html = ppStripLegacyChatLoader(html);
+    return html;
+  }
+
   function patchDecryptedContent(html) {
+    html = ppUpgradeChatIntegration(html);
+    html = ppSyncChatIntegration(html);
+
+    var hasModernNav = /class\s*=\s*["']header-nav-row["']|persistent-nav\.js/.test(html);
+
+    html = html.replace(
+      /<a href="((?:\.\.\/)*index\.html)" class="logo-srini"/g,
+      '<a href="$1" class="logo-srini" target="_top"'
+    );
+
     // 1. Fix AOS CDN (rawgit is dead)
     html = html.replace(
       'https://rawgit.com/michalsnik/aos/master/dist/aos.js',
@@ -279,9 +355,9 @@
       '<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">' +
       '<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">';
     var navCSS = '<style>' +
-      '.logo-srini{position:absolute;z-index:10001;font-family:"Press Start 2P","Courier New","Monaco",monospace;font-size:16px;color:#666;text-decoration:none;letter-spacing:2px;cursor:pointer;text-transform:uppercase;line-height:1.5;display:inline-block;padding-bottom:4px}' +
+      '.logo-srini{position:absolute;z-index:10090!important;pointer-events:auto!important;font-family:"Press Start 2P","Courier New","Monaco",monospace;font-size:16px;color:#666;text-decoration:none;letter-spacing:2px;cursor:pointer;text-transform:uppercase;line-height:1.5;display:inline-block;padding-bottom:4px}' +
       '.logo-srini::after{display:none}' +
-      '@media screen and (min-width:769px){.logo-srini{top:68px;transform:translateY(-50%);left:4rem}}' +
+      '@media screen and (min-width:769px){.logo-srini{top:68px;transform:translateY(-50%);left:4rem}.header-nav-row{pointer-events:none}.header-nav-row nav,.header-nav-row .header-chat-slot{pointer-events:auto}}' +
       '@media screen and (max-width:768px){.logo-srini{font-size:12px;top:2rem;left:5%;letter-spacing:1px;transform:none}}' +
       'header{background:#fff;display:flex;align-items:center;min-height:65px;justify-content:flex-end;padding:0 2rem 0 0;overflow:visible}' +
       'header nav{display:flex;justify-content:flex-end;flex:1}' +
@@ -293,7 +369,7 @@
       '.hamburgler-menu{opacity:0!important;pointer-events:none!important;position:fixed!important;top:12px!important;right:12px!important;bottom:auto!important;left:12px!important;width:auto!important;background-color:#fbfaf4!important;color:#2b2b2b!important;text-align:center!important;border-radius:20px!important;padding:5rem 2rem 2.5rem!important;box-shadow:0 8px 40px rgba(0,0,0,0.12),0 0 0 1px rgba(0,0,0,0.04)!important;z-index:9998!important;transform:translateY(-12px) scale(0.98)!important;transition:opacity 0.3s cubic-bezier(0.16,1,0.3,1),transform 0.3s cubic-bezier(0.16,1,0.3,1)!important}' +
       '.hamburgler-active .hamburgler-menu{opacity:1!important;pointer-events:initial!important;transform:translateY(0) scale(1)!important;z-index:9998!important}' +
       '.hamburgler-active{overflow:visible!important;max-height:none!important}' +
-      '.hamburgler-menu-list{display:flex!important;flex-direction:column!important;gap:0.25rem!important;float:none!important;text-align:center!important;padding:0!important;margin:0!important;list-style-type:none!important;position:static!important;transform:none!important;font-size:110%!important;overflow:visible!important}' +
+      '.hamburgler-menu-list{display:flex!important;flex-direction:column!important;gap:0.25rem!important;float:none!important;text-align:center!important;padding:0!important;margin:0!important;list-style-type:none!important;position:static!important;transform:none!important;overflow:visible!important}' +
       '.hamburgler-active .hamburgler-menu-list{transform:none!important}' +
       '.hamburgler-menu-list li{line-height:1.4!important;float:none!important;display:block!important;margin:0!important;text-align:center!important}' +
       '.hamburgler-menu-list li a:not(.get-in-touch-btn){display:block!important;padding:0.85rem 1rem!important;border-radius:12px!important;color:#2b2b2b!important;text-decoration:none!important;transition:background 0.2s ease!important}' +
@@ -304,7 +380,7 @@
       '.desk-menu li{display:flex!important;align-items:center!important;float:none!important;height:100%}' +
       '.desk-menu li a:not(.get-in-touch-btn){display:flex!important;align-items:center!important;height:100%;padding:0 25px!important;font-family:"Space Mono","Courier New","Monaco",monospace!important;font-size:14px!important;letter-spacing:0.5px!important;text-transform:uppercase!important;color:#2b2b2b!important;text-decoration:none}' +
       '.desk-menu li a:not(.get-in-touch-btn):hover,.desk-menu li a:not(.get-in-touch-btn):focus-visible{text-decoration:underline;text-underline-offset:0.2em}' +
-      '.hamburgler-menu-list li a{font-family:"Space Mono","Courier New","Monaco",monospace!important;font-size:16px!important;letter-spacing:0.5px!important;text-transform:uppercase!important}' +
+      '.hamburgler-menu-list li a{font-family:"Space Mono","Courier New","Monaco",monospace!important;font-size:14px!important;letter-spacing:0.5px!important;text-transform:uppercase!important}' +
       '.get-in-touch-btn{position:relative;display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px;padding:14px 28px!important;min-height:auto!important;min-width:auto!important;background:rgba(255,255,255,0.1)!important;backdrop-filter:blur(24px)!important;-webkit-backdrop-filter:blur(24px)!important;border:1px solid rgba(255,255,255,0.3)!important;box-shadow:0 4px 16px rgba(0,0,0,0.08),inset 0 1px 0 0 rgba(255,255,255,0.4),0 0 0 1px rgba(255,255,255,0.1)!important;color:#2b2b2b!important;border-radius:9999px!important;font-size:13px!important;font-weight:400!important;font-family:"Space Mono","Courier New","Monaco",monospace!important;text-decoration:none!important;transition:all 0.3s ease!important;cursor:pointer!important;line-height:1!important;letter-spacing:0.5px!important;text-transform:uppercase!important;margin-left:8px!important;vertical-align:middle!important;overflow:hidden}' +
       '.get-in-touch-btn:hover{border-color:rgba(255,255,255,0.5)!important;transform:scale(1.03)!important}' +
       '.get-in-touch-btn:active{transform:scale(0.98)!important}' +
@@ -325,7 +401,7 @@
       '</style>';
     html = html.replace(
       /<link rel="stylesheet" href="style-2\.css[^"]*">/,
-      fontLinks + '<link rel="stylesheet" href="srini-tokens.css?v=2">' + '<link rel="stylesheet" href="style-2.css?v=29">' + navCSS
+      fontLinks + '<link rel="stylesheet" href="srini-tokens.css?v=2">' + '<link rel="stylesheet" href="style-2.css?v=38">' + navCSS
     );
 
     // 4. Replace old hamburger menu with updated version
@@ -337,7 +413,7 @@
       '    <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">R\u00e9sum\u00e9</a></li>\n' +
       '         \n        \n  </ul>\n</div>';
     var newHamMenu =
-      '<a href="' + ppP + 'index.html" class="logo-srini" data-text="srini">srini</a>\n' +
+      '<a href="' + ppP + 'index.html" class="logo-srini" data-text="srini" target="_top">srini</a>\n' +
       '<div class="hamburgler-menu">\n  <ul class="hamburgler-menu-list">\n' +
       '    <li><a href="' + ppP + 'about.html">About</a></li>\n' +
       '    <li><a href="' + ppP + 'index.html#Selectedworks">Works</a></li>\n' +
@@ -346,9 +422,9 @@
       '  </ul>\n</div>';
     html = html.replace(oldHamMenu, newHamMenu);
 
-    // 5. Replace old <header> with new nav
+    // 5. Replace legacy <header> only when plain HTML still uses the old layout
     var headerMatch = html.match(/<header[^>]*>[\s\S]*?<\/header>/i);
-    if (headerMatch) {
+    if (headerMatch && !hasModernNav) {
       var sparkle = '<svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>';
       var newHeader =
         '<header>\n' +
@@ -437,6 +513,7 @@
       '<style>' +
       '#site-content-wrap{transition:margin-right 0.3s cubic-bezier(0.16,1,0.3,1)}' +
       'body.chat-open #site-content-wrap{margin-right:444px}' +
+      '@media(min-width:769px){body.chat-open .chatbot-sidebar{z-index:10120!important}body.chat-open .frame #site-content-wrap>header,body.chat-open #site-content-wrap>header{width:auto!important;max-width:none!important;margin-inline:0!important}body.chat-open.nav-persistent header nav{right:476px}}' +
       '@media(min-width:1280px){.case-study-page-wrap{transition:padding-left 0.3s cubic-bezier(0.16,1,0.3,1)}body.chat-open aside.case-study-toc{display:none!important}body.chat-open .case-study-page-wrap{padding-left:1.5rem!important}}' +
       '.chatbot-sidebar{position:fixed;top:12px;right:12px;bottom:12px;width:0;overflow:hidden;transition:width 0.3s cubic-bezier(0.16,1,0.3,1);z-index:9999;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,0.06);border-radius:16px}' +
       'body.chat-open .chatbot-sidebar{width:420px}' +
@@ -466,24 +543,12 @@
       '}' +
       '</style>';
 
-    var chatbotJS =
-      '<script>' +
-      '(function(){' +
-      'var sidebar=document.getElementById("chatbot-sidebar");' +
-      'var triggers=document.querySelectorAll(".srini-chat-trigger");' +
-      'var iframeLoaded=false;' +
-      'function resolveChatApi(e){e=String(e||"").trim();if(!e)return"";try{var t=new URL(e);if(t.hostname==="localhost"||t.hostname==="127.0.0.1")return"https://sriniai.netlify.app"}catch(x){}return e.replace(/\\/$/,"")}' +
-      'function getAppUrl(){var src=sidebar&&sidebar.getAttribute("data-chatbot-src");return(typeof window.CHATBOT_APP_URL!=="undefined"?window.CHATBOT_APP_URL:(src||"./chatbot/")).replace(/\\/$/,"")+"/";}' +
-      'function getIframeSrc(){var base=getAppUrl();var api=resolveChatApi((sidebar&&sidebar.getAttribute("data-chat-api"))||window.SRINI_CHAT_API||"");var params=[];if(api)params.push("api="+encodeURIComponent(api));try{var pagePath=window.SRINI_CHAT_PAGE_PATH||window.location.pathname;params.push("page="+encodeURIComponent(pagePath));if(document.title)params.push("title="+encodeURIComponent(document.title));}catch(x){}params.push("cb=34");return base+"?"+params.join("&");}' +
-      'function setOpen(open){var isOpen=!!open;document.body.classList.toggle("chat-open",isOpen);if(sidebar)sidebar.setAttribute("aria-hidden",!isOpen);triggers.forEach(function(t){t.setAttribute("aria-label",isOpen?"Close AI chat":"Open AI chat");t.setAttribute("aria-expanded",isOpen);});if(isOpen&&sidebar&&!iframeLoaded){var iframe=document.createElement("iframe");iframe.title="Proxy chat";iframe.src=getIframeSrc();sidebar.appendChild(iframe);iframeLoaded=true;}}' +
-      'triggers.forEach(function(t){t.addEventListener("click",function(){var isOpen=document.body.classList.contains("chat-open");setOpen(!isOpen);});});' +
-      'window.addEventListener("message",function(e){if(e.data==="srini-chat-close")setOpen(false);});' +
-      'function runChatBounceIntro(){try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;}catch(x){return;}triggers.forEach(function(t){t.classList.add("srini-chat-bounce-enter");function onEnd(ev){if(ev.animationName!=="srini-chat-bounce-load")return;t.classList.remove("srini-chat-bounce-enter");t.removeEventListener("animationend",onEnd);}t.addEventListener("animationend",onEnd);});}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",runChatBounceIntro);}else{runChatBounceIntro();}' +
-      '})();' +
-      '<\/script>';
+    var chatbotJS = ppGetCanonicalChatLoaderScript();
 
     var pageContextScript = ppChatPageContextScript();
-    var injectTail = pageContextScript + (plainHadChatSidebar ? '' : chatbotHTML + chatbotCSS + chatbotJS);
+    var injectTail =
+      pageContextScript +
+      (plainHadChatSidebar ? chatbotJS : chatbotHTML + chatbotCSS + chatbotJS);
 
     if (html.includes('</body>')) {
       html = html.replace('</body>', injectTail + '</body>');
