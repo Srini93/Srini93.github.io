@@ -57,7 +57,28 @@ function hydrateFolderMedia(folder) {
     if (video.getAttribute('src')) return;
     video.src = video.dataset.src;
     video.preload = 'metadata';
+    try {
+      video.load();
+    } catch (e) {}
   });
+}
+
+function watchFolderThumbs(folder) {
+  if (!('IntersectionObserver' in window)) {
+    hydrateFolderMedia(folder);
+    return;
+  }
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        hydrateFolderMedia(folder);
+        io.disconnect();
+      });
+    },
+    { root: null, rootMargin: '120px 0px', threshold: 0.01 }
+  );
+  io.observe(folder);
 }
 
 function ensureCloseButton() {
@@ -615,6 +636,7 @@ function bindFolder(folder) {
   apply(instant);
   folder.addEventListener('pointerenter', () => hydrateFolderMedia(folder), { once: true, passive: true });
   folder.addEventListener('focus', () => hydrateFolderMedia(folder), { once: true });
+  watchFolderThumbs(folder);
   items.forEach((item, i) => {
     const note = item.querySelector('.folder-note');
     if (note) bindStickyPeel(note, i);
@@ -788,6 +810,7 @@ export function initFolderCards(root = document) {
 
 export function refreshFolderCards(root = document) {
   root.querySelectorAll('[data-folder]').forEach((folder) => {
+    hydrateFolderMedia(folder);
     const slug = folder.dataset.folder;
     const c = controllers.get(slug);
     if (!c || stage) return;

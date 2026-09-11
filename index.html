@@ -1001,6 +1001,47 @@
       margin-bottom: 1.5rem;
       font-weight: 400;
       letter-spacing: 0.5px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.55rem 0.75rem;
+    }
+
+    .work-lock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px 4px 7px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: #5c5c5c;
+      background: rgba(43, 43, 43, 0.06);
+      border: 1px solid rgba(43, 43, 43, 0.12);
+    }
+
+    .work-lock-badge svg {
+      width: 11px;
+      height: 11px;
+      flex-shrink: 0;
+    }
+
+    .read-more-glass.is-locked {
+      min-width: 196px;
+    }
+
+    .read-more-lock {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 2px;
+    }
+
+    .read-more-lock svg {
+      width: 14px;
+      height: 14px;
     }
 
     /* Work Sans for bullet points */
@@ -1664,6 +1705,35 @@
       animation: workPanelIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
+    /* Scroll-driven blur reveal — same motion language as Zoho Sheet */
+    .home-scroll-reveal {
+      opacity: 0;
+      filter: blur(4px);
+      transform: translate3d(0, 12px, 0);
+      transition:
+        opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+        filter 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+        transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: opacity, filter, transform;
+    }
+
+    .home-scroll-reveal.is-revealed {
+      opacity: 1;
+      filter: blur(0);
+      transform: translate3d(0, 0, 0);
+      will-change: auto;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .home-scroll-reveal {
+        opacity: 1 !important;
+        filter: none !important;
+        transform: none !important;
+        transition: none !important;
+        will-change: auto !important;
+      }
+    }
+
     @keyframes workPanelIn {
       from {
         opacity: 0;
@@ -2154,7 +2224,7 @@
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
             <a href="Intuit.html" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Intuit Assist – GenAI-Powered Developer Assistant</a></h2>
-            <p class="project-date">June 2023 - Present</p>
+            <p class="project-date">June 2023 - Present <span class="work-lock-badge" title="This case study is NDA protected"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>NDA protected</span></p>
             <ul
              class="card-list-points"
               style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: var(--srini-color-text-body); display: block">
@@ -2188,8 +2258,9 @@
             </ul>
 
             <div style="padding-top: 6rem;">
-              <a class="read-more-glass" href="Intuit.html" target="_blank">
+              <a class="read-more-glass is-locked" href="Intuit.html" target="_blank" aria-label="Read more — this case study is NDA protected">
                 <div class="read-more-content">
+                  <span class="read-more-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
                   <span class="read-more-text">Read More</span>
                   <div class="read-more-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
@@ -2219,7 +2290,7 @@
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
             <a href="API.html" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">API platform - API Documentation, testing and integration experiences</a></h2>
-            <p class="project-date">Jan 2023 - Present</p>
+            <p class="project-date">Jan 2023 - Present <span class="work-lock-badge" title="This case study is NDA protected"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>NDA protected</span></p>
             <ul
              class="card-list-points"
               style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: var(--srini-color-text-body); display: block">
@@ -2253,8 +2324,9 @@
             </ul>
 
             <div style="padding-top: 6rem;">
-              <a class="read-more-glass" href="API.html" target="_blank" rel="noopener noreferrer">
+              <a class="read-more-glass is-locked" href="API.html" target="_blank" rel="noopener noreferrer" aria-label="Read more — this case study is NDA protected">
                 <div class="read-more-content">
+                  <span class="read-more-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
                   <span class="read-more-text">Read More</span>
                   <div class="read-more-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
@@ -2284,7 +2356,7 @@
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
             Spam Protection features and design system for Norton 360 iOS</h2>
-            <p class="project-date">Nov 2020 - Dec 2022</p>
+            <p class="project-date">Nov 2020 - Dec 2022 <span class="work-lock-badge" title="This case study is NDA protected"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>NDA protected</span></p>
             <ul
              class="card-list-points"
               style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: var(--srini-color-text-body); display: block">
@@ -2318,8 +2390,9 @@ Designed a white label friendly design system scaling from design to code for fi
 
   
             <div style="padding-top: 6rem;">
-              <a class="read-more-glass" href="Norton.html" target="_blank">
+              <a class="read-more-glass is-locked" href="Norton.html" target="_blank" aria-label="Read more — this case study is NDA protected">
                 <div class="read-more-content">
+                  <span class="read-more-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
                   <span class="read-more-text">Read More</span>
                   <div class="read-more-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
@@ -2335,7 +2408,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
       <hr style="width:80%; margin-top: 4rem; margin-bottom: 3rem; border: 0px solid #f1f1f1; border-top-width: 1px;">
 
-      <div style="padding-left: 5%; padding-top: 3%; padding-bottom: 2rem; color: #666; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;">
+      <div class="previous-work-label" style="padding-left: 5%; padding-top: 3%; padding-bottom: 2rem; color: #666; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;">
         Previous Work [2015-2019]
       </div>
       <div class="previous-work-grid">
@@ -2415,7 +2488,7 @@ Designed a white label friendly design system scaling from design to code for fi
               </svg>
               <div class="folder-items">
                 <div class="folder-item" data-folder-item data-w="44" data-kind="video" style="top:5%;width:44%;margin-left:-22%;aspect-ratio:16/9">
-                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/chatbot/proxy-ai.mp4" muted playsinline loop preload="none" aria-label="Proxy chatbot walkthrough"></video></figure></div>
+                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/chatbot/proxy-ai.mp4" poster="images/ai-labs/chatbot/proxy-ai.webp" muted playsinline loop preload="none" aria-label="Proxy chatbot walkthrough"></video></figure></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
                   <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">RAG Architecture</p><p class="folder-note-p">Built from the ground up — custom retrieval indexes portfolio content, grounding every answer in real context about my work.</p></div></div>
@@ -2459,7 +2532,7 @@ Designed a white label friendly design system scaling from design to code for fi
                   <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/03-computer.webp" alt="Abstract retro futuristic computer in nature" width="1200" height="673" loading="lazy" decoding="async"><figcaption class="folder-photo-caption">Computer</figcaption></figure></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="44" data-kind="video" style="top:7%;width:44%;margin-left:-22%;aspect-ratio:16/9">
-                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/midjourney/computer-video.mp4" muted playsinline loop preload="none" aria-label="Abstract retro futuristic computer in nature, video generation"></video><figcaption class="folder-photo-caption">Computer (video)</figcaption></figure></div>
+                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/midjourney/computer-video.mp4" poster="images/ai-labs/midjourney/computer-video.webp" muted playsinline loop preload="none" aria-label="Abstract retro futuristic computer in nature, video generation"></video><figcaption class="folder-photo-caption">Computer (video)</figcaption></figure></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="42" data-kind="photo" style="top:6%;width:42%;margin-left:-21%;aspect-ratio:16/9">
                   <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/crystal-ball.webp" alt="Crystal ball on a rock in a wildflower meadow at golden hour" width="1024" height="573" loading="lazy" decoding="async"><figcaption class="folder-photo-caption">Crystal Ball</figcaption></figure></div>
@@ -2506,10 +2579,10 @@ Designed a white label friendly design system scaling from design to code for fi
                   <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Figure</p><p class="folder-note-p">Figure is a generative UI experiment: describe a dashboard, report, or workspace and get on-brand data views—not generic charts dropped on a shared canvas.</p></div></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="44" data-kind="video" style="top:5%;width:44%;margin-left:-22%;aspect-ratio:16/9">
-                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/genui/figure.mp4" muted playsinline loop preload="none" aria-label="Figure generative UI walkthrough"></video><figcaption class="folder-photo-caption">Figure</figcaption></figure></div>
+                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/genui/figure.mp4" poster="images/ai-labs/genui/figure.webp" muted playsinline loop preload="none" aria-label="Figure generative UI walkthrough"></video><figcaption class="folder-photo-caption">Figure</figcaption></figure></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="42" data-kind="video" style="top:8%;width:42%;margin-left:-21%;aspect-ratio:16/9">
-                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/genui/figure-1.mp4" muted playsinline loop preload="none" aria-label="Figure prompt-to-screen demo"></video><figcaption class="folder-photo-caption">Prompt to screen</figcaption></figure></div>
+                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/genui/figure-1.mp4" poster="images/ai-labs/genui/figure-1.webp" muted playsinline loop preload="none" aria-label="Figure prompt-to-screen demo"></video><figcaption class="folder-photo-caption">Prompt to screen</figcaption></figure></div>
                 </div>
                 <div class="folder-item" data-folder-item data-w="36" data-kind="note" style="top:10%;width:36%;margin-left:-18%;aspect-ratio:3/3.8">
                   <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Prompt to screen</p><p class="folder-note-p">You say what you need. Figure lays out the page using familiar pieces: a headline, numbers, charts, tables, lists, forms, and next steps.</p></div></div>
@@ -2775,6 +2848,10 @@ Designed a white label friendly design system scaling from design to code for fi
               if (window.refreshFolderCards) window.refreshFolderCards();
             });
           }
+
+          requestAnimationFrame(function () {
+            if (window.flushHomeScrollReveal) window.flushHomeScrollReveal();
+          });
         }
 
         window.setWorkPanel = setPanel;
@@ -2793,6 +2870,87 @@ Designed a white label friendly design system scaling from design to code for fi
       }
 
       initWorkSwitch();
+
+      function initHomeScrollReveal() {
+        var prefersReduced = false;
+        try {
+          prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        } catch (e) {}
+
+        var nodes = document.querySelectorAll([
+          '.work-section-header',
+          '#work-panel-recent > .frame',
+          '.previous-work-label',
+          '.previous-work-item',
+          '.ai-labs-intro',
+          '.ai-labs-folders',
+          '#contact > .frame'
+        ].join(','));
+        var blocks = Array.prototype.slice.call(nodes);
+        if (!blocks.length) return;
+
+        function revealAll() {
+          blocks.forEach(function (el) {
+            el.classList.add('home-scroll-reveal', 'is-revealed');
+          });
+        }
+
+        if (prefersReduced || !('IntersectionObserver' in window)) {
+          revealAll();
+          return;
+        }
+
+        var prevStagger = 0;
+        blocks.forEach(function (el) {
+          el.classList.add('home-scroll-reveal');
+          if (el.classList.contains('previous-work-item')) {
+            el.style.transitionDelay = (prevStagger * 0.08) + 's';
+            prevStagger += 1;
+          }
+        });
+
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              if (!entry.isIntersecting) return;
+              entry.target.classList.add('is-revealed');
+              io.unobserve(entry.target);
+            });
+          },
+          {
+            root: null,
+            rootMargin: '0px 0px -5% 0px',
+            threshold: [0, 0.06, 0.12]
+          }
+        );
+
+        function isShown(el) {
+          return !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+        }
+
+        function observePending() {
+          blocks.forEach(function (el) {
+            if (el.classList.contains('is-revealed') || !isShown(el)) return;
+            io.observe(el);
+          });
+        }
+
+        window.flushHomeScrollReveal = function () {
+          observePending();
+          blocks.forEach(function (el) {
+            if (el.classList.contains('is-revealed') || !isShown(el)) return;
+            var rect = el.getBoundingClientRect();
+            if (rect.top < window.innerHeight * 0.95 && rect.bottom > 40) {
+              el.classList.add('is-revealed');
+              io.unobserve(el);
+            }
+          });
+        };
+
+        observePending();
+      }
+
+      initHomeScrollReveal();
       
       // Progressive Animation
       function animateElements() {
@@ -3662,7 +3820,7 @@ Designed a white label friendly design system scaling from design to code for fi
   <script src="ui-sounds.js?v=26"></script>
   <script src="dev-mode.js"></script>
   <script type="module">
-    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=25';
+    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=26';
     window.refreshFolderCards = refreshFolderCards;
     initFolderCards();
     if (document.getElementById('work-panel-ai-labs')?.classList.contains('is-active')) {

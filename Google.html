@@ -28,6 +28,7 @@
 <!-- Mobile icons ends here -->
 
 <link rel="stylesheet" href="style-2.css?v=38">
+<link rel="stylesheet" href="vendor/persistent-nav.css?v=10">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
@@ -347,7 +348,7 @@
     ul.hamburgler-menu-list { display: flex !important; flex-direction: column !important; overflow: visible !important; }
     .hamburgler-menu-list li { display: block !important; float: none !important; }
     header { padding-bottom: 0 !important; }
-    .srini-chat-nav-li { display: none !important; }
+    .srini-chat-nav-li, .header-chat-slot { display: none !important; }
   }
   @media screen and (max-width: 601px) {
     .desk-menu { display: none !important; }
@@ -391,7 +392,7 @@
       body.nav-persistent header nav {
         position: fixed;
         top: 20px;
-        right: 96px;
+        right: 100px;
         z-index: 10000;
         width: 64px;
         height: 64px;
@@ -408,12 +409,39 @@
         cursor: pointer;
       }
 
-      /* Pull chat button out of the pill so it sits to its right */
-      body.nav-persistent:not(.nav-expanded) .srini-chat-nav-li {
+      /* Homepage-style 64px chat sibling next to the scrolled nav pill */
+      body.nav-persistent:not(.nav-expanded) .srini-chat-nav-li,
+      body.nav-persistent:not(.nav-expanded) .header-chat-slot {
         position: fixed;
         top: 20px;
-        right: 32px;
-        z-index: 10001;
+        right: 24px;
+        z-index: 10081;
+        width: 64px;
+        height: 64px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        pointer-events: auto;
+        opacity: 1;
+      }
+      body.nav-persistent:not(.nav-expanded) .srini-chat-nav-li .srini-chat-nav-btn,
+      body.nav-persistent:not(.nav-expanded) .header-chat-slot .srini-chat-nav-btn {
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        min-height: 64px;
+        background: rgba(255, 255, 255, 0.62);
+        backdrop-filter: blur(24px) saturate(180%);
+        -webkit-backdrop-filter: blur(24px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        box-shadow:
+          0 14px 40px rgba(0, 0, 0, 0.1),
+          inset 0 1px 0 rgba(255, 255, 255, 0.65);
+      }
+      body.nav-persistent:not(.nav-expanded) .srini-chat-nav-li .srini-chat-sparkle,
+      body.nav-persistent:not(.nav-expanded) .header-chat-slot .srini-chat-sparkle {
+        width: 28px;
+        height: 28px;
       }
 
       body.nav-persistent.nav-expanded header nav {
@@ -583,15 +611,17 @@
   <div id="hamburgler" class="hamburgler-icon-wrapper">
     <span class="hamburgler-icon"></span>
   </div>
+  <div class="header-nav-row">
   <nav>
     <ul class="desk-menu">
       <li><a href="index.html#Selectedworks">Works</a></li>
       <li><a href="about.html">About</a></li>
       <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
-      <li class="srini-chat-nav-li"><button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><span class="srini-chat-hovertip" role="tooltip" style="opacity:0;visibility:hidden;pointer-events:none">Ask about Srini</span><svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg></button></li>
+      <li class="header-chat-slot"><button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><span class="srini-chat-hovertip" role="tooltip" style="opacity:0;visibility:hidden;pointer-events:none">Ask about Srini</span><svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg></button></li>
       <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>
     </ul>
   </nav>
+  </div>
 </header>
 
 <!-- About me -->
@@ -878,7 +908,7 @@ or contact me below</p>
     .srini-chat-fab:hover { animation-play-state: paused; }
     body.chat-open .srini-chat-fab { animation: none !important; }
   }
-  .srini-chat-nav-li { display: flex; align-items: center; overflow: visible; z-index: 2; }
+  .srini-chat-nav-li, .header-chat-slot { display: flex; align-items: center; overflow: visible; z-index: 2; }
   .srini-chat-hovertip {
     position: absolute;
     top: calc(100% + 10px);
@@ -941,7 +971,7 @@ or contact me below</p>
     }
     .srini-chat-fab { display: flex; top: auto; bottom: 24px; right: 24px; width: 75px; height: 75px; }
     .srini-chat-fab-icon { width: 32px; height: 32px; }
-    .srini-chat-nav-li { display: none !important; }
+    .srini-chat-nav-li, .header-chat-slot { display: none !important; }
     body.chat-open #site-content-wrap { margin-right: 0; }
     .chatbot-sidebar { top: 0; right: 0; bottom: 0; left: 0; width: 100% !important; height: 100%; border-radius: 0; z-index: 10003; transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
     body.chat-open .chatbot-sidebar { transform: translateY(0); }
@@ -989,7 +1019,22 @@ or contact me below</p>
 
       // ── Collapsed persistent top navigation ──
       var headerNav = document.querySelector('header nav');
+      var headerChatSlot = document.querySelector('.header-chat-slot') || document.querySelector('.srini-chat-nav-li');
+      var headerNavRow = document.querySelector('.header-nav-row');
+      var getInTouchItem = document.querySelector('header nav .desk-menu .get-in-touch-btn');
+      getInTouchItem = getInTouchItem ? getInTouchItem.closest('li') : null;
       var persistentNavMinWidth = window.matchMedia('(min-width: 769px)');
+      function syncChatSlotPlacement() {
+        if (!headerChatSlot || !headerNavRow) return;
+        var persist = document.body.classList.contains('nav-persistent');
+        if (persist) {
+          if (headerChatSlot.parentElement !== headerNavRow) {
+            headerNavRow.appendChild(headerChatSlot);
+          }
+        } else if (getInTouchItem && headerChatSlot.nextElementSibling !== getInTouchItem) {
+          getInTouchItem.parentNode.insertBefore(headerChatSlot, getInTouchItem);
+        }
+      }
       function hasScrolledPastHeader() {
         var header = document.querySelector('header');
         if (!header) return window.scrollY > 140;
@@ -1033,6 +1078,7 @@ or contact me below</p>
             }, 0);
           }
         }
+        syncChatSlotPlacement();
       }
 
       function updatePersistentNav() {
@@ -1052,6 +1098,7 @@ or contact me below</p>
           }
         }
         if (!shouldPersist) setPersistentNavExpanded(false);
+        syncChatSlotPlacement();
       }
 
       if (headerNav) {
@@ -1078,7 +1125,7 @@ or contact me below</p>
           }
         });
         document.addEventListener('click', function(e) {
-          if (isPersistentNavActive() && !headerNav.contains(e.target)) setPersistentNavExpanded(false);
+          if (isPersistentNavActive() && !headerNav.contains(e.target) && !(headerChatSlot && headerChatSlot.contains(e.target))) setPersistentNavExpanded(false);
         });
         $(window).on('keyup', function(e) { if (e.keyCode == 27) setPersistentNavExpanded(false); });
         updatePersistentNav();

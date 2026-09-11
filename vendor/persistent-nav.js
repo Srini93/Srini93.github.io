@@ -5,7 +5,7 @@
 (function () {
   function initPersistentNav() {
     var headerNav = document.querySelector('header nav');
-    var headerChatSlot = document.querySelector('.header-chat-slot');
+    var headerChatSlot = document.querySelector('.header-chat-slot') || document.querySelector('.srini-chat-nav-li');
     var headerNavRow = document.querySelector('.header-nav-row');
     var getInTouchItem = document.querySelector('header nav .desk-menu .get-in-touch-btn')
       ? document.querySelector('header nav .desk-menu .get-in-touch-btn').closest('li')
