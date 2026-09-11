@@ -738,11 +738,26 @@
       width: 18px;
       height: 18px;
       display: block;
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: visible;
     }
 
     .hero-cta--primary .hero-cta-chevron {
       color: #000;
+    }
+
+    .hero-cta-chevron .hero-cta-arrow {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: hero-arrow-down 1.15s ease-in-out infinite;
+    }
+
+    @keyframes hero-arrow-down {
+      0%, 100% {
+        transform: translateY(-1.5px);
+      }
+      50% {
+        transform: translateY(2.5px);
+      }
     }
 
     header .HeaderContent a.hero-cta--primary .hero-cta-primary-label {
@@ -759,11 +774,10 @@
         width: 0;
         min-width: 0;
         opacity: 0;
-        overflow: hidden;
+        overflow: visible;
         transition:
           width 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-          opacity 0.2s ease,
-          transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+          opacity 0.2s ease;
       }
 
       .hero-cta--primary:hover,
@@ -775,7 +789,6 @@
       .hero-cta--primary:focus-visible .hero-cta-chevron {
         width: 18px;
         opacity: 1;
-        transform: translateY(3px);
       }
     }
 
@@ -785,7 +798,8 @@
       border: 1px solid rgba(255, 255, 255, 0.55);
       box-shadow: 0 4px 16px rgba(59, 101, 239, 0.1);
       text-transform: none;
-      overflow: visible;
+      overflow: visible !important;
+      isolation: isolate;
       position: relative;
       z-index: 1;
       transition:
@@ -795,6 +809,26 @@
         box-shadow 0.25s ease,
         transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
         padding 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .hero-cta--chat::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      padding: 1px;
+      border-radius: inherit;
+      background: conic-gradient(from var(--srini-chat-angle, 0deg), #3b65ef, #a8c0ff, #dce3f8, #7da1f7, #3b65ef);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .hero-cta-chat-label {
@@ -856,9 +890,8 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .hero-cta--primary:hover .hero-cta-chevron,
-      .hero-cta--primary:focus-visible .hero-cta-chevron {
-        transform: none;
+      .hero-cta-chevron .hero-cta-arrow {
+        animation: none;
       }
     }
 
@@ -1392,11 +1425,8 @@
       background: rgba(255, 255, 255, 0.1) !important;
       backdrop-filter: blur(24px) !important;
       -webkit-backdrop-filter: blur(24px) !important;
-      border: 1px solid rgba(255, 255, 255, 0.3) !important;
-      box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+      border: 1px solid rgba(43, 43, 43, 0.22) !important;
+      box-shadow: none !important;
       
       color: #2b2b2b !important;
       border-radius: 9999px !important;
@@ -1435,13 +1465,10 @@
     }
 
     .get-in-touch-btn:hover {
-      border-color: rgba(255, 255, 255, 0.5) !important;
+      border-color: rgba(43, 43, 43, 0.36) !important;
       transform: scale(1.03) !important;
       opacity: 1 !important;
-      box-shadow: 
-        0 12px 32px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.2) !important;
+      box-shadow: none !important;
     }
 
     .get-in-touch-btn:active {
@@ -2076,18 +2103,20 @@
     <div class="frame" style="max-width: 1440px">
       <div class="HeaderContent" style="margin-top: 10%">
         <p class="hero-text-reveal" style='font-size: 250%; font-family: "MyWebFont"; margin-bottom: 0.75rem; color:#2b2b2b'> Hello there <span class="wave">👋</span>, </p>
-        <h1 class="hero-text-reveal" style="white-space: inherit;line-height: 1.125; color:#2b2b2b"> I'm <a href="about.html"
-            target="_blank" style="color:#3b65ef">Srini</a>, a full-spectrum product designer crafting intuitive AI-driven, agentic experiences and agent-ready design systems.
-        </h1>
+        <h1 class="hero-text-reveal" style="white-space: inherit;line-height: 1.125; color:#2b2b2b">I'm <a href="about.html"
+            target="_blank" style="color:#3b65ef">Srini</a>, a full-spectrum product designer crafting intuitive AI-driven, agentic experiences and agent-ready design systems.</h1>
         <div class="hero-text-reveal HeaderContent-description" style="color:var(--srini-color-text-secondary)"> Staff Product Designer @ Intuit | Previously @ Norton, Google & Zoho </div>
         <div class="hero-cta-row">
           <a href="#Selectedworks" class="hero-cta hero-cta--primary" aria-label="Scroll to selected works">
             <span class="hero-cta-primary-label">Selected Works</span>
             <svg class="hero-cta-chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <g class="hero-cta-arrow">
+                <path d="M12 5v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
             </svg>
           </a>
-          <button type="button" class="hero-cta hero-cta--chat srini-chat-trigger" aria-label="Ask Proxy" aria-expanded="false">
+          <button type="button" class="hero-cta hero-cta--chat srini-chat-trigger srini-chat-border-attention" aria-label="Ask Proxy" aria-expanded="false">
             <svg class="hero-cta-proxy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>
             <span class="hero-cta-chat-label"><span class="hero-cta-chat-prefix">Ask</span><span class="hero-cta-proxy-name">Proxy</span></span>
           </button>
@@ -2603,7 +2632,7 @@ Designed a white label friendly design system scaling from design to code for fi
               var word = '';
 
               function flushWord() {
-                if (!word) return;
+                if (!word) return null;
                 var wordEl = document.createElement('span');
                 wordEl.className = 'hero-word';
                 wordEl.setAttribute('aria-hidden', 'true');
@@ -2617,19 +2646,22 @@ Designed a white label friendly design system scaling from design to code for fi
                 }
                 word = '';
                 frag.appendChild(wordEl);
+                return wordEl;
               }
 
+              var lastWordEl = null;
               for (var i = 0; i < text.length; i++) {
                 var ch = text[i];
                 if (ch === '\n' || ch === '\r' || ch === '\t') continue;
                 if (ch === ' ') {
-                  flushWord();
+                  lastWordEl = flushWord() || lastWordEl;
+                  if (!lastWordEl) continue;
                   var space = document.createElement('span');
                   space.className = 'hero-char hero-char--space';
                   space.setAttribute('aria-hidden', 'true');
                   space.textContent = ' ';
                   allChars.push(space);
-                  frag.appendChild(space);
+                  lastWordEl.appendChild(space);
                 } else {
                   word += ch;
                 }
@@ -3248,17 +3280,30 @@ Designed a white label friendly design system scaling from design to code for fi
       48% { transform: scale(1.13); box-shadow: 0 8px 24px rgba(59, 101, 239, 0.24); }
       100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 101, 239, 0); }
     }
+    @property --srini-chat-angle {
+      syntax: '<angle>';
+      inherits: false;
+      initial-value: 0deg;
+    }
     @keyframes srini-chat-border-once {
       0% {
         opacity: 0;
-        transform: rotate(0deg) scale(0.94);
+        --srini-chat-angle: 0deg;
       }
-      14% {
+      10% {
+        opacity: 1;
+      }
+      72% {
         opacity: 1;
       }
       100% {
         opacity: 0;
-        transform: rotate(360deg) scale(1.08);
+        --srini-chat-angle: 360deg;
+      }
+    }
+    @keyframes srini-chat-border-loop {
+      to {
+        --srini-chat-angle: 360deg;
       }
     }
     @media (prefers-reduced-motion: no-preference) {
@@ -3267,6 +3312,10 @@ Designed a white label friendly design system scaling from design to code for fi
       }
       .header-chat-slot:not(.srini-chat-border-stopped).srini-chat-border-attention::before {
         animation: srini-chat-border-once 1.75s cubic-bezier(0.45, 0, 0.55, 1) 0.55s 1 forwards;
+      }
+      .hero-cta--chat:not(.srini-chat-border-stopped).srini-chat-border-attention::before {
+        opacity: 1;
+        animation: srini-chat-border-loop 2.6s linear infinite;
       }
       .srini-chat-fab:not(.srini-chat-attention-stopped) {
         animation: srini-chat-attention 2.75s ease-in-out infinite;
@@ -3291,7 +3340,7 @@ Designed a white label friendly design system scaling from design to code for fi
       position: absolute;
       inset: -3px;
       padding: 2px;
-      background: conic-gradient(from 0deg, #3b65ef, #a8c0ff, #dce3f8, #7da1f7, #3b65ef);
+      background: conic-gradient(from var(--srini-chat-angle, 0deg), #3b65ef, #a8c0ff, #dce3f8, #7da1f7, #3b65ef);
       -webkit-mask:
         linear-gradient(#fff 0 0) content-box,
         linear-gradient(#fff 0 0);
@@ -3308,7 +3357,11 @@ Designed a white label friendly design system scaling from design to code for fi
       border-radius: 50%;
     }
     .header-chat-slot.srini-chat-border-stopped::before,
-    body.chat-open .header-chat-slot::before {
+    body.chat-open .header-chat-slot::before,
+    .hero-cta--chat.srini-chat-border-stopped::before,
+    .hero-cta--chat:hover::before,
+    .hero-cta--chat:focus-visible::before,
+    body.chat-open .hero-cta--chat::before {
       animation: none !important;
       opacity: 0 !important;
     }
@@ -3495,8 +3548,10 @@ Designed a white label friendly design system scaling from design to code for fi
 
   triggers.forEach(function(t) {
     t.addEventListener('click', function() {
-      if (t.classList.contains('srini-chat-nav-btn')) {
+      if (t.classList.contains('srini-chat-nav-btn') || t.classList.contains('hero-cta--chat')) {
         t.classList.add('srini-chat-attention-stopped');
+        t.classList.add('srini-chat-border-stopped');
+        t.classList.remove('srini-chat-border-attention');
         var slot = t.closest('.header-chat-slot');
         if (slot) {
           slot.classList.add('srini-chat-border-stopped');
@@ -3520,7 +3575,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
     slot.classList.add('srini-chat-border-attention');
     function onBorderEnd(ev) {
-      if (ev.animationName !== 'srini-chat-border-once') return;
+      if (ev.target !== slot || ev.animationName !== 'srini-chat-border-once') return;
       slot.classList.remove('srini-chat-border-attention');
       slot.removeEventListener('animationend', onBorderEnd);
     }
@@ -3552,6 +3607,9 @@ Designed a white label friendly design system scaling from design to code for fi
   } else {
     runChatBounceIntro();
   }
+  setTimeout(function() {
+    startChatBorderIntro(document.querySelector('.hero-cta--chat'));
+  }, 500);
 
   function openChatFromUrlIfNeeded() {
     try {
