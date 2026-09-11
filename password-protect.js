@@ -269,7 +269,7 @@
     html = html.replace(/data-chat-api=["'][^"']*["']/gi, 'data-chat-api="' + PP_CHAT_API + '"');
     html = html.replace(/CHATBOT_CACHE_BUST\s*=\s*['"]\d+['"]/g, "CHATBOT_CACHE_BUST = '" + PP_CHAT_CACHE_BUST + "'");
     html = html.replace(/params\.push\(['"]cb=\d+['"]\)/g, "params.push('cb=" + PP_CHAT_CACHE_BUST + "')");
-    html = html.replace(/persistent-nav\.(css|js)\?v=\d+/g, 'persistent-nav.$1?v=8');
+    html = html.replace(/persistent-nav\.(css|js)\?v=\d+/g, 'persistent-nav.$1?v=9');
     html = html.replace(/style-2\.css(\?v=\d+)?/g, 'style-2.css?v=38');
     return html;
   }
