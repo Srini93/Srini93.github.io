@@ -498,6 +498,7 @@
     aspect-ratio: 4 / 5;
     border-radius: 16px;
     overflow: hidden;
+    clip-path: inset(0 round 16px);
     border: 1px solid rgba(29, 29, 31, 0.12);
     background: #fff;
     line-height: 0;
@@ -525,12 +526,11 @@
     margin: 0;
     padding: 0;
     border: 0;
-    border-radius: 0;
+    border-radius: 16px;
     object-fit: cover;
     object-position: center 38%;
     vertical-align: top;
-    transform: scale(1.04) translateZ(0);
-    transform-origin: center center;
+    transform: none;
     filter: saturate(0.86) contrast(0.97);
   }
   .about-profile-photo::after {
@@ -538,7 +538,7 @@
     position: absolute;
     inset: 0;
     pointer-events: none;
-    border-radius: inherit;
+    border-radius: 16px;
     background:
       linear-gradient(180deg, rgba(251, 250, 244, 0.18) 0%, rgba(247, 241, 234, 0.28) 100%);
     mix-blend-mode: soft-light;
@@ -549,9 +549,11 @@
       width: min(260px, 88vw);
       margin: 0 auto;
       border-radius: 14px;
+      clip-path: inset(0 round 14px);
     }
-    .about-profile-photo img {
-      border-radius: 0;
+    .about-profile-photo img,
+    .about-profile-photo::after {
+      border-radius: 14px;
     }
   }
 
