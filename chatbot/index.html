@@ -351,6 +351,19 @@
         left: var(--tooltip-arrow-left, 24px);
       }
 
+      .info-tooltip-labs-link {
+        display: inline-block;
+        margin-top: 10px;
+        color: var(--accent, #3b65ef);
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 0.18em;
+      }
+
+      .info-tooltip-labs-link:hover {
+        color: var(--accent-light, #5b82f5);
+      }
+
       /* Header — liquid glass pill (neutral on plain bg, translucent when gradient shows) */
       .chat-header {
         position: relative;
@@ -1485,6 +1498,35 @@
 
       // Font accessibility — text size slider
       (function () {
+        function enhanceInfoTooltip(tooltip) {
+          if (!tooltip || tooltip.querySelector('.info-tooltip-labs-link')) return;
+          var link = document.createElement('a');
+          link.className = 'info-tooltip-labs-link';
+          link.href = '../index.html#folder-chatbot';
+          link.textContent = 'See it in AI Labs';
+          link.addEventListener('click', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            var dest = new URL('../index.html#folder-chatbot', window.location.href).href;
+            try {
+              if (window.parent === window) {
+                window.location.href = dest;
+                return;
+              }
+              var folder = window.parent.document.querySelector('[data-folder="chatbot"]');
+              if (folder) {
+                window.parent.postMessage({ type: 'srini-open-folder', folder: 'chatbot' }, '*');
+                return;
+              }
+              window.parent.location.href = dest;
+            } catch (err) {
+              window.location.href = dest;
+            }
+          });
+          tooltip.appendChild(document.createElement('br'));
+          tooltip.appendChild(link);
+        }
+
         var STORAGE_KEY = 'srini-chat-font-a11y';
         var MIN = 100;
         var MAX = 150;
@@ -1685,6 +1727,7 @@
 
           var infoTooltip = header.querySelector('.info-tooltip');
           if (infoTooltip) {
+            enhanceInfoTooltip(infoTooltip);
             new MutationObserver(function () {
               if (infoTooltip.classList.contains('visible')) positionInfoTooltip();
             }).observe(infoTooltip, { attributes: true, attributeFilter: ['class'] });

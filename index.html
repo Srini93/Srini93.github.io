@@ -2180,9 +2180,9 @@
               </g>
             </svg>
           </a>
-          <button type="button" class="hero-cta hero-cta--chat srini-chat-trigger srini-chat-border-attention" aria-label="Ask Proxy" aria-expanded="false">
+          <button type="button" class="hero-cta hero-cta--chat srini-chat-trigger srini-chat-border-attention" aria-label="Chat with Proxy" aria-expanded="false">
             <svg class="hero-cta-proxy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>
-            <span class="hero-cta-chat-label"><span class="hero-cta-chat-prefix">Ask</span><span class="hero-cta-proxy-name">Proxy</span></span>
+            <span class="hero-cta-chat-label"><span class="hero-cta-chat-prefix">Chat with</span><span class="hero-cta-proxy-name">Proxy</span></span>
           </button>
         </div>
       </div>
@@ -2855,7 +2855,7 @@ Designed a white label friendly design system scaling from design to code for fi
           });
         });
 
-        if (window.location.hash === '#Selectedworks-ai-labs') {
+        if (window.location.hash === '#Selectedworks-ai-labs' || window.location.hash.indexOf('#folder-') === 0) {
           setPanel('ai-labs', false);
         } else {
           setPanel('recent', false);
@@ -3653,7 +3653,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
   var CHAT_API_PUBLIC = 'https://sriniai.netlify.app';
   /** Bump when deploying chatbot or host chat script changes (cache bust). */
-  var CHATBOT_CACHE_BUST = '37';
+  var CHATBOT_CACHE_BUST = '38';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
@@ -3738,6 +3738,19 @@ Designed a white label friendly design system scaling from design to code for fi
 
   window.addEventListener('message', function(e) {
     if (e.data === 'srini-chat-close') setOpen(false);
+    if (e.data && e.data.type === 'srini-open-folder') {
+      setOpen(false);
+      var slug = e.data.folder || 'chatbot';
+      var open = function() {
+        if (window.openFolderStage) window.openFolderStage(slug, true);
+      };
+      if (window.setWorkPanel) window.setWorkPanel('ai-labs', false);
+      var header = document.getElementById('Selectedworks');
+      if (header) header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      requestAnimationFrame(function() {
+        requestAnimationFrame(open);
+      });
+    }
   });
 
   function startChatBorderIntro(slot) {
@@ -3812,8 +3825,9 @@ Designed a white label friendly design system scaling from design to code for fi
   <script src="ui-sounds.js?v=26"></script>
   <script src="dev-mode.js"></script>
   <script type="module">
-    import { initFolderCards, refreshFolderCards } from './vendor/folder-cards/folder-cards.js?v=28';
+    import { initFolderCards, refreshFolderCards, openFolderStage } from './vendor/folder-cards/folder-cards.js?v=29';
     window.refreshFolderCards = refreshFolderCards;
+    window.openFolderStage = openFolderStage;
     initFolderCards();
     if (document.getElementById('work-panel-ai-labs')?.classList.contains('is-active')) {
       refreshFolderCards();

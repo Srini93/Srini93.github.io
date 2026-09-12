@@ -781,7 +781,7 @@ function bindGlobalOnce() {
     event.preventDefault();
   });
 
-  addEventListener('popstate', () => {
+  const syncHash = () => {
     const hash = location.hash.replace(/^#/, '');
     const slug = hash.startsWith('folder-') ? hash.slice(7) : '';
     if (stage) {
@@ -789,7 +789,10 @@ function bindGlobalOnce() {
     } else if (slug && controllers.has(slug)) {
       openStage(slug, false);
     }
-  });
+  };
+
+  addEventListener('popstate', syncHash);
+  addEventListener('hashchange', syncHash);
 
   addEventListener('resize', () => {
     if (!stage || stage.closing) return;
@@ -798,9 +801,31 @@ function bindGlobalOnce() {
   });
 }
 
+export function openFolderStage(slug, push = true) {
+  if (!slug || !controllers.has(slug)) return false;
+  if (stage) return stage.slug === slug;
+  if (typeof window.setWorkPanel === 'function') {
+    window.setWorkPanel('ai-labs', false);
+  }
+  refreshFolderCards();
+  openStage(slug, push);
+  return true;
+}
+
 export function initFolderCards(root = document) {
   bindGlobalOnce();
   root.querySelectorAll('[data-folder]').forEach(bindFolder);
+  const hash = location.hash.replace(/^#/, '');
+  if (hash.startsWith('folder-')) {
+    const slug = hash.slice(7);
+    if (controllers.has(slug)) {
+      if (typeof window.setWorkPanel === 'function') {
+        window.setWorkPanel('ai-labs', false);
+      }
+      refreshFolderCards();
+      openStage(slug, false);
+    }
+  }
 }
 
 export function refreshFolderCards(root = document) {
