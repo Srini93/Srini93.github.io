@@ -29,7 +29,7 @@
 <!-- Mobile icons ends here -->
 
 <link rel="stylesheet" href="style-3.css?v=24">
-<link rel="stylesheet" href="vendor/persistent-nav.css?v=14">
+<link rel="stylesheet" href="vendor/persistent-nav.css?v=15">
 <style>
   /* Force Light Mode */
   html {
@@ -492,6 +492,7 @@
     margin: 0;
     padding: 0;
     align-self: flex-start;
+    position: relative;
     width: min(320px, 80vw);
     max-width: 100%;
     aspect-ratio: 4 / 5;
@@ -526,10 +527,22 @@
     border: 0;
     border-radius: 0;
     object-fit: cover;
-    object-position: center;
+    object-position: center 38%;
     vertical-align: top;
-    transform: scale(1.16) translateZ(0);
+    transform: scale(1.04) translateZ(0);
     transform-origin: center center;
+    filter: saturate(0.86) contrast(0.97);
+  }
+  .about-profile-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+      linear-gradient(180deg, rgba(251, 250, 244, 0.18) 0%, rgba(247, 241, 234, 0.28) 100%);
+    mix-blend-mode: soft-light;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
   }
   @media (max-width: 600px) {
     .about-profile-photo {
@@ -1045,7 +1058,7 @@
         <a class="about-intro-email about-mentorship-cta" href="mailto:tcsreeni93@gmail.com"><span class="about-mentorship-cta-label">Email me</span><svg class="about-mentorship-cta-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
       <figure class="about-profile-photo" data-aos="fade-left">
-        <img src="images/My pic 2.png" alt="Srini portrait" width="320" height="400" loading="lazy" decoding="async" />
+        <img src="images/srini-about.png" alt="Srini at the Golden Gate Bridge" width="320" height="400" loading="lazy" decoding="async" />
       </figure>
      </div>
 </div>
@@ -1286,7 +1299,7 @@
 
   });
 </script>
-<script src="vendor/persistent-nav.js?v=7"></script>
+<script src="vendor/persistent-nav.js?v=8"></script>
 
 <script>
 (function() {

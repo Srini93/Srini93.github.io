@@ -1796,10 +1796,10 @@
     /* Scroll reveal — fade/rise only. Blur on image cards janks scroll. */
     .home-scroll-reveal {
       opacity: 0;
-      transform: translate3d(0, 10px, 0);
+      transform: translate3d(0, 22px, 0);
       transition:
-        opacity 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     .home-scroll-reveal.is-revealed {
@@ -2995,7 +2995,8 @@ Designed a white label friendly design system scaling from design to code for fi
           '.previous-work-label',
           '.previous-work-item',
           '.ai-labs-intro',
-          '#contact > .frame'
+          '.ai-labs-folders .folder',
+          '#contact .frame'
         ].join(','));
         var blocks = Array.prototype.slice.call(nodes);
         if (!blocks.length) return;
@@ -3011,12 +3012,14 @@ Designed a white label friendly design system scaling from design to code for fi
           return;
         }
 
-        var prevStagger = 0;
         blocks.forEach(function (el) {
           el.classList.add('home-scroll-reveal');
-          if (el.classList.contains('previous-work-item')) {
-            el.style.transitionDelay = (prevStagger * 0.08) + 's';
-            prevStagger += 1;
+          var parent = el.parentElement;
+          if (!parent) return;
+          if (el.tagName === 'LI' || el.classList.contains('previous-work-item') || el.classList.contains('folder')) {
+            var kids = parent.querySelectorAll(':scope > li, :scope > .previous-work-item, :scope > .folder');
+            var idx = Array.prototype.indexOf.call(kids, el);
+            if (idx >= 0) el.style.transitionDelay = (idx * 0.07) + 's';
           }
         });
 
@@ -3030,8 +3033,8 @@ Designed a white label friendly design system scaling from design to code for fi
           },
           {
             root: null,
-            rootMargin: '0px 0px -5% 0px',
-            threshold: [0, 0.06, 0.12]
+            rootMargin: '0px 0px -14% 0px',
+            threshold: 0.16
           }
         );
 
@@ -3048,17 +3051,22 @@ Designed a white label friendly design system scaling from design to code for fi
 
         window.flushHomeScrollReveal = function () {
           observePending();
-          blocks.forEach(function (el) {
-            if (el.classList.contains('is-revealed') || !isShown(el)) return;
-            var rect = el.getBoundingClientRect();
-            if (rect.top < window.innerHeight * 0.95 && rect.bottom > 40) {
-              el.classList.add('is-revealed');
-              io.unobserve(el);
-            }
-          });
         };
 
+        function revealIfPageEnd() {
+          var doc = document.documentElement;
+          var remaining = doc.scrollHeight - (window.scrollY + window.innerHeight);
+          if (remaining > 96) return;
+          blocks.forEach(function (el) {
+            if (el.classList.contains('is-revealed') || !isShown(el)) return;
+            el.classList.add('is-revealed');
+            io.unobserve(el);
+          });
+        }
+
+        window.addEventListener('scroll', revealIfPageEnd, { passive: true });
         observePending();
+        revealIfPageEnd();
       }
 
       initHomeScrollReveal();
