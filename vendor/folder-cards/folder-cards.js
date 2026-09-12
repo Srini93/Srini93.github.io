@@ -63,9 +63,112 @@ function hydrateFolderMedia(folder) {
   });
 }
 
+function isManualVideo(video) {
+  return video.hasAttribute('data-play-once');
+}
+
+function syncVideoPlayState(figure, video) {
+  if (!figure) return;
+  const playing = !video.paused && !video.ended;
+  figure.classList.toggle('is-playing', playing);
+  const btn = figure.querySelector('.folder-video-play');
+  if (btn) btn.setAttribute('aria-hidden', playing ? 'true' : 'false');
+}
+
+function bindManualVideos(folder) {
+  folder.querySelectorAll('video[data-play-once]').forEach((video) => {
+    const figure = video.closest('.folder-video') || video.closest('figure');
+    if (!figure || figure.dataset.playBound) return;
+    figure.dataset.playBound = '1';
+    video.loop = false;
+    video.removeAttribute('loop');
+
+    let btn = figure.querySelector('.folder-video-play');
+    if (!btn) {
+      btn = document.createElement('span');
+      btn.className = 'folder-video-play';
+      btn.setAttribute('role', 'button');
+      btn.setAttribute('tabindex', '0');
+      btn.setAttribute('aria-label', 'Play video');
+      btn.innerHTML =
+        '<span aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.12-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14z"/></svg></span>';
+      figure.appendChild(btn);
+    }
+
+    const start = () => {
+      hydrateFolderMedia(folder);
+      if (video.ended || video.currentTime >= (video.duration || 0) - 0.05) {
+        video.currentTime = 0;
+      }
+      const play = video.play();
+      if (play && play.catch) play.catch(() => {});
+    };
+
+    const onPlay = (event) => {
+      if (!folder.classList.contains('is-stage')) return;
+      event.preventDefault();
+      event.stopPropagation();
+      start();
+    };
+    btn.addEventListener('click', onPlay);
+    btn.addEventListener('keydown', (event) => {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      onPlay(event);
+    });
+
+    video.addEventListener('play', () => syncVideoPlayState(figure, video));
+    video.addEventListener('playing', () => syncVideoPlayState(figure, video));
+    video.addEventListener('pause', () => syncVideoPlayState(figure, video));
+    video.addEventListener('ended', () => {
+      video.pause();
+      try {
+        video.currentTime = 0;
+      } catch (err) {}
+      syncVideoPlayState(figure, video);
+    });
+    syncVideoPlayState(figure, video);
+  });
+}
+
+function startVideo(video) {
+  const folder = video.closest('.folder');
+  if (folder) hydrateFolderMedia(folder);
+  if (isManualVideo(video) && (video.ended || (video.duration && video.currentTime >= video.duration - 0.05))) {
+    try {
+      video.currentTime = 0;
+    } catch (err) {}
+  }
+  const play = video.play();
+  if (play && play.catch) play.catch(() => {});
+}
+
+function stopVideo(video, reset) {
+  if (!video.paused) video.pause();
+  if (reset) {
+    try {
+      video.currentTime = 0;
+    } catch (err) {}
+  }
+}
+
+function syncStageVideoPlayback() {
+  if (!stage || stage.closing) return;
+  stage.c.items.forEach((item, i) => {
+    const video = item.querySelector('video');
+    if (!video) return;
+    if (i === stage.active) startVideo(video);
+    else stopVideo(video, isManualVideo(video));
+  });
+}
+
 function playFolderVideos(folder) {
+  if (folder.classList.contains('is-stage')) {
+    syncStageVideoPlayback();
+    return;
+  }
   hydrateFolderMedia(folder);
   folder.querySelectorAll('video').forEach((video) => {
+    if (isManualVideo(video)) return;
     const play = video.play();
     if (play && play.catch) play.catch(() => {});
   });
@@ -314,15 +417,6 @@ async function openStage(slug, push) {
   c.folder.closest('.ai-labs-folders')?.classList.add('is-staging');
 
   hydrateFolderMedia(c.folder);
-  c.items.forEach((item) => {
-    const video = item.querySelector('video');
-    if (!video) return;
-    const start = () => {
-      video.play().catch(() => {});
-    };
-    if (video.readyState >= 2) start();
-    else video.addEventListener('canplay', start, { once: true });
-  });
 
   await Promise.all(
     c.items.map(async (item) => {
@@ -366,6 +460,7 @@ async function openStage(slug, push) {
   animate(c.flap, { rotateX: -80, opacity: 0 }, spring(flingSpring));
   render(spring(stageSpring), 0.02);
   updateStageHint();
+  syncStageVideoPlayback();
 }
 
 async function closeStage() {
@@ -481,6 +576,7 @@ function go(next) {
   stage.active = clamped;
   render(spring(stageSpring));
   updateStageHint();
+  syncStageVideoPlayback();
 }
 
 const PEEK_COPY = ['you found this.', 'nice peel.', 'still sticky.', 'keep looking.'];
@@ -633,6 +729,7 @@ function bindFolder(folder) {
 
   restack();
   apply(instant);
+  bindManualVideos(folder);
   folder.addEventListener('pointerdown', () => hydrateFolderMedia(folder), { passive: true });
   folder.addEventListener('pointerenter', () => playFolderVideos(folder), { passive: true });
   folder.addEventListener('pointerleave', () => pauseFolderVideos(folder), { passive: true });

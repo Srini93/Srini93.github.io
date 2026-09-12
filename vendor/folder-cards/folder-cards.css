@@ -428,6 +428,58 @@
   transition: border-radius 220ms var(--folder-ease-out);
 }
 
+.folder-photo.folder-video {
+  position: relative;
+}
+
+.folder-video-play {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.folder-video-play span {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  color: #1d1d1f;
+  box-shadow:
+    0 4px 14px rgb(0 0 0 / 0.14),
+    0 1px 0 rgb(255 255 255 / 0.8) inset;
+}
+
+.folder-video-play svg {
+  width: 18px;
+  height: 18px;
+  margin-left: 2px;
+}
+
+.folder-video.is-playing .folder-video-play {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.folder.is-stage .folder-video-play span {
+  width: 72px;
+  height: 72px;
+}
+
+.folder.is-stage .folder-video-play svg {
+  width: 26px;
+  height: 26px;
+}
+
 .folder-photo img,
 .folder-photo video,
 .folder-logo {
