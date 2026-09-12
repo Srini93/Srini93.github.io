@@ -24,7 +24,9 @@
   max-height: none;
   box-sizing: border-box;
   overflow-x: auto;
-  overflow-y: visible;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
@@ -36,6 +38,7 @@
 #work-panel-ai-labs:has(.folder.is-stage),
 .selected-works:has(.folder.is-stage) {
   overflow: visible;
+  touch-action: auto;
 }
 
 .ai-labs-folders::-webkit-scrollbar {
@@ -564,12 +567,14 @@
   backdrop-filter: blur(24px) saturate(140%);
   -webkit-backdrop-filter: blur(24px) saturate(140%);
   opacity: 0;
+  visibility: hidden;
   pointer-events: none;
-  transition: opacity 240ms var(--folder-ease-out);
+  transition: opacity 240ms var(--folder-ease-out), visibility 240ms var(--folder-ease-out);
 }
 
 .fstage.is-open {
   opacity: 1;
+  visibility: visible;
   /* Stay below staged folders (10050) and header nav (~10080) */
   pointer-events: none;
 }
@@ -741,6 +746,10 @@ body:has(.fstage.is-open) .fstage-close {
   display: inline-flex;
   align-items: flex-end;
   gap: 0.45rem;
+  pointer-events: none;
+}
+
+.fstage.is-open .fstage-hint-keys {
   pointer-events: auto;
 }
 
