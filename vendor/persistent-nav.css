@@ -29,6 +29,23 @@ a.logo-srini {
   pointer-events: auto !important;
 }
 
+.logo-srini--mark {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+  font-size: 0;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.logo-srini--mark img {
+  display: block;
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  filter: brightness(0) invert(26%);
+}
+
 @media screen and (min-width: 769px) {
   .header-nav-row {
     display: flex;
@@ -103,6 +120,23 @@ a.logo-srini {
       inset 0 1px 0 rgba(255, 255, 255, 0.65);
   }
 
+  body.nav-persistent .logo-srini.logo-srini--mark {
+    top: 20px;
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    min-height: 64px;
+    padding: 0;
+    box-sizing: border-box;
+    justify-content: center;
+    border: 1px solid rgba(255, 255, 255, 0.55);
+  }
+
+  body.nav-persistent .logo-srini--mark img {
+    width: 32px;
+    height: 32px;
+  }
+
   body.nav-persistent header nav {
     position: fixed;
     top: 20px;
@@ -161,18 +195,22 @@ a.logo-srini {
   body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:hover,
   body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:focus-visible,
   body.nav-persistent .header-nav-row > .srini-chat-nav-li .srini-chat-nav-btn:hover,
-  body.nav-persistent .header-nav-row > .srini-chat-nav-li .srini-chat-nav-btn:focus-visible {
-    background: #dce3f8;
-    border-color: rgba(255, 255, 255, 0.7);
+  body.nav-persistent .header-nav-row > .srini-chat-nav-li .srini-chat-nav-btn:focus-visible,
+  body.nav-persistent .desk-menu .header-chat-slot .srini-chat-nav-btn:hover,
+  body.nav-persistent .desk-menu .header-chat-slot .srini-chat-nav-btn:focus-visible {
+    background: #3b65ef;
+    border-color: rgba(255, 255, 255, 0.65);
     animation: none;
-    box-shadow: none;
+    box-shadow: 0 2px 12px rgba(59, 101, 239, 0.22);
   }
 
   body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:hover .srini-chat-sparkle,
   body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:focus-visible .srini-chat-sparkle,
   body.nav-persistent .header-nav-row > .srini-chat-nav-li .srini-chat-nav-btn:hover .srini-chat-sparkle,
-  body.nav-persistent .header-nav-row > .srini-chat-nav-li .srini-chat-nav-btn:focus-visible .srini-chat-sparkle {
-    color: #7da1f7;
+  body.nav-persistent .header-nav-row > .srini-chat-nav-li .srini-chat-nav-btn:focus-visible .srini-chat-sparkle,
+  body.nav-persistent .desk-menu .header-chat-slot .srini-chat-nav-btn:hover .srini-chat-sparkle,
+  body.nav-persistent .desk-menu .header-chat-slot .srini-chat-nav-btn:focus-visible .srini-chat-sparkle {
+    color: #fff;
   }
 
   body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-sparkle,
