@@ -142,7 +142,8 @@
     '        </div>' +
     '      </div>' +
     '      <div id="pp-getInTouch">' +
-    '        If you&rsquo;re a recruiter, you should already have the password on the r&eacute;sum&eacute;. If not, <a href="mailto:tcsreeni93@gmail.com">get in touch to request access</a>.' +
+    '        If you&rsquo;re a recruiter, you should already have the password on the r&eacute;sum&eacute;.' +
+    '        <a href="mailto:tcsreeni93@gmail.com">Get in touch to request access</a>' +
     '      </div>' +
       '      <div id="pp-fileprotocol" class="pp-error"><p>This page cannot unlock when opened straight from Finder/Explorer (<code style="background:rgba(0,0,0,0.08);padding:0 4px;border-radius:4px;">file://</code>). Browsers block Web Crypto there. Serve the folder locally (<code style="background:rgba(0,0,0,0.08);padding:0 4px;border-radius:4px;">npx serve</code> or <code style="background:rgba(0,0,0,0.08);padding:0 4px;border-radius:4px;">python3 -m http.server</code>) and open <code style="background:rgba(0,0,0,0.08);padding:0 4px;border-radius:4px;">http://127.0.0.1:…</code>, or use your published HTTPS site.</p></div>' +
       '      <div id="pp-securecontext" class="pp-error"><p>Password unlock requires a secure context (HTTPS or <code>http://localhost</code> / <code>http://127.0.0.1</code>). Open the deployed HTTPS URL or run a local web server—not a raw <code>file://</code> path.</p></div>' +
