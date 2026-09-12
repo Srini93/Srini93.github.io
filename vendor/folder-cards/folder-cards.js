@@ -186,9 +186,15 @@ function sizeStageItems(c, enable) {
 
     if (kind === 'photo' || kind === 'video') {
       const media = kind === 'video' ? item.querySelector('video') : item.querySelector('img');
-      const nw = (kind === 'video' ? media?.videoWidth : media?.naturalWidth) || 0;
-      const nh = (kind === 'video' ? media?.videoHeight : media?.naturalHeight) || 0;
-      if (!nw || !nh) return;
+      let nw = (kind === 'video' ? media?.videoWidth : media?.naturalWidth) || 0;
+      let nh = (kind === 'video' ? media?.videoHeight : media?.naturalHeight) || 0;
+      if (!nw || !nh) {
+        const arRaw = item.style.aspectRatio || item.dataset.foldAr || '16 / 9';
+        const parts = String(arRaw).split('/').map((n) => Number.parseFloat(n.trim()));
+        const ar = parts.length === 2 && parts[0] && parts[1] ? parts[0] / parts[1] : 16 / 9;
+        nw = kind === 'video' ? 1280 : 1600;
+        nh = Math.max(1, Math.round(nw / ar));
+      }
       const maxW = Math.min(innerWidth * (kind === 'video' ? 0.64 : 0.78), kind === 'video' ? 780 : 980);
       const maxH = stageSafeH() * (kind === 'video' ? 0.88 : 0.92);
       const scale = Math.min(maxW / nw, maxH / nh);
@@ -302,37 +308,30 @@ async function openStage(slug, push) {
   c.folder.closest('.ai-labs-folders')?.classList.add('is-staging');
 
   hydrateFolderMedia(c.folder);
+  c.items.forEach((item) => {
+    const video = item.querySelector('video');
+    if (!video) return;
+    const start = () => {
+      video.play().catch(() => {});
+    };
+    if (video.readyState >= 2) start();
+    else video.addEventListener('canplay', start, { once: true });
+  });
 
   await Promise.all(
     c.items.map(async (item) => {
       const img = item.querySelector('img');
-      const video = item.querySelector('video');
-      if (img) {
-        if (!img.complete) {
-          await new Promise((resolve) => {
-            img.addEventListener('load', resolve, { once: true });
-            img.addEventListener('error', resolve, { once: true });
-          });
-        }
-        try {
-          await img.decode();
-        } catch {
-          /* ignore decode failures; natural size may still be available */
-        }
-        return;
+      if (!img) return;
+      if (!img.complete) {
+        await new Promise((resolve) => {
+          img.addEventListener('load', resolve, { once: true });
+          img.addEventListener('error', resolve, { once: true });
+        });
       }
-      if (video) {
-        if (video.readyState < 1) {
-          await new Promise((resolve) => {
-            video.addEventListener('loadedmetadata', resolve, { once: true });
-            video.addEventListener('error', resolve, { once: true });
-          });
-        }
-        try {
-          await video.play();
-        } catch {
-          /* autoplay may be blocked; still show the frame */
-        }
+      try {
+        await img.decode();
+      } catch {
+        /* ignore decode failures; natural size may still be available */
       }
     }),
   );
@@ -628,6 +627,7 @@ function bindFolder(folder) {
 
   restack();
   apply(instant);
+  folder.addEventListener('pointerdown', () => hydrateFolderMedia(folder), { passive: true });
   folder.addEventListener('pointerenter', () => playFolderVideos(folder), { passive: true });
   folder.addEventListener('pointerleave', () => pauseFolderVideos(folder), { passive: true });
   folder.addEventListener('focus', () => playFolderVideos(folder));
