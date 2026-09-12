@@ -26,7 +26,7 @@
   overflow-x: auto;
   overflow-y: hidden;
   overscroll-behavior-x: contain;
-  touch-action: pan-x;
+  touch-action: pan-x pan-y;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: thin;
@@ -64,16 +64,26 @@
 
 @media screen and (max-width: 720px) {
   .ai-labs-folders {
-    gap: 1rem;
-    padding: 3rem 5% 1rem;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
     justify-content: flex-start;
+    gap: 1.25rem;
+    padding: 1.5rem 5% 2.5rem;
+    overflow: visible;
+    touch-action: auto;
+    scroll-snap-type: none;
   }
 
   .ai-labs-folders > .folder {
-    flex: 0 0 300px;
-    width: 300px;
-    min-width: 300px;
-    max-width: 300px;
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .folder-title {
+    white-space: normal;
   }
 }
 
@@ -943,6 +953,8 @@ button.folder.is-stage {
 
 .folder.is-stage .folder-note {
   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 
 .folder.is-stage .folder-photo,

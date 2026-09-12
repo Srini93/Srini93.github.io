@@ -37,11 +37,14 @@ const SIDE = 0.6;
 const GAP = 0.08;
 /* Keep staged media clear of the title bar + bottom chrome */
 const STAGE_TOP = 112;
+const STAGE_TOP_NARROW = 88;
 const STAGE_BOTTOM = 72;
 const STAGE_BOTTOM_TRY = 156;
+const isNarrowStage = () => innerWidth < 720;
+const stageTop = () => (isNarrowStage() ? STAGE_TOP_NARROW : STAGE_TOP);
 const stageBottom = () => (stage?.slug === 'chatbot' ? STAGE_BOTTOM_TRY : STAGE_BOTTOM);
-const stageSafeH = () => Math.max(240, innerHeight - STAGE_TOP - stageBottom());
-const stageCenterY = () => STAGE_TOP + stageSafeH() / 2;
+const stageSafeH = () => Math.max(200, innerHeight - stageTop() - stageBottom());
+const stageCenterY = () => stageTop() + stageSafeH() / 2;
 
 const tilt = (i) => {
   const n = Math.sin((i + 1) * 127.1) * 43758.5453;
@@ -195,7 +198,10 @@ function sizeStageItems(c, enable) {
         nw = kind === 'video' ? 1280 : 1600;
         nh = Math.max(1, Math.round(nw / ar));
       }
-      const maxW = Math.min(innerWidth * (kind === 'video' ? 0.64 : 0.78), kind === 'video' ? 780 : 980);
+      const maxW = Math.min(
+        innerWidth * (kind === 'video' ? (isNarrowStage() ? 0.9 : 0.64) : isNarrowStage() ? 0.9 : 0.78),
+        kind === 'video' ? 780 : 980,
+      );
       const maxH = stageSafeH() * (kind === 'video' ? 0.88 : 0.92);
       const scale = Math.min(maxW / nw, maxH / nh);
       const w = Math.max(1, Math.round(nw * scale));
@@ -208,7 +214,7 @@ function sizeStageItems(c, enable) {
     }
 
     /* Notes: readable layout size — avoid transform-upscaling tiny folder type. */
-    const maxW = Math.min(innerWidth * 0.38, 400);
+    const maxW = Math.min(innerWidth * (isNarrowStage() ? 0.86 : 0.38), 400);
     const maxH = Math.min(stageSafeH() * 0.85, 520);
     const ar = 3 / 4.2;
     let w = maxW;
@@ -780,6 +786,32 @@ function bindGlobalOnce() {
     else return;
     event.preventDefault();
   });
+
+  let swipeStart = null;
+  addEventListener(
+    'pointerdown',
+    (event) => {
+      if (!stage || stage.closing || event.pointerType === 'mouse') return;
+      if (event.target.closest('button, a, .sticky-peel-hit')) return;
+      swipeStart = { x: event.clientX, y: event.clientY };
+    },
+    { passive: true },
+  );
+  addEventListener(
+    'pointerup',
+    (event) => {
+      if (!swipeStart || !stage || stage.closing) {
+        swipeStart = null;
+        return;
+      }
+      const dx = event.clientX - swipeStart.x;
+      const dy = event.clientY - swipeStart.y;
+      swipeStart = null;
+      if (Math.abs(dx) < 48 || Math.abs(dx) <= Math.abs(dy)) return;
+      go(stage.active + (dx < 0 ? 1 : -1));
+    },
+    { passive: true },
+  );
 
   const syncHash = () => {
     const hash = location.hash.replace(/^#/, '');
