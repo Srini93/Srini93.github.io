@@ -263,7 +263,7 @@
 
   // ─── Nav / chatbot injection for decrypted content ──────────────────
   var PP_CHAT_API = 'https://sriniai.netlify.app';
-  var PP_CHAT_CACHE_BUST = '39';
+  var PP_CHAT_CACHE_BUST = '42';
 
   function ppUpgradeChatIntegration(html) {
     html = html.replace(/https:\/\/srinilm\.onrender\.com\/?/gi, PP_CHAT_API);

@@ -23,15 +23,7 @@
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap"
       rel="stylesheet"
-      media="print"
-      onload="this.media='all'"
     />
-    <noscript>
-      <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap"
-        rel="stylesheet"
-      />
-    </noscript>
     <script type="module" crossorigin src="./assets/index-Ceo5IzNr.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-C6bn-kI3.css">
     <style>
@@ -359,19 +351,6 @@
         left: var(--tooltip-arrow-left, 24px);
       }
 
-      .info-tooltip-labs-link {
-        display: inline-block;
-        margin-top: 10px;
-        color: var(--accent, #3b65ef);
-        font-weight: 600;
-        text-decoration: underline;
-        text-underline-offset: 0.18em;
-      }
-
-      .info-tooltip-labs-link:hover {
-        color: var(--accent-light, #5b82f5);
-      }
-
       /* Header — liquid glass pill (neutral on plain bg, translucent when gradient shows) */
       .chat-header {
         position: relative;
@@ -616,8 +595,8 @@
 
       /* Send: circular button, active once the user has typed */
       .chat-form__send {
-        width: 40px;
-        height: 40px;
+        width: 56px;
+        height: 56px;
         border-radius: 50%;
         border: none;
         background: rgba(118, 118, 128, 0.16);
@@ -631,8 +610,8 @@
       }
 
       .chat-form__send svg {
-        width: 18px;
-        height: 18px;
+        width: 22px;
+        height: 22px;
         transition: transform 0.2s cubic-bezier(0.34, 1.2, 0.64, 1);
       }
 
@@ -1506,35 +1485,6 @@
 
       // Font accessibility — text size slider
       (function () {
-        function enhanceInfoTooltip(tooltip) {
-          if (!tooltip || tooltip.querySelector('.info-tooltip-labs-link')) return;
-          var link = document.createElement('a');
-          link.className = 'info-tooltip-labs-link';
-          link.href = '../index.html#folder-chatbot';
-          link.textContent = 'See it in AI Labs';
-          link.addEventListener('click', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            var dest = new URL('../index.html#folder-chatbot', window.location.href).href;
-            try {
-              if (window.parent === window) {
-                window.location.href = dest;
-                return;
-              }
-              var folder = window.parent.document.querySelector('[data-folder="chatbot"]');
-              if (folder) {
-                window.parent.postMessage({ type: 'srini-open-folder', folder: 'chatbot' }, '*');
-                return;
-              }
-              window.parent.location.href = dest;
-            } catch (err) {
-              window.location.href = dest;
-            }
-          });
-          tooltip.appendChild(document.createElement('br'));
-          tooltip.appendChild(link);
-        }
-
         var STORAGE_KEY = 'srini-chat-font-a11y';
         var MIN = 100;
         var MAX = 150;
@@ -1735,7 +1685,6 @@
 
           var infoTooltip = header.querySelector('.info-tooltip');
           if (infoTooltip) {
-            enhanceInfoTooltip(infoTooltip);
             new MutationObserver(function () {
               if (infoTooltip.classList.contains('visible')) positionInfoTooltip();
             }).observe(infoTooltip, { attributes: true, attributeFilter: ['class'] });
@@ -1762,11 +1711,196 @@
         mountFontA11y();
       })();
 
-      if ("serviceWorker" in navigator && window.parent === window) {
+      if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker.register("./sw.js").catch(() => {});
         });
       }
+
+      // Contextual starter prompts based on page context
+      (function() {
+        // Page-path to contextual prompts mapping
+        // Add your page paths and relevant prompts here
+        const CONTEXTUAL_PROMPTS = {
+          // Case study pages
+          '/intuit': [
+            "What does Srini do at Intuit?",
+            "Tell me about the Intuit Assist project",
+            "How did Srini approach the GenAI design challenges?"
+          ],
+          '/google': [
+            "What did Srini work on at Google?",
+            "Tell me about Srini's experience at Google",
+            "What products did Srini design at Google?"
+          ],
+          '/norton': [
+            "What was Srini's role at NortonLifeLock?",
+            "Tell me about Srini's cybersecurity design work",
+            "What products did Srini design at Norton?"
+          ],
+          // Topic pages
+          '/about': [
+            "What is Srini's background?",
+            "Where has Srini worked?",
+            "What is Srini's design philosophy?"
+          ],
+          '/mentorship': [
+            "What topics does Srini mentor on?",
+            "How can I book a session with Srini?",
+            "What do mentees say about Srini?"
+          ],
+          '/contact': [
+            "How can I reach Srini?",
+            "Is Srini available for mentorship?",
+            "What's the best way to connect with Srini?"
+          ],
+          // Default fallback
+          '_default': [
+            "What does Srini do and where does he work?",
+            "What do mentees say about Srini's mentorship?",
+            "What's Srini's design philosophy?"
+          ]
+        };
+
+        function getPagePath() {
+          try {
+            // Check URL params first
+            const params = new URLSearchParams(window.location.search);
+            const pagePath = params.get('page');
+            if (pagePath) return pagePath.toLowerCase();
+            
+            // Try parent window
+            if (window.parent && window.parent !== window) {
+              return window.parent.location.pathname.toLowerCase();
+            }
+          } catch (e) {}
+          return window.location.pathname.toLowerCase();
+        }
+
+        function getContextualPrompts() {
+          // Check if parent set custom prompts
+          try {
+            if (window.parent?.SRINI_CHAT_PROMPTS?.length) {
+              return window.parent.SRINI_CHAT_PROMPTS;
+            }
+            if (window.SRINI_CHAT_PROMPTS?.length) {
+              return window.SRINI_CHAT_PROMPTS;
+            }
+          } catch (e) {}
+
+          // Match page path to prompts
+          const path = getPagePath();
+          for (const [pattern, prompts] of Object.entries(CONTEXTUAL_PROMPTS)) {
+            if (pattern !== '_default' && path.includes(pattern)) {
+              return prompts;
+            }
+          }
+          return CONTEXTUAL_PROMPTS._default;
+        }
+
+        function suggestionLabel(btn) {
+          return (btn.textContent || '').replace(/\s+/g, ' ').trim();
+        }
+
+        function setSuggestionText(btn, text) {
+          const textNode = Array.from(btn.childNodes).find(n => n.nodeType === Node.TEXT_NODE && n.textContent.trim());
+          if (textNode) {
+            textNode.textContent = text;
+            return;
+          }
+          const svg = btn.querySelector('svg');
+          if (svg && svg.nextSibling) {
+            if (svg.nextSibling.nodeType === Node.TEXT_NODE) {
+              svg.nextSibling.textContent = text;
+            } else {
+              svg.after(document.createTextNode(text));
+            }
+            return;
+          }
+          if (svg) {
+            btn.appendChild(document.createTextNode(text));
+            return;
+          }
+          btn.textContent = text;
+        }
+
+        function findChatSend(fromEl) {
+          var node = fromEl || document.querySelector('.welcome') || document.querySelector('.chat-form');
+          for (var hop = 0; hop < 10 && node; hop++) {
+            var fiberKey = Object.keys(node).find(function (k) {
+              return k.indexOf('__reactFiber$') === 0 || k.indexOf('__reactInternalInstance$') === 0;
+            });
+            if (fiberKey) {
+              var fiber = node[fiberKey];
+              for (var i = 0; i < 24 && fiber; i++) {
+                var props = fiber.memoizedProps || fiber.pendingProps || {};
+                if (typeof props.onSuggestionClick === 'function') return props.onSuggestionClick;
+                if (typeof props.onSend === 'function') return props.onSend;
+                fiber = fiber.return;
+              }
+            }
+            node = node.parentElement;
+          }
+          return null;
+        }
+
+        function sendVisiblePrompt(text) {
+          var send = findChatSend(document.querySelector('.welcome-suggestions'));
+          if (typeof send === 'function') {
+            send(text);
+            return true;
+          }
+          return false;
+        }
+
+        function updateWelcomePrompts() {
+          const suggestions = document.querySelectorAll('.welcome-suggestions .suggestion-row');
+          if (suggestions.length === 0) return false;
+
+          const prompts = getContextualPrompts();
+          suggestions.forEach((btn, i) => {
+            if (!prompts[i]) return;
+            btn.dataset.sriniPrompt = prompts[i];
+            if (suggestionLabel(btn) !== prompts[i].trim()) {
+              setSuggestionText(btn, prompts[i]);
+            }
+            btn.onclick = null;
+          });
+          return true;
+        }
+
+        function scheduleWelcomePromptSync() {
+          [0, 50, 150, 400].forEach(function (ms) {
+            setTimeout(updateWelcomePrompts, ms);
+          });
+        }
+
+        const root = document.getElementById('root');
+        if (root) {
+          const observer = new MutationObserver(function () {
+            if (document.querySelector('.welcome-suggestions')) {
+              updateWelcomePrompts();
+            }
+          });
+          observer.observe(root, { childList: true, subtree: true });
+          scheduleWelcomePromptSync();
+          document.addEventListener('click', function (e) {
+            var resetBtn = e.target.closest('button[aria-label="Reset conversation"]');
+            if (resetBtn) {
+              scheduleWelcomePromptSync();
+              return;
+            }
+            var btn = e.target.closest('.welcome-suggestions .suggestion-row');
+            if (!btn) return;
+            var text = (btn.dataset.sriniPrompt || suggestionLabel(btn) || '').trim();
+            if (!text) return;
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation();
+            sendVisiblePrompt(text);
+          }, true);
+        }
+      })();
     </script>
   </body>
 </html>

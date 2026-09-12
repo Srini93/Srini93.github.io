@@ -1322,7 +1322,7 @@ AOS.init({
     return (typeof window.CHATBOT_APP_URL !== 'undefined' ? window.CHATBOT_APP_URL : (src || './chatbot/')).replace(/\/$/, '') + '/';
   }
   var CHAT_API_PUBLIC = 'https://sriniai.netlify.app';
-  var CHATBOT_CACHE_BUST = '36';
+  var CHATBOT_CACHE_BUST = '42';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
