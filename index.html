@@ -493,18 +493,49 @@
     }
 
     @media screen and (max-width: 768px) {
+      html, body {
+        overflow-x: clip;
+        overflow-y: auto;
+      }
+
       header {
-        min-height: 100vh;
-        min-height: 100svh;
-        padding-bottom: 6rem;
+        min-height: 0;
+        padding-bottom: 3.5rem;
+      }
+
+      header .HeaderContent {
+        margin-top: 3.25rem !important;
+        padding-top: 3.25rem;
+      }
+
+      header .HeaderContent > p.hero-text-reveal {
+        font-size: 1.5rem !important;
+        margin-bottom: 0.4rem !important;
+      }
+
+      header .HeaderContent h1 {
+        font-size: 1.7rem !important;
+        line-height: 1.28 !important;
+      }
+
+      header .HeaderContent .HeaderContent-description {
+        margin-top: 1.15rem !important;
+        font-size: 14px !important;
       }
     }
 
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 430px) {
       header {
-        min-height: 100vh;
-        min-height: 100svh;
-        padding-bottom: 5rem;
+        min-height: 0;
+        padding-bottom: 2.75rem;
+      }
+
+      header .HeaderContent > p.hero-text-reveal {
+        font-size: 1.3rem !important;
+      }
+
+      header .HeaderContent h1 {
+        font-size: 1.5rem !important;
       }
     }
 
