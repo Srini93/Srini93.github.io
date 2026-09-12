@@ -63,7 +63,7 @@ table {
   src:url('fonts/Product Sans Medium.ttf'); 
 }
 
-*  {
+html {
   -webkit-overflow-scrolling: touch;
 }
 

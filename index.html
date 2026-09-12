@@ -21,7 +21,7 @@
   <link href="images/favi.png" rel="icon" sizes="128x128" type="image/png" />
 <!-- App Icon Ends -->
 
-  <link rel="stylesheet" href="style.css?v=29">
+  <link rel="stylesheet" href="style.css?v=30">
   <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=54">
   <style>
     /* Force Light Mode — shared hero/footer wash (matches #contact) */
@@ -32,12 +32,16 @@
     html {
       color-scheme: light;
       background: #fff;
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
+      overflow-x: clip;
+      overflow-y: scroll;
     }
     
     body {
       background: #fff;
       color: var(--srini-color-text-body);
+      overflow-x: clip;
+      overflow-y: visible;
     }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -530,7 +534,14 @@
     @media screen and (max-width: 768px) {
       html, body {
         overflow-x: clip;
-        overflow-y: auto;
+      }
+
+      html {
+        overflow-y: scroll;
+      }
+
+      body {
+        overflow-y: visible;
       }
 
       header {
@@ -1793,17 +1804,21 @@
       animation: workPanelIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
-    /* Scroll reveal — fade/rise only. Blur on image cards janks scroll. */
+    /* Scroll reveal — short fade, tiny rise. Large frames fade only. */
     .home-scroll-reveal {
       opacity: 0;
-      transform: translate3d(0, 22px, 0);
+      transform: translate3d(0, 8px, 0);
       transition:
-        opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
-        transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+        opacity 0.32s ease-out,
+        transform 0.32s ease-out;
     }
 
     .home-scroll-reveal.is-revealed {
       opacity: 1;
+      transform: none;
+    }
+
+    .home-scroll-reveal--static {
       transform: none;
     }
 
@@ -2991,12 +3006,10 @@ Designed a white label friendly design system scaling from design to code for fi
 
         var nodes = document.querySelectorAll([
           '.work-section-header',
-          '#work-panel-recent > .frame',
-          '.previous-work-label',
-          '.previous-work-item',
+          '#work-panel-recent',
           '.ai-labs-intro',
-          '.ai-labs-folders .folder',
-          '#contact .frame'
+          '.ai-labs-folders',
+          '#contact'
         ].join(','));
         var blocks = Array.prototype.slice.call(nodes);
         if (!blocks.length) return;
@@ -3014,12 +3027,8 @@ Designed a white label friendly design system scaling from design to code for fi
 
         blocks.forEach(function (el) {
           el.classList.add('home-scroll-reveal');
-          var parent = el.parentElement;
-          if (!parent) return;
-          if (el.tagName === 'LI' || el.classList.contains('previous-work-item') || el.classList.contains('folder')) {
-            var kids = parent.querySelectorAll(':scope > li, :scope > .previous-work-item, :scope > .folder');
-            var idx = Array.prototype.indexOf.call(kids, el);
-            if (idx >= 0) el.style.transitionDelay = (idx * 0.07) + 's';
+          if (el.matches('#work-panel-recent, .ai-labs-folders, #contact')) {
+            el.classList.add('home-scroll-reveal--static');
           }
         });
 
@@ -3033,8 +3042,8 @@ Designed a white label friendly design system scaling from design to code for fi
           },
           {
             root: null,
-            rootMargin: '0px 0px -14% 0px',
-            threshold: 0.16
+            rootMargin: '0px 0px -8% 0px',
+            threshold: 0
           }
         );
 
@@ -3053,20 +3062,7 @@ Designed a white label friendly design system scaling from design to code for fi
           observePending();
         };
 
-        function revealIfPageEnd() {
-          var doc = document.documentElement;
-          var remaining = doc.scrollHeight - (window.scrollY + window.innerHeight);
-          if (remaining > 96) return;
-          blocks.forEach(function (el) {
-            if (el.classList.contains('is-revealed') || !isShown(el)) return;
-            el.classList.add('is-revealed');
-            io.unobserve(el);
-          });
-        }
-
-        window.addEventListener('scroll', revealIfPageEnd, { passive: true });
         observePending();
-        revealIfPageEnd();
       }
 
       initHomeScrollReveal();
@@ -3342,7 +3338,16 @@ Designed a white label friendly design system scaling from design to code for fi
         });
 
         updatePersistentNav();
-        window.addEventListener('scroll', updatePersistentNav, { passive: true });
+        var persistNavQueued = false;
+        function onPersistNavScroll() {
+          if (persistNavQueued) return;
+          persistNavQueued = true;
+          requestAnimationFrame(function () {
+            persistNavQueued = false;
+            updatePersistentNav();
+          });
+        }
+        window.addEventListener('scroll', onPersistNavScroll, { passive: true });
         window.addEventListener('resize', updatePersistentNav, { passive: true });
         persistentNavMinWidth.addEventListener('change', updatePersistentNav);
       }
