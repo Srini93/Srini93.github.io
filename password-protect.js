@@ -263,7 +263,7 @@
 
   // ─── Nav / chatbot injection for decrypted content ──────────────────
   var PP_CHAT_API = 'https://sriniai.netlify.app';
-  var PP_CHAT_CACHE_BUST = '38';
+  var PP_CHAT_CACHE_BUST = '39';
 
   function ppUpgradeChatIntegration(html) {
     html = html.replace(/https:\/\/srinilm\.onrender\.com\/?/gi, PP_CHAT_API);
@@ -315,7 +315,8 @@
       'function getIframeSrc(){var base=getAppUrl();var api=resolveChatApiUrl((sidebar&&sidebar.getAttribute("data-chat-api"))||window.SRINI_CHAT_API||"");var params=[];if(api)params.push("api="+encodeURIComponent(api));try{var pagePath=window.SRINI_CHAT_PAGE_PATH||window.location.pathname;params.push("page="+encodeURIComponent(pagePath));if(document.title)params.push("title="+encodeURIComponent(document.title));}catch(e){}params.push("cb="+CHATBOT_CACHE_BUST);return base+"?"+params.join("&");}' +
       'function mountChatIframe(){if(!sidebar||iframeLoaded)return;var iframe=document.createElement("iframe");iframe.title="Proxy chat";iframe.src=getIframeSrc();iframe.setAttribute("loading","eager");sidebar.appendChild(iframe);iframeLoaded=true;}' +
       'function warmupChatIframe(){try{if(window.matchMedia("(prefers-reduced-data: reduce)").matches)return;}catch(e){}mountChatIframe();}' +
-      'function scheduleChatWarmup(){var run=function(){warmupChatIframe();};if("requestIdleCallback"in window){requestIdleCallback(run,{timeout:2500});}else{setTimeout(run,1400);}}' +
+      'function isSafariLike(){var ua=navigator.userAgent||"";return /Safari/i.test(ua)&&!/Chrome|Chromium|Android|CriOS|FxiOS|EdgiOS/i.test(ua);}' +
+      'function scheduleChatWarmup(){var run=function(){warmupChatIframe();};if(isSafariLike()){setTimeout(run,80);return;}if("requestIdleCallback"in window){requestIdleCallback(run,{timeout:2500});}else{setTimeout(run,1400);}}' +
       'function setOpen(open){var isOpen=!!open;document.body.classList.toggle("chat-open",isOpen);if(sidebar)sidebar.setAttribute("aria-hidden",!isOpen);triggers.forEach(function(t){t.setAttribute("aria-label",isOpen?"Close AI chat":"Open AI chat");t.setAttribute("aria-expanded",isOpen);});if(isOpen)mountChatIframe();}' +
       'triggers.forEach(function(t){t.addEventListener("pointerenter",warmupChatIframe,{once:true,passive:true});t.addEventListener("focus",warmupChatIframe,{once:true});t.addEventListener("click",function(){if(t.classList.contains("srini-chat-nav-btn")){t.classList.add("srini-chat-attention-stopped");var slot=t.closest(".header-chat-slot");if(slot){slot.classList.add("srini-chat-border-stopped");slot.classList.remove("srini-chat-border-attention");}}setOpen(!document.body.classList.contains("chat-open"));});});' +
       'window.addEventListener("message",function(e){if(e.data==="srini-chat-close")setOpen(false);});' +
@@ -521,8 +522,8 @@
       'body.chat-open #site-content-wrap{margin-right:444px}' +
       '@media(min-width:769px){body.chat-open .chatbot-sidebar{z-index:10120!important}body.chat-open .frame #site-content-wrap>header,body.chat-open #site-content-wrap>header{width:auto!important;max-width:none!important;margin-inline:0!important}body.chat-open.nav-persistent header nav{right:476px}}' +
       '@media(min-width:1280px){.case-study-page-wrap{transition:padding-left 0.3s cubic-bezier(0.16,1,0.3,1)}body.chat-open aside.case-study-toc{display:none!important}body.chat-open .case-study-page-wrap{padding-left:1.5rem!important}}' +
-      '.chatbot-sidebar{position:fixed;top:12px;right:12px;bottom:12px;width:0;overflow:hidden;transition:width 0.3s cubic-bezier(0.16,1,0.3,1);z-index:9999;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,0.06);border-radius:16px}' +
-      'body.chat-open .chatbot-sidebar{width:420px}' +
+      '.chatbot-sidebar{position:fixed;top:12px;right:12px;bottom:12px;width:420px;overflow:hidden;transform:translateX(calc(100% + 24px));transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);z-index:9999;background:#fff;box-shadow:0 0 0 1px rgba(0,0,0,0.06);border-radius:16px;pointer-events:none}' +
+      'body.chat-open .chatbot-sidebar{transform:translateX(0);pointer-events:auto}' +
       '.chatbot-sidebar iframe{width:100%;height:100%;border:none;display:block;border-radius:16px}' +
       '@keyframes srini-chat-attention{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(59,101,239,0)}35%{transform:scale(1.12);box-shadow:0 8px 24px rgba(59,101,239,0.28)}55%{transform:scale(1.06);box-shadow:0 4px 14px rgba(59,101,239,0.15)}}' +
       '@keyframes srini-chat-bounce-load{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(59,101,239,0)}48%{transform:scale(1.13);box-shadow:0 8px 24px rgba(59,101,239,0.24)}100%{transform:scale(1);box-shadow:0 0 0 0 rgba(59,101,239,0)}}' +

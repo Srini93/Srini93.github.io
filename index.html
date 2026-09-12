@@ -2498,6 +2498,9 @@ Designed a white label friendly design system scaling from design to code for fi
                 <div class="folder-item" data-folder-item data-w="44" data-kind="video" style="top:5%;width:44%;margin-left:-22%;aspect-ratio:16/9">
                   <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/chatbot/proxy-ai.mp4" poster="images/ai-labs/chatbot/proxy-ai.webp" muted playsinline loop preload="none" aria-label="Proxy chatbot walkthrough"></video></figure></div>
                 </div>
+                <div class="folder-item" data-folder-item data-w="42" data-kind="video" style="top:8%;width:42%;margin-left:-21%;aspect-ratio:1280/836">
+                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/chatbot/proxy-ai-2.mp4" poster="images/ai-labs/chatbot/proxy-ai-2.webp" muted playsinline loop preload="none" aria-label="Proxy chatbot walkthrough, second clip"></video></figure></div>
+                </div>
                 <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
                   <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Custom RAG Architecture</p><p class="folder-note-p">Built from the ground up — custom retrieval indexes portfolio content, grounding every answer in real context about my work.</p></div></div>
                 </div>
@@ -3430,11 +3433,13 @@ Designed a white label friendly design system scaling from design to code for fi
     #site-content-wrap { transition: margin-right 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
     body.chat-open #site-content-wrap { margin-right: 444px; }
     .chatbot-sidebar {
-      position: fixed; top: 12px; right: 12px; bottom: 12px; width: 0; overflow: hidden;
-      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 9999;
+      position: fixed; top: 12px; right: 12px; bottom: 12px; width: 420px; overflow: hidden;
+      transform: translateX(calc(100% + 24px));
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 9999;
       background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.06); border-radius: 16px;
+      pointer-events: none;
     }
-    body.chat-open .chatbot-sidebar { width: 420px; }
+    body.chat-open .chatbot-sidebar { transform: translateX(0); pointer-events: auto; }
     .chatbot-sidebar iframe { width: 100%; height: 100%; border: none; display: block; border-radius: 16px; }
     @keyframes srini-chat-attention {
       0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 101, 239, 0); }
@@ -3668,7 +3673,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
   var CHAT_API_PUBLIC = 'https://sriniai.netlify.app';
   /** Bump when deploying chatbot or host chat script changes (cache bust). */
-  var CHATBOT_CACHE_BUST = '38';
+  var CHATBOT_CACHE_BUST = '39';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
@@ -3712,8 +3717,34 @@ Designed a white label friendly design system scaling from design to code for fi
     mountChatIframe();
   }
 
+  function isSafariLike() {
+    var ua = navigator.userAgent || '';
+    return /Safari/i.test(ua) && !/Chrome|Chromium|Android|CriOS|FxiOS|EdgiOS/i.test(ua);
+  }
+
+  function prefetchChatShell() {
+    var base = getAppUrl();
+    [
+      ['assets/index-Ceo5IzNr.js', 'script'],
+      ['assets/index-C6bn-kI3.css', 'style']
+    ].forEach(function (pair) {
+      try {
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = pair[1];
+        link.href = base + pair[0];
+        if (pair[1] === 'script') link.crossOrigin = 'anonymous';
+        document.head.appendChild(link);
+      } catch (err) {}
+    });
+  }
+
   function scheduleChatWarmup() {
     var run = function() { warmupChatIframe(); };
+    if (isSafariLike()) {
+      setTimeout(run, 80);
+      return;
+    }
     if ('requestIdleCallback' in window) {
       requestIdleCallback(run, { timeout: 2500 });
     } else {
@@ -3830,6 +3861,7 @@ Designed a white label friendly design system scaling from design to code for fi
   } else {
     openChatFromUrlIfNeeded();
   }
+  prefetchChatShell();
   if (document.readyState === 'complete') {
     scheduleChatWarmup();
   } else {

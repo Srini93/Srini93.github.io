@@ -23,7 +23,15 @@
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap"
       rel="stylesheet"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap"
+        rel="stylesheet"
+      />
+    </noscript>
     <script type="module" crossorigin src="./assets/index-Ceo5IzNr.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-C6bn-kI3.css">
     <style>
@@ -1754,7 +1762,7 @@
         mountFontA11y();
       })();
 
-      if ("serviceWorker" in navigator) {
+      if ("serviceWorker" in navigator && window.parent === window) {
         window.addEventListener("load", () => {
           navigator.serviceWorker.register("./sw.js").catch(() => {});
         });
