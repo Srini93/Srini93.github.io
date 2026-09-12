@@ -1654,6 +1654,7 @@
       position: relative;
       transition: color 0.2s ease;
       white-space: nowrap;
+      touch-action: pan-y;
     }
 
     .work-switch-btn:last-child {
@@ -1783,8 +1784,13 @@
 
     @media screen and (max-width: 768px) {
       .work-section-header {
-        padding-top: 2rem;
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        padding-top: 0.85rem;
         margin: 0 5%;
+        background: #fff;
+        touch-action: pan-y;
       }
 
       .work-switch-btn {
@@ -2903,7 +2909,23 @@ Designed a white label friendly design system scaling from design to code for fi
         window.setWorkPanel = setPanel;
 
         buttons.forEach(function (btn) {
-          btn.addEventListener('click', function () {
+          var press = null;
+          btn.addEventListener('pointerdown', function (event) {
+            press = { x: event.clientX, y: event.clientY, moved: false };
+          }, { passive: true });
+          btn.addEventListener('pointermove', function (event) {
+            if (!press || press.moved) return;
+            if (Math.abs(event.clientX - press.x) > 10 || Math.abs(event.clientY - press.y) > 10) {
+              press.moved = true;
+            }
+          }, { passive: true });
+          btn.addEventListener('click', function (event) {
+            if (press && press.moved) {
+              event.preventDefault();
+              press = null;
+              return;
+            }
+            press = null;
             setPanel(btn.getAttribute('data-work-panel'));
           });
         });
