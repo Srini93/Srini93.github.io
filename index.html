@@ -1179,13 +1179,24 @@
         height: 64px;
         min-width: 64px;
         min-height: 64px;
-        background: rgba(255, 255, 255, 0.62);
-        backdrop-filter: blur(24px) saturate(180%);
-        -webkit-backdrop-filter: blur(24px) saturate(180%);
-        border: 1px solid rgba(255, 255, 255, 0.55);
-        box-shadow:
-          0 14px 40px rgba(0, 0, 0, 0.1),
-          inset 0 1px 0 rgba(255, 255, 255, 0.65);
+        background: #eaeefb;
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: none;
+      }
+
+      body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:hover,
+      body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:focus-visible {
+        background: #dce3f8;
+        border-color: rgba(255, 255, 255, 0.7);
+        animation: none;
+        box-shadow: none;
+      }
+
+      body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:hover .srini-chat-sparkle,
+      body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:focus-visible .srini-chat-sparkle {
+        color: #7da1f7;
       }
 
       body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-sparkle {
