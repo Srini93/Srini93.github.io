@@ -3865,9 +3865,11 @@ Designed a white label friendly design system scaling from design to code for fi
       .srini-chat-fab { display: flex; top: auto; bottom: 24px; right: 24px; width: 75px; height: 75px; }
       .srini-chat-fab-icon { width: 32px; height: 32px; }
       .header-chat-slot { display: none !important; }
+      body.chat-open { overflow: hidden; }
       body.chat-open #site-content-wrap { margin-right: 0; }
-      .chatbot-sidebar { top: 0; right: 0; bottom: 0; left: 0; width: 100% !important; height: 100%; border-radius: 0; z-index: 10003; transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
-      body.chat-open .chatbot-sidebar { transform: translateY(0); }
+      .chatbot-sidebar { top: 0; right: 0; bottom: 0; left: 0; width: 100% !important; height: 100%; height: 100dvh; border-radius: 0; z-index: 10150; transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+      body.chat-open .chatbot-sidebar { transform: translateY(0); z-index: 10150 !important; }
+      body.chat-open .logo-srini { visibility: hidden !important; pointer-events: none !important; }
       .chatbot-sidebar iframe { border-radius: 0; }
       body.chat-open .srini-chat-fab { display: none; }
     }

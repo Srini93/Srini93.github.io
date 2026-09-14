@@ -270,7 +270,7 @@
     html = html.replace(/data-chat-api=["'][^"']*["']/gi, 'data-chat-api="' + PP_CHAT_API + '"');
     html = html.replace(/CHATBOT_CACHE_BUST\s*=\s*['"]\d+['"]/g, "CHATBOT_CACHE_BUST = '" + PP_CHAT_CACHE_BUST + "'");
     html = html.replace(/params\.push\(['"]cb=\d+['"]\)/g, "params.push('cb=" + PP_CHAT_CACHE_BUST + "')");
-    html = html.replace(/persistent-nav\.css\?v=\d+/g, 'persistent-nav.css?v=17');
+    html = html.replace(/persistent-nav\.css\?v=\d+/g, 'persistent-nav.css?v=20');
     html = html.replace(/persistent-nav\.js\?v=\d+/g, 'persistent-nav.js?v=8');
     html = html.replace(/style-2\.css(\?v=\d+)?/g, 'style-2.css?v=40');
     return html;
@@ -548,9 +548,11 @@
       '.srini-chat-fab{display:flex;top:auto;bottom:24px;right:24px;width:75px;height:75px}' +
       '.srini-chat-fab-icon{width:32px;height:32px}' +
       '.srini-chat-nav-li{display:none!important}' +
+      'body.chat-open{overflow:hidden}' +
       'body.chat-open #site-content-wrap{margin-right:0}' +
-      '.chatbot-sidebar{top:0;right:0;bottom:0;left:0;width:100%!important;height:100%;border-radius:0;z-index:10003;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1)}' +
-      'body.chat-open .chatbot-sidebar{transform:translateY(0)}' +
+      '.chatbot-sidebar{top:0;right:0;bottom:0;left:0;width:100%!important;height:100%;height:100dvh;border-radius:0;z-index:10150;transform:translateY(100%);transition:transform 0.35s cubic-bezier(0.16,1,0.3,1)}' +
+      'body.chat-open .chatbot-sidebar{transform:translateY(0);z-index:10150!important}' +
+      'body.chat-open .logo-srini{visibility:hidden!important;pointer-events:none!important}' +
       '.chatbot-sidebar iframe{border-radius:0}' +
       'body.chat-open .srini-chat-fab{display:none}' +
       '}' +
