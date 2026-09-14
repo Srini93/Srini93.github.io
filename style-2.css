@@ -1236,3 +1236,25 @@ header a[href="index.html"]:has(#logo) {
     background-position: 50% 50%;
   }
 }
+
+@keyframes footer-heart-beat {
+  0%, 100% { transform: scale(1); }
+  14% { transform: scale(1.14); }
+  28% { transform: scale(1); }
+  42% { transform: scale(1.08); }
+  56% { transform: scale(1); }
+}
+
+.footer-heart {
+  display: inline-block;
+  color: #ff2957;
+  font-weight: 600;
+  transform-origin: 50% 55%;
+  animation: footer-heart-beat 1.7s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-heart {
+    animation: none;
+  }
+}
