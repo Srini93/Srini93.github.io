@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Share card preview — not live</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    if (new URLSearchParams(location.search).has("export")) {
+      document.documentElement.classList.add("og-export");
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink: #2c2c2e;
+      --muted: #6e6e73;
+      --blue: #3b65ef;
+      --srini-hero-footer-gradient: linear-gradient(90deg, #f6f9fe 0%, #f4f6f9 50%, #f7f1ea 100%);
+    }
+    html.og-export,
+    html.og-export body {
+      margin: 0;
+      padding: 0;
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      background: #f6f9fe;
+    }
+    html.og-export .wrap,
+    html.og-export .grid,
+    html.og-export .grid > div:first-child {
+      max-width: none;
+      margin: 0;
+      padding: 0;
+      display: block;
+    }
+    html.og-export h1,
+    html.og-export .lede,
+    html.og-export .label,
+    html.og-export .grid > div:last-child {
+      display: none !important;
+    }
+    html.og-export .og {
+      width: 1200px;
+      height: 630px;
+      aspect-ratio: auto;
+      border-radius: 0;
+      border: 0;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #eceef2;
+      color: var(--ink);
+    }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+    h1 { font-size: 1.35rem; font-weight: 600; margin: 0 0 0.35rem; }
+    .lede { color: var(--muted); margin: 0 0 1.5rem; font-size: 0.95rem; }
+    .grid { display: grid; gap: 2rem; }
+    @media (min-width: 900px) {
+      .grid { grid-template-columns: 1.15fr 0.85fr; align-items: start; }
+    }
+    .label {
+      font: 400 11px/1 "Space Mono", monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 0 0 0.65rem;
+    }
+
+    .og {
+      width: 100%;
+      aspect-ratio: 1200 / 630;
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--srini-hero-footer-gradient);
+      position: relative;
+      border: 1px solid rgba(29,29,31,.1);
+    }
+    .og-stripe {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.72;
+    }
+    .og-stripe canvas {
+      width: 100% !important;
+      height: 100% !important;
+      display: block;
+    }
+    .og-inner {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 8% 8%;
+      max-width: 100%;
+    }
+    .og-photo {
+      width: clamp(56px, 12.5%, 92px);
+      aspect-ratio: 1;
+      border-radius: 18%;
+      overflow: hidden;
+      margin: 0 0 1.1rem;
+      flex-shrink: 0;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
+    }
+    .og-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 50% 50%;
+      transform: scale(1.7);
+      transform-origin: 50% 50%;
+      display: block;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .og-stripe { display: none; }
+    }
+    .og-kicker {
+      font: 400 clamp(11px, 1.6vw, 14px)/1 "Space Mono", monospace;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin: 0 0 0.7rem;
+    }
+    .og-title {
+      font-family: Fraunces, Georgia, serif;
+      font-size: clamp(1.85rem, 4.2vw, 3.1rem);
+      font-weight: 560;
+      letter-spacing: -0.035em;
+      line-height: 1.08;
+      margin: 0 0 0.85rem;
+      max-width: 18ch;
+    }
+    .og-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(0.95rem, 1.7vw, 1.2rem);
+      line-height: 1.4;
+      max-width: 36ch;
+    }
+    .li {
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid #e0e0e0;
+      padding: 0.9rem 0 0;
+      max-width: 520px;
+    }
+    .li-head { display: flex; gap: 0.7rem; padding: 0 1rem 0.75rem; align-items: center; }
+    .li-av {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: #eaeefb;
+      color: var(--blue);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 700 14px/1 "Space Mono", monospace;
+      flex-shrink: 0;
+    }
+    .li-name { font-size: 14px; font-weight: 600; }
+    .li-sub { font-size: 12px; color: #666; }
+    .li-text { padding: 0 1rem 0.75rem; font-size: 14px; line-height: 1.45; }
+    .og-clone .og {
+      border-radius: 0;
+      border: 0;
+      aspect-ratio: 1200 / 630;
+    }
+    .li-card .og { border-radius: 0; }
+    .li-meta { padding: 0.7rem 1rem 0.9rem; background: #f3f2ef; }
+    .li-meta small { display: block; color: #666; font-size: 11px; text-transform: uppercase; }
+    .li-meta strong { display: block; font-size: 14px; margin-top: 0.2rem; }
+    .li-meta span { display: block; font-size: 13px; color: #555; margin-top: 0.15rem; }
+
+    .x {
+      background: #000;
+      color: #e7e9ea;
+      border-radius: 16px;
+      padding: 1rem 1rem 0;
+      max-width: 520px;
+    }
+    .x-head { display: flex; gap: 0.7rem; margin-bottom: 0.55rem; align-items: center; }
+    .x-av {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #16181c;
+      color: #e7e9ea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font: 700 13px/1 "Space Mono", monospace;
+      flex-shrink: 0;
+    }
+    .x-name { font-size: 14px; font-weight: 700; }
+    .x-handle { color: #71767b; font-weight: 400; }
+    .x-text { font-size: 15px; line-height: 1.4; margin: 0 0 0.75rem; }
+    .x-card {
+      border: 1px solid #2f3336;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .x-meta { padding: 0.7rem 0.85rem 0.85rem; }
+    .x-meta small { color: #71767b; font-size: 12px; }
+    .x-meta strong { display: block; font-size: 14px; margin-top: 0.15rem; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Social share preview</h1>
+    <p class="lede">One card for every page. Portrait top-left; header wash and Stripe mesh behind the type. Draft only — nothing is live until you say deploy.</p>
+
+    <div class="grid">
+      <div>
+        <p class="label">Open Graph image · 1200 × 630</p>
+        <div class="og" id="og">
+          <div class="og-stripe" aria-hidden="true">
+            <canvas></canvas>
+          </div>
+          <div class="og-inner">
+            <div class="og-photo">
+              <img src="images/srini-about.png?v=2" alt="" width="92" height="92">
+            </div>
+            <p class="og-kicker" id="og-kicker">Staff product designer</p>
+            <h2 class="og-title" id="og-title">Srinivasan Chakkarapani</h2>
+            <p class="og-desc" id="og-desc">AI-driven, agentic experiences and agent-ready design systems.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <p class="label">LinkedIn</p>
+        <article class="li">
+          <div class="li-head">
+            <div class="li-av" aria-hidden="true">S</div>
+            <div>
+              <div class="li-name">Srinivasan Chakkarapani</div>
+              <div class="li-sub">Staff Product Designer · Intuit</div>
+            </div>
+          </div>
+          <p class="li-text" id="li-text">A few recent notes on how I’m thinking about AI-native product design.</p>
+          <div class="li-card">
+            <div class="og-clone" id="li-og"></div>
+            <div class="li-meta">
+              <small>srinivasan.design</small>
+              <strong id="li-title">Srinivasan | Staff Product Designer</strong>
+              <span id="li-desc">AI-driven, agentic experiences and agent-ready design systems.</span>
+            </div>
+          </div>
+        </article>
+
+        <p class="label" style="margin-top:1.75rem">X / Twitter</p>
+        <article class="x">
+          <div class="x-head">
+            <div class="x-av" aria-hidden="true">S</div>
+            <div>
+              <div class="x-name">Srini <span class="x-handle">@srinivasan</span></div>
+            </div>
+          </div>
+          <p class="x-text" id="x-text">New work on the site.</p>
+          <div class="x-card">
+            <div class="og-clone" id="x-og"></div>
+            <div class="x-meta">
+              <small>srinivasan.design</small>
+              <strong id="x-title">Srinivasan | Staff Product Designer</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+  <script src="vendor/stripe-gradient/stripe-gradient.js"></script>
+  <script>
+    if (!document.documentElement.classList.contains("og-export")) {
+      const cloneHtml = document.getElementById("og").outerHTML.replace('id="og"', "");
+      document.getElementById("li-og").innerHTML = cloneHtml;
+      document.getElementById("x-og").innerHTML = cloneHtml;
+    }
+
+    (function mountHeaderGradientOnCards() {
+      if (typeof Gradient === "undefined") return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+      document.querySelectorAll(".og").forEach(function (el, i) {
+        var canvas = el.querySelector("canvas");
+        if (!canvas) return;
+        canvas.id = "og-stripe-canvas-" + i;
+        try {
+          var gradient = new Gradient({
+            canvas: "#" + canvas.id,
+            colors: ["#f6f9fe", "#c8dafb", "#e4eefb", "#f7f1ea"],
+            amplitude: 220,
+            density: [0.06, 0.14],
+            angle: 0.22
+          });
+          function fit() {
+            var rect = el.getBoundingClientRect();
+            var w = Math.max(1, Math.round(rect.width));
+            var h = Math.max(1, Math.round(rect.height));
+            var density = gradient.getOption("density");
+            gradient.width = w;
+            gradient.height = h;
+            gradient._minigl.setSize(w, h);
+            gradient._minigl.setOrthographicCamera();
+            gradient.xSegCount = Math.ceil(w * density[0]);
+            gradient.ySegCount = Math.ceil(h * density[1]);
+            gradient.mesh.geometry.setTopology(gradient.xSegCount, gradient.ySegCount);
+            gradient.mesh.geometry.setSize(w, h);
+            gradient.mesh.material.uniforms.u_shadow_power.value = w < 600 ? 5 : 6;
+          }
+          gradient.disconnect();
+          window.addEventListener("resize", fit);
+          fit();
+        } catch (err) {
+          console.warn("Share-card header gradient unavailable:", err);
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
