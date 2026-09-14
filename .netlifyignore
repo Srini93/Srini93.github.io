@@ -1,6 +1,5 @@
 .git
 .cursor
-srini-chatbot
 **/.DS_Store
 backend/.env
 backend/venv

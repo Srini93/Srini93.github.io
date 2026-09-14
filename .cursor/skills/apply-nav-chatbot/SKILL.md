@@ -30,7 +30,7 @@ Ensure these Google Fonts `<link>` tags exist (add if missing, don't duplicate):
 Place these **before** the `<header>` tag (outside it):
 
 ```html
-<a href="index.html" class="logo-srini logo-srini--mark" data-text="srini" aria-label="srini"><img src="images/srini-mark.png" alt="" width="50" height="50"></a>
+<a href="index.html" class="logo-srini" data-text="srini">srini</a>
 
 <div class="hamburgler-menu">
   <ul class="hamburgler-menu-list">
@@ -66,21 +66,6 @@ Add a `<style>` block (before `<header>`) with the exact styles below. Copy from
   padding-bottom: 4px;
 }
 .logo-srini::after { display: none; }
-.logo-srini--mark {
-  display: flex;
-  align-items: center;
-  line-height: 0;
-  font-size: 0;
-  letter-spacing: 0;
-  text-transform: none;
-}
-.logo-srini--mark img {
-  display: block;
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  filter: brightness(0) invert(26%);
-}
 
 @media screen and (min-width: 769px) {
   .logo-srini {
@@ -189,7 +174,7 @@ header nav {
   list-style-type: none !important;
   position: static !important;
   transform: none !important;
-  
+  font-size: 110% !important;
   overflow: visible !important;
 }
 .hamburgler-active .hamburgler-menu-list {
@@ -263,7 +248,7 @@ header nav {
 /* Hamburger menu links */
 .hamburgler-menu-list li a {
   font-family: 'Space Mono', 'Courier New', 'Monaco', monospace !important;
-  font-size: 14px !important;
+  font-size: 16px !important;
   letter-spacing: 0.5px !important;
   text-transform: uppercase !important;
 }
@@ -449,12 +434,12 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
   .srini-chat-nav-li { display: flex; align-items: center; }
   .srini-chat-nav-btn { background: #eaeefb; border: 1px solid rgba(255,255,255,0.5); padding: 0; width: 48px; height: 48px; min-width: 48px; min-height: 48px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
   .srini-chat-sparkle { width: 26px; height: 26px; color: #3b65ef; transition: transform 0.2s ease, color 0.2s ease; }
-  .srini-chat-nav-btn:hover { background: #3b65ef; box-shadow: 0 2px 12px rgba(59, 101, 239, 0.22); border-color: rgba(255,255,255,0.65); }
-  .srini-chat-nav-btn:hover .srini-chat-sparkle { transform: scale(1.15); color: #fff; }
+  .srini-chat-nav-btn:hover { background: #dce3f8; }
+  .srini-chat-nav-btn:hover .srini-chat-sparkle { transform: scale(1.15); color: #3b65ef; }
   .srini-chat-fab { position: fixed; top: 1.85rem; right: 2rem; z-index: 10002; display: none; align-items: center; justify-content: center; width: 75px; height: 75px; padding: 0; background: #eaeefb; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; box-shadow: none; transition: all 0.3s ease; }
   .srini-chat-fab-icon { width: 32px; height: 32px; color: #3b65ef; transition: color 0.2s ease, transform 0.2s ease; }
-  .srini-chat-fab:hover { background: #3b65ef; border-color: rgba(255,255,255,0.65); box-shadow: 0 2px 12px rgba(59, 101, 239, 0.22); }
-  .srini-chat-fab:hover .srini-chat-fab-icon { color: #fff; transform: scale(1.1); }
+  .srini-chat-fab:hover { background: #dce3f8; border-color: rgba(255,255,255,0.7); }
+  .srini-chat-fab:hover .srini-chat-fab-icon { color: #7da1f7; transform: scale(1.1); }
   .srini-chat-fab:active { transform: scale(0.95); }
   @media (min-width: 769px) { .srini-chat-fab { display: none !important; } }
   @media (max-width: 768px) {
@@ -540,23 +525,6 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
     return base;
   }
 
-  function mountChatIframe() {
-    if (!sidebar || iframeLoaded) return;
-    var iframe = document.createElement('iframe');
-    iframe.title = 'Proxy chat';
-    iframe.src = getIframeSrc();
-    iframe.setAttribute('loading', 'eager');
-    sidebar.appendChild(iframe);
-    iframeLoaded = true;
-  }
-
-  function warmupChatIframe() {
-    try {
-      if (window.matchMedia('(prefers-reduced-data: reduce)').matches) return;
-    } catch (err) {}
-    mountChatIframe();
-  }
-
   function setOpen(open) {
     var isOpen = !!open;
     document.body.classList.toggle('chat-open', isOpen);
@@ -565,12 +533,16 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
       t.setAttribute('aria-label', isOpen ? 'Close AI chat' : 'Open AI chat');
       t.setAttribute('aria-expanded', isOpen);
     });
-    if (isOpen) mountChatIframe();
+    if (isOpen && sidebar && !iframeLoaded) {
+      var iframe = document.createElement('iframe');
+      iframe.title = 'Srini AI chat';
+      iframe.src = getIframeSrc();
+      sidebar.appendChild(iframe);
+      iframeLoaded = true;
+    }
   }
 
   triggers.forEach(function(t) {
-    t.addEventListener('pointerenter', warmupChatIframe, { once: true, passive: true });
-    t.addEventListener('focus', warmupChatIframe, { once: true });
     t.addEventListener('click', function() {
       var isOpen = document.body.classList.contains('chat-open');
       setOpen(!isOpen);
@@ -580,17 +552,6 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
   window.addEventListener('message', function(e) {
     if (e.data === 'srini-chat-close') setOpen(false);
   });
-
-  function scheduleChatWarmup() {
-    var run = function() { warmupChatIframe(); };
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(run, { timeout: 2500 });
-    } else {
-      setTimeout(run, 1400);
-    }
-  }
-  if (document.readyState === 'complete') scheduleChatWarmup();
-  else window.addEventListener('load', scheduleChatWarmup);
 })();
 </script>
 ```
