@@ -21,7 +21,8 @@
   <link href="images/favi.png" rel="icon" sizes="128x128" type="image/png" />
 <!-- App Icon Ends -->
 
-  <link rel="stylesheet" href="style.css?v=29">
+  <link rel="stylesheet" href="style.css?v=30">
+  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=55">
   <style>
     /* Force Light Mode — shared hero/footer wash (matches #contact) */
     :root {
@@ -31,12 +32,15 @@
     html {
       color-scheme: light;
       background: #fff;
-      scroll-behavior: smooth;
+      scroll-behavior: auto;
+      overflow-x: clip;
     }
     
     body {
       background: #fff;
       color: var(--srini-color-text-body);
+      overflow-x: clip;
+      overflow-y: visible;
     }
   </style>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -46,11 +50,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Departure+Mono:wght@400&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
   <style>
     /* Logo Styles */
     .logo-srini {
       position: absolute;
-      z-index: 10001;
+      z-index: 10090;
       font-family: 'Press Start 2P', 'Courier New', 'Monaco', monospace;
       font-size: 16px;
       color: #666;
@@ -64,12 +69,16 @@
       text-align: left;
       white-space: nowrap;
       transition:
-        top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-        left 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-        padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-        color 0.2s ease,
-        background 0.2s ease,
-        box-shadow 0.2s ease;
+        top 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        left 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        padding 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        border-radius 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+        color 0.3s ease,
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .logo-srini:hover {
@@ -80,13 +89,47 @@
       display: none;
     }
 
+    .logo-srini--mark {
+      display: flex;
+      align-items: center;
+      line-height: 0;
+      font-size: 0;
+      letter-spacing: 0;
+      text-transform: none;
+      pointer-events: auto;
+    }
+
+    .logo-srini--mark img {
+      display: block;
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+      filter: brightness(0) invert(26%);
+    }
+
+    body.nav-persistent .logo-srini--mark {
+      padding: 0;
+      width: 64px;
+      height: 64px;
+      min-width: 64px;
+      min-height: 64px;
+      box-sizing: border-box;
+      justify-content: center;
+    }
+
+    body.nav-persistent .logo-srini--mark img {
+      width: 32px;
+      height: 32px;
+    }
+
     /* Vertically center align with nav items, horizontally align with header text */
     /* Nav has padding-top: 40px and nav items are vertically centered */
     /* Nav items are approximately 48-56px tall, centered at ~64px from top (40px padding + half nav height) */
     /* HeaderContent has padding: 0 4rem (64px) on screens >= 720px */
     /* Header text is inside centered frame with max-width 1400px */
     header nav,
-    header .see-more {
+    .hero-cta-row,
+    .header-nav-row {
       position: relative;
       z-index: 10;
     }
@@ -116,7 +159,6 @@
       }
     }
 
-
     @media screen and (max-width: 768px) {
       .logo-srini {
         font-size: 12px;
@@ -124,6 +166,64 @@
         left: 2rem;
         letter-spacing: 1px;
         transform: none;
+      }
+    }
+
+    @media screen and (min-width: 769px) {
+      .header-nav-row {
+        display: flex;
+        align-items: stretch;
+        justify-content: flex-end;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        box-sizing: border-box;
+        /* Above hero HeaderContent (same z-index, later in DOM) */
+        z-index: 10002;
+        pointer-events: none;
+      }
+
+      .header-nav-row nav {
+        flex: 0 1 auto;
+        min-width: 0;
+        pointer-events: auto;
+      }
+
+      .desk-menu .header-chat-slot {
+        display: none !important;
+      }
+
+      .header-nav-row > .header-chat-slot {
+        display: flex;
+        align-items: center;
+        flex-shrink: 0;
+        position: relative;
+        overflow: hidden;
+        z-index: 2;
+        width: 0;
+        min-width: 0;
+        margin: 0;
+        padding: 0;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translate3d(0, -8px, 0) scale(0.94);
+        transition:
+          opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          visibility 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      body.nav-persistent .header-nav-row > .header-chat-slot {
+        width: 64px;
+        min-width: 64px;
+        overflow: visible;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translate3d(0, 0, 0) scale(1);
+        transition-delay: 0.08s;
       }
     }
 
@@ -243,11 +343,11 @@
       transform: translateY(0);
     }
 
-    /* Header — shader.se line-reveal: each rendered line fades+floats up together */
-    @keyframes heroLineReveal {
+    /* Header — letters push down from above; wave travels line by line */
+    @keyframes heroSiriWave {
       from {
         opacity: 0;
-        transform: translateY(0.45em);
+        transform: translateY(-1.2em);
       }
       to {
         opacity: 1;
@@ -378,12 +478,14 @@
     header {
       position: relative;
       overflow: visible;
-      min-height: 75vh;
+      min-height: 100vh;
+      min-height: 100dvh;
       padding-top: env(safe-area-inset-top, 0px);
       padding-bottom: 8rem;
       display: flex;
       flex-direction: column;
       background: var(--srini-hero-footer-gradient);
+      box-sizing: border-box;
     }
 
     /* Stripe-style animated gradient — https://github.com/thelevicole/stripe-gradient */
@@ -414,29 +516,67 @@
 
     @media screen and (max-width: 1440px) {
       header {
-        min-height: 70vh;
+        min-height: 100vh;
+        min-height: 100dvh;
         padding-bottom: 8rem;
       }
     }
 
     @media screen and (max-width: 1024px) {
       header {
-        min-height: 65vh;
+        min-height: 100vh;
+        min-height: 100dvh;
         padding-bottom: 6rem;
       }
     }
 
     @media screen and (max-width: 768px) {
+      html, body {
+        overflow-x: clip;
+      }
+
+      body {
+        overflow-y: visible;
+      }
+
       header {
-        min-height: 85vh;
-        padding-bottom: 6rem;
+        min-height: 0;
+        padding-bottom: 3.5rem;
+      }
+
+      header .HeaderContent {
+        margin-top: 3.25rem !important;
+        padding-top: 3.25rem;
+      }
+
+      header .HeaderContent > p.hero-text-reveal {
+        font-size: 1.7rem !important;
+        margin-bottom: 0.4rem !important;
+      }
+
+      header .HeaderContent h1 {
+        font-size: 1.95rem !important;
+        line-height: 1.28 !important;
+      }
+
+      header .HeaderContent .HeaderContent-description {
+        margin-top: 1.15rem !important;
+        font-size: 15px !important;
       }
     }
 
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 430px) {
       header {
-        min-height: 80vh;
-        padding-bottom: 5rem;
+        min-height: 0;
+        padding-bottom: 2.75rem;
+      }
+
+      header .HeaderContent > p.hero-text-reveal {
+        font-size: 1.5rem !important;
+      }
+
+      header .HeaderContent h1 {
+        font-size: 1.75rem !important;
       }
     }
 
@@ -459,6 +599,7 @@
 
     header .HeaderContent h1 {
       font-family: 'Fraunces', Georgia, 'Times New Roman', serif !important;
+      font-size: 325%;
       font-weight: 400;
       font-optical-sizing: auto;
     }
@@ -478,35 +619,37 @@
     /* Header hero reveal — after typography rules so animation isn't overridden */
     header .HeaderContent .hero-text-reveal {
       opacity: 1;
+      overflow: visible;
     }
 
     header .HeaderContent .hero-word {
       display: inline-block;
       white-space: nowrap;
-      /* animation-delay set by JS per line group */
+      overflow: visible;
+    }
+
+    header .HeaderContent .hero-char,
+    header .HeaderContent .hero-char--glyph {
+      display: inline-block;
+      vertical-align: baseline;
+      transform-origin: 50% 100%;
       opacity: 0;
-      animation: heroLineReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation: heroSiriWave 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
       will-change: opacity, transform;
     }
 
-    header .HeaderContent .hero-char {
-      display: inline-block;
-    }
-
     header .HeaderContent .hero-char--space {
-      display: inline;
-      white-space: pre;
-      opacity: 0;
-      animation: heroLineReveal 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    header .HeaderContent .hero-char--glyph {
       display: inline-block;
+      white-space: pre;
+      vertical-align: baseline;
+      opacity: 0;
+      animation: heroSiriWave 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
     }
 
     @media (prefers-reduced-motion: reduce) {
-      header .HeaderContent .hero-word,
-      header .HeaderContent .hero-char--space {
+      header .HeaderContent .hero-char,
+      header .HeaderContent .hero-char--space,
+      header .HeaderContent .hero-char--glyph {
         opacity: 1 !important;
         transform: none !important;
         animation: none !important;
@@ -541,25 +684,95 @@
       pointer-events: auto;
     }
 
-    /* Chevron down arrow at bottom of header - centered */
-    .see-more-wrapper {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      margin-top: 3rem;
+    /* Hero dual CTAs — liquid glass + Proxy chat */
+    @keyframes heroCtaEnter {
+      from {
+        opacity: 0;
+        transform: translate3d(0, 14px, 0);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+      }
     }
 
-    .see-more {
-      display: flex !important;
+    @keyframes persistentChromeIn {
+      from {
+        opacity: 0;
+        transform: translate3d(0, -10px, 0) scale(0.94);
+      }
+      to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0) scale(1);
+      }
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 0;
-      width: 48px;
-      height: 48px;
-      padding: 0;
+      gap: 0.85rem;
+      width: 100%;
+      margin-top: 5rem;
+      padding-top: 10px;
+      opacity: 0;
+      animation: heroCtaEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      will-change: transform, opacity;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      @keyframes persistentChromeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      .hero-cta-row {
+        animation: fadeInUp 0.6s ease forwards;
+        will-change: auto;
+      }
+
+      body.nav-persistent .logo-srini,
+      body.nav-persistent header nav,
+      body.nav-persistent .header-nav-row > .header-chat-slot {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    .hero-cta {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 48px;
+      padding: 14px 26px;
       border-radius: 9999px;
-      
-      /* Liquid Glass Effect - enhanced */
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      text-transform: none;
+      line-height: 1.2;
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition:
+        background 0.3s ease,
+        color 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease,
+        transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+        padding 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      -webkit-tap-highlight-color: transparent;
+      overflow: hidden;
+    }
+
+    .hero-cta--primary {
+      color: #000 !important;
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+      font-weight: 400 !important;
       background: linear-gradient(
         135deg,
         rgba(255, 255, 255, 0.4) 0%,
@@ -569,31 +782,15 @@
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
       border: 1px solid rgba(255, 255, 255, 0.5);
-      box-shadow: 
+      box-shadow:
         0 8px 32px rgba(0, 0, 0, 0.1),
         inset 0 1px 0 rgba(255, 255, 255, 0.6),
         inset 0 -1px 0 rgba(255, 255, 255, 0.2);
-      
-      /* Apple iOS spring animation timing */
-      transition: 
-        width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-        padding 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-        gap 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-        background 0.3s ease,
-        box-shadow 0.3s ease,
-        transform 0.2s ease,
-        border-color 0.3s ease;
-      
-      opacity: 1 !important;
-      animation: bounce-slow 2.5s infinite ease-in-out !important;
-      text-decoration: none;
-      overflow: hidden;
     }
 
-    .see-more:hover {
-      width: 220px;
-      gap: 10px;
-      padding: 0 24px;
+    .hero-cta--primary:hover,
+    .hero-cta--primary:focus-visible {
+      color: #000 !important;
       background: linear-gradient(
         135deg,
         rgba(255, 255, 255, 0.5) 0%,
@@ -601,57 +798,174 @@
         rgba(255, 255, 255, 0.4) 100%
       );
       border-color: rgba(255, 255, 255, 0.7);
-      box-shadow: 
+      box-shadow:
         0 12px 40px rgba(0, 0, 0, 0.15),
         inset 0 1px 0 rgba(255, 255, 255, 0.8),
         inset 0 -1px 0 rgba(255, 255, 255, 0.3);
-      animation: none !important;
-      transform: scale(1.02);
+      transform: scale(1.06);
+      padding: 16px 30px;
     }
 
-    .see-more:active {
-      transform: scale(0.97);
-    }
-
-    .see-more svg {
-      opacity: 1 !important;
+    .hero-cta-chevron {
       flex-shrink: 0;
+      width: 18px;
+      height: 18px;
       display: block;
-      width: 20px;
-      height: 20px;
-      margin-top: -1px; /* Optical alignment adjustment */
-      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      overflow: visible;
     }
 
-    .see-more:hover svg {
-      transform: translateY(3px);
+    .hero-cta--primary .hero-cta-chevron {
+      color: #000;
     }
 
-    .see-more-text {
-      font-family: 'Space Mono', 'Courier New', 'Monaco', monospace;
-      font-size: 12px;
-      font-weight: 400;
-      letter-spacing: 0.5px;
-      text-transform: uppercase;
-      line-height: 1;
+    .hero-cta-chevron .hero-cta-arrow {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: hero-arrow-down 1.15s ease-in-out infinite;
+    }
+
+    @keyframes hero-arrow-down {
+      0%, 100% {
+        transform: translateY(-1.5px);
+      }
+      50% {
+        transform: translateY(2.5px);
+      }
+    }
+
+    header .HeaderContent a.hero-cta--primary .hero-cta-primary-label {
+      font-family: inherit !important;
+      font-weight: 400 !important;
+    }
+
+    @media (min-width: 769px) {
+      .hero-cta--primary {
+        gap: 0;
+      }
+
+      .hero-cta--primary .hero-cta-chevron {
+        width: 0;
+        min-width: 0;
+        opacity: 0;
+        overflow: visible;
+        transition:
+          width 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.2s ease;
+      }
+
+      .hero-cta--primary:hover,
+      .hero-cta--primary:focus-visible {
+        gap: 0.5rem;
+      }
+
+      .hero-cta--primary:hover .hero-cta-chevron,
+      .hero-cta--primary:focus-visible .hero-cta-chevron {
+        width: 18px;
+        opacity: 1;
+      }
+    }
+
+    .hero-cta--chat {
       color: #2b2b2b;
-      white-space: nowrap;
-      opacity: 0;
-      width: 0;
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      padding-top: 1px; /* Compensate for font baseline */
-      transition: 
-        opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-        width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-      transition-delay: 0s;
+      background: #eaeefb;
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      box-shadow: 0 4px 16px rgba(59, 101, 239, 0.1);
+      text-transform: none;
+      overflow: visible !important;
+      isolation: isolate;
+      position: relative;
+      z-index: 1;
+      transition:
+        background 0.25s ease,
+        color 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+        padding 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    .see-more:hover .see-more-text {
-      opacity: 1;
-      width: auto;
-      transition-delay: 0.1s;
+    .hero-cta--chat::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      padding: 1px;
+      border-radius: inherit;
+      background: conic-gradient(from var(--srini-chat-angle, 0deg), #3b65ef, #a8c0ff, #dce3f8, #7da1f7, #3b65ef);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-cta-chat-label {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.3rem;
+    }
+
+    .hero-cta-chat-prefix {
+      font-family: inherit;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      text-transform: none;
+    }
+
+    .hero-cta-proxy-icon {
+      flex-shrink: 0;
+      width: 16px;
+      height: 16px;
+      color: #3b65ef;
+      transition: transform 0.2s ease, color 0.2s ease;
+    }
+
+    .hero-cta-proxy-name {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      text-transform: none;
+      color: #3d3d3d;
+    }
+
+    .hero-cta--chat:hover,
+    .hero-cta--chat:focus-visible {
+      color: #fff;
+      background: #3b65ef;
+      border-color: rgba(255, 255, 255, 0.65);
+      box-shadow: 0 2px 12px rgba(59, 101, 239, 0.22);
+      transform: scale(1.06);
+      padding: 16px 30px;
+    }
+
+    .hero-cta--chat:hover .hero-cta-proxy-icon,
+    .hero-cta--chat:focus-visible .hero-cta-proxy-icon {
+      color: #fff;
+      transform: scale(1.12);
+    }
+
+    .hero-cta--chat:hover .hero-cta-chat-prefix,
+    .hero-cta--chat:focus-visible .hero-cta-chat-prefix,
+    .hero-cta--chat:hover .hero-cta-proxy-name,
+    .hero-cta--chat:focus-visible .hero-cta-proxy-name {
+      color: #fff;
+    }
+
+    .hero-cta:active {
+      transform: scale(0.98);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-cta-chevron .hero-cta-arrow {
+        animation: none;
+      }
     }
 
     @keyframes bounce-slow {
@@ -662,6 +976,84 @@
       50% {
         transform: translateY(8px);
         opacity: 1;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero-cta-row {
+        justify-content: center;
+        margin-top: 5.25rem;
+        gap: 0;
+      }
+
+      .hero-cta--chat {
+        display: none !important;
+      }
+
+      .hero-cta--primary {
+        display: flex !important;
+        gap: 0;
+        width: 48px;
+        height: 48px;
+        min-height: 48px;
+        padding: 0 !important;
+        overflow: hidden;
+        animation: bounce-slow 2.5s ease-in-out 1.4s infinite !important;
+        transition:
+          width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+          padding 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+          gap 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
+          background 0.3s ease,
+          box-shadow 0.3s ease,
+          transform 0.2s ease,
+          border-color 0.3s ease;
+      }
+
+      .hero-cta--primary .hero-cta-primary-label {
+        font-family: 'Space Mono', 'Courier New', Monaco, monospace;
+        font-size: 12px;
+        font-weight: 400;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+        line-height: 1;
+        color: #2b2b2b;
+        white-space: nowrap;
+        opacity: 0;
+        width: 0;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        padding-top: 1px;
+        transition:
+          opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
+          width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+      }
+
+      .hero-cta--primary:hover,
+      .hero-cta--primary:focus-visible {
+        width: 232px;
+        gap: 10px;
+        padding: 0 26px !important;
+        animation: none !important;
+        transform: scale(1.06);
+      }
+
+      .hero-cta--primary:hover .hero-cta-primary-label,
+      .hero-cta--primary:focus-visible .hero-cta-primary-label {
+        opacity: 1;
+        width: auto;
+        transition-delay: 0.1s;
+      }
+
+      .hero-cta--primary .hero-cta-chevron {
+        width: 20px;
+        height: 20px;
+        margin-top: -1px;
+        color: #000;
+      }
+
+      .hero-cta--primary:active {
+        transform: scale(0.97);
       }
     }
 
@@ -682,6 +1074,47 @@
       margin-bottom: 1.5rem;
       font-weight: 400;
       letter-spacing: 0.5px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.55rem 0.75rem;
+    }
+
+    .work-lock-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 4px 9px 4px 7px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: #5c5c5c;
+      background: rgba(43, 43, 43, 0.06);
+      border: 1px solid rgba(43, 43, 43, 0.12);
+    }
+
+    .work-lock-badge svg {
+      width: 11px;
+      height: 11px;
+      flex-shrink: 0;
+    }
+
+    .read-more-glass.is-locked {
+      min-width: 196px;
+    }
+
+    .read-more-lock {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 2px;
+    }
+
+    .read-more-lock svg {
+      width: 14px;
+      height: 14px;
     }
 
     /* Work Sans for bullet points */
@@ -738,23 +1171,41 @@
     @media screen and (min-width: 769px) {
       header nav {
         transition:
-          top 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          right 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          padding 0.35s cubic-bezier(0.16, 1, 0.3, 1),
-          background 0.2s ease,
-          box-shadow 0.2s ease,
-          border-color 0.2s ease;
+          top 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          right 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          width 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          height 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          padding 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          border-radius 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+          transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+          background 0.3s ease,
+          box-shadow 0.3s ease,
+          border-color 0.3s ease;
       }
 
       body.nav-persistent .logo-srini {
         position: fixed;
-        top: 28px;
+        top: 20px;
         left: 32px;
+        z-index: 10080;
         transform: none;
-        padding: 14px 16px 12px;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        white-space: nowrap;
+        animation: persistentChromeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        min-height: 64px;
+        padding: 0;
+        box-sizing: border-box;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-radius: 9999px;
+        border: 1px solid rgba(255, 255, 255, 0.55);
         color: #666;
         background: rgba(255, 255, 255, 0.66);
         backdrop-filter: blur(24px) saturate(180%);
@@ -767,8 +1218,8 @@
       body.nav-persistent header nav {
         position: fixed;
         top: 20px;
-        right: 96px;
-        z-index: 10000;
+        right: 100px;
+        z-index: 10080;
         width: 64px;
         height: 64px;
         padding: 0;
@@ -782,14 +1233,56 @@
           0 14px 40px rgba(0, 0, 0, 0.1),
           inset 0 1px 0 rgba(255, 255, 255, 0.65);
         cursor: pointer;
+        animation: persistentChromeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
       }
 
-      /* Pull chat button out of the pill so it sits to its right */
-      body.nav-persistent:not(.nav-expanded) .srini-chat-nav-li {
+      body.folder-stage-open.nav-persistent header nav,
+      body:has(.fstage.is-open).nav-persistent header nav,
+      body.folder-stage-open .header-chat-slot,
+      body:has(.fstage.is-open) .header-chat-slot {
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      body.nav-persistent .header-nav-row > .header-chat-slot {
         position: fixed;
         top: 20px;
-        right: 32px;
-        z-index: 10001;
+        right: 24px;
+        z-index: 10081;
+        padding-top: 0;
+        margin: 0;
+        width: 64px;
+        height: 64px;
+      }
+
+      body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn {
+        width: 64px;
+        height: 64px;
+        min-width: 64px;
+        min-height: 64px;
+        background: #eaeefb;
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        box-shadow: none;
+      }
+
+      body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:hover,
+      body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:focus-visible {
+        background: #3b65ef;
+        border-color: rgba(255, 255, 255, 0.65);
+        animation: none;
+        box-shadow: 0 2px 12px rgba(59, 101, 239, 0.22);
+      }
+
+      body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:hover .srini-chat-sparkle,
+      body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:focus-visible .srini-chat-sparkle {
+        color: #fff;
+      }
+
+      body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-sparkle {
+        width: 28px;
+        height: 28px;
       }
 
       body.chat-open.nav-persistent header nav {
@@ -797,22 +1290,17 @@
       }
 
       body.chat-open.nav-persistent.nav-expanded header nav {
+        right: 476px;
         width: min(560px, calc(100vw - 540px));
       }
 
-      @media screen and (max-width: 1199px) {
-        body.chat-open.nav-persistent header nav {
-          right: 96px;
-        }
-
-        body.chat-open.nav-persistent.nav-expanded header nav {
-          width: min(560px, calc(100vw - 128px));
-        }
-      }
-
       body.nav-persistent.nav-expanded header nav {
-        width: min(560px, calc(100vw - 128px));
-        padding: 0 14px;
+        right: 100px;
+        width: fit-content;
+        min-width: 64px;
+        max-width: min(560px, calc(100vw - 128px));
+        padding: 0;
+        overflow: hidden;
         cursor: default;
       }
 
@@ -820,40 +1308,66 @@
       body.nav-persistent header nav::after {
         content: '';
         position: absolute;
-        right: 21px;
-        width: 22px;
-        height: 3px;
+        left: 19px;
+        right: auto;
+        height: 2px;
         border-radius: 9999px;
         background: #2b2b2b;
         transition:
           top 0.25s ease,
+          left 0.25s ease,
+          right 0.25s ease,
+          width 0.25s ease,
           transform 0.25s ease,
           opacity 0.2s ease;
       }
 
       body.nav-persistent header nav::before {
-        top: 24.5px;
+        top: 25px;
+        width: 24px;
       }
 
       body.nav-persistent header nav::after {
-        top: 36.5px;
+        top: 34px;
+        width: 16px;
       }
 
       body.nav-persistent.nav-expanded header nav::before {
-        top: 30.5px;
+        top: 31px;
+        left: auto;
+        right: 16px;
+        width: 20px;
         transform: rotate(45deg);
       }
 
       body.nav-persistent.nav-expanded header nav::after {
-        top: 30.5px;
+        top: 31px;
+        left: auto;
+        right: 16px;
+        width: 20px;
         transform: rotate(-45deg);
       }
 
+      body.nav-persistent:not(.nav-expanded) header nav .desk-menu {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        clip-path: inset(50%);
+        white-space: nowrap;
+      }
+
       body.nav-persistent header nav .desk-menu {
+        width: auto;
+        max-width: 100%;
         height: 100%;
         padding-top: 0 !important;
-        padding-right: 50px;
-        gap: 2px;
+        padding-left: 0;
+        padding-right: 44px;
+        margin: 0;
+        gap: 0;
+        justify-content: flex-start !important;
         opacity: 0;
         transform: translateX(18px);
         pointer-events: none;
@@ -863,6 +1377,12 @@
       }
 
       body.nav-persistent.nav-expanded header nav .desk-menu {
+        position: static;
+        width: auto;
+        height: 100%;
+        clip: auto;
+        clip-path: none;
+        overflow: visible;
         opacity: 1;
         transform: translateX(0);
         pointer-events: auto;
@@ -870,18 +1390,23 @@
       }
 
       body.nav-persistent header nav .desk-menu li a:not(.get-in-touch-btn) {
-        padding: 0 18px !important;
+        padding: 0 12px !important;
+      }
+
+      body.nav-persistent header nav .desk-menu li:first-child a:not(.get-in-touch-btn) {
+        padding-left: 16px !important;
       }
 
       body.nav-persistent header nav .get-in-touch-btn {
-        padding: 12px 22px !important;
+        padding: 12px 16px !important;
+        margin-right: 0;
       }
     }
 
     /* Hamburger menu links */
     .hamburgler-menu-list li a {
       font-family: 'Space Mono', 'Courier New', 'Monaco', monospace !important;
-      font-size: 16px !important;
+      font-size: 14px !important;
       letter-spacing: 0.5px !important;
       text-transform: uppercase !important;
     }
@@ -1034,11 +1559,8 @@
       background: rgba(255, 255, 255, 0.1) !important;
       backdrop-filter: blur(24px) !important;
       -webkit-backdrop-filter: blur(24px) !important;
-      border: 1px solid rgba(255, 255, 255, 0.3) !important;
-      box-shadow: 
-        0 4px 16px rgba(0, 0, 0, 0.08),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.4),
-        0 0 0 1px rgba(255, 255, 255, 0.1) !important;
+      border: 1px solid rgba(43, 43, 43, 0.22) !important;
+      box-shadow: none !important;
       
       color: #2b2b2b !important;
       border-radius: 9999px !important;
@@ -1077,13 +1599,10 @@
     }
 
     .get-in-touch-btn:hover {
-      border-color: rgba(255, 255, 255, 0.5) !important;
+      border-color: rgba(43, 43, 43, 0.36) !important;
       transform: scale(1.03) !important;
       opacity: 1 !important;
-      box-shadow: 
-        0 12px 32px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 0 rgba(255, 255, 255, 0.5),
-        0 0 0 1px rgba(255, 255, 255, 0.2) !important;
+      box-shadow: none !important;
     }
 
     .get-in-touch-btn:active {
@@ -1133,11 +1652,219 @@
       text-align: left;
     }
 
-    #Selectedworks > .cards-layout:first-of-type {
+    .work-section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: center;
+      gap: 0;
+      padding: clamp(2rem, 3vw, 3rem) 5% 0;
+      border-bottom: 1px solid #ececec;
+      margin: 0 5%;
+      padding-left: 0;
+      padding-right: 0;
+      width: auto;
+      scroll-margin-top: 5.5rem;
+    }
+
+    .work-section-header .work-section-title {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .work-switch {
+      display: inline-flex;
+      align-items: stretch;
+      gap: 0;
+      position: relative;
+    }
+
+    .work-switch-btn {
+      appearance: none;
+      border: none;
+      background: transparent;
+      padding: 0 0 0.85rem;
+      margin: 0 2rem 0 0;
+      border-radius: 0;
+      font-family: 'Space Mono', 'Courier New', 'Monaco', monospace;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.2;
+      color: #9e9e9e;
+      cursor: pointer;
+      position: relative;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+      touch-action: pan-y;
+    }
+
+    .work-switch-btn:last-child {
+      margin-right: 0;
+    }
+
+    .work-switch-btn::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -1px;
+      height: 2px;
+      background: #3b65ef;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .work-switch-btn:hover {
+      color: var(--srini-color-text-primary);
+    }
+
+    .work-switch-btn:focus-visible {
+      outline: 2px solid #3b65ef;
+      outline-offset: 4px;
+    }
+
+    .work-switch-btn.is-active {
+      color: var(--srini-color-text-primary);
+    }
+
+    .work-switch-btn.is-active::after {
+      transform: scaleX(1);
+    }
+
+    /* AI Labs — write-on text on hover (site blue spectrum) */
+    #work-tab-ai-labs {
+      --labs-spectrum: linear-gradient(
+        105deg,
+        #a8c0ff 0%,
+        #7da1f7 28%,
+        var(--srini-color-link, #3b65ef) 58%,
+        #5b7cfa 100%
+      );
+    }
+
+    @keyframes labsWriteText {
+      0% {
+        background-size: 0% 100%;
+      }
+      12% {
+        background-size: 0% 100%;
+      }
+      72% {
+        background-size: 100% 100%;
+      }
+      88% {
+        background-size: 100% 100%;
+      }
+      100% {
+        background-size: 0% 100%;
+      }
+    }
+
+    #work-tab-ai-labs:hover {
+      color: transparent;
+      background-image: var(--labs-spectrum);
+      background-size: 0% 100%;
+      background-repeat: no-repeat;
+      background-position: left center;
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: labsWriteText 1.85s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #work-tab-ai-labs:hover {
+        color: transparent;
+        background-image: var(--labs-spectrum);
+        background-size: 100% 100%;
+        animation: none;
+      }
+    }
+
+    .work-panel {
+      display: none;
+    }
+
+    .work-panel.is-active {
+      display: block;
+      animation: workPanelIn 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Native trackpad is the default — no scroll-linked hide/fade. */
+
+    @keyframes workPanelIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .work-section-header {
+        position: sticky;
+        top: 0;
+        z-index: 30;
+        padding-top: 0.85rem;
+        margin: 0 5%;
+        background: #fff;
+        touch-action: pan-y;
+      }
+
+      .work-switch-btn {
+        margin-right: 1.25rem;
+        font-size: 12px;
+        padding-bottom: 0.75rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .work-panel.is-active {
+        animation: none;
+      }
+
+      .work-switch-btn::after {
+        transition: none;
+      }
+    }
+
+    .selected-works > .work-panel.is-active > .cards-layout:first-of-type,
+    .selected-works > .work-panel.is-active > .frame:first-of-type .cards-layout {
       padding-top: 2rem !important;
     }
 
-    #Selectedworks .cards-layout-content h2,
+    .ai-labs-intro {
+      max-width: 48rem;
+      margin: 2rem auto 0;
+      padding: 0 5%;
+      font-family: 'Fraunces', Georgia, 'Times New Roman', serif;
+      font-size: 14px;
+      font-weight: 400;
+      font-optical-sizing: auto;
+      line-height: 1.45;
+      letter-spacing: -0.01em;
+      color: #666;
+      text-align: center;
+      text-wrap: pretty;
+    }
+
+    #work-panel-ai-labs:has(.ai-labs-intro) .ai-labs-folders {
+      padding-top: 2.25rem;
+    }
+
+    .selected-works .cards-layout-content h2,
     .previous-work-item .cards-layout-content h2,
     #contact .txt6,
     .archives-title {
@@ -1148,6 +1875,83 @@
       .work-section-title {
         padding-top: 2rem;
       }
+
+      .ai-labs-intro br {
+        display: none;
+      }
+    }
+
+    /* AI Labs folders: vendor/folder-cards/folder-cards.css */
+    .folder-note--stack {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .folder-note-section {
+      display: block;
+      width: 100%;
+      margin: 4cqw 0 0;
+    }
+    .folder-note-kicker {
+      margin: 0;
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 4.4cqw;
+      font-weight: 600;
+      line-height: 1.35;
+      color: var(--sticky-ink, #2c2c2e);
+    }
+    .folder-note-section .folder-note-p {
+      margin: 1.6cqw 0 0;
+    }
+    .folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note-section {
+      margin-top: 0.85rem;
+    }
+    .folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note-kicker {
+      font-size: clamp(0.95rem, 1.45vw, 1.1rem);
+    }
+    .folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note-section .folder-note-p {
+      margin-top: 0.28rem;
+    }
+    .folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note--stack {
+      overflow-y: auto;
+    }
+
+    .folder-title-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem 0.45rem;
+      min-width: 0;
+    }
+    .folder-title-row .folder-title {
+      min-width: 0;
+    }
+    .folder-status {
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-family: 'Space Mono', 'Courier New', Monaco, monospace;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      text-transform: uppercase;
+      color: #6b5c3a;
+      background: rgba(212, 175, 55, 0.14);
+      border: 1px solid rgba(160, 126, 40, 0.22);
+    }
+
+    .fstage-title {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .fstage-title .folder-status {
+      font-size: 0.58rem;
     }
 
     /* Three-column grid for Previous Work */
@@ -1353,39 +2157,77 @@
       transform: translate(3px, -3px);
     }
 
-    /* Large displays (1800px+) — ~120% type scale */
+    #contact .footer-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem 1.5rem;
+      flex-wrap: wrap;
+      padding-top: 3rem;
+      padding-right: 5%;
+      box-sizing: border-box;
+    }
+    #contact .footer-meta .footertxt {
+      padding-top: 0 !important;
+      margin: 0;
+      flex: 1 1 14rem;
+    }
+    .back-to-top {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0;
+      padding: 0;
+      width: 36px;
+      height: 36px;
+      border: 1px solid rgba(29, 29, 31, 0.12);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.62);
+      color: #2b2b2b;
+      line-height: 1;
+      cursor: pointer;
+      text-decoration: none;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .back-to-top svg {
+      width: 16px;
+      height: 16px;
+      transition: transform 0.25s ease;
+    }
+    .back-to-top:hover svg {
+      transform: translateY(-2px);
+    }
+    .back-to-top:focus-visible {
+      outline: 2px solid #3b65ef;
+      outline-offset: 3px;
+    }
+    @media screen and (max-width: 768px) {
+      #contact .footer-meta {
+        padding-right: 5%;
+      }
+      #contact .footer-meta .back-to-top {
+        margin-left: 5%;
+      }
+    }
+
+    /* Large displays (1800px+) — ~120% type scale (body/content; header nav stays base size) */
     @media screen and (min-width: 1801px) {
-      .logo-srini {
-        font-size: 19px;
-      }
-
-      .desk-menu li a:not(.get-in-touch-btn) {
-        font-size: 17px !important;
-      }
-
-      .hamburgler-menu-list li a {
-        font-size: 19px !important;
-      }
-
-      .get-in-touch-btn {
-        font-size: 16px !important;
-        padding: 17px 34px !important;
-      }
-
       header .HeaderContent > p.hero-text-reveal {
-        font-size: 300% !important;
+        font-size: 275% !important;
       }
 
       header .HeaderContent h1 {
-        font-size: 420% !important;
+        font-size: 390% !important;
       }
 
       header .HeaderContent .HeaderContent-description {
         font-size: 22px !important;
       }
 
-      .see-more-text {
-        font-size: 14px !important;
+      .hero-cta {
+        font-size: 16px !important;
+        padding: 14px 28px !important;
       }
 
       .work-section-title {
@@ -1462,8 +2304,9 @@
     content="Digital product designer focused on crafting and shipping superlative products that impact people at scale." />
   <meta property="og:description"
     content="A digital product designer who solves complex problems with <br>simple and intuitive interfaces." />
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-131508743-1"></script>
-  <script>window.dataLayer = window.dataLayer || []; function gtag() { dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'UA-131508743-1');</script>
+  <link rel="preconnect" href="https://sriniai.netlify.app" crossorigin />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
   <script async src="https://cdn.amplitude.com/script/4cdba9bcfab0ed83708e9b2b558d9bac.js" onload="window.amplitude.add(window.sessionReplay.plugin({sampleRate: 1}));window.amplitude.init('4cdba9bcfab0ed83708e9b2b558d9bac', {fetchRemoteConfig:true,autocapture:{attribution:true,fileDownloads:true,formInteractions:true,pageViews:true,sessions:true,elementInteractions:true,networkTracking:true,webVitals:true,frustrationInteractions:{thrashedCursor:true,errorClicks:true,deadClicks:true,rageClicks:true}}});"></script>
 </head>
 
@@ -1499,7 +2342,7 @@
   </div>
 
   <!-- Logo -->
-  <a href="#" class="logo-srini" data-text="srini">srini</a>
+  <a href="#" class="logo-srini logo-srini--mark" data-text="srini" aria-label="srini"><img src="images/srini-mark.png" alt="" width="50" height="50"></a>
 
   <div class="hamburgler-menu">
     <ul class="hamburgler-menu-list">
@@ -1515,29 +2358,40 @@
       <canvas id="stripe-gradient-canvas" aria-hidden="true"></canvas>
     </div>
     <div id="hamburgler" class="hamburgler-icon-wrapper"> <span class="hamburgler-icon"></span> </div>
+    <div class="header-nav-row">
+    <div class="header-chat-slot">
+      <button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg></button>
+      <span class="srini-chat-hovertip" role="tooltip">Ask about Srini</span>
+    </div>
     <nav>
       <ul class="desk-menu">
         <li><a href="index.html#Selectedworks">Works</a></li>
         <li><a href="about.html">About</a></li>
         <li><a class="contact" href="Resume_Srinivasan.pdf" target="_blank">Résumé</a></li>
-        <li class="srini-chat-nav-li"><button type="button" class="srini-chat-trigger srini-chat-nav-btn" aria-label="Open AI chat" aria-expanded="false"><svg class="srini-chat-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg></button><span class="srini-chat-hovertip" role="tooltip">Ask about Srini</span></li>
         <li><a class="get-in-touch-btn" href="mailto:tcsreeni93@gmail.com">Get in Touch</a></li>
       </ul>
     </nav>
+    </div>
     <div class="frame" style="max-width: 1440px">
       <div class="HeaderContent" style="margin-top: 10%">
-        <p class="hero-text-reveal" style='font-size: 250%; font-family: "MyWebFont"; margin-bottom: 0.75rem; color:#2b2b2b'> Hello there <span class="wave">👋</span>, </p>
-        <h1 class="hero-text-reveal" style="white-space: inherit;line-height: 1.125; color:#2b2b2b"> I'm <a href="about.html"
-            target="_blank" style="color:#3b65ef">Srini</a>, a full-spectrum product designer crafting intuitive AI-driven, agentic experiences and scalable design systems.
-        </h1>
+        <p class="hero-text-reveal" style='font-size: 230%; font-family: "MyWebFont"; margin-bottom: 0.75rem; color:#2b2b2b'> Hello there <span class="wave">👋</span>, </p>
+        <h1 class="hero-text-reveal" style="white-space: inherit;line-height: 1.125; color:#2b2b2b">I'm <a href="about.html"
+            target="_blank" style="color:#3b65ef">Srini</a>, a full-spectrum product designer crafting intuitive AI-driven, agentic experiences and agent-ready design systems.</h1>
         <div class="hero-text-reveal HeaderContent-description" style="color:var(--srini-color-text-secondary)"> Staff Product Designer @ Intuit | Previously @ Norton, Google & Zoho </div>
-        <div class="see-more-wrapper animate-progressive">
-          <a href="#Selectedworks" class="see-more" aria-label="Scroll to work section">
-            <span class="see-more-text">Selected Works</span>
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M6 9L12 15L18 9" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <div class="hero-cta-row">
+          <a href="#Selectedworks" class="hero-cta hero-cta--primary" aria-label="Scroll to selected works">
+            <span class="hero-cta-primary-label">Selected Works</span>
+            <svg class="hero-cta-chevron" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <g class="hero-cta-arrow">
+                <path d="M12 5v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
             </svg>
           </a>
+          <button type="button" class="hero-cta hero-cta--chat srini-chat-trigger srini-chat-border-attention" aria-label="Ask about me" aria-expanded="false">
+            <svg class="hero-cta-proxy-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>
+            <span class="hero-cta-chat-label"><span class="hero-cta-chat-prefix">Ask about</span><span class="hero-cta-proxy-name">me</span></span>
+          </button>
         </div>
       </div>
     </div>
@@ -1545,8 +2399,16 @@
 
 
   <div class="frame" style="max-width: 1440px">
-    <div id="Selectedworks">
-      <h2 class="work-section-title">Recent Work</h2>
+    <div class="selected-works">
+      <div class="work-section-header" id="Selectedworks">
+        <h2 class="work-section-title" id="work-section-heading">Selected Works</h2>
+        <div class="work-switch" role="tablist" aria-label="Work categories">
+          <button type="button" class="work-switch-btn is-active" role="tab" aria-selected="true" aria-controls="work-panel-recent" id="work-tab-recent" data-work-panel="recent">Selected Works</button>
+          <button type="button" class="work-switch-btn" role="tab" aria-selected="false" aria-controls="work-panel-ai-labs" id="work-tab-ai-labs" data-work-panel="ai-labs">AI Labs</button>
+        </div>
+      </div>
+
+      <div class="work-panel is-active" id="work-panel-recent" role="tabpanel" aria-labelledby="work-tab-recent">
 
 <!-- Write your comments here -->
 
@@ -1563,7 +2425,7 @@
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
             <a href="Intuit.html" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Intuit Assist – GenAI-Powered Developer Assistant</a></h2>
-            <p class="project-date">June 2023 - Present</p>
+            <p class="project-date">June 2023 - Present <span class="work-lock-badge" title="This case study is NDA protected"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>NDA protected</span></p>
             <ul
              class="card-list-points"
               style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: var(--srini-color-text-body); display: block">
@@ -1597,8 +2459,9 @@
             </ul>
 
             <div style="padding-top: 6rem;">
-              <a class="read-more-glass" href="Intuit.html" target="_blank">
+              <a class="read-more-glass is-locked" href="Intuit.html" target="_blank" aria-label="Read more — this case study is NDA protected">
                 <div class="read-more-content">
+                  <span class="read-more-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
                   <span class="read-more-text">Read More</span>
                   <div class="read-more-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
@@ -1628,7 +2491,7 @@
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
             <a href="API.html" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">API platform - API Documentation, testing and integration experiences</a></h2>
-            <p class="project-date">Jan 2023 - Present</p>
+            <p class="project-date">Jan 2023 - Present <span class="work-lock-badge" title="This case study is NDA protected"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>NDA protected</span></p>
             <ul
              class="card-list-points"
               style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: var(--srini-color-text-body); display: block">
@@ -1662,8 +2525,9 @@
             </ul>
 
             <div style="padding-top: 6rem;">
-              <a class="read-more-glass" href="API.html" target="_blank" rel="noopener noreferrer">
+              <a class="read-more-glass is-locked" href="API.html" target="_blank" rel="noopener noreferrer" aria-label="Read more — this case study is NDA protected">
                 <div class="read-more-content">
+                  <span class="read-more-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
                   <span class="read-more-text">Read More</span>
                   <div class="read-more-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
@@ -1693,7 +2557,7 @@
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
             Spam Protection features and design system for Norton 360 iOS</h2>
-            <p class="project-date">Nov 2020 - Dec 2022</p>
+            <p class="project-date">Nov 2020 - Dec 2022 <span class="work-lock-badge" title="This case study is NDA protected"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>NDA protected</span></p>
             <ul
              class="card-list-points"
               style="flex: 3 0 400px; line-height: 1.5; padding-bottom: 12%; font-family: MyWebFont; font-size: 15px; color: var(--srini-color-text-body); display: block">
@@ -1727,8 +2591,9 @@ Designed a white label friendly design system scaling from design to code for fi
 
   
             <div style="padding-top: 6rem;">
-              <a class="read-more-glass" href="Norton.html" target="_blank">
+              <a class="read-more-glass is-locked" href="Norton.html" target="_blank" aria-label="Read more — this case study is NDA protected">
                 <div class="read-more-content">
+                  <span class="read-more-lock" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></span>
                   <span class="read-more-text">Read More</span>
                   <div class="read-more-icon">
                     <svg viewBox="0 0 24 24" fill="currentColor">
@@ -1744,7 +2609,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
       <hr style="width:80%; margin-top: 4rem; margin-bottom: 3rem; border: 0px solid #f1f1f1; border-top-width: 1px;">
 
-      <div style="padding-left: 5%; padding-top: 3%; padding-bottom: 2rem; color: #666; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;">
+      <div class="previous-work-label" style="padding-left: 5%; padding-top: 3%; padding-bottom: 2rem; color: #666; font-size: 14px; font-weight: 500; letter-spacing: 0.5px; font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', 'Source Code Pro', monospace;">
         Previous Work [2015-2019]
       </div>
       <div class="previous-work-grid">
@@ -1803,6 +2668,172 @@ Designed a white label friendly design system scaling from design to code for fi
         </div>
       </div>
 
+      </div>
+
+      <div class="work-panel" id="work-panel-ai-labs" role="tabpanel" aria-labelledby="work-tab-ai-labs" hidden>
+        <p class="ai-labs-intro">This section showcases how I use generative AI code as a medium for creative experiments —<br>building new interactions, visual languages, and systems before they become product.</p>
+        <!-- Frosted folders adapted from https://github.com/fayazara/portfolio-site-template -->
+        <div class="ai-labs-folders">
+
+          <button type="button" class="folder" data-folder="chatbot" data-title="Proxy Chatbot" data-meta="Custom RAG-based solution built from the ground up to answer about me" aria-label="Open Proxy Chatbot folder">
+            <div class="folder-shell">
+              <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
+                <defs>
+                  <linearGradient id="folder-fill-chatbot" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ffffff"></stop>
+                    <stop offset="1" stop-color="#ffffff"></stop>
+                  </linearGradient>
+                </defs>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="url(#folder-fill-chatbot)"></path>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="none" stroke="white" stroke-opacity="0.8"></path>
+              </svg>
+              <div class="folder-items">
+                <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:6%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.4">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">The problem</p><p class="folder-note-p">A portfolio is one-way. Recruiters skim, miss context, and leave with unanswered questions. Proxy lets them ask about my work and get answers grounded in the real case studies—not a generic chatbot.</p></div></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="44" data-kind="video" style="top:5%;width:44%;margin-left:-22%;aspect-ratio:16/9">
+                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-play-once data-src="images/ai-labs/chatbot/proxy-ai.mp4" poster="images/ai-labs/chatbot/proxy-ai.webp" muted playsinline preload="none" aria-label="Proxy chatbot walkthrough"></video><span class="folder-video-play" role="button" tabindex="0" aria-label="Play video"><span aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.14v13.72a1 1 0 0 0 1.54.84l10.12-6.86a1 1 0 0 0 0-1.68L9.54 4.3A1 1 0 0 0 8 5.14z"/></svg></span></span></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="42" data-kind="video" style="top:8%;width:42%;margin-left:-21%;aspect-ratio:1280/836">
+                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/chatbot/proxy-ai-2.mp4" poster="images/ai-labs/chatbot/proxy-ai-2.webp" muted playsinline loop preload="none" aria-label="Proxy chatbot walkthrough, second clip"></video></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Custom RAG Architecture</p><p class="folder-note-p">Built from the ground up — custom retrieval indexes portfolio content, grounding every answer in real context about my work.</p></div></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="38" data-kind="note" style="top:10%;width:38%;margin-left:-19%;aspect-ratio:3/5.6">
+                  <div class="folder-frame"><div class="folder-note folder-note--stack">
+                    <p class="folder-note-title">What’s Under the Hood</p>
+                    <div class="folder-note-section">
+                      <p class="folder-note-kicker">Model &amp; Inference</p>
+                      <p class="folder-note-p">OpenAI GPT OSS 20B via Groq for ultra fast, low latency responses.</p>
+                    </div>
+                    <div class="folder-note-section">
+                      <p class="folder-note-kicker">Vector Database</p>
+                      <p class="folder-note-p">ChromaDB utilizing all MiniLM L6 v2 embeddings with a K=4 nearest neighbor search.</p>
+                    </div>
+                    <div class="folder-note-section">
+                      <p class="folder-note-kicker">Middleware &amp; Hosting</p>
+                      <p class="folder-note-p">FastAPI backend hosted on Render to handle the chat and data stream.</p>
+                    </div>
+                    <div class="folder-note-section">
+                      <p class="folder-note-kicker">Observability &amp; Tracing</p>
+                      <p class="folder-note-p">Langfuse traces the full prompt lifecycle, token usage, cost, and latency across retrieval steps.</p>
+                    </div>
+                  </div></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="32" data-kind="note" style="top:8%;width:32%;margin-left:-16%;aspect-ratio:3/5">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Context-Aware</p><p class="folder-note-p">Detects which page you're on and tailors suggestions — different prompts for each case study.</p></div></div>
+                </div>
+              </div>
+              <div class="folder-flap" data-folder-flap>
+                <div class="folder-flap-inner">
+                  <div class="folder-flap-copy">
+                    <p class="folder-title">Proxy Chatbot</p>
+                    <p class="folder-meta">Custom RAG-based solution built from the ground up to answer about me</p>
+                  </div>
+                  <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <button type="button" class="folder" data-folder="midjourney" data-title="Image Generation Experiments" data-meta="Abstract experiments using Midjourney and Gemini" aria-label="Open Image Generation Experiments folder">
+            <div class="folder-shell">
+              <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
+                <defs>
+                  <linearGradient id="folder-fill-midjourney" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ffffff"></stop>
+                    <stop offset="1" stop-color="#ffffff"></stop>
+                  </linearGradient>
+                </defs>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="url(#folder-fill-midjourney)"></path>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="none" stroke="white" stroke-opacity="0.8"></path>
+              </svg>
+              <div class="folder-items">
+                <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Image Generation Experiments</p><p class="folder-note-p">These are digital artworks—abstract stills and motion studies made with Midjourney and Gemini.</p></div></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="44" data-kind="photo" style="top:9%;width:44%;margin-left:-22%;aspect-ratio:16/9">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/03-computer.webp" alt="Abstract retro futuristic computer in nature" width="1200" height="673" loading="lazy" decoding="async"><figcaption class="folder-photo-caption">Computer</figcaption></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="44" data-kind="video" style="top:7%;width:44%;margin-left:-22%;aspect-ratio:16/9">
+                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/midjourney/computer-video.mp4" poster="images/ai-labs/midjourney/computer-video.webp" muted playsinline loop preload="none" aria-label="Abstract retro futuristic computer in nature, video generation"></video><figcaption class="folder-photo-caption">Computer (video)</figcaption></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="42" data-kind="photo" style="top:6%;width:42%;margin-left:-21%;aspect-ratio:16/9">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/crystal-ball.webp" alt="Crystal ball on a rock in a wildflower meadow at golden hour" width="1024" height="573" loading="lazy" decoding="async"><figcaption class="folder-photo-caption">Crystal Ball</figcaption></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="37" data-kind="photo" style="top:4%;width:37%;margin-left:-18.5%;aspect-ratio:1/1">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/02-mazda.webp" alt="Realistic photo of a red Mazda CX5" width="1024" height="1024" loading="lazy" decoding="async"><figcaption class="folder-photo-caption">Mazda</figcaption></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="32" data-kind="photo" style="top:6%;width:32%;margin-left:-16%;aspect-ratio:4/3">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/04-mountain.webp" alt="A man walking on a mountain path" width="1200" height="904" loading="lazy" decoding="async"><figcaption class="folder-photo-caption">Mountain Path</figcaption></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="36" data-kind="photo" style="top:5%;width:36%;margin-left:-18%;aspect-ratio:1/1">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/05-peaks.webp" alt="Stylized grainy illustration of colorful mountain peaks" width="1024" height="1024" loading="lazy" decoding="async"><figcaption class="folder-photo-caption">Peaks</figcaption></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="34" data-kind="photo" style="top:5%;width:34%;margin-left:-17%;aspect-ratio:1/1">
+                  <div class="folder-frame"><figure class="folder-photo"><img src="images/ai-labs/midjourney/01-portrait.webp" alt="Recreate this image without text" width="1024" height="1024" loading="lazy" decoding="async"><figcaption class="folder-photo-caption">Portrait</figcaption></figure></div>
+                </div>
+              </div>
+              <div class="folder-flap" data-folder-flap>
+                <div class="folder-flap-inner">
+                  <div class="folder-flap-copy">
+                    <p class="folder-title">Image Generation Experiments</p>
+                    <p class="folder-meta">Abstract experiments using Midjourney and Gemini</p>
+                  </div>
+                  <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+          </button>
+
+          <button type="button" class="folder" data-folder="genui" data-title="Generative UI Experiments" data-status="In labs" data-meta="A set of generative UI experiments" aria-label="Open Generative UI Experiments folder, in labs">
+            <div class="folder-shell">
+              <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
+                <defs>
+                  <linearGradient id="folder-fill-genui" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#ffffff"></stop>
+                    <stop offset="1" stop-color="#ffffff"></stop>
+                  </linearGradient>
+                </defs>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="url(#folder-fill-genui)"></path>
+                <path d="M0,26 A26,26 0 0 1 26,0 L154,0 A26,26 0 0 1 180,26 A34,34 0 0 0 214,60 L370,60 A30,30 0 0 1 400,90 L400,310 A30,30 0 0 1 370,340 L30,340 A30,30 0 0 1 0,310 Z" fill="none" stroke="white" stroke-opacity="0.8"></path>
+              </svg>
+              <div class="folder-items">
+                <div class="folder-item" data-folder-item data-w="33" data-kind="note" style="top:3%;width:33%;margin-left:-16.5%;aspect-ratio:3/4.6">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Figure</p><p class="folder-note-p">Figure is a generative UI experiment: describe a dashboard, report, or workspace and get on-brand data views—not generic charts dropped on a shared canvas.</p></div></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="44" data-kind="video" style="top:5%;width:44%;margin-left:-22%;aspect-ratio:16/9">
+                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/genui/figure.mp4" poster="images/ai-labs/genui/figure.webp" muted playsinline loop preload="none" aria-label="Figure generative UI walkthrough"></video><figcaption class="folder-photo-caption">Figure</figcaption></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="42" data-kind="video" style="top:8%;width:42%;margin-left:-21%;aspect-ratio:16/9">
+                  <div class="folder-frame"><figure class="folder-photo folder-video"><video data-src="images/ai-labs/genui/figure-1.mp4" poster="images/ai-labs/genui/figure-1.webp" muted playsinline loop preload="none" aria-label="Figure prompt-to-screen demo"></video><figcaption class="folder-photo-caption">Prompt to screen</figcaption></figure></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="36" data-kind="note" style="top:10%;width:36%;margin-left:-18%;aspect-ratio:3/3.8">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Prompt to screen</p><p class="folder-note-p">You say what you need. Figure lays out the page using familiar pieces: a headline, numbers, charts, tables, lists, forms, and next steps.</p></div></div>
+                </div>
+                <div class="folder-item" data-folder-item data-w="32" data-kind="note" style="top:6%;width:32%;margin-left:-16%;aspect-ratio:3/5">
+                  <div class="folder-frame"><div class="folder-note"><p class="folder-note-title">Refine &amp; on-brand</p><p class="folder-note-p">Add your own data so charts and tables mean something. Refine the prompt and the same screen updates. Everything stays on-brand, so every workspace feels consistent.</p></div></div>
+                </div>
+              </div>
+              <div class="folder-flap" data-folder-flap>
+                <div class="folder-flap-inner">
+                  <div class="folder-flap-copy">
+                    <div class="folder-title-row">
+                      <p class="folder-title">Generative UI Experiments</p>
+                      <span class="folder-status">In labs</span>
+                    </div>
+                    <p class="folder-meta">A set of generative UI experiments</p>
+                  </div>
+                  <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+              </div>
+            </div>
+          </button>
+
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -1819,7 +2850,12 @@ Designed a white label friendly design system scaling from design to code for fi
         &nbsp;|&nbsp;
         <a class="contact-link" target="_blank" href="https://www.linkedin.com/in/srinivasanchakkarapani/" style="text-decoration: none; color: #2b2b2b">LinkedIn <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align: middle;"><line x1="6" y1="18" x2="18" y2="6"/><polyline points="10 6 18 6 18 14"/></svg></a>
       </p>
-      <p class="footertxt" style="max-width: 600px; padding-top: 3rem; color: #9e9e9e;">Designed and Handcoded in San Francisco Bay with <span style="color:#ff2957;"><span class="semibold">♥</span></span> © <span id="current-year"></span></p>
+      <div class="footer-meta">
+        <p class="footertxt" style="max-width: 600px; color: #9e9e9e;">Designed and Handcoded in San Francisco Bay with <span style="color:#ff2957;"><span class="semibold">♥</span></span> © <span id="current-year"></span></p>
+        <button type="button" class="back-to-top" aria-label="Back to top">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5"/><path d="M6 11l6-6 6 6"/></svg>
+        </button>
+      </div>
     </div>
   </div>
 
@@ -1888,11 +2924,11 @@ Designed a white label friendly design system scaling from design to code for fi
         var reveals = document.querySelectorAll('.HeaderContent .hero-text-reveal');
         if (!reveals.length) return;
 
-        // shader.se style: words float up line-by-line (all words on same rendered
-        // line share one delay — so each full line reveals as a unit, not word-by-word)
-        var LINE_DELAY   = 130;  // ms between consecutive rendered lines
-        var START_DELAY  = 180;  // ms before first line starts
-        var allWordSpans = [];   // collect first, assign delays after layout
+        var LINE_DELAY = 140;
+        var CHAR_DELAY = 8;
+        var START_DELAY = 160;
+        var LINE_TOLERANCE = 4;
+        var allChars = [];
 
         function splitNode(node) {
           var children = Array.prototype.slice.call(node.childNodes);
@@ -1903,7 +2939,7 @@ Designed a white label friendly design system scaling from design to code for fi
               var word = '';
 
               function flushWord() {
-                if (!word) return;
+                if (!word) return null;
                 var wordEl = document.createElement('span');
                 wordEl.className = 'hero-word';
                 wordEl.setAttribute('aria-hidden', 'true');
@@ -1913,23 +2949,26 @@ Designed a white label friendly design system scaling from design to code for fi
                   letter.setAttribute('aria-hidden', 'true');
                   letter.textContent = word[w];
                   wordEl.appendChild(letter);
+                  allChars.push(letter);
                 }
                 word = '';
-                allWordSpans.push({ el: wordEl, kind: 'word' });
                 frag.appendChild(wordEl);
+                return wordEl;
               }
 
+              var lastWordEl = null;
               for (var i = 0; i < text.length; i++) {
                 var ch = text[i];
                 if (ch === '\n' || ch === '\r' || ch === '\t') continue;
                 if (ch === ' ') {
-                  flushWord();
+                  lastWordEl = flushWord() || lastWordEl;
+                  if (!lastWordEl) continue;
                   var space = document.createElement('span');
                   space.className = 'hero-char hero-char--space';
                   space.setAttribute('aria-hidden', 'true');
                   space.textContent = ' ';
-                  allWordSpans.push({ el: space, kind: 'space' });
-                  frag.appendChild(space);
+                  allChars.push(space);
+                  lastWordEl.appendChild(space);
                 } else {
                   word += ch;
                 }
@@ -1937,23 +2976,16 @@ Designed a white label friendly design system scaling from design to code for fi
               flushWord();
               child.parentNode.replaceChild(frag, child);
             } else if (child.nodeType === 1) {
-              if (child.classList.contains('see-more') || child.classList.contains('see-more-text')) {
+              if (child.classList.contains('see-more') || child.classList.contains('see-more-text') || child.classList.contains('hero-cta')) {
                 return;
               }
               if (child.classList.contains('wave')) {
                 var wrap = document.createElement('span');
-                wrap.className = 'hero-word hero-char--glyph';
+                wrap.className = 'hero-char hero-char--glyph';
                 wrap.setAttribute('aria-hidden', 'true');
                 child.parentNode.insertBefore(wrap, child);
                 wrap.appendChild(child);
-                allWordSpans.push({ el: wrap, kind: 'word' });
-              } else if (child.tagName === 'A') {
-                var linkWrap = document.createElement('span');
-                linkWrap.className = 'hero-word';
-                linkWrap.setAttribute('aria-hidden', 'true');
-                child.parentNode.insertBefore(linkWrap, child);
-                linkWrap.appendChild(child);
-                allWordSpans.push({ el: linkWrap, kind: 'word' });
+                allChars.push(wrap);
               } else {
                 splitNode(child);
               }
@@ -1968,48 +3000,121 @@ Designed a white label friendly design system scaling from design to code for fi
           splitNode(el);
         });
 
-        if (!prefersReduced && allWordSpans.length) {
-          // After the DOM has been painted, read the top-offset of each word span
-          // so we can group them by rendered line and stagger per-line.
-          requestAnimationFrame(function () {
-            var lineMap = [];   // [ { top, spans[] } ]
-            var TOLERANCE = 4; // px — words within 4px y-offset are on the same line
+        if (prefersReduced) return;
 
-            allWordSpans.forEach(function (item) {
-              var top = item.el.getBoundingClientRect().top;
-              var found = null;
-              for (var li = 0; li < lineMap.length; li++) {
-                if (Math.abs(lineMap[li].top - top) <= TOLERANCE) {
-                  found = lineMap[li];
-                  break;
-                }
+        requestAnimationFrame(function () {
+          var lineMap = [];
+          allChars.forEach(function (el) {
+            var top = el.getBoundingClientRect().top;
+            var found = null;
+            for (var li = 0; li < lineMap.length; li++) {
+              if (Math.abs(lineMap[li].top - top) <= LINE_TOLERANCE) {
+                found = lineMap[li];
+                break;
               }
-              if (!found) { found = { top: top, spans: [] }; lineMap.push(found); }
-              found.spans.push(item.el);
-            });
-
-            // Sort lines top-to-bottom and assign a shared delay to every span in each line
-            lineMap.sort(function (a, b) { return a.top - b.top; });
-            lineMap.forEach(function (line, lineIdx) {
-              var delay = (START_DELAY + lineIdx * LINE_DELAY) + 'ms';
-              line.spans.forEach(function (span) {
-                span.style.animationDelay = delay;
-              });
-            });
-
-            // "Selected Works" button appears after last line
-            var seeMore = document.querySelector('.HeaderContent .see-more-wrapper.animate-progressive');
-            if (seeMore) {
-              seeMore.style.animationDelay = (START_DELAY + lineMap.length * LINE_DELAY + 80) + 'ms';
             }
+            if (!found) {
+              found = { top: top, chars: [] };
+              lineMap.push(found);
+            }
+            found.chars.push(el);
           });
-        } else if (!prefersReduced) {
-          var seeMore = document.querySelector('.HeaderContent .see-more-wrapper.animate-progressive');
-          if (seeMore) seeMore.style.animationDelay = '400ms';
-        }
+          lineMap.sort(function (a, b) { return a.top - b.top; });
+
+          lineMap.forEach(function (line, lineIdx) {
+            line.chars.forEach(function (el, charIdx) {
+              el.style.animationDelay = (START_DELAY + lineIdx * LINE_DELAY + charIdx * CHAR_DELAY) + 'ms';
+            });
+          });
+
+          var lastLine = lineMap[lineMap.length - 1];
+          var lastDelay = START_DELAY + Math.max(0, lineMap.length - 1) * LINE_DELAY + ((lastLine && lastLine.chars.length) || 0) * CHAR_DELAY;
+          var heroCtaRow = document.querySelector('.HeaderContent .hero-cta-row');
+          if (heroCtaRow) {
+            heroCtaRow.style.animationDelay = (lastDelay + 220) + 'ms';
+          }
+        });
       }
 
       initHeroTextReveal();
+
+      function initWorkSwitch() {
+        var switchRoot = document.querySelector('.work-switch');
+        if (!switchRoot) return;
+
+        var buttons = switchRoot.querySelectorAll('.work-switch-btn');
+        var panels = document.querySelectorAll('.work-panel');
+        var heading = document.getElementById('work-section-heading');
+        var titles = {
+          recent: 'Selected Works',
+          'ai-labs': 'AI Labs'
+        };
+
+        function setPanel(panelName, updateHash) {
+          buttons.forEach(function (btn) {
+            var isActive = btn.getAttribute('data-work-panel') === panelName;
+            btn.classList.toggle('is-active', isActive);
+            btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+          });
+
+          panels.forEach(function (panel) {
+            var isActive = panel.id === 'work-panel-' + panelName;
+            panel.classList.toggle('is-active', isActive);
+            panel.hidden = !isActive;
+          });
+
+          if (heading && titles[panelName]) {
+            heading.textContent = titles[panelName];
+          }
+
+          if (updateHash !== false) {
+            if (panelName === 'ai-labs') {
+              history.replaceState(null, '', '#Selectedworks-ai-labs');
+              requestAnimationFrame(function () {
+                if (window.refreshFolderCards) window.refreshFolderCards();
+              });
+            } else if (window.location.hash === '#Selectedworks-ai-labs' || window.location.hash.indexOf('#folder-') === 0) {
+              history.replaceState(null, '', '#Selectedworks');
+            }
+          } else if (panelName === 'ai-labs') {
+            requestAnimationFrame(function () {
+              if (window.refreshFolderCards) window.refreshFolderCards();
+            });
+          }
+        }
+
+        window.setWorkPanel = setPanel;
+
+        buttons.forEach(function (btn) {
+          var press = null;
+          btn.addEventListener('pointerdown', function (event) {
+            press = { x: event.clientX, y: event.clientY, moved: false };
+          }, { passive: true });
+          btn.addEventListener('pointermove', function (event) {
+            if (!press || press.moved) return;
+            if (Math.abs(event.clientX - press.x) > 10 || Math.abs(event.clientY - press.y) > 10) {
+              press.moved = true;
+            }
+          }, { passive: true });
+          btn.addEventListener('click', function (event) {
+            if (press && press.moved) {
+              event.preventDefault();
+              press = null;
+              return;
+            }
+            press = null;
+            setPanel(btn.getAttribute('data-work-panel'));
+          });
+        });
+
+        if (window.location.hash === '#Selectedworks-ai-labs' || window.location.hash.indexOf('#folder-') === 0) {
+          setPanel('ai-labs', false);
+        } else {
+          setPanel('recent', false);
+        }
+      }
+
+      initWorkSwitch();
       
       // Progressive Animation
       function animateElements() {
@@ -2029,11 +3134,65 @@ Designed a white label friendly design system scaling from design to code for fi
       setTimeout(animateElements, 500);
       // (removed) header role animation
 
-      // Smooth scroll links
-      $('a[href^="#"]').on("click", function () {
-        var id = $(this).attr("href");
-        $('html, body').animate({ scrollTop: $(id).offset().top }, 500);
+      $(document).on('click', '.back-to-top', function (e) {
+        e.preventDefault();
+        var behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+        window.scrollTo({ top: 0, behavior: behavior });
       });
+
+      function scrollToPageSection(targetEl, opts) {
+        if (!targetEl) return;
+        var behavior = (opts && opts.behavior) || (window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
+        var headerEl = document.querySelector('header');
+        var headerHeight = headerEl ? headerEl.offsetHeight : 0;
+        var navClearance = window.matchMedia('(min-width: 769px)').matches ? 88 : 16;
+        var targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset;
+        var scrollTop = Math.max(headerHeight + 1, targetTop - navClearance);
+        window.scrollTo({ top: scrollTop, behavior: behavior });
+      }
+
+      function navigateToSelectedWorks(opts) {
+        var target = document.getElementById('Selectedworks');
+        if (!target) return;
+        if (typeof window.setWorkPanel === 'function') {
+          window.setWorkPanel('recent');
+        }
+        scrollToPageSection(target, opts);
+        if (history.replaceState) {
+          history.replaceState(null, '', '#Selectedworks');
+        }
+      }
+
+      // Smooth scroll links (Works → Recent Work / AI Labs header)
+      $('a[href^="#"]').on('click', function (e) {
+        var id = $(this).attr('href');
+        if (!id || id === '#') return;
+        if (id === '#Selectedworks') {
+          e.preventDefault();
+          navigateToSelectedWorks();
+          return;
+        }
+        var $target = $(id);
+        if (!$target.length) return;
+        e.preventDefault();
+        scrollToPageSection($target[0]);
+        if (history.replaceState) {
+          history.replaceState(null, '', id);
+        }
+      });
+
+      $('a[href="#Selectedworks"], a[href="index.html#Selectedworks"], a[href$="index.html#Selectedworks"]').on('click', function (e) {
+        if (!document.getElementById('Selectedworks')) return;
+        e.preventDefault();
+        navigateToSelectedWorks();
+      });
+
+      if (window.location.hash === '#Selectedworks' || window.location.hash === '#Selectedworks-ai-labs') {
+        requestAnimationFrame(function () {
+          var target = document.getElementById('Selectedworks');
+          if (target) scrollToPageSection(target, { behavior: 'auto' });
+        });
+      }
 
       //Hamburger Menu and Esc events
       $('#hamburgler').on('click', checkNav);
@@ -2088,9 +3247,48 @@ Designed a white label friendly design system scaling from design to code for fi
 
       // Collapsed persistent top navigation
       const headerNav = document.querySelector('header nav');
+      const headerChatSlot = document.querySelector('.header-nav-row > .header-chat-slot');
+      const headerNavRow = document.querySelector('.header-nav-row');
+      const getInTouchItem = null;
       const floatingNav = document.querySelector('.floating-nav-container');
       const persistentNavMinWidth = window.matchMedia('(min-width: 769px)');
-      const persistentNavOffset = 140;
+      let headerChatBorderIntroPlayed = false;
+
+      const persistOffThreshold = 56;
+
+      function isPastScrollThreshold(bottom) {
+        if (document.body.classList.contains('nav-persistent')) {
+          return bottom <= persistOffThreshold;
+        }
+        return bottom <= 0;
+      }
+
+      function hasScrolledPastHeader() {
+        const header = document.querySelector('header');
+        if (!header) return window.scrollY > 140;
+
+        if (header.querySelector('.HeaderContent')) {
+          return isPastScrollThreshold(header.getBoundingClientRect().bottom);
+        }
+
+        const hero = document.getElementById('about');
+        if (hero) {
+          return isPastScrollThreshold(hero.getBoundingClientRect().bottom);
+        }
+
+        const anchor =
+          document.querySelector('.header-nav-row') ||
+          document.querySelector('header nav') ||
+          header;
+        const rect = anchor.getBoundingClientRect();
+        if (rect.height > 0 && !document.body.classList.contains('nav-persistent')) {
+          anchor.dataset.persistAtScrollY = String(window.scrollY + rect.bottom);
+        }
+        if (document.body.classList.contains('nav-persistent') && anchor.dataset.persistAtScrollY) {
+          return window.scrollY >= parseFloat(anchor.dataset.persistAtScrollY, 10);
+        }
+        return isPastScrollThreshold(rect.bottom);
+      }
 
       function isPersistentNavActive() {
         return document.body.classList.contains('nav-persistent');
@@ -2110,10 +3308,15 @@ Designed a white label friendly design system scaling from design to code for fi
             }, 0);
           }
         }
+        syncChatSlotPlacement();
+      }
+
+      function syncChatSlotPlacement() {
+        /* Chat icon stays in header-nav-row; CSS shows it only when nav-persistent. */
       }
 
       function updatePersistentNav() {
-        const shouldPersist = persistentNavMinWidth.matches && window.scrollY > persistentNavOffset;
+        const shouldPersist = persistentNavMinWidth.matches && hasScrolledPastHeader();
         document.body.classList.toggle('nav-persistent', shouldPersist);
         if (headerNav) {
           headerNav.classList.toggle('nav-scrolled', shouldPersist);
@@ -2131,6 +3334,11 @@ Designed a white label friendly design system scaling from design to code for fi
         if (!shouldPersist) {
           setPersistentNavExpanded(false);
         }
+        if (shouldPersist && !headerChatBorderIntroPlayed) {
+          headerChatBorderIntroPlayed = true;
+          window.dispatchEvent(new CustomEvent('srini:header-chat-visible'));
+        }
+        syncChatSlotPlacement();
         if (floatingNav) {
           floatingNav.classList.remove('visible');
         }
@@ -2140,11 +3348,12 @@ Designed a white label friendly design system scaling from design to code for fi
         headerNav.setAttribute('aria-expanded', 'false');
         headerNav.addEventListener('click', function(e) {
           if (!isPersistentNavActive()) return;
+          if (document.body.classList.contains('folder-stage-open')) return;
 
           const isExpanded = document.body.classList.contains('nav-expanded');
           const clickedLinkOrButton = e.target.closest('a, button');
           const navRect = headerNav.getBoundingClientRect();
-          const clickedCloseArea = isExpanded && e.clientX >= navRect.right - 76;
+          const clickedCloseArea = isExpanded && e.clientX >= navRect.right - 52;
 
           if (!isExpanded) {
             e.preventDefault();
@@ -2166,17 +3375,35 @@ Designed a white label friendly design system scaling from design to code for fi
         });
 
         document.addEventListener('click', function(e) {
-          if (isPersistentNavActive() && !headerNav.contains(e.target)) {
+          if (
+            isPersistentNavActive() &&
+            !document.body.classList.contains('folder-stage-open') &&
+            !headerNav.contains(e.target) &&
+            !(headerChatSlot && headerChatSlot.contains(e.target)) &&
+            !e.target.closest('.fstage-close')
+          ) {
             setPersistentNavExpanded(false);
           }
         });
 
         $(window).on('keyup', function(e) {
-          if (e.keyCode == 27) setPersistentNavExpanded(false);
+          if (e.keyCode == 27 && !document.body.classList.contains('folder-stage-open')) {
+            setPersistentNavExpanded(false);
+          }
         });
 
         updatePersistentNav();
-        window.addEventListener('scroll', updatePersistentNav, { passive: true });
+        var persistNavQueued = false;
+        function onPersistNavScroll() {
+          if (persistNavQueued) return;
+          persistNavQueued = true;
+          requestAnimationFrame(function () {
+            persistNavQueued = false;
+            updatePersistentNav();
+          });
+        }
+        window.addEventListener('scroll', onPersistNavScroll, { passive: true });
+        window.addEventListener('resize', updatePersistentNav, { passive: true });
         persistentNavMinWidth.addEventListener('change', updatePersistentNav);
       }
 
@@ -2185,7 +3412,6 @@ Designed a white label friendly design system scaling from design to code for fi
     // ── Text Scramble Decode Animation on Hover ──
     (function () {
       const CHARS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*<>[]{}/\\|~^';
-      // One word per hover, rotated like loading copy (optional override: data-text-hover="Hi|Hello|Welcome")
       const DEFAULT_LOGO_HOVER_GREETINGS = [
         'Hello',
         'Hi',
@@ -2206,20 +3432,19 @@ Designed a white label friendly design system scaling from design to code for fi
         'Hallo',
         'Bonjour',
       ];
-      const TICK = 40;           // ms per scramble frame
-      const WARMUP = 12;         // full-scramble cycles before resolving
-      const MIN_EXTRA = 2;       // min extra scramble ticks before lock-in
-      const MAX_EXTRA = 5;       // max extra scramble ticks before lock-in
+      const TICK = 40;
+      const WARMUP = 12;
+      const MIN_EXTRA = 2;
+      const MAX_EXTRA = 5;
 
       function randChar() {
         return CHARS[Math.floor(Math.random() * CHARS.length)];
       }
 
       function shuffledIndices(len) {
-        // Build a roughly left-to-right order with ±2 shuffling
         const indices = Array.from({ length: len }, (_, i) => i);
         for (let i = 0; i < indices.length; i++) {
-          const jitter = Math.floor(Math.random() * 5) - 2; // -2 to +2
+          const jitter = Math.floor(Math.random() * 5) - 2;
           const j = Math.max(0, Math.min(indices.length - 1, i + jitter));
           [indices[i], indices[j]] = [indices[j], indices[i]];
         }
@@ -2267,6 +3492,7 @@ Designed a white label friendly design system scaling from design to code for fi
       }
 
       function resetLogoText(el) {
+        if (el.classList.contains('logo-srini--mark')) return;
         stopScramble(el);
         el.textContent = homeLogoText(el);
       }
@@ -2285,13 +3511,11 @@ Designed a white label friendly design system scaling from design to code for fi
         const display = new Array(len);
         let tick = 0;
 
-        // Pre-compute resolve order and per-char extra ticks
         const order = shuffledIndices(len);
         const extraTicks = order.map(() =>
           MIN_EXTRA + Math.floor(Math.random() * (MAX_EXTRA - MIN_EXTRA + 1))
         );
 
-        // Resolve schedule: after WARMUP, each char gets its own deadline
         const resolveTick = [];
         let cursor = WARMUP;
         for (let i = 0; i < order.length; i++) {
@@ -2302,14 +3526,12 @@ Designed a white label friendly design system scaling from design to code for fi
         const interval = setInterval(() => {
           tick++;
 
-          // Check which chars to lock this tick
           for (let i = 0; i < order.length; i++) {
             if (!locked[order[i]] && tick >= resolveTick[i]) {
               locked[order[i]] = true;
             }
           }
 
-          // Build display string
           for (let c = 0; c < len; c++) {
             if (finalText[c] === ' ') {
               display[c] = ' ';
@@ -2322,7 +3544,6 @@ Designed a white label friendly design system scaling from design to code for fi
 
           el.textContent = display.join('');
 
-          // All resolved → stop
           if (locked.every(Boolean)) {
             clearInterval(interval);
             el.textContent = finalText;
@@ -2334,6 +3555,7 @@ Designed a white label friendly design system scaling from design to code for fi
       }
 
       document.querySelectorAll('.logo-srini').forEach(el => {
+        if (el.classList.contains('logo-srini--mark')) return;
         el._scrambling = false;
         el._scrambleTimer = null;
 
@@ -2369,7 +3591,6 @@ Designed a white label friendly design system scaling from design to code for fi
       }, { passive: true });
     })();
 
-
   </script>
 
   </div>
@@ -2383,11 +3604,13 @@ Designed a white label friendly design system scaling from design to code for fi
     #site-content-wrap { transition: margin-right 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
     body.chat-open #site-content-wrap { margin-right: 444px; }
     .chatbot-sidebar {
-      position: fixed; top: 12px; right: 12px; bottom: 12px; width: 0; overflow: hidden;
-      transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 9999;
+      position: fixed; top: 12px; right: 12px; bottom: 12px; width: 420px; overflow: hidden;
+      transform: translateX(calc(100% + 24px));
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 9999;
       background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.06); border-radius: 16px;
+      pointer-events: none;
     }
-    body.chat-open .chatbot-sidebar { width: 420px; }
+    body.chat-open .chatbot-sidebar { transform: translateX(0); pointer-events: auto; }
     .chatbot-sidebar iframe { width: 100%; height: 100%; border: none; display: block; border-radius: 16px; }
     @keyframes srini-chat-attention {
       0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 101, 239, 0); }
@@ -2399,25 +3622,92 @@ Designed a white label friendly design system scaling from design to code for fi
       48% { transform: scale(1.13); box-shadow: 0 8px 24px rgba(59, 101, 239, 0.24); }
       100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(59, 101, 239, 0); }
     }
+    @property --srini-chat-angle {
+      syntax: '<angle>';
+      inherits: false;
+      initial-value: 0deg;
+    }
+    @keyframes srini-chat-border-once {
+      0% {
+        opacity: 0;
+        --srini-chat-angle: 0deg;
+      }
+      10% {
+        opacity: 1;
+      }
+      72% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 0;
+        --srini-chat-angle: 360deg;
+      }
+    }
+    @keyframes srini-chat-border-loop {
+      to {
+        --srini-chat-angle: 360deg;
+      }
+    }
     @media (prefers-reduced-motion: no-preference) {
       .srini-chat-trigger.srini-chat-bounce-enter {
         animation: srini-chat-bounce-load 0.9s cubic-bezier(0.45, 0, 0.55, 1) 0.4s 1 both !important;
       }
-      .srini-chat-fab,
-      .srini-chat-nav-btn:not(.srini-chat-attention-stopped) {
+      .header-chat-slot:not(.srini-chat-border-stopped).srini-chat-border-attention::before {
+        animation: srini-chat-border-once 1.75s cubic-bezier(0.45, 0, 0.55, 1) 0.55s 1 forwards;
+      }
+      .hero-cta--chat:not(.srini-chat-border-stopped).srini-chat-border-attention::before {
+        opacity: 1;
+        animation: srini-chat-border-loop 2.6s linear infinite;
+      }
+      .srini-chat-fab:not(.srini-chat-attention-stopped) {
         animation: srini-chat-attention 2.75s ease-in-out infinite;
       }
-      .srini-chat-fab:hover,
-      .srini-chat-nav-btn:not(.srini-chat-attention-stopped):hover {
+      .srini-chat-fab:hover {
         animation-play-state: paused;
       }
-      body.chat-open .srini-chat-fab,
-      body.chat-open .srini-chat-nav-btn,
-      .srini-chat-nav-btn.srini-chat-attention-stopped {
+      body.chat-open .srini-chat-fab {
         animation: none !important;
       }
     }
-    .srini-chat-nav-li { display: flex; align-items: center; flex-shrink: 0; overflow: visible; z-index: 2; position: relative; }
+    .header-chat-slot {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      overflow: visible;
+      z-index: 2;
+      position: relative;
+    }
+    .header-chat-slot::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      padding: 2px;
+      background: conic-gradient(from var(--srini-chat-angle, 0deg), #3b65ef, #a8c0ff, #dce3f8, #7da1f7, #3b65ef);
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask-composite: exclude;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .header-chat-slot::before {
+      border-radius: 50%;
+    }
+    .header-chat-slot.srini-chat-border-stopped::before,
+    body.chat-open .header-chat-slot::before,
+    .hero-cta--chat.srini-chat-border-stopped::before,
+    .hero-cta--chat:hover::before,
+    .hero-cta--chat:focus-visible::before,
+    body.chat-open .hero-cta--chat::before {
+      animation: none !important;
+      opacity: 0 !important;
+    }
+    body.chat-open .header-chat-slot { display: none !important; }
     .srini-chat-hovertip {
       position: absolute;
       top: calc(100% + 10px);
@@ -2436,8 +3726,14 @@ Designed a white label friendly design system scaling from design to code for fi
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
-      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+      clip-path: inset(50%);
+      transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s, clip-path 0.2s ease;
       z-index: 10005;
+    }
+    .header-chat-slot .srini-chat-hovertip {
+      left: auto;
+      right: 0;
+      transform: translateY(6px);
     }
     .srini-chat-hovertip::after {
       content: '';
@@ -2454,7 +3750,17 @@ Designed a white label friendly design system scaling from design to code for fi
     .srini-chat-fab:focus-visible .srini-chat-hovertip {
       opacity: 1 !important;
       visibility: visible !important;
+      clip-path: none;
       transform: translateX(-50%) translateY(0) !important;
+    }
+    .header-chat-slot .srini-chat-nav-btn:hover ~ .srini-chat-hovertip,
+    .header-chat-slot .srini-chat-nav-btn:focus-visible ~ .srini-chat-hovertip {
+      transform: translateY(0) !important;
+    }
+    .header-chat-slot .srini-chat-hovertip::after {
+      left: auto;
+      right: 18px;
+      margin-left: 0;
     }
     @keyframes srini-chat-nav-shine {
       0%, 100% { background-position: 0% 50%; }
@@ -2474,34 +3780,35 @@ Designed a white label friendly design system scaling from design to code for fi
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: box-shadow 0.25s, transform 0.2s;
+      transition: background 0.25s ease, box-shadow 0.25s ease, transform 0.2s ease, border-color 0.25s ease;
       box-sizing: border-box;
       position: relative;
-      overflow: hidden;
+      overflow: visible;
+      z-index: 1;
     }
     .srini-chat-sparkle { width: 26px; height: 26px; flex-shrink: 0; color: #3b65ef; transition: transform 0.2s ease, color 0.2s ease; position: relative; z-index: 1; }
     .srini-chat-nav-btn:hover,
     .srini-chat-nav-btn:focus-visible {
-      background: linear-gradient(135deg, #d4dcfc, #a8c0ff, #3b65ef, #7da1f7, #c5cef8, #3b65ef);
-      background-size: 300% 300%;
-      animation: srini-chat-nav-shine 3.5s ease infinite;
-      box-shadow: 0 2px 12px rgba(59, 101, 239, 0.18), 0 0 14px rgba(59, 101, 239, 0.1);
+      background: #3b65ef;
+      animation: none;
+      box-shadow: 0 2px 12px rgba(59, 101, 239, 0.22);
       border-color: rgba(255,255,255,0.65);
     }
     .srini-chat-nav-btn.srini-chat-attention-stopped:hover,
     .srini-chat-nav-btn.srini-chat-attention-stopped:focus-visible {
-      animation: srini-chat-nav-shine 3.5s ease infinite;
+      animation: none;
+      background: #3b65ef;
     }
     @media (prefers-reduced-motion: reduce) {
       .srini-chat-nav-btn:hover,
-      .srini-chat-nav-btn:focus-visible { animation: none; background: linear-gradient(135deg, #b8c8f5, #3b65ef, #a8c0ff); }
+      .srini-chat-nav-btn:focus-visible { animation: none; background: #3b65ef; }
     }
     .srini-chat-nav-btn:hover .srini-chat-sparkle,
-    .srini-chat-nav-btn:focus-visible .srini-chat-sparkle { transform: scale(1.15); }
+    .srini-chat-nav-btn:focus-visible .srini-chat-sparkle { transform: scale(1.15); color: #fff; }
     .srini-chat-fab { position: fixed; top: 1.85rem; right: 2rem; z-index: 10002; display: none; align-items: center; justify-content: center; width: 75px; height: 75px; padding: 0; background: #eaeefb; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; box-shadow: none; transition: all 0.3s ease; overflow: visible; }
     .srini-chat-fab-icon { width: 32px; height: 32px; color: #3b65ef; transition: color 0.2s ease, transform 0.2s ease; }
-    .srini-chat-fab:hover { background: #dce3f8; border-color: rgba(255,255,255,0.7); }
-    .srini-chat-fab:hover .srini-chat-fab-icon { color: #7da1f7; transform: scale(1.1); }
+    .srini-chat-fab:hover { background: #3b65ef; border-color: rgba(255,255,255,0.65); box-shadow: 0 2px 12px rgba(59, 101, 239, 0.22); }
+    .srini-chat-fab:hover .srini-chat-fab-icon { color: #fff; transform: scale(1.1); }
     .srini-chat-fab:active { animation: none !important; transform: scale(0.95); }
     @media (min-width: 769px) { .srini-chat-fab { display: none !important; } }
     @media (max-width: 768px) {
@@ -2516,7 +3823,7 @@ Designed a white label friendly design system scaling from design to code for fi
       }
       .srini-chat-fab { display: flex; top: auto; bottom: 24px; right: 24px; width: 75px; height: 75px; }
       .srini-chat-fab-icon { width: 32px; height: 32px; }
-      .srini-chat-nav-li { display: none !important; }
+      .header-chat-slot { display: none !important; }
       body.chat-open #site-content-wrap { margin-right: 0; }
       .chatbot-sidebar { top: 0; right: 0; bottom: 0; left: 0; width: 100% !important; height: 100%; border-radius: 0; z-index: 10003; transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
       body.chat-open .chatbot-sidebar { transform: translateY(0); }
@@ -2537,7 +3844,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
   var CHAT_API_PUBLIC = 'https://sriniai.netlify.app';
   /** Bump when deploying chatbot or host chat script changes (cache bust). */
-  var CHATBOT_CACHE_BUST = '34';
+  var CHATBOT_CACHE_BUST = '42';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
@@ -2564,6 +3871,58 @@ Designed a white label friendly design system scaling from design to code for fi
     return base + '?' + params.join('&');
   }
 
+  function mountChatIframe() {
+    if (!sidebar || iframeLoaded) return;
+    var iframe = document.createElement('iframe');
+    iframe.title = 'Proxy chat';
+    iframe.src = getIframeSrc();
+    iframe.setAttribute('loading', 'eager');
+    sidebar.appendChild(iframe);
+    iframeLoaded = true;
+  }
+
+  function warmupChatIframe() {
+    try {
+      if (window.matchMedia('(prefers-reduced-data: reduce)').matches) return;
+    } catch (err) {}
+    mountChatIframe();
+  }
+
+  function isSafariLike() {
+    var ua = navigator.userAgent || '';
+    return /Safari/i.test(ua) && !/Chrome|Chromium|Android|CriOS|FxiOS|EdgiOS/i.test(ua);
+  }
+
+  function prefetchChatShell() {
+    var base = getAppUrl();
+    [
+      ['assets/index-Ceo5IzNr.js', 'script'],
+      ['assets/index-C6bn-kI3.css', 'style']
+    ].forEach(function (pair) {
+      try {
+        var link = document.createElement('link');
+        link.rel = 'preload';
+        link.as = pair[1];
+        link.href = base + pair[0];
+        if (pair[1] === 'script') link.crossOrigin = 'anonymous';
+        document.head.appendChild(link);
+      } catch (err) {}
+    });
+  }
+
+  function scheduleChatWarmup() {
+    var run = function() { warmupChatIframe(); };
+    if (isSafariLike()) {
+      setTimeout(run, 80);
+      return;
+    }
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(run, { timeout: 2500 });
+    } else {
+      setTimeout(run, 1400);
+    }
+  }
+
   function setOpen(open) {
     var isOpen = !!open;
     document.body.classList.toggle('chat-open', isOpen);
@@ -2572,19 +3931,22 @@ Designed a white label friendly design system scaling from design to code for fi
       t.setAttribute('aria-label', isOpen ? 'Close AI chat' : 'Open AI chat');
       t.setAttribute('aria-expanded', isOpen);
     });
-    if (isOpen && sidebar && !iframeLoaded) {
-      var iframe = document.createElement('iframe');
-      iframe.title = 'Proxy chat';
-      iframe.src = getIframeSrc();
-      sidebar.appendChild(iframe);
-      iframeLoaded = true;
-    }
+    if (isOpen) mountChatIframe();
   }
 
   triggers.forEach(function(t) {
+    t.addEventListener('pointerenter', warmupChatIframe, { once: true, passive: true });
+    t.addEventListener('focus', warmupChatIframe, { once: true });
     t.addEventListener('click', function() {
-      if (t.classList.contains('srini-chat-nav-btn')) {
+      if (t.classList.contains('srini-chat-nav-btn') || t.classList.contains('hero-cta--chat')) {
         t.classList.add('srini-chat-attention-stopped');
+        t.classList.add('srini-chat-border-stopped');
+        t.classList.remove('srini-chat-border-attention');
+        var slot = t.closest('.header-chat-slot');
+        if (slot) {
+          slot.classList.add('srini-chat-border-stopped');
+          slot.classList.remove('srini-chat-border-attention');
+        }
       }
       var isOpen = document.body.classList.contains('chat-open');
       setOpen(!isOpen);
@@ -2593,6 +3955,40 @@ Designed a white label friendly design system scaling from design to code for fi
 
   window.addEventListener('message', function(e) {
     if (e.data === 'srini-chat-close') setOpen(false);
+    if (e.data && e.data.type === 'srini-open-folder') {
+      setOpen(false);
+      var slug = e.data.folder || 'chatbot';
+      var open = function() {
+        if (window.openFolderStage) window.openFolderStage(slug, true);
+      };
+      if (window.setWorkPanel) window.setWorkPanel('ai-labs', false);
+      var header = document.getElementById('Selectedworks');
+      if (header) header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      requestAnimationFrame(function() {
+        requestAnimationFrame(open);
+      });
+    }
+  });
+
+  function startChatBorderIntro(slot) {
+    if (!slot || slot.classList.contains('srini-chat-border-stopped')) return;
+    try {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    } catch (err) { return; }
+
+    slot.classList.add('srini-chat-border-attention');
+    function onBorderEnd(ev) {
+      if (ev.target !== slot || ev.animationName !== 'srini-chat-border-once') return;
+      slot.classList.remove('srini-chat-border-attention');
+      slot.removeEventListener('animationend', onBorderEnd);
+    }
+    slot.addEventListener('animationend', onBorderEnd);
+  }
+
+  window.addEventListener('srini:header-chat-visible', function() {
+    setTimeout(function() {
+      startChatBorderIntro(document.querySelector('.header-nav-row > .header-chat-slot'));
+    }, 550);
   });
 
   function runChatBounceIntro() {
@@ -2614,6 +4010,9 @@ Designed a white label friendly design system scaling from design to code for fi
   } else {
     runChatBounceIntro();
   }
+  setTimeout(function() {
+    startChatBorderIntro(document.querySelector('.hero-cta--chat'));
+  }, 500);
 
   function openChatFromUrlIfNeeded() {
     try {
@@ -2633,10 +4032,25 @@ Designed a white label friendly design system scaling from design to code for fi
   } else {
     openChatFromUrlIfNeeded();
   }
+  prefetchChatShell();
+  if (document.readyState === 'complete') {
+    scheduleChatWarmup();
+  } else {
+    window.addEventListener('load', scheduleChatWarmup);
+  }
 })();
   </script>
   <script src="ui-sounds.js?v=26"></script>
   <script src="dev-mode.js"></script>
+  <script type="module">
+    import { initFolderCards, refreshFolderCards, openFolderStage } from './vendor/folder-cards/folder-cards.js?v=34';
+    window.refreshFolderCards = refreshFolderCards;
+    window.openFolderStage = openFolderStage;
+    initFolderCards();
+    if (document.getElementById('work-panel-ai-labs')?.classList.contains('is-active')) {
+      refreshFolderCards();
+    }
+  </script>
 
 </body>
 

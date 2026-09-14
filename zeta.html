@@ -26,7 +26,7 @@
 <link href="images/Appicons/android/128.png" rel="icon" sizes="128x128">
 <!-- Mobile icons ends here -->
 
-<link rel="stylesheet" href="style-2.css?v=30">
+<link rel="stylesheet" href="style-2.css?v=39">
 <style type="text/css">
    header {
     background: #fff;
@@ -144,7 +144,7 @@ Zeta- Digitising employee benefits<br>& tax-saving reimbursements
      <p style="flex: 3;">
             Zeta focuses on digitising employee tax savings & benefits. I Worked as an interaction designer for two web products
 bundled inside the Zeta Optima product which focuses on digitising the
-employee salary disrbursal and health insurance process. Apart from this, I worked time in designing multiple minor user life cycle features.
+employee salary disbursal and health insurance process. Apart from this, I worked time in designing multiple minor user life cycle features.
     </div>
 </div>
 
@@ -258,7 +258,7 @@ employee salary disrbursal and health insurance process. Apart from this, I work
 
 2. Disbursal management dashboard<br>
 
-3. Acoount approval portal<br>
+3. Account approval portal<br>
 
  </div>
 </div>
@@ -494,7 +494,7 @@ AOS.init({
     <span class="srini-chat-hovertip" role="tooltip" style="opacity:0;visibility:hidden;pointer-events:none">Ask about Srini</span>
     <svg class="srini-chat-fab-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>
   </button>
-  <div id="chatbot-sidebar" class="chatbot-sidebar" data-chatbot-src="./chatbot/" data-chat-api="https://srinilm.onrender.com" aria-hidden="true"></div>
+  <div id="chatbot-sidebar" class="chatbot-sidebar" data-chatbot-src="./chatbot/" data-chat-api="https://sriniai.netlify.app" aria-hidden="true"></div>
   <style>
     .chatbot-sidebar { position: fixed; top: 12px; right: 12px; bottom: 12px; width: 0; overflow: hidden; transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1); z-index: 9999; background: #fff; box-shadow: 0 0 0 1px rgba(0,0,0,0.06); border-radius: 16px; }
     body.chat-open .chatbot-sidebar { width: 420px; }
@@ -553,8 +553,8 @@ AOS.init({
     @keyframes fab-appear { 0% { opacity:0; transform:scale(0.4) translateY(16px); } 35% { opacity:1; transform:scale(1.05) translateY(-3px); box-shadow:0 8px 32px 0 rgba(59,101,239,0.14); } 60% { transform:scale(0.98) translateY(1px); } 100% { opacity:1; transform:scale(1) translateY(0); } }
     .srini-chat-fab-icon { width: 32px; height: 32px; color: #3b65ef; transition: color 0.4s ease, transform 0.4s cubic-bezier(0.25,1,0.5,1); animation: fab-icon-appear 1.8s cubic-bezier(0.16,1,0.3,1) 1s both; }
     @keyframes fab-icon-appear { 0% { opacity:0; transform:scale(0.3) rotate(-20deg); } 35% { opacity:1; transform:scale(1.06) rotate(4deg); } 60% { transform:scale(0.97) rotate(-1deg); } 100% { opacity:1; transform:scale(1) rotate(0deg); } }
-    .srini-chat-fab:hover { transform: scale(1.1); }
-    .srini-chat-fab:hover .srini-chat-fab-icon { transform: scale(1.08); }
+    .srini-chat-fab:hover { transform: scale(1.1); background: #3b65ef; border-color: rgba(255,255,255,0.65); box-shadow: 0 2px 12px rgba(59, 101, 239, 0.22); }
+    .srini-chat-fab:hover .srini-chat-fab-icon { transform: scale(1.08); color: #fff; }
     .srini-chat-fab:active { animation: none !important; transform: scale(0.95); }
     .hamburgler-menu-list .get-in-touch-btn { display: flex !important; align-items: center !important; justify-content: center !important; margin: 1.25rem auto 0 !important; padding: 16px 32px !important; width: 100%; max-width: 280px; min-height: 56px; background: #000 !important; color: #fff !important; border-radius: 9999px !important; font-size: 15px !important; font-weight: 600 !important; text-decoration: none !important; transition: transform 0.2s ease, box-shadow 0.2s ease !important; }
     .hamburgler-menu-list .get-in-touch-btn:hover { transform: scale(1.03) !important; box-shadow: 0 6px 20px rgba(0,0,0,0.2) !important; background: #222 !important; }
@@ -579,8 +579,8 @@ AOS.init({
     var sidebar = document.getElementById("chatbot-sidebar");
     var triggers = document.querySelectorAll(".srini-chat-trigger");
     var iframeLoaded = false;
-    function resolveChatApi(e) { e = String(e || "").trim(); if (!e) return ""; try { var t = new URL(e); if (t.hostname === "localhost" || t.hostname === "127.0.0.1") return "https://srinilm.onrender.com"; } catch (x) {} return e.replace(/\/$/, ""); }
-    function getIframeSrc() { var api = resolveChatApi((sidebar && sidebar.getAttribute("data-chat-api")) || (typeof window.SRINI_CHAT_API !== "undefined" ? window.SRINI_CHAT_API : "") || ""); var src = (sidebar && sidebar.getAttribute("data-chatbot-src")) || "./chatbot/"; var base = src.replace(/\/$/, "") + "/"; var params = []; if (api) params.push("api=" + encodeURIComponent(api)); try { params.push("page=" + encodeURIComponent(window.location.pathname)); if (document.title) params.push("title=" + encodeURIComponent(document.title)); } catch (x) {} params.push("cb=34"); return base + "?" + params.join("&"); }
+    function resolveChatApi(e) { e = String(e || "").trim(); if (!e) return ""; try { var t = new URL(e); if (t.hostname === "localhost" || t.hostname === "127.0.0.1") return "https://sriniai.netlify.app"; } catch (x) {} return e.replace(/\/$/, ""); }
+    function getIframeSrc() { var api = resolveChatApi((sidebar && sidebar.getAttribute("data-chat-api")) || (typeof window.SRINI_CHAT_API !== "undefined" ? window.SRINI_CHAT_API : "") || ""); var src = (sidebar && sidebar.getAttribute("data-chatbot-src")) || "./chatbot/"; var base = src.replace(/\/$/, "") + "/"; var params = []; if (api) params.push("api=" + encodeURIComponent(api)); try { params.push("page=" + encodeURIComponent(window.location.pathname)); if (document.title) params.push("title=" + encodeURIComponent(document.title)); } catch (x) {} params.push("cb=35"); return base + "?" + params.join("&"); }
     function setOpen(open) { document.body.classList.toggle("chat-open", !!open); if (sidebar) sidebar.setAttribute("aria-hidden", !open); triggers.forEach(function(t) { t.setAttribute("aria-label", open ? "Close AI chat" : "Open AI chat"); t.setAttribute("aria-expanded", !!open); }); if (open && sidebar && !iframeLoaded) { var iframe = document.createElement("iframe"); iframe.title = "Proxy chat"; iframe.src = getIframeSrc(); sidebar.appendChild(iframe); iframeLoaded = true; } }
     triggers.forEach(function(t) { t.addEventListener("click", function() { setOpen(!document.body.classList.contains("chat-open")); }); });
     window.addEventListener("message", function(e) { if (e.data === "srini-chat-close") setOpen(false); });

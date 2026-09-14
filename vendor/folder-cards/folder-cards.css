@@ -1,0 +1,1040 @@
+/* Frosted folder cards — adapted from
+   https://github.com/fayazara/portfolio-site-template (MIT) */
+
+:root {
+  --folder-ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --folder-ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+  --folder-neutral-800: #262626;
+  --folder-neutral-600: #525252;
+  --folder-neutral-500: #737373;
+  --folder-neutral-400: #a3a3a3;
+}
+
+.ai-labs-folders {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 0 auto 3rem;
+  padding: 4rem 5% 1.5rem;
+  max-width: 1440px;
+  width: 100%;
+  max-height: none;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  touch-action: pan-x pan-y;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(10, 37, 64, 0.22) transparent;
+}
+
+/* Staged cards fly into the viewport — parent overflow must not clip them */
+.ai-labs-folders.is-staging,
+#work-panel-ai-labs:has(.folder.is-stage),
+.selected-works:has(.folder.is-stage) {
+  overflow: visible;
+  touch-action: auto;
+}
+
+.ai-labs-folders::-webkit-scrollbar {
+  height: 6px;
+}
+
+.ai-labs-folders::-webkit-scrollbar-thumb {
+  background: rgba(10, 37, 64, 0.2);
+  border-radius: 999px;
+}
+
+.ai-labs-folders::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ai-labs-folders > .folder {
+  flex: 0 0 380px;
+  width: 380px;
+  min-width: 380px;
+  max-width: 380px;
+  scroll-snap-align: start;
+}
+
+@media screen and (max-width: 720px) {
+  .ai-labs-folders {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 1.25rem;
+    padding: 1.5rem 5% 2.5rem;
+    overflow: visible;
+    touch-action: auto;
+    scroll-snap-type: none;
+  }
+
+  .ai-labs-folders > .folder {
+    flex: 0 0 auto;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .folder-title {
+    white-space: normal;
+  }
+}
+
+.folder {
+  display: block;
+  padding: 0;
+  border: none;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: transform 160ms var(--folder-ease-out);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.folder:focus-visible {
+  outline: 2px solid #3b65ef;
+  outline-offset: 4px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .folder:active:not(.is-stage) {
+    transform: scale(0.98);
+  }
+}
+
+.folder-shell {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 20 / 17;
+  perspective: 1000px;
+  overflow: visible;
+}
+
+.folder-back {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  filter:
+    drop-shadow(0 1px 2px rgb(0 0 0 / 0.04))
+    drop-shadow(0 8px 20px rgb(0 0 0 / 0.05));
+}
+
+.folder-items {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: visible;
+}
+
+.folder-item {
+  position: absolute;
+  left: 50%;
+  overflow: visible;
+}
+
+.folder.is-stage .folder-item,
+.folder:hover .folder-item {
+  will-change: transform;
+}
+
+.folder:not(.is-stage) .folder-item[data-kind="note"] {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.folder-flap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 24%;
+  bottom: 0;
+  z-index: 10;
+  border-radius: 7.5% / 11.6%;
+  background-image: linear-gradient(
+    to bottom,
+    rgb(255 255 255 / 0.5),
+    rgb(255 255 255 / 0.38)
+  );
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 0.6),
+    0 -2px 6px -1px rgb(0 0 0 / 0.08);
+  transform-origin: bottom center;
+}
+
+.folder-flap-inner {
+  position: absolute;
+  inset: 0 0 0 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  padding: 1.25rem;
+  gap: 0.75rem;
+}
+
+.folder-flap-copy {
+  min-width: 0;
+}
+
+.folder-title {
+  margin: 0;
+  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--folder-neutral-800);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.folder-meta {
+  margin: 0.125rem 0 0;
+  font-family: 'Space Mono', 'Courier New', Monaco, monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.04em;
+  color: var(--folder-neutral-500);
+  white-space: normal;
+  line-height: 1.35;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.folder-arrow {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: var(--folder-neutral-400);
+}
+
+/* Inner cards */
+.folder-frame {
+  container-type: inline-size;
+  height: 100%;
+  width: 100%;
+  --pad: 3cqw;
+  --radius: 9cqw;
+  overflow: visible;
+}
+
+.folder-photo,
+.folder-note,
+.folder-logo,
+.folder-placeholder {
+  height: 100%;
+  width: 100%;
+  scrollbar-width: none;
+}
+
+.folder-note {
+  --sticky-paper: #fff3a3;
+  --sticky-ink: #3d3426;
+  --sticky-mute: #6b5e48;
+  --sticky-tilt: -1.4deg;
+  position: relative;
+  margin: 0;
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.42) 0%, transparent 22%),
+    repeating-linear-gradient(
+      180deg,
+      transparent 0 10px,
+      rgb(80 50 10 / 0.045) 10px 11px
+    ),
+    var(--sticky-paper);
+  border-radius: 2px 2px 5px 4px;
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 0.45) inset,
+    0 1px 1px rgb(80 50 10 / 0.08),
+    0 4px 10px rgb(60 40 10 / 0.12),
+    0 14px 28px rgb(40 28 8 / 0.1);
+  transform: rotate(var(--sticky-tilt));
+  transform-origin: 50% 10%;
+}
+
+.folder-item[data-kind="note"]:nth-child(4n + 1) .folder-note {
+  --sticky-paper: #fff4a8;
+  --sticky-tilt: -1.8deg;
+}
+
+.folder-item[data-kind="note"]:nth-child(4n + 2) .folder-note {
+  --sticky-paper: #ffd6e4;
+  --sticky-tilt: 1.2deg;
+}
+
+.folder-item[data-kind="note"]:nth-child(4n + 3) .folder-note {
+  --sticky-paper: #d4f0c9;
+  --sticky-tilt: -0.9deg;
+}
+
+.folder-item[data-kind="note"]:nth-child(4n + 4) .folder-note {
+  --sticky-paper: #d6e8ff;
+  --sticky-tilt: 1.6deg;
+}
+
+.folder-note::before {
+  content: '';
+  position: absolute;
+  top: 4cqw;
+  left: 50%;
+  z-index: 2;
+  width: 32%;
+  height: 9cqw;
+  transform: translateX(-50%) rotate(-2deg);
+  background:
+    linear-gradient(180deg, rgb(255 255 255 / 0.28), rgb(255 255 255 / 0.05)),
+    rgb(255 248 210 / 0.42);
+  border: 1px solid rgb(255 255 255 / 0.38);
+  box-shadow: 0 1px 2px rgb(60 40 10 / 0.12);
+  pointer-events: none;
+}
+
+.folder-note::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0.22;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+
+@property --peel-px {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
+.folder-frame {
+  --peel-px: 0px;
+}
+
+.folder.is-stage .folder-frame:has(.folder-note) {
+  --peel-px: 0px;
+}
+
+.folder.is-stage .folder-note {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--peel-px)),
+    calc(100% - var(--peel-px)) 100%,
+    0 100%
+  );
+}
+
+.folder.is-stage .folder-note.is-unpeeling {
+  transition: --peel-px 520ms cubic-bezier(0.22, 1.15, 0.32, 1);
+}
+
+.sticky-peel-hit {
+  display: none;
+}
+
+.folder.is-stage .sticky-peel-hit {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  width: 26%;
+  height: 26%;
+  min-width: 48px;
+  min-height: 48px;
+  cursor: inherit;
+  touch-action: none;
+  pointer-events: auto;
+}
+
+.folder.is-stage .sticky-peel-hit:active,
+.folder.is-stage .folder-note.is-peeling ~ .sticky-peel-hit,
+.folder.is-stage .folder-frame:has(.is-peeling) .sticky-peel-hit {
+  cursor: grabbing;
+  width: 42%;
+  height: 42%;
+}
+
+.sticky-peel-flap {
+  display: none;
+}
+
+.folder.is-stage .sticky-peel-flap {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  z-index: 4;
+  width: var(--peel-px);
+  height: var(--peel-px);
+  pointer-events: none;
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  background:
+    linear-gradient(135deg, rgb(255 255 255 / 0.42) 0 36%, transparent 48%),
+    linear-gradient(135deg, #f6ebc0, #d8bc6c);
+  box-shadow:
+    -3px -3px 8px rgb(40 28 8 / 0.12),
+    inset 1px 1px 0 rgb(255 255 255 / 0.35);
+}
+
+.sticky-peel-back {
+  position: absolute;
+  left: 18%;
+  top: 22%;
+  max-width: 70%;
+  font-family: 'Space Mono', 'Courier New', Monaco, monospace;
+  font-size: clamp(0.55rem, 3.6cqw, 0.72rem);
+  letter-spacing: 0.04em;
+  line-height: 1.25;
+  color: rgb(80 60 20 / 0.72);
+  transform: rotate(-45deg);
+  transform-origin: left center;
+  opacity: 0;
+  white-space: nowrap;
+}
+
+.folder.is-stage .folder-frame.is-peeled .sticky-peel-back {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folder.is-stage .folder-note.is-unpeeling {
+    transition: none;
+  }
+}
+
+/* Clean image tiles — no matte, padding, or masked frame */
+.folder-photo,
+.folder-placeholder {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  border-radius: var(--radius);
+  box-shadow: none;
+  overflow: visible;
+  transition: border-radius 220ms var(--folder-ease-out);
+}
+
+.folder-photo.folder-video {
+  position: relative;
+}
+
+.folder-video-play {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.folder-video-play span {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.94);
+  color: #1d1d1f;
+  box-shadow:
+    0 4px 14px rgb(0 0 0 / 0.14),
+    0 1px 0 rgb(255 255 255 / 0.8) inset;
+}
+
+.folder-video-play svg {
+  width: 18px;
+  height: 18px;
+  margin-left: 2px;
+}
+
+.folder-video.is-playing .folder-video-play {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.folder.is-stage .folder-video-play span {
+  width: 72px;
+  height: 72px;
+}
+
+.folder.is-stage .folder-video-play svg {
+  width: 26px;
+  height: 26px;
+}
+
+.folder-photo img,
+.folder-photo video,
+.folder-logo {
+  display: block;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--radius);
+  background: transparent;
+  /* Prefer full-res decode; avoid soft upscales from tiny folder tiles */
+  image-rendering: auto;
+  -webkit-user-drag: none;
+  transform-origin: center bottom;
+  transition:
+    transform 280ms var(--folder-ease-out),
+    box-shadow 280ms var(--folder-ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .folder:not(.is-stage) .folder-item[data-kind="photo"]:hover .folder-photo img,
+  .folder:not(.is-stage) .folder-item[data-kind="video"]:hover .folder-photo video {
+    transform: scale(1.14) translateY(-10%);
+    box-shadow:
+      0 6px 16px rgb(0 0 0 / 0.1),
+      0 22px 44px rgb(0 0 0 / 0.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folder-photo img,
+  .folder-photo video {
+    transition: none;
+  }
+
+  .folder:not(.is-stage) .folder-item[data-kind="photo"]:hover .folder-photo img,
+  .folder:not(.is-stage) .folder-item[data-kind="video"]:hover .folder-photo video {
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+.folder-photo-caption {
+  display: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+/* One- or two-word titles from image metadata — under the photo on stage */
+.folder.is-stage .folder-photo {
+  position: relative;
+}
+
+.folder.is-stage .folder-photo-caption {
+  display: block;
+  position: absolute;
+  top: calc(100% + 0.7rem);
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Space Mono', 'Courier New', Monaco, monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--folder-neutral-600);
+  pointer-events: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+.folder-logo {
+  object-fit: contain;
+  filter: none;
+}
+
+.folder-placeholder {
+  display: grid;
+  place-items: center;
+  background:
+    linear-gradient(145deg, #f3f5f8 0%, #e7ebf2 100%);
+  border: 1px dashed rgba(10, 37, 64, 0.14);
+  box-sizing: border-box;
+}
+
+.folder-placeholder-label {
+  font-family: 'Space Mono', 'Courier New', Monaco, monospace;
+  font-size: 8cqw;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #9aa3b2;
+  user-select: none;
+}
+
+.folder-note {
+  height: 100%;
+  padding: 14cqw 8cqw 8cqw;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.folder-note-title {
+  margin: 0;
+  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 7.5cqw;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--sticky-ink);
+}
+
+.folder-note-p {
+  margin: 4cqw 0 0;
+  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 4.2cqw;
+  line-height: 1.7;
+  color: var(--sticky-mute);
+}
+
+/* Stage notes: real rem type at layout size (cqw + transform scale looks pixelated) */
+.folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note {
+  padding: 2.15rem 1.7rem 1.6rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+.folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note::before {
+  top: 12px;
+  width: 72px;
+  height: 22px;
+}
+
+.folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note-title {
+  font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+}
+
+.folder.is-stage.is-scaled .folder-item[data-kind="note"] .folder-note-p {
+  margin-top: 0.85rem;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  line-height: 1.55;
+}
+
+/* Stage overlay */
+.fstage {
+  position: fixed;
+  inset: 0;
+  z-index: 10040;
+  background: rgb(250 250 250 / 0.86);
+  backdrop-filter: blur(24px) saturate(140%);
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 240ms var(--folder-ease-out), visibility 240ms var(--folder-ease-out);
+}
+
+.fstage.is-open {
+  opacity: 1;
+  visibility: visible;
+  /* Stay below staged folders (10050) and header nav (~10080) */
+  pointer-events: none;
+}
+
+.fstage-backdrop {
+  position: absolute;
+  top: 5.5rem;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 90% 70% at 100% 0%, rgb(255 240 228 / 0.45) 0%, transparent 58%),
+    radial-gradient(ellipse 75% 55% at 0% 100%, rgb(230 240 255 / 0.35) 0%, transparent 52%),
+    linear-gradient(165deg, #f6f9fe 0%, #f4f6f9 48%, #f7f1ea 100%);
+}
+
+.fstage.is-open .fstage-backdrop {
+  pointer-events: auto;
+}
+
+body:has(.fstage.is-open) .logo-srini,
+body.folder-stage-open .logo-srini {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.fstage-bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: auto;
+  height: auto;
+  min-height: 0;
+  padding: 1.5rem;
+  z-index: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit;
+  pointer-events: none;
+}
+
+.fstage-title {
+  margin: 0;
+  font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--folder-neutral-800);
+}
+
+.fstage-meta {
+  margin: 0.125rem 0 0;
+  font-family: 'Space Mono', 'Courier New', Monaco, monospace;
+  font-size: 0.75rem;
+  color: var(--folder-neutral-500);
+}
+
+.fstage-close {
+  position: fixed;
+  top: 20px;
+  right: 24px;
+  z-index: 10085;
+  display: none;
+  visibility: hidden;
+  pointer-events: none;
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  min-width: 52px;
+  min-height: 52px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.62);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  color: transparent;
+  overflow: hidden;
+  transition: transform 160ms var(--folder-ease-out);
+}
+
+body.folder-stage-open .fstage-close,
+body:has(.fstage.is-open) .fstage-close {
+  display: block;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.fstage-close svg {
+  display: none;
+}
+
+.fstage-close::before,
+.fstage-close::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 20px;
+  height: 2px;
+  margin-left: -10px;
+  margin-top: -1px;
+  border-radius: 9999px;
+  background: #2b2b2b;
+}
+
+.fstage-close::before {
+  transform: rotate(45deg);
+}
+
+.fstage-close::after {
+  transform: rotate(-45deg);
+}
+
+.fstage-close:active {
+  transform: scale(0.94);
+}
+
+.fstage-hint {
+  position: absolute;
+  inset: auto 0 1.75rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  text-align: center;
+  font-family: 'Space Mono', 'Courier New', Monaco, monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--folder-neutral-500);
+  z-index: 10083;
+  pointer-events: none;
+  opacity: 0.96;
+}
+
+.fstage-hint-copy {
+  line-height: 1;
+  pointer-events: none;
+}
+
+.fstage-hint-group {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+
+.fstage-hint-label {
+  line-height: 1;
+  pointer-events: none;
+  padding-bottom: 0.55rem;
+}
+
+.fstage-hint-keys {
+  display: inline-flex;
+  align-items: flex-end;
+  gap: 0.45rem;
+  pointer-events: none;
+}
+
+.fstage.is-open .fstage-hint-keys {
+  pointer-events: auto;
+}
+
+/* Keychron-style OEM keycap */
+.fstage-key {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 2.35rem;
+  height: 2.35rem;
+  padding: 0 0 3px;
+  margin: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.fstage-key-cap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: calc(100% - 3px);
+  border-radius: 5px;
+  border: 1px solid #c9c9c9;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0) 28%),
+    linear-gradient(180deg, #f3f3f3 0%, #e7e7e7 52%, #dcdcdc 100%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.98),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.05),
+    0 1px 0 #bdbdbd,
+    0 2px 0 #adadad,
+    0 3px 0 #9f9f9f,
+    0 4px 6px rgba(0, 0, 0, 0.16);
+  color: #303030;
+  transition:
+    transform 70ms ease,
+    box-shadow 70ms ease,
+    background 120ms ease;
+}
+
+.fstage-key svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  display: block;
+  opacity: 0.88;
+}
+
+.fstage-key:hover:not(:disabled) .fstage-key-cap {
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96) 0%, rgba(255, 255, 255, 0) 28%),
+    linear-gradient(180deg, #f8f8f8 0%, #ececec 52%, #e0e0e0 100%);
+}
+
+.fstage-key:active:not(:disabled) {
+  padding-bottom: 1px;
+}
+
+.fstage-key:active:not(:disabled) .fstage-key-cap {
+  transform: translateY(1px);
+  box-shadow:
+    inset 0 2px 3px rgba(0, 0, 0, 0.14),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.35),
+    0 0 0 #bdbdbd,
+    0 1px 0 #adadad,
+    0 1px 3px rgba(0, 0, 0, 0.12);
+}
+
+.fstage-key:disabled {
+  cursor: default;
+  opacity: 0.42;
+}
+
+.fstage-key:disabled .fstage-key-cap {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.75),
+    0 1px 0 #c8c8c8,
+    0 2px 0 #bcbcbc,
+    0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+@media (max-width: 768px) {
+  .fstage-hint-group {
+    gap: 0.35rem;
+  }
+
+  .fstage-hint-label {
+    font-size: 0.62rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+body.folder-stage-try .fstage-hint {
+  bottom: 1.5rem;
+}
+
+body.folder-stage-try .fstage-try-btn {
+  bottom: 5.35rem;
+}
+
+/* "Try it" button for chatbot folder — on body so it sits above staged media */
+.fstage-try-btn {
+  position: fixed;
+  bottom: 2.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10086;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 28px 14px 22px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: #2b2b2b;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 160ms var(--folder-ease-out), box-shadow 160ms var(--folder-ease-out);
+}
+
+.fstage-try-btn.is-visible {
+  display: flex;
+}
+
+.fstage-try-btn svg {
+  width: 20px;
+  height: 20px;
+  stroke: #3b65ef;
+}
+
+.fstage-try-btn:hover {
+  transform: translateX(-50%) scale(1.04);
+  box-shadow:
+    0 18px 48px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.fstage-try-btn:active {
+  transform: translateX(-50%) scale(0.97);
+}
+
+button.folder.is-stage {
+  position: relative;
+  z-index: 10050;
+  transition: none !important;
+  transform: none !important;
+  overflow: visible;
+}
+
+.folder.is-stage .folder-shell,
+.folder.is-stage .folder-items,
+.folder.is-stage .folder-item,
+.folder.is-stage .folder-frame {
+  overflow: visible;
+}
+
+/* Hide pocket chrome so staged images aren't masked by glass/back */
+.folder.is-stage .folder-back {
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+/* Keep flap Motion-driven while open; allow it to animate during close */
+.folder.is-stage:not(.is-closing) .folder-flap {
+  opacity: 0 !important;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.folder.is-stage.is-closing .folder-flap {
+  visibility: visible;
+  pointer-events: none;
+}
+
+.folder.is-stage .folder-item {
+  cursor: pointer;
+}
+
+.folder.is-stage .folder-note {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+}
+
+.folder.is-stage .folder-photo,
+.folder.is-stage .folder-placeholder {
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow:
+    0 2px 8px rgb(0 0 0 / 0.08),
+    0 16px 40px rgb(0 0 0 / 0.12);
+}
+
+/* Stage photos: JS sets near-final width/height; keep img filling that box crisply. */
+.folder.is-stage .folder-item[data-kind="photo"] .folder-frame,
+.folder.is-stage .folder-item[data-kind="photo"] .folder-photo,
+.folder.is-stage .folder-item[data-kind="video"] .folder-frame,
+.folder.is-stage .folder-item[data-kind="video"] .folder-photo {
+  height: 100%;
+  width: 100%;
+}
+
+.folder.is-stage .folder-photo img,
+.folder.is-stage .folder-photo video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.folder.is-scaled .folder-frame {
+  --radius: 3.5cqw;
+}

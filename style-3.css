@@ -362,26 +362,30 @@ button.srini-chat-trigger.srini-chat-nav-btn {
   z-index: 1;
 }
 
+button.srini-chat-trigger.srini-chat-nav-btn:hover,
+button.srini-chat-trigger.srini-chat-nav-btn:focus-visible,
 .srini-chat-nav-btn:hover,
 .srini-chat-nav-btn:focus-visible {
-  background: linear-gradient(135deg, #d4dcfc, #a8c0ff, #3b65ef, #7da1f7, #c5cef8, #3b65ef);
-  background-size: 300% 300%;
-  animation: srini-chat-nav-shine 3.5s ease infinite;
-  box-shadow: 0 2px 12px rgba(59, 101, 239, 0.18), 0 0 14px rgba(59, 101, 239, 0.1);
+  background: #3b65ef;
+  animation: none;
+  box-shadow: 0 2px 12px rgba(59, 101, 239, 0.22);
   border-color: rgba(255, 255, 255, 0.65);
 }
 
 @media (prefers-reduced-motion: reduce) {
+  button.srini-chat-trigger.srini-chat-nav-btn:hover,
+  button.srini-chat-trigger.srini-chat-nav-btn:focus-visible,
   .srini-chat-nav-btn:hover,
   .srini-chat-nav-btn:focus-visible {
     animation: none;
-    background: linear-gradient(135deg, #b8c8f5, #3b65ef, #a8c0ff);
+    background: #3b65ef;
   }
 }
 
 .srini-chat-nav-btn:hover .srini-chat-sparkle,
 .srini-chat-nav-btn:focus-visible .srini-chat-sparkle {
   transform: scale(1.15);
+  color: #fff;
 }
 
 section {
