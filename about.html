@@ -403,12 +403,29 @@
     padding: 20px;
     margin: 20px;
   }
-  .txt3, .txt4, .txt8, .txt9, p, .mypic {
-    animation: slideUpFade 1.2s ease-out;
+  [data-scroll-reveal].case-study-scroll-reveal {
+    opacity: 0;
+    filter: blur(4px);
+    transform: translate3d(0, 12px, 0);
+    transition:
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      filter 0.55s cubic-bezier(0.25, 1, 0.5, 1),
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, filter, transform;
   }
-  @keyframes slideUpFade {
-    0% { opacity: 0; transform: translateY(50px); }
-    100% { opacity: 1; transform: translateY(0); }
+  [data-scroll-reveal].case-study-scroll-reveal.is-revealed {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+    will-change: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    [data-scroll-reveal].case-study-scroll-reveal {
+      opacity: 1 !important;
+      filter: none !important;
+      transform: none !important;
+      transition: none !important;
+    }
   }
 
   /* Intro row only: flex gap between copy + portrait (not other .txt4 blocks under #about) */
@@ -1100,16 +1117,15 @@
        
    <div id="about" style="/* height:30%; */backgroun;">
        
-    <p class="txt3">Hello again! 👋</p>
-    <div class="txt4 about-intro">
+    <p class="txt3" data-scroll-reveal>Hello again! 👋</p>
+    <div class="txt4 about-intro" data-scroll-reveal>
       <div class="about-intro-copy">
         <p class="about-intro-lead">I'm Srini, a Product Designer passionate about creating digital experiences that blend design, technology, and real human insight.</p>
-        <p class="about-intro-body">Hands-on through the whole product journey — from shaping early ideas to crafting interactions and coding using agentic tools, which I am passionate about.</p>
-        <p class="about-intro-quote">I believe in the perfect harmony of design, experience, and technology.</p>
+        <p class="about-intro-body">I believe in the perfect harmony of design, experience, and technology. Hands-on through the whole product journey — from shaping early ideas to crafting interactions, with a recent focus on non-deterministic experiences and design frameworks. I also enjoy jumping into code and dabbling with LLMs.</p>
         <p class="about-intro-aside">When I'm not designing, you'll likely find me in a Bay Area café sipping on a cappuccino, exploring a new vegetarian spot, or capturing everyday moments through my camera. I take a trip every year to disconnect, recharge, and return with fresh ideas.</p>
         <a class="about-intro-email about-mentorship-cta" href="mailto:tcsreeni93@gmail.com"><span class="about-mentorship-cta-label">Email me</span><svg class="about-mentorship-cta-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
       </div>
-      <figure class="about-profile-photo" data-aos="fade-left">
+      <figure class="about-profile-photo">
         <img src="images/srini-about.png?v=2" alt="Srini at the Golden Gate Bridge" width="320" height="400" loading="lazy" decoding="async" />
       </figure>
      </div>
@@ -1119,31 +1135,31 @@
 <div>
 
 <div class="about-howiwork" id="how-i-work">
-  <span class="about-howiwork-eyebrow" data-aos="fade-up">Process</span>
-  <p class="txt3" data-aos="fade-up">How I work</p>
-  <p class="txt4 about-howiwork-lead" data-aos="fade-up">
+  <span class="about-howiwork-eyebrow" data-scroll-reveal>Playbook</span>
+  <p class="txt3" data-scroll-reveal>How I work</p>
+  <p class="txt4 about-howiwork-lead" data-scroll-reveal>
     I treat product design as a team sport — pairing curiosity with craft. Whether I'm sketching a flow, running a critique, or shipping pixel-perfect screens with engineering, I aim for clarity, momentum, and decisions everyone can stand behind.
   </p>
 
   <div class="about-howiwork-grid">
-    <article class="about-howiwork-card" data-aos="fade-up">
+    <article class="about-howiwork-card" data-scroll-reveal>
       <span class="about-howiwork-step">01</span>
       <h3>Understand</h3>
       <p>Start with the problem, not the solution. I dig into user research, business context, and constraints, then frame what we're really solving — and why it matters now.</p>
     </article>
-    <article class="about-howiwork-card" data-aos="fade-up" data-aos-delay="100">
+    <article class="about-howiwork-card" data-scroll-reveal>
       <span class="about-howiwork-step">02</span>
       <h3>Explore &amp; align</h3>
       <p>I sketch broadly before going deep — multiple directions, fast prototypes, and tight loops with PMs and engineers. Decisions are made together, with tradeoffs on the table.</p>
     </article>
-    <article class="about-howiwork-card" data-aos="fade-up" data-aos-delay="200">
+    <article class="about-howiwork-card" data-scroll-reveal>
       <span class="about-howiwork-step">03</span>
       <h3>Refine &amp; ship</h3>
       <p>Stay close through dev — sweating micro-interactions, edge cases, and copy until the details hold. That same care carries into the repo: agentic tooling to iterate fast, tight loops with engineering, pushing PRs, and nothing shipped until it matches the intent.</p>
     </article>
   </div>
 
-  <ul class="about-howiwork-principles" data-aos="fade-up">
+  <ul class="about-howiwork-principles" data-scroll-reveal>
     <li><strong>Default to clarity</strong> — short writing, named decisions, visible tradeoffs.</li>
     <li><strong>Prototype to think</strong> — interactive artifacts move conversations forward faster than slides.</li>
     <li><strong>Design with engineers</strong> — the best craft happens when design and code grow together.</li>
@@ -1152,10 +1168,10 @@
 </div>
 
 <div class="about-mentorship" id="mentorship">
-  <span class="about-mentorship-eyebrow" data-aos="fade-up">Giving back</span>
-  <p class="txt3" data-aos="fade-up">Mentorship</p>
+  <span class="about-mentorship-eyebrow" data-scroll-reveal>Giving back</span>
+  <p class="txt3" data-scroll-reveal>Mentorship</p>
   <div class="about-mentorship-grid">
-    <div class="about-mentorship-copy" data-aos="fade-up">
+    <div class="about-mentorship-copy" data-scroll-reveal>
       <p class="txt4 about-mentorship-lead">
         I mentor designers around the world on portfolio reviews, interview prep, and growing their craft. My goal is practical, actionable feedback—you should leave a session with a short list of concrete things to try next.
       </p>
@@ -1166,7 +1182,7 @@
       </ul>
       <a class="about-mentorship-cta" id="adplist-profile-link" href="https://adplist.org/mentors/srini-chakkarapani" target="_blank" rel="noopener noreferrer"><span class="about-mentorship-cta-label">Book a session</span><svg class="about-mentorship-cta-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
     </div>
-    <section class="about-mentorship-reviews" data-aos="fade-up" aria-label="Mentor reviews">
+    <section class="about-mentorship-reviews" data-scroll-reveal aria-label="Mentor reviews">
       <iframe src="https://adplist.org/widgets/reviews?src=srini-chakkarapani" title="Mentor reviews" width="100%" height="100%" loading="lazy"></iframe>
     </section>
   </div>
@@ -1179,7 +1195,7 @@
   <!-- Footer -->
   <div id="contact">
     <div class="frame" style="max-width: 1400px; padding-top: 4rem; padding-bottom: 3rem;">
-      <p class="txt6 wrap" style="font-size: 200%; line-height: 1.5;">You made it! Curious to say hello?<br> View my <a
+      <p class="txt6 wrap" data-scroll-reveal style="font-size: 200%; line-height: 1.5;">You made it! Curious to say hello?<br> View my <a
           style="color:#3b65ef; text-decoration:none" href="Resume_Srinivasan.pdf" target="_blank">résumé</a>,
         get in touch 👇</p>
       <p style="padding-left: 5%; padding-top: 2%; font-size: 120%; letter-spacing: 0.1em; font-family: 'Space Mono', 'Courier New', 'Monaco', monospace;">
@@ -1313,10 +1329,8 @@
 </style>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
   $(function(){
-    try { AOS.init({ duration: 1200 }); } catch(e) {}
 
     var y = document.getElementById('current-year');
     if (y) { y.textContent = new Date().getFullYear(); }
@@ -1480,6 +1494,7 @@
   }
 })();
 </script>
+<script src="case-study-scroll-reveal.js"></script>
 <script src="ui-sounds.js?v=26"></script>
 
 </body></html>

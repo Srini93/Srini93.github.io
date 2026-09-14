@@ -1,15 +1,20 @@
 /**
- * Progressive blur reveal for case study pages: each direct block in .case-study-main-col
- * sharpens and fades in as it enters the viewport (IntersectionObserver).
+ * Progressive blur reveal: case-study main-column blocks and [data-scroll-reveal]
+ * (e.g. About) sharpen and fade in as they enter the viewport.
  */
 (function () {
+  var blocks = [];
   var main = document.querySelector('.case-study-main-col');
-  if (!main) return;
-
-  var blocks = Array.prototype.filter.call(main.children, function (el) {
-    if (el.nodeType !== 1) return false;
-    var tag = el.tagName;
-    return tag !== 'HR' && tag !== 'SCRIPT' && tag !== 'STYLE' && tag !== 'NOSCRIPT';
+  if (main) {
+    Array.prototype.forEach.call(main.children, function (el) {
+      if (el.nodeType !== 1) return;
+      var tag = el.tagName;
+      if (tag === 'HR' || tag === 'SCRIPT' || tag === 'STYLE' || tag === 'NOSCRIPT') return;
+      blocks.push(el);
+    });
+  }
+  document.querySelectorAll('[data-scroll-reveal]').forEach(function (el) {
+    if (blocks.indexOf(el) === -1) blocks.push(el);
   });
 
   if (!blocks.length) return;
