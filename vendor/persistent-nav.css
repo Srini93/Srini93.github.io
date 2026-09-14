@@ -211,6 +211,8 @@ a.logo-srini {
   body.nav-persistent .desk-menu .header-chat-slot .srini-chat-nav-btn:hover .srini-chat-sparkle,
   body.nav-persistent .desk-menu .header-chat-slot .srini-chat-nav-btn:focus-visible .srini-chat-sparkle {
     color: #fff;
+    fill: currentColor;
+    stroke: currentColor;
   }
 
   body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-sparkle,
@@ -366,4 +368,13 @@ body.chat-open .header-chat-slot {
   .header-chat-slot {
     display: none !important;
   }
+}
+
+/* Outline sparkle at rest; solid fill on hover / focus */
+.srini-chat-nav-btn:hover .srini-chat-sparkle,
+.srini-chat-nav-btn:focus-visible .srini-chat-sparkle,
+.srini-chat-fab:hover .srini-chat-fab-icon,
+.srini-chat-fab:focus-visible .srini-chat-fab-icon {
+  fill: currentColor;
+  stroke: currentColor;
 }

@@ -22,7 +22,7 @@
 <!-- App Icon Ends -->
 
   <link rel="stylesheet" href="style.css?v=30">
-  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=55">
+  <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=56">
   <style>
     /* Force Light Mode — shared hero/footer wash (matches #contact) */
     :root {
@@ -923,7 +923,9 @@
       width: 16px;
       height: 16px;
       color: #3b65ef;
-      transition: transform 0.2s ease, color 0.2s ease;
+      fill: none;
+      stroke: currentColor;
+      transition: transform 0.2s ease, color 0.2s ease, fill 0.2s ease, stroke 0.2s ease;
     }
 
     .hero-cta-proxy-name {
@@ -948,6 +950,8 @@
     .hero-cta--chat:hover .hero-cta-proxy-icon,
     .hero-cta--chat:focus-visible .hero-cta-proxy-icon {
       color: #fff;
+      fill: currentColor;
+      stroke: currentColor;
       transform: scale(1.12);
     }
 
@@ -1278,6 +1282,8 @@
       body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:hover .srini-chat-sparkle,
       body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn:focus-visible .srini-chat-sparkle {
         color: #fff;
+        fill: currentColor;
+        stroke: currentColor;
       }
 
       body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-sparkle {
@@ -3804,11 +3810,11 @@ Designed a white label friendly design system scaling from design to code for fi
       .srini-chat-nav-btn:focus-visible { animation: none; background: #3b65ef; }
     }
     .srini-chat-nav-btn:hover .srini-chat-sparkle,
-    .srini-chat-nav-btn:focus-visible .srini-chat-sparkle { transform: scale(1.15); color: #fff; }
+    .srini-chat-nav-btn:focus-visible .srini-chat-sparkle { transform: scale(1.15); color: #fff; fill: currentColor; stroke: currentColor; }
     .srini-chat-fab { position: fixed; top: 1.85rem; right: 2rem; z-index: 10002; display: none; align-items: center; justify-content: center; width: 75px; height: 75px; padding: 0; background: #eaeefb; backdrop-filter: blur(20px) saturate(180%); -webkit-backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; cursor: pointer; box-shadow: none; transition: all 0.3s ease; overflow: visible; }
     .srini-chat-fab-icon { width: 32px; height: 32px; color: #3b65ef; transition: color 0.2s ease, transform 0.2s ease; }
     .srini-chat-fab:hover { background: #3b65ef; border-color: rgba(255,255,255,0.65); box-shadow: 0 2px 12px rgba(59, 101, 239, 0.22); }
-    .srini-chat-fab:hover .srini-chat-fab-icon { color: #fff; transform: scale(1.1); }
+    .srini-chat-fab:hover .srini-chat-fab-icon { color: #fff; transform: scale(1.1); fill: currentColor; stroke: currentColor; }
     .srini-chat-fab:active { animation: none !important; transform: scale(0.95); }
     @media (min-width: 769px) { .srini-chat-fab { display: none !important; } }
     @media (max-width: 768px) {

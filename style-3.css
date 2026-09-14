@@ -386,6 +386,8 @@ button.srini-chat-trigger.srini-chat-nav-btn:focus-visible,
 .srini-chat-nav-btn:focus-visible .srini-chat-sparkle {
   transform: scale(1.15);
   color: #fff;
+  fill: currentColor;
+  stroke: currentColor;
 }
 
 section {

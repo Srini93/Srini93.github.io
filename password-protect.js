@@ -270,7 +270,7 @@
     html = html.replace(/data-chat-api=["'][^"']*["']/gi, 'data-chat-api="' + PP_CHAT_API + '"');
     html = html.replace(/CHATBOT_CACHE_BUST\s*=\s*['"]\d+['"]/g, "CHATBOT_CACHE_BUST = '" + PP_CHAT_CACHE_BUST + "'");
     html = html.replace(/params\.push\(['"]cb=\d+['"]\)/g, "params.push('cb=" + PP_CHAT_CACHE_BUST + "')");
-    html = html.replace(/persistent-nav\.css\?v=\d+/g, 'persistent-nav.css?v=15');
+    html = html.replace(/persistent-nav\.css\?v=\d+/g, 'persistent-nav.css?v=16');
     html = html.replace(/persistent-nav\.js\?v=\d+/g, 'persistent-nav.js?v=8');
     html = html.replace(/style-2\.css(\?v=\d+)?/g, 'style-2.css?v=39');
     return html;
@@ -410,7 +410,7 @@
       '.srini-chat-sparkle{width:26px;height:26px;color:#3b65ef;transition:transform 0.2s ease,color 0.2s ease;position:relative;z-index:1}' +
       '.srini-chat-nav-btn:hover,.srini-chat-nav-btn:focus-visible{background:#3b65ef;animation:none;box-shadow:0 2px 12px rgba(59,101,239,0.22);border-color:rgba(255,255,255,0.65)}' +
       '@media (prefers-reduced-motion:reduce){.srini-chat-nav-btn:hover,.srini-chat-nav-btn:focus-visible{animation:none;background:#3b65ef}}' +
-      '.srini-chat-nav-btn:hover .srini-chat-sparkle,.srini-chat-nav-btn:focus-visible .srini-chat-sparkle{transform:scale(1.15);color:#fff}' +
+      '.srini-chat-nav-btn:hover .srini-chat-sparkle,.srini-chat-nav-btn:focus-visible .srini-chat-sparkle{transform:scale(1.15);color:#fff;fill:currentColor;stroke:currentColor}' +
       '</style>';
     html = html.replace(
       /<link rel="stylesheet" href="style-2\.css[^"]*">/,
