@@ -79,6 +79,8 @@
       background: var(--srini-hero-footer-gradient);
       position: relative;
       border: 1px solid rgba(29,29,31,.1);
+      container-type: inline-size;
+      container-name: og;
     }
     .og-stripe {
       position: absolute;
@@ -100,15 +102,15 @@
       flex-direction: column;
       justify-content: center;
       align-items: flex-start;
-      padding: 8% 8%;
+      padding: 6.5% 7%;
       max-width: 100%;
     }
     .og-photo {
-      width: clamp(56px, 12.5%, 92px);
+      width: clamp(72px, 12cqi, 128px);
       aspect-ratio: 1;
       border-radius: 18%;
       overflow: hidden;
-      margin: 0 0 1.1rem;
+      margin: 0 0 1.15rem;
       flex-shrink: 0;
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.45);
     }
@@ -125,27 +127,29 @@
       .og-stripe { display: none; }
     }
     .og-kicker {
-      font: 400 clamp(11px, 1.6vw, 14px)/1 "Space Mono", monospace;
+      font: 400 clamp(12px, 1.85cqi, 20px)/1 "Space Mono", monospace;
       letter-spacing: .14em;
       text-transform: uppercase;
       color: var(--blue);
-      margin: 0 0 0.7rem;
+      margin: 0 0 0.85rem;
     }
     .og-title {
       font-family: Fraunces, Georgia, serif;
-      font-size: clamp(1.85rem, 4.2vw, 3.1rem);
+      font-size: clamp(2.6rem, 10.1cqi, 7.35rem);
       font-weight: 560;
-      letter-spacing: -0.035em;
-      line-height: 1.08;
-      margin: 0 0 0.85rem;
-      max-width: 18ch;
+      letter-spacing: -0.045em;
+      line-height: 0.98;
+      margin: 0 0 1.05rem;
+      max-width: none;
+      width: 100%;
     }
     .og-desc {
       margin: 0;
       color: var(--muted);
-      font-size: clamp(0.95rem, 1.7vw, 1.2rem);
-      line-height: 1.4;
-      max-width: 36ch;
+      font-size: clamp(1.05rem, 2.55cqi, 1.85rem);
+      line-height: 1.35;
+      max-width: none;
+      width: 100%;
     }
     .li {
       background: #fff;
@@ -232,7 +236,7 @@
               <img src="images/srini-about.png?v=2" alt="" width="92" height="92">
             </div>
             <p class="og-kicker" id="og-kicker">Staff product designer</p>
-            <h2 class="og-title" id="og-title">Srinivasan Chakkarapani</h2>
+            <h2 class="og-title" id="og-title">Srinivasan<br>Chakkarapani</h2>
             <p class="og-desc" id="og-desc">AI-driven, agentic experiences and agent-ready design systems.</p>
           </div>
         </div>
