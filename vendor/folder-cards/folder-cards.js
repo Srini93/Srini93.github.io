@@ -402,7 +402,16 @@ async function openStage(slug, push) {
     );
   }
 
-  overlayTitle.textContent = c.folder.dataset.title ?? '';
+  const title = c.folder.dataset.title ?? '';
+  const status = (c.folder.dataset.status || '').trim();
+  overlayTitle.replaceChildren();
+  overlayTitle.appendChild(document.createTextNode(title));
+  if (status) {
+    const badge = document.createElement('span');
+    badge.className = 'folder-status';
+    badge.textContent = status;
+    overlayTitle.appendChild(badge);
+  }
   overlayMeta.textContent = c.folder.dataset.meta ?? '';
 
   const tryBtn = ensureTryButton();

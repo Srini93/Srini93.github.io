@@ -1916,6 +1916,44 @@
       overflow-y: auto;
     }
 
+    .folder-title-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.35rem 0.45rem;
+      min-width: 0;
+    }
+    .folder-title-row .folder-title {
+      min-width: 0;
+    }
+    .folder-status {
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+      padding: 3px 7px;
+      border-radius: 999px;
+      font-family: 'Space Mono', 'Courier New', Monaco, monospace;
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1;
+      text-transform: uppercase;
+      color: #6b5c3a;
+      background: rgba(212, 175, 55, 0.14);
+      border: 1px solid rgba(160, 126, 40, 0.22);
+    }
+
+    .fstage-title {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .fstage-title .folder-status {
+      font-size: 0.58rem;
+    }
+
     /* Three-column grid for Previous Work */
     .previous-work-grid {
       display: grid !important;
@@ -2749,7 +2787,7 @@ Designed a white label friendly design system scaling from design to code for fi
             </div>
           </button>
 
-          <button type="button" class="folder" data-folder="genui" data-title="Generative UI Experiments" data-meta="A set of generative UI experiments" aria-label="Open Generative UI Experiments folder">
+          <button type="button" class="folder" data-folder="genui" data-title="Generative UI Experiments" data-status="In labs" data-meta="A set of generative UI experiments" aria-label="Open Generative UI Experiments folder, in labs">
             <div class="folder-shell">
               <svg viewBox="0 0 400 340" class="folder-back" aria-hidden="true">
                 <defs>
@@ -2781,7 +2819,10 @@ Designed a white label friendly design system scaling from design to code for fi
               <div class="folder-flap" data-folder-flap>
                 <div class="folder-flap-inner">
                   <div class="folder-flap-copy">
-                    <p class="folder-title">Generative UI Experiments</p>
+                    <div class="folder-title-row">
+                      <p class="folder-title">Generative UI Experiments</p>
+                      <span class="folder-status">In labs</span>
+                    </div>
                     <p class="folder-meta">A set of generative UI experiments</p>
                   </div>
                   <svg class="folder-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -4002,7 +4043,7 @@ Designed a white label friendly design system scaling from design to code for fi
   <script src="ui-sounds.js?v=26"></script>
   <script src="dev-mode.js"></script>
   <script type="module">
-    import { initFolderCards, refreshFolderCards, openFolderStage } from './vendor/folder-cards/folder-cards.js?v=33';
+    import { initFolderCards, refreshFolderCards, openFolderStage } from './vendor/folder-cards/folder-cards.js?v=34';
     window.refreshFolderCards = refreshFolderCards;
     window.openFolderStage = openFolderStage;
     initFolderCards();
