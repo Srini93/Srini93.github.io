@@ -561,9 +561,13 @@
     var chatbotJS = ppGetCanonicalChatLoaderScript();
 
     var pageContextScript = ppChatPageContextScript();
+    var resizeScript = /proxy-resize\.js/.test(html)
+      ? ''
+      : '<script src="' + ppP + 'proxy-resize.js?v=1"><\/script>';
     var injectTail =
       pageContextScript +
-      (plainHadChatSidebar ? chatbotJS : chatbotHTML + chatbotCSS + chatbotJS);
+      (plainHadChatSidebar ? chatbotJS : chatbotHTML + chatbotCSS + chatbotJS) +
+      resizeScript;
 
     if (html.includes('</body>')) {
       html = html.replace('</body>', injectTail + '</body>');

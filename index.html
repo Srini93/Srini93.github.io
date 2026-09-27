@@ -22,8 +22,9 @@
   <link href="favicon.ico?v=2" rel="shortcut icon" type="image/x-icon" />
 <!-- App Icon Ends -->
 
-  <link rel="stylesheet" href="style.css?v=31">
+  <link rel="stylesheet" href="style.css?v=32">
   <link rel="stylesheet" href="vendor/folder-cards/folder-cards.css?v=56">
+  <link rel="stylesheet" href="iphone-duo.css?v=1">
   <style>
     /* Force Light Mode — shared hero/footer wash (matches #contact) */
     :root {
@@ -561,7 +562,7 @@
       }
 
       header .HeaderContent .HeaderContent-description {
-        margin-top: 1.15rem !important;
+        margin-top: 1.75rem !important;
         font-size: 15px !important;
       }
     }
@@ -584,7 +585,7 @@
     header .HeaderContent {
       position: relative;
       z-index: 10;
-      padding-top: 8vh;
+      padding-top: clamp(3.5rem, 7vh, 6rem);
       align-items: flex-start !important;
     }
     
@@ -609,6 +610,7 @@
       color: var(--srini-color-text-secondary) !important;
       font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
       font-weight: 400;
+      margin-top: clamp(2.5rem, 4.5vh, 3.25rem);
     }
 
     header .HeaderContent h1 a {
@@ -700,7 +702,11 @@
     @keyframes persistentChromeIn {
       from {
         opacity: 0;
-        transform: translate3d(0, -10px, 0) scale(0.94);
+        transform: translate3d(0, -22px, 0) scale(0.78);
+      }
+      62% {
+        opacity: 1;
+        transform: translate3d(0, 3px, 0) scale(1.05);
       }
       to {
         opacity: 1;
@@ -713,13 +719,23 @@
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      gap: 0.85rem;
+      gap: 1rem;
       width: 100%;
-      margin-top: 5rem;
-      padding-top: 10px;
+      margin-top: clamp(5.5rem, 9vh, 7rem);
+      padding-top: 0;
       opacity: 0;
       animation: heroCtaEnter 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
       will-change: transform, opacity;
+    }
+
+    @media (max-height: 640px) {
+      header .HeaderContent .HeaderContent-description {
+        margin-top: 1.75rem;
+      }
+
+      .hero-cta-row {
+        margin-top: 4.5rem;
+      }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -733,11 +749,10 @@
         will-change: auto;
       }
 
-      body.nav-persistent .logo-srini,
-      body.nav-persistent header nav,
-      body.nav-persistent .header-nav-row > .header-chat-slot {
-        animation: none !important;
-        transition: none !important;
+      body.nav-persistent.nav-chrome-enter .logo-srini,
+      body.nav-persistent.nav-chrome-enter header nav,
+      body.nav-persistent.nav-chrome-enter .header-nav-row > .header-chat-slot {
+        animation: persistentChromeIn 0.4s ease backwards;
       }
     }
 
@@ -746,13 +761,13 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
-      min-height: 48px;
-      padding: 14px 26px;
+      gap: 0.7rem;
+      min-height: 60px;
+      padding: 18px 36px;
       border-radius: 9999px;
       font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-size: 15px;
-      font-weight: 500;
+      font-size: 17px;
+      font-weight: 600;
       letter-spacing: -0.01em;
       text-transform: none;
       line-height: 1.2;
@@ -771,46 +786,46 @@
     }
 
     .hero-cta--primary {
-      color: #000 !important;
+      color: #111 !important;
       font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
       font-weight: 400 !important;
       background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.4) 0%,
-        rgba(255, 255, 255, 0.1) 50%,
-        rgba(255, 255, 255, 0.3) 100%
+        rgba(255, 255, 255, 0.82) 0%,
+        rgba(255, 255, 255, 0.58) 50%,
+        rgba(255, 255, 255, 0.74) 100%
       );
       backdrop-filter: blur(20px) saturate(180%);
       -webkit-backdrop-filter: blur(20px) saturate(180%);
-      border: 1px solid rgba(255, 255, 255, 0.5);
+      border: 1.5px solid rgba(255, 255, 255, 0.92);
       box-shadow:
-        0 8px 32px rgba(0, 0, 0, 0.1),
-        inset 0 1px 0 rgba(255, 255, 255, 0.6),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.2);
+        0 10px 32px rgba(0, 0, 0, 0.14),
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.35);
     }
 
     .hero-cta--primary:hover,
     .hero-cta--primary:focus-visible {
-      color: #000 !important;
+      color: #111 !important;
       background: linear-gradient(
         135deg,
-        rgba(255, 255, 255, 0.5) 0%,
-        rgba(255, 255, 255, 0.2) 50%,
-        rgba(255, 255, 255, 0.4) 100%
+        rgba(255, 255, 255, 0.94) 0%,
+        rgba(255, 255, 255, 0.7) 50%,
+        rgba(255, 255, 255, 0.86) 100%
       );
-      border-color: rgba(255, 255, 255, 0.7);
+      border-color: #fff;
       box-shadow:
-        0 12px 40px rgba(0, 0, 0, 0.15),
-        inset 0 1px 0 rgba(255, 255, 255, 0.8),
-        inset 0 -1px 0 rgba(255, 255, 255, 0.3);
-      transform: scale(1.06);
-      padding: 16px 30px;
+        0 16px 40px rgba(0, 0, 0, 0.18),
+        inset 0 1px 0 rgba(255, 255, 255, 1),
+        inset 0 -1px 0 rgba(255, 255, 255, 0.4);
+      transform: scale(1.04);
+      padding: 18px 40px;
     }
 
     .hero-cta-chevron {
       flex-shrink: 0;
-      width: 18px;
-      height: 18px;
+      width: 22px;
+      height: 22px;
       display: block;
       overflow: visible;
     }
@@ -841,36 +856,22 @@
 
     @media (min-width: 769px) {
       .hero-cta--primary {
-        gap: 0;
+        gap: 0.65rem;
       }
 
       .hero-cta--primary .hero-cta-chevron {
-        width: 0;
-        min-width: 0;
-        opacity: 0;
-        overflow: visible;
-        transition:
-          width 0.28s cubic-bezier(0.16, 1, 0.3, 1),
-          opacity 0.2s ease;
-      }
-
-      .hero-cta--primary:hover,
-      .hero-cta--primary:focus-visible {
-        gap: 0.5rem;
-      }
-
-      .hero-cta--primary:hover .hero-cta-chevron,
-      .hero-cta--primary:focus-visible .hero-cta-chevron {
-        width: 18px;
+        width: 22px;
+        min-width: 22px;
         opacity: 1;
+        overflow: visible;
       }
     }
 
     .hero-cta--chat {
-      color: #2b2b2b;
-      background: #eaeefb;
-      border: 1px solid rgba(255, 255, 255, 0.55);
-      box-shadow: 0 4px 16px rgba(59, 101, 239, 0.1);
+      color: #1f1f1f;
+      background: #dce6fb;
+      border: 1.5px solid rgba(59, 101, 239, 0.28);
+      box-shadow: 0 8px 24px rgba(59, 101, 239, 0.16);
       text-transform: none;
       overflow: visible !important;
       isolation: isolate;
@@ -921,8 +922,8 @@
 
     .hero-cta-proxy-icon {
       flex-shrink: 0;
-      width: 16px;
-      height: 16px;
+      width: 20px;
+      height: 20px;
       color: #3b65ef;
       fill: none;
       stroke: currentColor;
@@ -931,21 +932,21 @@
 
     .hero-cta-proxy-name {
       font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 15px;
+      font-size: 17px;
       font-weight: 700;
       letter-spacing: 0.01em;
       text-transform: none;
-      color: #3d3d3d;
+      color: #2b2b2b;
     }
 
     .hero-cta--chat:hover,
     .hero-cta--chat:focus-visible {
       color: #fff;
       background: #3b65ef;
-      border-color: rgba(255, 255, 255, 0.65);
-      box-shadow: 0 2px 12px rgba(59, 101, 239, 0.22);
-      transform: scale(1.06);
-      padding: 16px 30px;
+      border-color: #3b65ef;
+      box-shadow: 0 10px 28px rgba(59, 101, 239, 0.32);
+      transform: scale(1.04);
+      padding: 18px 40px;
     }
 
     .hero-cta--chat:hover .hero-cta-proxy-icon,
@@ -987,7 +988,7 @@
     @media (max-width: 768px) {
       .hero-cta-row {
         justify-content: center;
-        margin-top: 5.25rem;
+        margin-top: clamp(4.5rem, 8vh, 6rem);
         gap: 0;
       }
 
@@ -998,9 +999,9 @@
       .hero-cta--primary {
         display: flex !important;
         gap: 0;
-        width: 48px;
-        height: 48px;
-        min-height: 48px;
+        width: 58px;
+        height: 58px;
+        min-height: 58px;
         padding: 0 !important;
         overflow: hidden;
         animation: bounce-slow 2.5s ease-in-out 1.4s infinite !important;
@@ -1015,11 +1016,11 @@
       }
 
       .hero-cta--primary .hero-cta-primary-label {
-        font-family: 'Space Mono', 'Courier New', Monaco, monospace;
-        font-size: 12px;
+        font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-size: 15px;
         font-weight: 400;
-        letter-spacing: 0.5px;
-        text-transform: uppercase;
+        letter-spacing: -0.01em;
+        text-transform: none;
         line-height: 1;
         color: #2b2b2b;
         white-space: nowrap;
@@ -1036,11 +1037,11 @@
 
       .hero-cta--primary:hover,
       .hero-cta--primary:focus-visible {
-        width: 232px;
+        width: 248px;
         gap: 10px;
-        padding: 0 26px !important;
+        padding: 0 28px !important;
         animation: none !important;
-        transform: scale(1.06);
+        transform: scale(1.05);
       }
 
       .hero-cta--primary:hover .hero-cta-primary-label,
@@ -1051,8 +1052,8 @@
       }
 
       .hero-cta--primary .hero-cta-chevron {
-        width: 20px;
-        height: 20px;
+        width: 22px;
+        height: 22px;
         margin-top: -1px;
         color: #000;
       }
@@ -1133,6 +1134,17 @@
       padding-bottom: unset;
     }
 
+    .card-list-points .work-mark {
+      color: inherit;
+      font: inherit;
+      font-weight: 600;
+      background: none;
+      padding: 0;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
     /* Align content to top of image */
     .cards-layout {
       align-items: flex-start !important;
@@ -1199,7 +1211,6 @@
         visibility: visible;
         pointer-events: auto;
         white-space: nowrap;
-        animation: persistentChromeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         width: 64px;
         height: 64px;
         min-width: 64px;
@@ -1220,6 +1231,10 @@
           inset 0 1px 0 rgba(255, 255, 255, 0.65);
       }
 
+      body.nav-persistent.nav-chrome-enter .logo-srini {
+        animation: persistentChromeIn 0.68s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+      }
+
       body.nav-persistent header nav {
         position: fixed;
         top: 20px;
@@ -1238,7 +1253,10 @@
           0 14px 40px rgba(0, 0, 0, 0.1),
           inset 0 1px 0 rgba(255, 255, 255, 0.65);
         cursor: pointer;
-        animation: persistentChromeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+      }
+
+      body.nav-persistent.nav-chrome-enter header nav {
+        animation: persistentChromeIn 0.68s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
       }
 
       body.folder-stage-open.nav-persistent header nav,
@@ -1258,6 +1276,11 @@
         margin: 0;
         width: 64px;
         height: 64px;
+      }
+
+      body.nav-persistent.nav-chrome-enter .header-nav-row > .header-chat-slot {
+        animation: persistentChromeIn 0.68s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
+        transition: none;
       }
 
       body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn {
@@ -1674,12 +1697,14 @@
       align-items: baseline;
       justify-content: center;
       gap: 0;
+      width: 100vw;
+      max-width: 100vw;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
       padding: clamp(2rem, 3vw, 3rem) 5% 0;
+      box-sizing: border-box;
       border-bottom: 1px solid #ececec;
-      margin: 0 5%;
-      padding-left: 0;
-      padding-right: 0;
-      width: auto;
+      background: #fff;
       scroll-margin-top: 5.5rem;
     }
 
@@ -1829,14 +1854,33 @@
     }
 
     @media screen and (max-width: 768px) {
+      .selected-works {
+        isolation: isolate;
+      }
+
+      .selected-works .work-panel {
+        position: relative;
+        z-index: 0;
+      }
+
       .work-section-header {
         position: sticky;
         top: 0;
-        z-index: 30;
-        padding-top: 0.85rem;
-        margin: 0 5%;
-        background: #fff;
+        z-index: 9000;
+        width: 100vw;
+        max-width: 100vw;
+        margin-left: calc(50% - 50vw);
+        margin-right: calc(50% - 50vw);
+        padding: 0.85rem 5% 0.15rem;
+        box-sizing: border-box;
+        background: #fff !important;
+        box-shadow: 0 12px 0 0 #fff;
+        isolation: isolate;
         touch-action: pan-y;
+      }
+
+      .selected-works ul {
+        z-index: auto;
       }
 
       .work-switch-btn {
@@ -2259,8 +2303,9 @@
       }
 
       .hero-cta {
-        font-size: 16px !important;
-        padding: 14px 28px !important;
+        font-size: 18px !important;
+        padding: 20px 40px !important;
+        min-height: 64px;
       }
 
       .work-section-title {
@@ -2475,7 +2520,7 @@
                   <use xlink:href="#check" />
                 </svg>
                 <div>
-              Designed and launched the first version of Intuit Assist, a GenAI-powered assistant enabling summary generation, internal documentation authoring, and API discovery.
+              Designed and launched the <mark class="work-mark">first version of Intuit Assist</mark>, a GenAI-powered assistant enabling <mark class="work-mark">summary generation, internal documentation authoring, and API discovery</mark>.
                
               </div>
               </li>
@@ -2485,7 +2530,7 @@
                   <use xlink:href="#check" />
                 </svg>
                 <div>
-                  Led design of core Generative AI experiences across developer touchpoints, shaping how AI integrates into internal platforms and IDE workflows.
+                  Led design of <mark class="work-mark">core Generative AI experiences</mark> across developer touchpoints, shaping how AI integrates into internal platforms and IDE workflows.
               </div>
               </li>
 
@@ -2494,7 +2539,7 @@
                   <use xlink:href="#check" />
                 </svg>
                 <div>
-                  Contributed to Intuit's GenUX framework, aligning AI-driven experiences with existing systems to ensure scalability and design cohesion.
+                  Contributed to Intuit's <mark class="work-mark">GenUX framework</mark>, aligning AI-driven experiences with existing systems to ensure scalability and design cohesion.
               </div>
               </li>
             </ul>
@@ -2541,7 +2586,7 @@
                   <use xlink:href="#check" />
                 </svg>
                 <div>
-              Designed end-to-end API Explorer experiences, enabling developers to discover, test, and integrate APIs with interactive documentation and real-time sandbox environments.
+              Designed end-to-end <mark class="work-mark">API Explorer experiences</mark>, enabling developers to discover, test, and integrate APIs with interactive documentation and real-time sandbox environments.
                
               </div>
               </li>
@@ -2551,7 +2596,7 @@
                   <use xlink:href="#check" />
                 </svg>
                 <div>
-                  Created intuitive authentication flows and API key management interfaces, reducing developer onboarding time by 40% and improving security compliance.
+                  Created intuitive authentication flows and API key management interfaces, <mark class="work-mark">reducing developer onboarding time by 40%</mark> and improving security compliance.
               </div>
               </li>
 
@@ -2560,7 +2605,7 @@
                   <use xlink:href="#check" />
                 </svg>
                 <div>
-                  Built comprehensive API documentation experiences with code samples, interactive request/response examples, and multi-language SDK support for seamless developer integration.
+                  Built comprehensive API documentation experiences with code samples, <mark class="work-mark">interactive request/response examples</mark>, and multi-language SDK support for seamless developer integration.
               </div>
               </li>
             </ul>
@@ -2607,7 +2652,7 @@
                   <use xlink:href="#check" />
                 </svg>
                 <div>
-           Product Designer for Norton 360 v2 on the iOS & iPadOS platforms.
+           Product Designer for <mark class="work-mark">Norton 360 v2</mark> on the iOS & iPadOS platforms.
               </li>
                 
               <li >
@@ -2615,7 +2660,7 @@
                   <use xlink:href="#check" />
                 </svg>
                 <div>
-             Primary designer for new Spam Protection
+             Primary designer for new <mark class="work-mark">Spam Protection</mark>
 features shipping to ~XXXK users.
                 </div>
                 </li>
@@ -2625,7 +2670,7 @@ features shipping to ~XXXK users.
                   <use xlink:href="#check" />
                 </svg>
                 <div>
-Designed a white label friendly design system scaling from design to code for first party and partner products.
+Designed a <mark class="work-mark">white label friendly design system</mark> scaling from design to code for first party and partner products.
               </div>
               </li>
             </ul>
@@ -3357,8 +3402,19 @@ Designed a white label friendly design system scaling from design to code for fi
       }
 
       function updatePersistentNav() {
+        const wasPersist = document.body.classList.contains('nav-persistent');
         const shouldPersist = persistentNavMinWidth.matches && hasScrolledPastHeader();
         document.body.classList.toggle('nav-persistent', shouldPersist);
+        if (shouldPersist && !wasPersist) {
+          document.body.classList.remove('nav-chrome-enter');
+          requestAnimationFrame(function () {
+            requestAnimationFrame(function () {
+              document.body.classList.add('nav-chrome-enter');
+            });
+          });
+        } else if (!shouldPersist) {
+          document.body.classList.remove('nav-chrome-enter');
+        }
         if (headerNav) {
           headerNav.classList.toggle('nav-scrolled', shouldPersist);
           headerNav.setAttribute(
@@ -4083,10 +4139,13 @@ Designed a white label friendly design system scaling from design to code for fi
   }
 })();
   </script>
+  <link rel="stylesheet" href="iphone-duo.css?v=1">
+  <script src="iphone-duo.js?v=1"></script>
+  <script src="proxy-resize.js?v=1"></script>
   <script src="ui-sounds.js?v=26"></script>
   <script src="dev-mode.js"></script>
   <script type="module">
-    import { initFolderCards, refreshFolderCards, openFolderStage } from './vendor/folder-cards/folder-cards.js?v=34';
+    import { initFolderCards, refreshFolderCards, openFolderStage } from './vendor/folder-cards/folder-cards.js?v=35';
     window.refreshFolderCards = refreshFolderCards;
     window.openFolderStage = openFolderStage;
     initFolderCards();

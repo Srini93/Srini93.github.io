@@ -106,14 +106,10 @@ body{
  }
    .mypic{
     width: 50%;
-    min-width: 500px;
+    min-width: 0;
+    max-width: 100%;
     align-self: center;
   }
-  @media screen and (-webkit-min-device-pixel-ratio:0) and (min-width:400px) {
-    h1 {
-        white-space: nowrap;
-    }
-}
  ::-moz-selection { /* Code for Firefox */
     color: White;
     background: #000;
@@ -201,7 +197,8 @@ body{
 
   .mypic{
     width: 50%;
-    min-width: 500px;
+    min-width: 0;
+    max-width: 100%;
     align-self: center;
   }
 
@@ -837,7 +834,8 @@ header section h2 {
 }
  .mypic{
     width: 50%;
-    min-width: 400px;
+    min-width: 0;
+    max-width: 100%;
     align-self: center;
   }
 }

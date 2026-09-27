@@ -40,7 +40,7 @@ const STAGE_TOP = 112;
 const STAGE_TOP_NARROW = 88;
 const STAGE_BOTTOM = 72;
 const STAGE_BOTTOM_TRY = 156;
-const isNarrowStage = () => innerWidth < 720;
+const isNarrowStage = () => innerWidth < 720 || (innerWidth < 960 && innerHeight < 700);
 const stageTop = () => (isNarrowStage() ? STAGE_TOP_NARROW : STAGE_TOP);
 const stageBottom = () => (stage?.slug === 'chatbot' ? STAGE_BOTTOM_TRY : STAGE_BOTTOM);
 const stageSafeH = () => Math.max(200, innerHeight - stageTop() - stageBottom());
