@@ -14,7 +14,7 @@
   <p>
     This page loads the chatbot app against <strong>your local API</strong> on port 9000.
     Start the site from the repo root: <code>python3 -m http.server 8765</code>
-    and the API: <code>cd backend &amp;&amp; uvicorn server:app --host 127.0.0.1 --port 9000</code>
+    and the API: <code>cd backend &amp;&amp; uvicorn app:app --host 127.0.0.1 --port 9000</code>
     (requires <code>GROQ_API_KEY</code> in <code>backend/.env</code>, or use Ollama per <code>backend/.env.example</code>).
   </p>
   <p>Open: <code>http://127.0.0.1:8765/test-chat-local.html</code></p>
