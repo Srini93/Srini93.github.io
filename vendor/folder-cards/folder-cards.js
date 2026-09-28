@@ -54,6 +54,8 @@ const tilt = (i) => {
 const controllers = new Map();
 let stage = null;
 let bootstrapped = false;
+/** True after a touch swipe so the following click does not also change slides. */
+let swipeMoved = false;
 
 function hydrateFolderMedia(folder) {
   folder.querySelectorAll('video[data-src]').forEach((video) => {
@@ -802,6 +804,12 @@ function bindFolder(folder) {
 
   folder.addEventListener('click', (event) => {
     if (event.target.closest('.sticky-peel-hit')) return;
+    if (swipeMoved) {
+      swipeMoved = false;
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
     event.preventDefault();
     if (stage && stage.c === controllers.get(slug) && !stage.closing) {
       const hit = event.target.closest('[data-folder-item]');
@@ -894,30 +902,48 @@ function bindGlobalOnce() {
   });
 
   let swipeStart = null;
+  const isSwipeChrome = (target) =>
+    Boolean(
+      target.closest(
+        '.fstage-close, .fstage-try-btn, .fstage-key, a, .sticky-peel-hit, .folder-video-play',
+      ),
+    );
+
   addEventListener(
     'pointerdown',
     (event) => {
       if (!stage || stage.closing || event.pointerType === 'mouse') return;
-      if (event.target.closest('button, a, .sticky-peel-hit')) return;
-      swipeStart = { x: event.clientX, y: event.clientY };
+      /* Folder roots are <button>s — still allow swipes on staged media inside them. */
+      if (isSwipeChrome(event.target)) return;
+      swipeMoved = false;
+      swipeStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
     },
     { passive: true },
   );
   addEventListener(
-    'pointerup',
+    'pointermove',
     (event) => {
-      if (!swipeStart || !stage || stage.closing) {
-        swipeStart = null;
-        return;
-      }
+      if (!swipeStart || event.pointerId !== swipeStart.id) return;
       const dx = event.clientX - swipeStart.x;
       const dy = event.clientY - swipeStart.y;
-      swipeStart = null;
-      if (Math.abs(dx) < 48 || Math.abs(dx) <= Math.abs(dy)) return;
-      go(stage.active + (dx < 0 ? 1 : -1));
+      if (Math.abs(dx) > 12 || Math.abs(dy) > 12) swipeMoved = true;
     },
     { passive: true },
   );
+  const endSwipe = (event) => {
+    if (!swipeStart || (event.pointerId != null && event.pointerId !== swipeStart.id)) {
+      return;
+    }
+    const dx = event.clientX - swipeStart.x;
+    const dy = event.clientY - swipeStart.y;
+    swipeStart = null;
+    if (!stage || stage.closing) return;
+    if (Math.abs(dx) < 48 || Math.abs(dx) <= Math.abs(dy)) return;
+    swipeMoved = true;
+    go(stage.active + (dx < 0 ? 1 : -1));
+  };
+  addEventListener('pointerup', endSwipe, { passive: true });
+  addEventListener('pointercancel', endSwipe, { passive: true });
 
   const syncHash = () => {
     const hash = location.hash.replace(/^#/, '');
