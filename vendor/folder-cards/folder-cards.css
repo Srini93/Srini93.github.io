@@ -41,6 +41,27 @@
   touch-action: auto;
 }
 
+/*
+ * Mobile Selected Works uses isolation + z-index:0 on panels so sticky tabs
+ * stay above case cards. That traps folder z-index:10050 under the fixed
+ * .fstage overlay (10040), hiding all staged media. Drop the trap while a
+ * folder is open so .folder.is-stage can paint above the frosted backdrop.
+ */
+@media screen and (max-width: 768px) {
+  .selected-works:has(.folder.is-stage) {
+    isolation: auto;
+  }
+
+  .selected-works:has(.folder.is-stage) .work-panel {
+    z-index: auto;
+  }
+
+  body.folder-stage-open .work-section-header {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
 .ai-labs-folders::-webkit-scrollbar {
   height: 6px;
 }
