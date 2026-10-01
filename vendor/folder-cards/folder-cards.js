@@ -213,10 +213,44 @@ function ensureTryButton() {
   return tryBtn;
 }
 
+/**
+ * Previous/Next keys must live on body (like close/try), not inside .fstage.
+ * Staged folder media sits at z-index 10050 above .fstage (10040); tall notes
+ * otherwise intercept clicks meant for the bottom chrome.
+ */
+function ensureHintControls() {
+  let hint = document.querySelector('.fstage-hint');
+  if (!hint) {
+    hint = document.createElement('p');
+    hint.className = 'fstage-hint';
+    hint.innerHTML = FSTAGE_HINT_INNER;
+    document.body.appendChild(hint);
+  } else {
+    if (!hint.querySelector('.fstage-key-prev')) {
+      hint.innerHTML = FSTAGE_HINT_INNER;
+    }
+    if (hint.closest('.fstage') || hint.parentElement !== document.body) {
+      document.body.appendChild(hint);
+    }
+  }
+  return hint;
+}
+
 function updateStageHint() {
-  if (!stage || stage.closing) return;
-  const hintPrev = document.querySelector('.fstage-key-prev');
-  const hintNext = document.querySelector('.fstage-key-next');
+  const hint = ensureHintControls();
+  const hintPrev = hint.querySelector('.fstage-key-prev');
+  const hintNext = hint.querySelector('.fstage-key-next');
+  if (!stage || stage.closing) {
+    if (hintPrev) {
+      hintPrev.disabled = true;
+      hintPrev.setAttribute('aria-disabled', 'true');
+    }
+    if (hintNext) {
+      hintNext.disabled = true;
+      hintNext.setAttribute('aria-disabled', 'true');
+    }
+    return;
+  }
   const atStart = stage.active <= 0;
   const atEnd = stage.active >= stage.c.items.length - 1;
   if (hintPrev) {
@@ -234,6 +268,7 @@ function ensureOverlay() {
   if (overlay) {
     ensureCloseButton();
     ensureTryButton();
+    ensureHintControls();
     return overlay;
   }
 
@@ -246,11 +281,11 @@ function ensureOverlay() {
         <p class="fstage-title"></p>
         <p class="fstage-meta"></p>
       </div>
-    </header>
-    <p class="fstage-hint">${FSTAGE_HINT_INNER}</p>`;
+    </header>`;
   document.body.appendChild(overlay);
   ensureCloseButton();
   ensureTryButton();
+  ensureHintControls();
   return overlay;
 }
 
@@ -835,19 +870,17 @@ function bindGlobalOnce() {
   }
   const closeBtn = ensureCloseButton();
   const backdrop = overlay.querySelector('.fstage-backdrop');
-  const hint = overlay.querySelector('.fstage-hint');
-  if (hint && !hint.querySelector('.fstage-key-prev')) {
-    hint.innerHTML = FSTAGE_HINT_INNER;
-  }
+  const hint = ensureHintControls();
 
-  const hintPrev = overlay.querySelector('.fstage-key-prev');
-  const hintNext = overlay.querySelector('.fstage-key-next');
+  const hintPrev = hint.querySelector('.fstage-key-prev');
+  const hintNext = hint.querySelector('.fstage-key-next');
 
   if (hintPrev && !hintPrev.dataset.bound) {
     hintPrev.dataset.bound = '1';
     hintPrev.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
+      if (!stage || stage.closing) return;
       go(stage.active - 1);
     });
   }
@@ -857,6 +890,7 @@ function bindGlobalOnce() {
     hintNext.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
+      if (!stage || stage.closing) return;
       go(stage.active + 1);
     });
   }
