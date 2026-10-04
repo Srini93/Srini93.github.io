@@ -2520,9 +2520,12 @@ Designed a white label friendly design system scaling from design to code for fi
       .srini-chat-fab-icon { width: 32px; height: 32px; }
       .srini-chat-nav-li { display: none !important; }
       body.chat-open #site-content-wrap { margin-right: 0; }
-      .chatbot-sidebar { top: 0; right: 0; bottom: 0; left: 0; width: 100% !important; height: 100%; border-radius: 0; z-index: 10003; transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+      .chatbot-sheet-backdrop { display: none; }
+      .chatbot-sidebar { top: auto; right: 0; bottom: 0; left: 0; width: 100% !important; height: min(92dvh, calc(100% - 52px)); max-height: calc(100dvh - 52px); border-radius: 20px 20px 0 0; z-index: 10003; transform: translateY(110%); transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1); box-shadow: 0 -8px 40px rgba(0,0,0,0.18); box-sizing: border-box; padding-top: 16px; overflow: hidden; }
       body.chat-open .chatbot-sidebar { transform: translateY(0); }
-      .chatbot-sidebar iframe { border-radius: 0; }
+      body.chat-open .chatbot-sheet-backdrop { display: block; position: fixed; inset: 0; z-index: 10002; background: rgba(0,0,0,0.28); -webkit-tap-highlight-color: transparent; }
+      .chatbot-sidebar::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 36px; height: 5px; border-radius: 999px; background: rgba(60,60,67,0.35); z-index: 2; pointer-events: none; }
+      .chatbot-sidebar iframe { border-radius: 0; height: 100%; }
       body.chat-open .srini-chat-fab { display: none; }
     }
   </style>
@@ -2539,7 +2542,7 @@ Designed a white label friendly design system scaling from design to code for fi
 
   var CHAT_API_PUBLIC = 'https://sriniai.netlify.app';
   /** Bump when deploying chatbot or host chat script changes (cache bust). */
-  var CHATBOT_CACHE_BUST = '34';
+  var CHATBOT_CACHE_BUST = '36';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
@@ -2568,7 +2571,36 @@ Designed a white label friendly design system scaling from design to code for fi
 
   function setOpen(open) {
     var isOpen = !!open;
+    if (isOpen && typeof window.__sriniChatScrollY !== 'number') {
+      window.__sriniChatScrollY = window.scrollY || window.pageYOffset || 0;
+    }
     document.body.classList.toggle('chat-open', isOpen);
+    var backdrop = document.querySelector('.chatbot-sheet-backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.className = 'chatbot-sheet-backdrop';
+      backdrop.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(backdrop);
+      backdrop.addEventListener('click', function() { setOpen(false); });
+    }
+    backdrop.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
+    if (isOpen) {
+      document.body.style.position = 'fixed';
+      document.body.style.top = '-' + window.__sriniChatScrollY + 'px';
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100%';
+    } else if (typeof window.__sriniChatScrollY === 'number') {
+      var y = window.__sriniChatScrollY;
+      window.__sriniChatScrollY = undefined;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
+      window.scrollTo(0, y);
+    }
+
     if (sidebar) sidebar.setAttribute('aria-hidden', !isOpen);
     triggers.forEach(function(t) {
       t.setAttribute('aria-label', isOpen ? 'Close AI chat' : 'Open AI chat');
