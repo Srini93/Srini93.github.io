@@ -453,7 +453,6 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
     body.chat-open .chatbot-sheet-backdrop { display: block; position: fixed; inset: 0; z-index: 10002; background: rgba(0,0,0,0.28); -webkit-tap-highlight-color: transparent; }
     .chatbot-sidebar::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 36px; height: 5px; border-radius: 999px; background: rgba(60,60,67,0.35); z-index: 2; pointer-events: none; }
     .chatbot-sidebar iframe { border-radius: 0; height: 100%; }
-    body.chat-open { overflow: hidden; }
     body.chat-open .srini-chat-fab { display: none; }
   }
 </style>
@@ -531,6 +530,9 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
 
   function setOpen(open) {
     var isOpen = !!open;
+    if (isOpen && typeof window.__sriniChatScrollY !== 'number') {
+      window.__sriniChatScrollY = window.scrollY || window.pageYOffset || 0;
+    }
     document.body.classList.toggle('chat-open', isOpen);
     var backdrop = document.querySelector('.chatbot-sheet-backdrop');
     if (!backdrop) {
@@ -542,9 +544,6 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
     }
     backdrop.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
     if (isOpen) {
-      if (typeof window.__sriniChatScrollY !== 'number') {
-        window.__sriniChatScrollY = window.scrollY || window.pageYOffset || 0;
-      }
       document.body.style.position = 'fixed';
       document.body.style.top = '-' + window.__sriniChatScrollY + 'px';
       document.body.style.left = '0';
