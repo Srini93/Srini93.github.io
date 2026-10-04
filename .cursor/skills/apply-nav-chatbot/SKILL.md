@@ -447,9 +447,13 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
     .srini-chat-fab-icon { width: 32px; height: 32px; }
     .srini-chat-nav-li { display: none !important; }
     body.chat-open #site-content-wrap { margin-right: 0; }
-    .chatbot-sidebar { top: 0; right: 0; bottom: 0; left: 0; width: 100% !important; height: 100%; border-radius: 0; z-index: 10003; transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1); }
+    .chatbot-sheet-backdrop { display: none; }
+    .chatbot-sidebar { top: auto; right: 0; bottom: 0; left: 0; width: 100% !important; height: min(92dvh, calc(100% - 52px)); max-height: calc(100dvh - 52px); border-radius: 16px 16px 0 0; z-index: 10003; transform: translateY(110%); transition: transform 0.4s cubic-bezier(0.32, 0.72, 0, 1); box-shadow: 0 -8px 40px rgba(0,0,0,0.18); box-sizing: border-box; padding-top: 16px; overflow: hidden; }
     body.chat-open .chatbot-sidebar { transform: translateY(0); }
-    .chatbot-sidebar iframe { border-radius: 0; }
+    body.chat-open .chatbot-sheet-backdrop { display: block; position: fixed; inset: 0; z-index: 10002; background: rgba(0,0,0,0.28); -webkit-tap-highlight-color: transparent; }
+    .chatbot-sidebar::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 36px; height: 5px; border-radius: 999px; background: rgba(60,60,67,0.3); z-index: 2; pointer-events: none; }
+    .chatbot-sidebar iframe { border-radius: 0; height: 100%; }
+    body.chat-open { overflow: hidden; }
     body.chat-open .srini-chat-fab { display: none; }
   }
 </style>
@@ -528,6 +532,15 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
   function setOpen(open) {
     var isOpen = !!open;
     document.body.classList.toggle('chat-open', isOpen);
+    var backdrop = document.querySelector('.chatbot-sheet-backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.className = 'chatbot-sheet-backdrop';
+      backdrop.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(backdrop);
+      backdrop.addEventListener('click', function() { setOpen(false); });
+    }
+    backdrop.setAttribute('aria-hidden', isOpen ? 'false' : 'true');
     if (sidebar) sidebar.setAttribute('aria-hidden', !isOpen);
     triggers.forEach(function(t) {
       t.setAttribute('aria-label', isOpen ? 'Close AI chat' : 'Open AI chat');
@@ -589,7 +602,7 @@ Remove any old navigation elements that were replaced:
    - Desktop nav links are right-aligned (WORKS, ABOUT, RÉSUMÉ, sparkle icon, GET IN TOUCH)
    - Hamburger menu works on mobile (cream panel, centered links, black GET IN TOUCH pill, X close icon)
    - Chatbot opens/closes via sparkle icon and pushes content left on desktop
-   - Chatbot goes full-screen on mobile
+   - Chatbot opens as an iOS-style modal sheet on mobile
 
 ## Reference files
 
