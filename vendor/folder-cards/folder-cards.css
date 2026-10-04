@@ -41,6 +41,27 @@
   touch-action: auto;
 }
 
+/*
+ * Mobile Selected Works uses isolation + z-index:0 on panels so sticky tabs
+ * stay above case cards. That traps folder z-index:10050 under the fixed
+ * .fstage overlay (10040), hiding all staged media. Drop the trap while a
+ * folder is open so .folder.is-stage can paint above the frosted backdrop.
+ */
+@media screen and (max-width: 768px) {
+  .selected-works:has(.folder.is-stage) {
+    isolation: auto;
+  }
+
+  .selected-works:has(.folder.is-stage) .work-panel {
+    z-index: auto;
+  }
+
+  body.folder-stage-open .work-section-header {
+    visibility: hidden;
+    pointer-events: none;
+  }
+}
+
 .ai-labs-folders::-webkit-scrollbar {
   height: 6px;
 }
@@ -768,11 +789,12 @@ body:has(.fstage.is-open) .fstage-close {
   transform: scale(0.94);
 }
 
+/* Previous/Next lives on body (like close/try) so staged media can't eat clicks */
 .fstage-hint {
-  position: absolute;
+  position: fixed;
   inset: auto 0 1.75rem;
   margin: 0;
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
@@ -782,9 +804,15 @@ body:has(.fstage.is-open) .fstage-close {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--folder-neutral-500);
-  z-index: 10083;
+  z-index: 10084;
   pointer-events: none;
   opacity: 0.96;
+}
+
+body.folder-stage-open .fstage-hint,
+body:has(.fstage.is-open) .fstage-hint {
+  display: flex;
+  visibility: visible;
 }
 
 .fstage-hint-copy {
@@ -811,7 +839,8 @@ body:has(.fstage.is-open) .fstage-close {
   pointer-events: none;
 }
 
-.fstage.is-open .fstage-hint-keys {
+body.folder-stage-open .fstage-hint-keys,
+body:has(.fstage.is-open) .fstage-hint-keys {
   pointer-events: auto;
 }
 

@@ -54,6 +54,8 @@ const tilt = (i) => {
 const controllers = new Map();
 let stage = null;
 let bootstrapped = false;
+/** True after a touch swipe so the following click does not also change slides. */
+let swipeMoved = false;
 
 function hydrateFolderMedia(folder) {
   folder.querySelectorAll('video[data-src]').forEach((video) => {
@@ -211,10 +213,44 @@ function ensureTryButton() {
   return tryBtn;
 }
 
+/**
+ * Previous/Next keys must live on body (like close/try), not inside .fstage.
+ * Staged folder media sits at z-index 10050 above .fstage (10040); tall notes
+ * otherwise intercept clicks meant for the bottom chrome.
+ */
+function ensureHintControls() {
+  let hint = document.querySelector('.fstage-hint');
+  if (!hint) {
+    hint = document.createElement('p');
+    hint.className = 'fstage-hint';
+    hint.innerHTML = FSTAGE_HINT_INNER;
+    document.body.appendChild(hint);
+  } else {
+    if (!hint.querySelector('.fstage-key-prev')) {
+      hint.innerHTML = FSTAGE_HINT_INNER;
+    }
+    if (hint.closest('.fstage') || hint.parentElement !== document.body) {
+      document.body.appendChild(hint);
+    }
+  }
+  return hint;
+}
+
 function updateStageHint() {
-  if (!stage || stage.closing) return;
-  const hintPrev = document.querySelector('.fstage-key-prev');
-  const hintNext = document.querySelector('.fstage-key-next');
+  const hint = ensureHintControls();
+  const hintPrev = hint.querySelector('.fstage-key-prev');
+  const hintNext = hint.querySelector('.fstage-key-next');
+  if (!stage || stage.closing) {
+    if (hintPrev) {
+      hintPrev.disabled = true;
+      hintPrev.setAttribute('aria-disabled', 'true');
+    }
+    if (hintNext) {
+      hintNext.disabled = true;
+      hintNext.setAttribute('aria-disabled', 'true');
+    }
+    return;
+  }
   const atStart = stage.active <= 0;
   const atEnd = stage.active >= stage.c.items.length - 1;
   if (hintPrev) {
@@ -232,6 +268,7 @@ function ensureOverlay() {
   if (overlay) {
     ensureCloseButton();
     ensureTryButton();
+    ensureHintControls();
     return overlay;
   }
 
@@ -244,11 +281,11 @@ function ensureOverlay() {
         <p class="fstage-title"></p>
         <p class="fstage-meta"></p>
       </div>
-    </header>
-    <p class="fstage-hint">${FSTAGE_HINT_INNER}</p>`;
+    </header>`;
   document.body.appendChild(overlay);
   ensureCloseButton();
   ensureTryButton();
+  ensureHintControls();
   return overlay;
 }
 
@@ -802,6 +839,12 @@ function bindFolder(folder) {
 
   folder.addEventListener('click', (event) => {
     if (event.target.closest('.sticky-peel-hit')) return;
+    if (swipeMoved) {
+      swipeMoved = false;
+      event.preventDefault();
+      event.stopPropagation();
+      return;
+    }
     event.preventDefault();
     if (stage && stage.c === controllers.get(slug) && !stage.closing) {
       const hit = event.target.closest('[data-folder-item]');
@@ -827,19 +870,17 @@ function bindGlobalOnce() {
   }
   const closeBtn = ensureCloseButton();
   const backdrop = overlay.querySelector('.fstage-backdrop');
-  const hint = overlay.querySelector('.fstage-hint');
-  if (hint && !hint.querySelector('.fstage-key-prev')) {
-    hint.innerHTML = FSTAGE_HINT_INNER;
-  }
+  const hint = ensureHintControls();
 
-  const hintPrev = overlay.querySelector('.fstage-key-prev');
-  const hintNext = overlay.querySelector('.fstage-key-next');
+  const hintPrev = hint.querySelector('.fstage-key-prev');
+  const hintNext = hint.querySelector('.fstage-key-next');
 
   if (hintPrev && !hintPrev.dataset.bound) {
     hintPrev.dataset.bound = '1';
     hintPrev.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
+      if (!stage || stage.closing) return;
       go(stage.active - 1);
     });
   }
@@ -849,6 +890,7 @@ function bindGlobalOnce() {
     hintNext.addEventListener('click', (event) => {
       event.preventDefault();
       event.stopPropagation();
+      if (!stage || stage.closing) return;
       go(stage.active + 1);
     });
   }
@@ -894,30 +936,48 @@ function bindGlobalOnce() {
   });
 
   let swipeStart = null;
+  const isSwipeChrome = (target) =>
+    Boolean(
+      target.closest(
+        '.fstage-close, .fstage-try-btn, .fstage-key, a, .sticky-peel-hit, .folder-video-play',
+      ),
+    );
+
   addEventListener(
     'pointerdown',
     (event) => {
       if (!stage || stage.closing || event.pointerType === 'mouse') return;
-      if (event.target.closest('button, a, .sticky-peel-hit')) return;
-      swipeStart = { x: event.clientX, y: event.clientY };
+      /* Folder roots are <button>s — still allow swipes on staged media inside them. */
+      if (isSwipeChrome(event.target)) return;
+      swipeMoved = false;
+      swipeStart = { x: event.clientX, y: event.clientY, id: event.pointerId };
     },
     { passive: true },
   );
   addEventListener(
-    'pointerup',
+    'pointermove',
     (event) => {
-      if (!swipeStart || !stage || stage.closing) {
-        swipeStart = null;
-        return;
-      }
+      if (!swipeStart || event.pointerId !== swipeStart.id) return;
       const dx = event.clientX - swipeStart.x;
       const dy = event.clientY - swipeStart.y;
-      swipeStart = null;
-      if (Math.abs(dx) < 48 || Math.abs(dx) <= Math.abs(dy)) return;
-      go(stage.active + (dx < 0 ? 1 : -1));
+      if (Math.abs(dx) > 12 || Math.abs(dy) > 12) swipeMoved = true;
     },
     { passive: true },
   );
+  const endSwipe = (event) => {
+    if (!swipeStart || (event.pointerId != null && event.pointerId !== swipeStart.id)) {
+      return;
+    }
+    const dx = event.clientX - swipeStart.x;
+    const dy = event.clientY - swipeStart.y;
+    swipeStart = null;
+    if (!stage || stage.closing) return;
+    if (Math.abs(dx) < 48 || Math.abs(dx) <= Math.abs(dy)) return;
+    swipeMoved = true;
+    go(stage.active + (dx < 0 ? 1 : -1));
+  };
+  addEventListener('pointerup', endSwipe, { passive: true });
+  addEventListener('pointercancel', endSwipe, { passive: true });
 
   const syncHash = () => {
     const hash = location.hash.replace(/^#/, '');
