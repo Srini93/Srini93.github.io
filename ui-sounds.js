@@ -1,7 +1,6 @@
 /**
- * UI sounds: chirp on chatbot open and CTA clicks; soft descending close sound
- * when the chatbot sidebar is dismissed. Chatbot iframe calls
- * window.SRINI_CHAT_SOUND('send'|'answer') when a message is sent and when a reply arrives.
+ * Chatbot-only UI sounds: open chirp, close tone, plus
+ * window.SRINI_CHAT_SOUND('send'|'answer') from the chatbot iframe.
  * Uses Web Audio API (no external audio files). Plays only after user gesture.
  */
 (function() {
@@ -19,15 +18,15 @@
     return audioContext;
   }
 
-  function playChirp(variant) {
+  function playChirp() {
     var ctx = getContext();
     if (!ctx) return;
 
     var now = ctx.currentTime;
     var duration = 0.07;
     var gap = 0.03;
-    var freq1 = variant === 1 ? 720 : 580;
-    var freq2 = variant === 1 ? 960 : 780;
+    var freq1 = 580;
+    var freq2 = 780;
 
     var gainNode = ctx.createGain();
     gainNode.connect(ctx.destination);
@@ -72,11 +71,9 @@
     });
   }
 
-  function onChirpClick(e) {
-    var target = e.target.closest('.srini-chat-trigger, .get-in-touch-btn, .see-more, .read-more-glass, .back-button-glass');
-    if (!target) return;
-    var variant = target.classList.contains('srini-chat-trigger') ? 0 : 1;
-    playChirp(variant);
+  function onChatOpenClick(e) {
+    if (!e.target.closest('.srini-chat-trigger')) return;
+    playChirp();
   }
 
   function unlockAudio() {
@@ -84,7 +81,7 @@
     if (ctx && ctx.state === 'suspended') ctx.resume();
   }
 
-  document.addEventListener('click', onChirpClick, true);
+  document.addEventListener('click', onChatOpenClick, true);
   document.addEventListener('touchstart', unlockAudio, { once: true, passive: true });
   document.addEventListener('keydown', unlockAudio, { once: true });
 

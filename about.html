@@ -472,6 +472,11 @@
     flex-direction: column;
     gap: 1.15rem;
   }
+  @media (min-width: 769px) {
+    .about-intro-copy {
+      max-width: 640px;
+    }
+  }
   .about-intro-copy p {
     margin: 0;
     padding: 0;
@@ -510,10 +515,73 @@
   .about-intro-email {
     margin-top: 0.5rem;
   }
+  .about-signature {
+    margin: 0.85rem 0 0;
+    padding: 0;
+    width: 150px;
+    height: 45px;
+    max-width: 100%;
+    line-height: 0;
+  }
+  .about-signature-svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow: visible;
+  }
+  /* White strokes live in a mask, so they uncover the handwriting as a pen would. */
+  .about-signature-stroke {
+    fill: none;
+    stroke: #fff;
+    stroke-width: 24;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+  }
+  .about-signature-stroke--dot {
+    stroke-width: 14;
+  }
+  .about-signature-stroke--period {
+    stroke-width: 16;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .about-signature-stroke {
+      stroke-dashoffset: 1;
+    }
+    .about-intro.is-revealed .about-signature-stroke {
+      animation: about-signature-draw 2.35s cubic-bezier(0.42, 0.02, 0.18, 1) 0.28s forwards;
+    }
+    .about-intro.is-revealed .about-signature-stroke--dot {
+      animation-duration: 0.32s;
+      animation-delay: 2.4s;
+    }
+    .about-intro.is-revealed .about-signature-stroke--period {
+      animation-duration: 0.26s;
+      animation-delay: 2.68s;
+    }
+  }
+  @keyframes about-signature-draw {
+    to { stroke-dashoffset: 0; }
+  }
   @media (max-width: 768px) {
+    .about-intro {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+    }
     .about-intro-copy {
       flex: 1 1 auto;
       padding: 0;
+    }
+    .about-signature {
+      width: 150px;
+      height: 45px;
+    }
+    /* style-3.css hides every ul between 320px and 768px, including these lists. */
+    ul.about-howiwork-principles,
+    ul.about-mentorship-topics {
+      display: block;
     }
   }
 
@@ -546,9 +614,6 @@
       0 25.5306px 25.5306px -2.0625px rgba(0, 0, 0, 0.04),
       0 43.962px 43.962px -2.40625px rgba(0, 0, 0, 0.04),
       0 80px 80px -2.75px rgba(0, 0, 0, 0.04);
-  }
-  @media (max-width: 768px) {
-    .about-profile-photo { margin: 0.25rem auto 0.5rem; }
   }
   .about-profile-photo img {
     display: block;
@@ -617,16 +682,45 @@
     box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
     transition: bottom 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .about-profile-photo {
+      align-self: center;
       width: min(280px, 100%);
-      margin: 0.5rem auto 0.75rem;
-      border-radius: 14px;
-      clip-path: inset(0 round 14px);
+      margin: 0.35rem auto 0;
+      overflow: visible;
+      clip-path: none;
+      aspect-ratio: auto;
+      height: auto;
+      border: none;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      font-size: 1rem;
+      line-height: normal;
     }
-    .about-profile-photo img,
-    .about-profile-photo::after {
+    .about-profile-photo img {
+      height: auto;
+      aspect-ratio: 4 / 5;
       border-radius: 14px;
+      box-shadow:
+        0 1.34px 1.34px -0.34px rgba(0, 0, 0, 0.04),
+        0 15.6px 15.6px -1.72px rgba(0, 0, 0, 0.05),
+        0 44px 44px -2.4px rgba(0, 0, 0, 0.06);
+    }
+    .about-profile-photo::after {
+      display: none;
+    }
+    .about-profile-note {
+      position: static;
+      z-index: auto;
+      min-height: 0;
+      margin-top: 0.7rem;
+      padding: 0 0.15rem;
+      background: transparent;
+    }
+    .about-profile-photo:hover img,
+    .about-profile-photo:focus-within img {
+      transform: none;
     }
   }
 
@@ -712,7 +806,7 @@
     gap: 1.25rem;
     margin-top: 1.5rem;
   }
-  @media (min-width: 720px) {
+  @media (min-width: 960px) {
     .about-howiwork-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 1.5rem;
@@ -935,15 +1029,18 @@
     height: 100%;
     display: block;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     .about-mentorship {
       padding: 0 5% 8%;
     }
     .about-mentorship-reviews {
-      height: 480px;
+      flex: 0 1 auto;
+      height: min(420px, 62dvh);
+      max-height: 62dvh;
       border-radius: 16px;
+      overflow: hidden;
     }
-    .about-howiwork-card { padding: 1.5rem 1.4rem 1.4rem; }
+    .about-howiwork-card { padding: 1.35rem 1.2rem 1.25rem; }
   }
 
   /* Footer (match index.html): full-bleed gradient edge-to-edge of #site-content-wrap */
@@ -1059,8 +1156,20 @@
     outline-offset: 3px;
   }
   @media screen and (max-width: 768px) {
+    #contact .frame {
+      padding-bottom: 5.5rem !important;
+    }
+    #contact .footer-meta {
+      padding-left: 5%;
+      padding-right: 5.75rem;
+      align-items: center;
+    }
+    #contact .footer-meta .footertxt {
+      padding-left: 0 !important;
+    }
     #contact .footer-meta .back-to-top {
-      margin-left: 5%;
+      margin-left: auto;
+      flex: 0 0 auto;
     }
   }
 
@@ -1068,8 +1177,8 @@
     @media screen and (max-width: 768px) {
       .hamburgler-icon-wrapper {
         display: block !important;
-        top: 20px !important;
-        right: 24px !important;
+        top: max(12px, env(safe-area-inset-top, 0px)) !important;
+        right: max(16px, env(safe-area-inset-right, 0px)) !important;
         width: 64px !important;
         height: 64px !important;
         border: 1px solid rgba(255, 255, 255, 0.55);
@@ -1196,7 +1305,19 @@
         <p class="about-intro-lead">I'm Srini, a Product Designer passionate about creating digital experiences that blend design, technology, and real human insight.</p>
         <p class="about-intro-body">I believe in the perfect harmony of design, experience, and technology. Hands-on through the whole product journey — from shaping early ideas to crafting interactions, with a recent focus on non-deterministic experiences and design frameworks. I also enjoy jumping into code and dabbling with LLMs.</p>
         <p class="about-intro-aside">When I'm not designing, you'll likely find me in a Bay Area café sipping on a cappuccino, exploring a new vegetarian spot, or capturing everyday moments through my camera. I take a trip every year to disconnect, recharge, and return with fresh ideas.</p>
-        <a class="about-intro-email about-mentorship-cta" href="mailto:tcsreeni93@gmail.com"><span class="about-mentorship-cta-label">Email me</span><svg class="about-mentorship-cta-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <figure class="about-signature" aria-label="Srini signature">
+          <svg class="about-signature-svg" viewBox="0 0 446 129" xmlns="http://www.w3.org/2000/svg" role="img" aria-hidden="true">
+            <defs>
+              <mask id="about-signature-mask" maskUnits="userSpaceOnUse" maskContentUnits="userSpaceOnUse" x="-12" y="-12" width="470" height="154">
+                <path class="about-signature-stroke" pathLength="1"
+                  d="M94 6 L84 7 L72 11 L60 18 L52 30 L49 40 L54 48 L66 54 L80 60 L90 64 L76 69 L60 72 L44 75 L32 79 L20 85 L12 93 L6 104 L10 114 L22 120 L40 124 L64 124 L86 120 L100 112 L110 100 L114 86 L106 72 L124 78 L136 70 L140 88 L142 104 L148 82 L158 62 L172 56 L190 62 L204 70 L214 86 L222 100 L228 102 L244 92 L260 74 L272 60 L278 78 L280 96 L294 74 L310 58 L322 56 L328 74 L334 96 L340 101 L356 90 L372 72 L378 64 L382 86 L388 104 L400 108 L416 98 L424 86" />
+                <path class="about-signature-stroke about-signature-stroke--dot" pathLength="1" d="M389 35 L397 36" />
+                <path class="about-signature-stroke about-signature-stroke--period" pathLength="1" d="M430 64 L441 64" />
+              </mask>
+            </defs>
+            <image href="images/srini-signature.png" x="0" y="0" width="446" height="129" mask="url(#about-signature-mask)" />
+          </svg>
+        </figure>
       </div>
       <figure class="about-profile-photo">
         <img src="images/srini-about.png?v=2" alt="Srini at the Golden Gate Bridge" width="320" height="400" loading="lazy" decoding="async" />
@@ -1218,7 +1339,7 @@
   <div class="about-howiwork-grid">
     <article class="about-howiwork-card" data-scroll-reveal>
       <span class="about-howiwork-step">01</span>
-      <h3>Understand</h3>
+      <h3>Observe and understand</h3>
       <p>Start with the problem, not the solution. I dig into user research, business context, and constraints, then frame what we're really solving — and why it matters now.</p>
     </article>
     <article class="about-howiwork-card" data-scroll-reveal>
@@ -1391,7 +1512,14 @@
       opacity: 0 !important;
       visibility: hidden !important;
     }
-    .srini-chat-fab { display: flex; top: auto; bottom: 24px; right: 24px; width: 75px; height: 75px; }
+    .srini-chat-fab {
+      display: flex;
+      top: auto;
+      bottom: max(16px, env(safe-area-inset-bottom, 0px));
+      right: max(16px, env(safe-area-inset-right, 0px));
+      width: 64px;
+      height: 64px;
+    }
     .srini-chat-fab-icon { width: 32px; height: 32px; }
     .header-chat-slot { display: none !important; }
     body.chat-open { overflow: hidden; }
@@ -1574,6 +1702,6 @@
 <link rel="stylesheet" href="iphone-duo.css?v=1">
 <script src="iphone-duo.js?v=1"></script>
 <script src="proxy-resize.js?v=1"></script>
-<script src="ui-sounds.js?v=26"></script>
+<script src="ui-sounds.js?v=27"></script>
 
 </body></html>
