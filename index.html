@@ -3355,40 +3355,34 @@ Designed a <mark class="work-mark">white label friendly design system</mark> sca
       const persistentNavMinWidth = window.matchMedia('(min-width: 769px)');
       let headerChatBorderIntroPlayed = false;
 
-      const persistOffThreshold = 56;
-
-      function isPastScrollThreshold(bottom) {
-        if (document.body.classList.contains('nav-persistent')) {
-          return bottom <= persistOffThreshold;
-        }
-        return bottom <= 0;
+      function measureInFlowChromeBottom() {
+        const logo = document.querySelector('.logo-srini');
+        const menu = document.querySelector('header .desk-menu');
+        const bottoms = [];
+        [logo, menu].forEach(function (el) {
+          if (!el) return;
+          const rect = el.getBoundingClientRect();
+          if (rect.height > 0) bottoms.push(rect.bottom);
+        });
+        return bottoms.length ? Math.max.apply(null, bottoms) : null;
       }
 
       function hasScrolledPastHeader() {
         const header = document.querySelector('header');
         if (!header) return window.scrollY > 140;
 
-        if (header.querySelector('.HeaderContent')) {
-          return isPastScrollThreshold(header.getBoundingClientRect().bottom);
+        /* Compact logo, hamburger, and chat appear once the in-flow mark and menu leave the viewport. */
+        const anchor = document.querySelector('.logo-srini') || document.querySelector('.header-nav-row') || header;
+        if (!document.body.classList.contains('nav-persistent')) {
+          const bottom = measureInFlowChromeBottom();
+          if (bottom == null) return window.scrollY > 140;
+          anchor.dataset.persistAtScrollY = String(window.scrollY + bottom);
+          return bottom <= 0;
         }
-
-        const hero = document.getElementById('about');
-        if (hero) {
-          return isPastScrollThreshold(hero.getBoundingClientRect().bottom);
-        }
-
-        const anchor =
-          document.querySelector('.header-nav-row') ||
-          document.querySelector('header nav') ||
-          header;
-        const rect = anchor.getBoundingClientRect();
-        if (rect.height > 0 && !document.body.classList.contains('nav-persistent')) {
-          anchor.dataset.persistAtScrollY = String(window.scrollY + rect.bottom);
-        }
-        if (document.body.classList.contains('nav-persistent') && anchor.dataset.persistAtScrollY) {
+        if (anchor.dataset.persistAtScrollY) {
           return window.scrollY >= parseFloat(anchor.dataset.persistAtScrollY, 10);
         }
-        return isPastScrollThreshold(rect.bottom);
+        return window.scrollY > 140;
       }
 
       function isPersistentNavActive() {
@@ -3958,7 +3952,7 @@ Designed a <mark class="work-mark">white label friendly design system</mark> sca
 
   var CHAT_API_PUBLIC = 'https://sriniai.netlify.app';
   /** Bump when deploying chatbot or host chat script changes (cache bust). */
-  var CHATBOT_CACHE_BUST = '42';
+  var CHATBOT_CACHE_BUST = '43';
   function resolveChatApiUrl(raw) {
     var s = (raw || '').trim();
     if (!s) return '';
