@@ -1,0 +1,25 @@
+{
+  "id": "./index.html",
+  "name": "Srinivasan",
+  "short_name": "srini",
+  "description": "Staff Product Designer — AI-driven product design",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "images/Appicons/iOS/180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "images/Appicons/iOS/152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

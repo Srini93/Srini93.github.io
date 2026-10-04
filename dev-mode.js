@@ -441,55 +441,115 @@
     setTimeout(function() { flash.remove(); }, 500);
   }
 
+  function getAudioContext() {
+    try {
+      return new (window.AudioContext || window.webkitAudioContext)();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  /* Sci-fi power-up: rising digital sweep + glassy chord */
   function playOpenSound() {
     try {
-      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      var ctx = getAudioContext();
+      if (!ctx) return;
       var now = ctx.currentTime;
+      var master = ctx.createGain();
+      master.gain.setValueAtTime(0.22, now);
+      master.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+      master.connect(ctx.destination);
 
-      // Rising confirmation beep
-      var osc = ctx.createOscillator();
-      var gain = ctx.createGain();
+      var filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(800, now);
+      filter.frequency.exponentialRampToValueAtTime(6200, now + 0.32);
+      filter.Q.setValueAtTime(6, now);
+      filter.connect(master);
 
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(880, now);
-      osc.frequency.setValueAtTime(1100, now + 0.08);
+      // Rising saw sweep
+      var sweep = ctx.createOscillator();
+      sweep.type = 'sawtooth';
+      sweep.frequency.setValueAtTime(180, now);
+      sweep.frequency.exponentialRampToValueAtTime(1400, now + 0.35);
+      sweep.connect(filter);
+      sweep.start(now);
+      sweep.stop(now + 0.38);
 
-      gain.gain.setValueAtTime(0.15, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+      // Soft square pulse trail
+      var pulseGain = ctx.createGain();
+      pulseGain.gain.setValueAtTime(0, now + 0.12);
+      pulseGain.gain.linearRampToValueAtTime(0.12, now + 0.18);
+      pulseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.5);
+      pulseGain.connect(master);
+      var pulse = ctx.createOscillator();
+      pulse.type = 'square';
+      pulse.frequency.setValueAtTime(880, now + 0.12);
+      pulse.frequency.setValueAtTime(1320, now + 0.28);
+      pulse.connect(pulseGain);
+      pulse.start(now + 0.12);
+      pulse.stop(now + 0.5);
 
-      osc.connect(gain);
-      gain.connect(ctx.destination);
+      // Glassy confirmation chord
+      [1175, 1480, 1760].forEach(function (freq, i) {
+        var g = ctx.createGain();
+        var start = now + 0.22 + i * 0.04;
+        g.gain.setValueAtTime(0, start);
+        g.gain.linearRampToValueAtTime(0.08, start + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, start + 0.28);
+        g.connect(master);
+        var osc = ctx.createOscillator();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, start);
+        osc.connect(g);
+        osc.start(start);
+        osc.stop(start + 0.3);
+      });
 
-      osc.start(now);
-      osc.stop(now + 0.2);
-
-      setTimeout(function() { ctx.close(); }, 300);
+      setTimeout(function () { ctx.close(); }, 700);
     } catch (e) {}
   }
 
+  /* Sci-fi power-down: falling filtered sweep */
   function playCloseSound() {
     try {
-      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      var ctx = getAudioContext();
+      if (!ctx) return;
       var now = ctx.currentTime;
+      var master = ctx.createGain();
+      master.gain.setValueAtTime(0.18, now);
+      master.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+      master.connect(ctx.destination);
 
-      // Descending beep
-      var osc = ctx.createOscillator();
-      var gain = ctx.createGain();
+      var filter = ctx.createBiquadFilter();
+      filter.type = 'lowpass';
+      filter.frequency.setValueAtTime(4800, now);
+      filter.frequency.exponentialRampToValueAtTime(280, now + 0.35);
+      filter.Q.setValueAtTime(4, now);
+      filter.connect(master);
 
-      osc.type = 'sine';
-      osc.frequency.setValueAtTime(1100, now);
-      osc.frequency.setValueAtTime(880, now + 0.08);
+      var sweep = ctx.createOscillator();
+      sweep.type = 'sawtooth';
+      sweep.frequency.setValueAtTime(980, now);
+      sweep.frequency.exponentialRampToValueAtTime(120, now + 0.36);
+      sweep.connect(filter);
+      sweep.start(now);
+      sweep.stop(now + 0.38);
 
-      gain.gain.setValueAtTime(0.12, now);
-      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.12);
+      var g = ctx.createGain();
+      g.gain.setValueAtTime(0, now);
+      g.gain.linearRampToValueAtTime(0.1, now + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+      g.connect(master);
+      var ping = ctx.createOscillator();
+      ping.type = 'triangle';
+      ping.frequency.setValueAtTime(660, now);
+      ping.frequency.exponentialRampToValueAtTime(220, now + 0.25);
+      ping.connect(g);
+      ping.start(now);
+      ping.stop(now + 0.28);
 
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-
-      osc.start(now);
-      osc.stop(now + 0.15);
-
-      setTimeout(function() { ctx.close(); }, 250);
+      setTimeout(function () { ctx.close(); }, 500);
     } catch (e) {}
   }
 
@@ -754,7 +814,6 @@
     toggleBoxes();
     toggleSpacings();
 
-    // Play open sound
     if (playSound !== false) {
       playOpenSound();
     }

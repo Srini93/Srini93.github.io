@@ -11,6 +11,30 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Srinivasan">
+  <link rel="manifest" href="manifest.webmanifest">
+  <script>
+    (function () {
+      try {
+        var nav = performance.getEntriesByType && performance.getEntriesByType('navigation')[0];
+        var type = (nav && nav.type) || (performance.navigation && performance.navigation.type === 1 ? 'reload' : 'navigate');
+        var standalone = (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone === true;
+        var sameOriginReferrer = false;
+        try {
+          sameOriginReferrer = !!(document.referrer && new URL(document.referrer).origin === location.origin);
+        } catch (err) {}
+        var startAtTop = type === 'reload' || (standalone && !sameOriginReferrer);
+        if (startAtTop) {
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+          if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+          window.scrollTo(0, 0);
+          window.addEventListener('pageshow', function (e) {
+            if (e.persisted) return;
+            window.scrollTo(0, 0);
+          });
+        }
+      } catch (err) {}
+    })();
+  </script>
 
   <!-- App Icon -->
   <link href="images/Appicons/iOS/120.png" rel="apple-touch-icon" />
@@ -2511,7 +2535,7 @@
           <div  class="cards-layout-content" style="padding-top: 5%; min-width: 320px;">
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
-            <a href="Intuit.html" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Intuit Assist – GenAI-Powered Developer Assistant</a></h2>
+            <a href="Intuit.html" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Making Developer Knowledge More Accessible with Generative AI</a></h2>
             <p class="project-date">June 2023 - Present <span class="work-lock-badge" title="This case study is NDA protected"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>NDA protected</span></p>
             <ul
              class="card-list-points"
@@ -2577,7 +2601,7 @@
           <div  class="cards-layout-content" style="padding-top: 5%; min-width: 320px;">
             <h2
               style=" font-weight: 200; font-family: 'MyWebFont'; font-size: 30px; margin-bottom: 2rem; line-height: 2.3rem;">
-            <a href="API.html" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">API platform - API Documentation, testing and integration experiences</a></h2>
+            <a href="API.html" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">Standardizing API Discovery, Testing, and Integration for Developers</a></h2>
             <p class="project-date">Jan 2023 - Present <span class="work-lock-badge" title="This case study is NDA protected"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>NDA protected</span></p>
             <ul
              class="card-list-points"
@@ -3156,12 +3180,9 @@ Designed a <mark class="work-mark">white label friendly design system</mark> sca
 
           if (updateHash !== false) {
             if (panelName === 'ai-labs') {
-              history.replaceState(null, '', '#Selectedworks-ai-labs');
               requestAnimationFrame(function () {
                 if (window.refreshFolderCards) window.refreshFolderCards();
               });
-            } else if (window.location.hash === '#Selectedworks-ai-labs' || window.location.hash.indexOf('#folder-') === 0) {
-              history.replaceState(null, '', '#Selectedworks');
             }
           } else if (panelName === 'ai-labs') {
             requestAnimationFrame(function () {
@@ -3245,9 +3266,6 @@ Designed a <mark class="work-mark">white label friendly design system</mark> sca
           window.setWorkPanel('recent');
         }
         scrollToPageSection(target, opts);
-        if (history.replaceState) {
-          history.replaceState(null, '', '#Selectedworks');
-        }
       }
 
       // Smooth scroll links (Works → Recent Work / AI Labs header)
@@ -3263,9 +3281,6 @@ Designed a <mark class="work-mark">white label friendly design system</mark> sca
         if (!$target.length) return;
         e.preventDefault();
         scrollToPageSection($target[0]);
-        if (history.replaceState) {
-          history.replaceState(null, '', id);
-        }
       });
 
       $('a[href="#Selectedworks"], a[href="index.html#Selectedworks"], a[href$="index.html#Selectedworks"]').on('click', function (e) {
@@ -4143,8 +4158,8 @@ Designed a <mark class="work-mark">white label friendly design system</mark> sca
   <link rel="stylesheet" href="iphone-duo.css?v=1">
   <script src="iphone-duo.js?v=1"></script>
   <script src="proxy-resize.js?v=1"></script>
-  <script src="ui-sounds.js?v=26"></script>
-  <script src="dev-mode.js"></script>
+  <script src="ui-sounds.js?v=27"></script>
+  <script src="dev-mode.js?v=2"></script>
   <script type="module">
     import { initFolderCards, refreshFolderCards, openFolderStage } from './vendor/folder-cards/folder-cards.js?v=37';
     window.refreshFolderCards = refreshFolderCards;
