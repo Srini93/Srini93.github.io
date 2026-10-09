@@ -667,6 +667,56 @@
       }
     }
 
+    /* Mobile: plain chevron only — no circle, no bounce */
+    @media screen and (max-width: 768px) {
+      .see-more {
+        width: auto !important;
+        height: auto !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
+        padding: 0 !important;
+        border-radius: 0 !important;
+        background: transparent !important;
+        background-image: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        animation: none !important;
+        transition: none !important;
+        overflow: visible !important;
+        gap: 0 !important;
+      }
+
+      .see-more:hover,
+      .see-more:active {
+        width: auto !important;
+        height: auto !important;
+        gap: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        background-image: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        transform: none !important;
+        animation: none !important;
+      }
+
+      .see-more:hover svg {
+        transform: none !important;
+      }
+
+      .see-more-text {
+        display: none !important;
+      }
+
+      .see-more svg {
+        width: 28px;
+        height: 28px;
+        margin-top: 0;
+      }
+    }
+
 
     /* Image hover effect for buttons */
     .cards-layout-image:hover ~ .cards-layout-content .read-more-glass {
