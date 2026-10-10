@@ -1166,6 +1166,11 @@
       }
     }
 
+    /* Mobile: plain chevron only — no circle, no bounce, no down-arrow stem */
+    .hero-cta-chevron-only {
+      display: none;
+    }
+
     @media (max-width: 768px) {
       .hero-cta-row {
         justify-content: center;
@@ -1179,68 +1184,59 @@
 
       .hero-cta--primary {
         display: flex !important;
-        gap: 0;
-        width: 58px;
-        height: 58px;
-        min-height: 58px;
+        align-items: center;
+        justify-content: center;
+        gap: 0 !important;
+        width: auto !important;
+        height: auto !important;
+        min-width: 0 !important;
+        min-height: 0 !important;
         padding: 0 !important;
-        overflow: hidden;
-        animation: bounce-slow 2.5s ease-in-out 1.4s infinite !important;
-        transition:
-          width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-          padding 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-          gap 0.5s cubic-bezier(0.34, 1.56, 0.64, 1),
-          background 0.3s ease,
-          box-shadow 0.3s ease,
-          transform 0.2s ease,
-          border-color 0.3s ease;
+        border-radius: 0 !important;
+        background: transparent !important;
+        background-image: none !important;
+        backdrop-filter: none !important;
+        -webkit-backdrop-filter: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        overflow: visible !important;
+        animation: none !important;
+        transition: none !important;
       }
 
       .hero-cta--primary .hero-cta-primary-label {
-        font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        font-size: 15px;
-        font-weight: 400;
-        letter-spacing: -0.01em;
-        text-transform: none;
-        line-height: 1;
-        color: #2b2b2b;
-        white-space: nowrap;
-        opacity: 0;
-        width: 0;
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        padding-top: 1px;
-        transition:
-          opacity 0.4s cubic-bezier(0.34, 1.56, 0.64, 1),
-          width 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+        display: none !important;
       }
 
       .hero-cta--primary:hover,
-      .hero-cta--primary:focus-visible {
-        width: 248px;
-        gap: 10px;
-        padding: 0 28px !important;
+      .hero-cta--primary:focus-visible,
+      .hero-cta--primary:active {
+        width: auto !important;
+        height: auto !important;
+        gap: 0 !important;
+        padding: 0 !important;
+        background: transparent !important;
+        background-image: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        transform: none !important;
         animation: none !important;
-        transform: scale(1.05);
-      }
-
-      .hero-cta--primary:hover .hero-cta-primary-label,
-      .hero-cta--primary:focus-visible .hero-cta-primary-label {
-        opacity: 1;
-        width: auto;
-        transition-delay: 0.1s;
       }
 
       .hero-cta--primary .hero-cta-chevron {
-        width: 22px;
-        height: 22px;
-        margin-top: -1px;
+        width: 28px;
+        height: 28px;
+        margin-top: 0;
         color: #000;
       }
 
-      .hero-cta--primary:active {
-        transform: scale(0.97);
+      .hero-cta--primary .hero-cta-arrow {
+        display: none !important;
+        animation: none !important;
+      }
+
+      .hero-cta--primary .hero-cta-chevron-only {
+        display: block !important;
       }
     }
 
@@ -2662,6 +2658,7 @@
                 <path d="M12 5v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                 <path d="M6 13l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </g>
+              <path class="hero-cta-chevron-only" d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </a>
           <button type="button" class="hero-cta hero-cta--chat srini-chat-trigger srini-chat-border-attention" aria-label="Ask about me" aria-expanded="false">
