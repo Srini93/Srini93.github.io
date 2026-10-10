@@ -1385,11 +1385,57 @@
         var reduceMotion =
           window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         var sessions = new WeakMap();
+        var STAGGER_MS = 120;
 
         function cloneBlock(block) {
           var node = block.cloneNode(true);
           node.classList.add('msg-line');
           return node;
+        }
+
+        function isList(node) {
+          return node.tagName === 'UL' || node.tagName === 'OL';
+        }
+
+        function animateIn(session, node) {
+          if (reduceMotion) return;
+          var now = performance.now();
+          var start = Math.max(now, session.nextAt);
+          session.nextAt = start + STAGGER_MS;
+          node.style.animationDelay = Math.round(start - now) + 'ms';
+          node.classList.remove('msg-line--enter');
+          void node.offsetWidth;
+          node.classList.add('msg-line--enter');
+        }
+
+        // Lists reveal item by item; other blocks reveal as a whole.
+        function appendBlock(session, block) {
+          if (!isList(block)) {
+            var node = cloneBlock(block);
+            session.reveal.appendChild(node);
+            animateIn(session, node);
+            return node;
+          }
+          var list = block.cloneNode(false);
+          list.classList.add('msg-line');
+          session.reveal.appendChild(list);
+          syncListItems(session, list, block);
+          return list;
+        }
+
+        function syncListItems(session, list, block) {
+          var items = block.children;
+          for (var i = 0; i < items.length; i += 1) {
+            var current = list.children[i];
+            if (!current) {
+              var item = items[i].cloneNode(true);
+              list.appendChild(item);
+              animateIn(session, item);
+            } else if (current.innerHTML !== items[i].innerHTML) {
+              current.innerHTML = items[i].innerHTML;
+            }
+          }
+          while (list.children.length > items.length) list.removeChild(list.lastChild);
         }
 
         function ensureSession(source) {
@@ -1411,6 +1457,7 @@
             liveNode: null,
             observer: null,
             raf: 0,
+            nextAt: 0,
           };
           sessions.set(source, session);
           return session;
@@ -1419,44 +1466,34 @@
         function sealLive(session) {
           if (!session.liveNode) return;
           session.liveNode.classList.remove('msg-line--live');
-          if (!reduceMotion) {
-            session.liveNode.classList.remove('msg-line--enter');
-            void session.liveNode.offsetWidth;
-            session.liveNode.classList.add('msg-line--enter');
-          }
           session.liveNode = null;
           session.liveHtml = '';
           session.sealed += 1;
         }
 
+        function fillLive(session, block) {
+          if (isList(block)) syncListItems(session, session.liveNode, block);
+          else session.liveNode.innerHTML = block.innerHTML;
+          session.liveHtml = block.innerHTML;
+        }
+
         function updateLive(session, block) {
           var inner = block.innerHTML;
 
+          if (session.liveNode && session.liveNode.tagName !== block.tagName) {
+            session.reveal.removeChild(session.liveNode);
+            session.liveNode = null;
+          }
+
           if (!session.liveNode) {
-            var node = cloneBlock(block);
-            node.classList.add('msg-line--live');
-            if (!reduceMotion) node.classList.add('msg-line--enter');
-            session.reveal.appendChild(node);
-            session.liveNode = node;
+            session.liveNode = appendBlock(session, block);
+            session.liveNode.classList.add('msg-line--live');
             session.liveHtml = inner;
             return;
           }
 
           if (inner === session.liveHtml) return;
-
-          // Tag mismatch (e.g. p -> ul): replace the live node.
-          if (session.liveNode.tagName !== block.tagName) {
-            var replacement = cloneBlock(block);
-            replacement.classList.add('msg-line--live');
-            if (!reduceMotion) replacement.classList.add('msg-line--enter');
-            session.reveal.replaceChild(replacement, session.liveNode);
-            session.liveNode = replacement;
-            session.liveHtml = inner;
-            return;
-          }
-
-          session.liveNode.innerHTML = inner;
-          session.liveHtml = inner;
+          fillLive(session, block);
         }
 
         function syncSession(session) {
@@ -1468,12 +1505,10 @@
             if (session.liveNode) {
               // Persist the latest HTML before sealing.
               var done = blocks[session.sealed];
-              if (done) session.liveNode.innerHTML = done.innerHTML;
+              if (done) fillLive(session, done);
               sealLive(session);
             } else {
-              var completed = cloneBlock(blocks[session.sealed]);
-              if (!reduceMotion) completed.classList.add('msg-line--enter');
-              session.reveal.appendChild(completed);
+              appendBlock(session, blocks[session.sealed]);
               session.sealed += 1;
             }
           }
@@ -1505,12 +1540,10 @@
           while (session.sealed < blocks.length) {
             if (session.liveNode) {
               var current = blocks[session.sealed];
-              if (current) session.liveNode.innerHTML = current.innerHTML;
+              if (current) fillLive(session, current);
               sealLive(session);
             } else {
-              var node = cloneBlock(blocks[session.sealed]);
-              if (!reduceMotion) node.classList.add('msg-line--enter');
-              session.reveal.appendChild(node);
+              appendBlock(session, blocks[session.sealed]);
               session.sealed += 1;
             }
           }
@@ -1931,43 +1964,77 @@
           });
         }
 
-        function captureAdplistFromStream(response) {
+        // The app only renders chips once its stream closes, so end it as soon as
+        // the server's `done` event arrives instead of waiting for the server to hang up.
+        function captureAdplistFromStream(response, onDone) {
           if (!response.ok || !response.body) return response;
-          const [forApp, forTap] = response.body.tee();
-          const reader = forTap.getReader();
+          const reader = response.body.getReader();
           const decoder = new TextDecoder();
+          const encoder = new TextEncoder();
           let buffer = '';
+          let finished = false;
 
-          (async () => {
+          const handleLine = (line) => {
+            if (!line.startsWith('data: ')) return false;
+            const payload = line.slice(6).trim();
+            if (!payload || payload === '[DONE]') return false;
             try {
-              const handleLine = (line) => {
-                if (!line.startsWith('data: ')) return;
-                const payload = line.slice(6).trim();
-                if (!payload || payload === '[DONE]') return;
-                try {
-                  const event = JSON.parse(payload);
-                  if (event.type === 'done') {
-                    if (event.adplist) scheduleAdplistWidget(event.adplist);
-                    if (event.suggestions) trackSuggestions(event.suggestions);
-                    if (event.trace_id) noteTrace(event.trace_id);
-                  }
-                } catch (_) {}
-              };
+              const event = JSON.parse(payload);
+              if (event.type === 'done') {
+                if (event.adplist) scheduleAdplistWidget(event.adplist);
+                if (event.suggestions) trackSuggestions(event.suggestions);
+                if (event.trace_id) noteTrace(event.trace_id);
+                if (onDone) onDone(event);
+                return true;
+              }
+            } catch (_) {}
+            return false;
+          };
 
-              while (true) {
+          const forApp = new ReadableStream({
+            async pull(controller) {
+              if (finished) return;
+              try {
                 const { done, value } = await reader.read();
                 if (done) {
                   buffer += decoder.decode();
-                  buffer.split('\n').forEach(handleLine);
-                  break;
+                  if (buffer) {
+                    handleLine(buffer);
+                    controller.enqueue(encoder.encode(buffer));
+                  }
+                  finished = true;
+                  controller.close();
+                  return;
                 }
                 buffer += decoder.decode(value, { stream: true });
                 const lines = buffer.split('\n');
                 buffer = lines.pop() || '';
-                lines.forEach(handleLine);
+                let out = '';
+                for (const line of lines) {
+                  out += line + '\n';
+                  if (handleLine(line)) {
+                    controller.enqueue(encoder.encode(out + '\n'));
+                    finished = true;
+                    controller.close();
+                    // Keep the connection open so the server can finish flushing traces.
+                    (async () => {
+                      try {
+                        while (!(await reader.read()).done) {}
+                      } catch (_) {}
+                    })();
+                    return;
+                  }
+                }
+                if (out) controller.enqueue(encoder.encode(out));
+              } catch (err) {
+                finished = true;
+                controller.error(err);
               }
-            } catch (_) {}
-          })();
+            },
+            cancel() {
+              reader.cancel().catch(() => {});
+            },
+          });
 
           return new Response(forApp, {
             status: response.status,
@@ -2004,21 +2071,32 @@
           }
         }
 
+        // Last two turns, sent with each request so follow-ups like "tell me more" resolve
+        let chatHistory = [];
+
+        function rememberTurn(question, answer) {
+          if (!question || !answer) return;
+          chatHistory = [
+            ...chatHistory,
+            { role: 'user', content: String(question).slice(0, 300) },
+            { role: 'assistant', content: String(answer).slice(0, 1200) },
+          ].slice(-4);
+        }
+
         // Reset suggestions when conversation is reset
         const feedbackTraces = [];
 
-        window.addEventListener('srini-chat-reset', () => {
+        function resetConversationState() {
           previousSuggestions = [];
+          chatHistory = [];
           feedbackTraces.length = 0;
-        });
+        }
+
+        window.addEventListener('srini-chat-reset', resetConversationState);
 
         // Listen for reset button clicks
         document.addEventListener('click', (e) => {
-          const resetBtn = e.target.closest('button[aria-label="Reset conversation"]');
-          if (resetBtn) {
-            previousSuggestions = [];
-            feedbackTraces.length = 0;
-          }
+          if (e.target.closest('button[aria-label="Reset conversation"]')) resetConversationState();
         });
         const thumbUpSvg = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5.2 7.9H3.6V15.1H5.2V7.9Z" fill="currentColor"/><path d="M10.8 5.5V8.7H14.8V8.73L14.78 8.76L13.56 13.5H8.4V8.46L10.77 5.5H10.8ZM10.8 3.9H10.77C10.28 3.9 9.82 4.12 9.52 4.5L7.15 7.46C6.93 7.74 6.8 8.1 6.8 8.46V13.5C6.8 14.38 7.51 15.1 8.4 15.1H13.56C14.29 15.1 14.93 14.6 15.11 13.9L16.33 9.16C16.65 8.14 15.87 7.11 14.8 7.11H12.4V5.51C12.4 4.63 11.68 3.91 10.8 3.91V3.9Z" fill="currentColor"/></svg>';
         const thumbDownSvg = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16.4 4.9H14.8V12.1H16.4V4.9Z" fill="currentColor"/><path d="M6.44 6.5H11.6V11.54L9.2 14.5V11.3H5.2V11.27L5.21 11.24L6.44 6.5ZM6.44 4.9C5.71 4.9 5.07 5.4 4.89 6.1L3.67 10.84C3.36 11.86 4.13 12.9 5.21 12.9H7.61V14.5C7.61 15.38 8.33 16.1 9.21 16.1H9.24C9.73 16.1 10.18 15.87 10.49 15.5L12.85 12.54C13.08 12.26 13.21 11.9 13.21 11.54V6.5C13.2 5.62 12.48 4.9 11.6 4.9H6.44Z" fill="currentColor"/></svg>';
@@ -2127,11 +2205,14 @@
           const method = (init && init.method) || (typeof input !== 'string' && input?.method) || 'GET';
           const chatKind = isChatPost(url, method);
           
-          // Inject previous suggestions into chat requests
-          if (chatKind && init?.body && previousSuggestions.length > 0) {
+          // Inject previous suggestions and recent turns into chat requests
+          let question = '';
+          if (chatKind && init?.body) {
             try {
               const bodyObj = JSON.parse(init.body);
-              bodyObj.previous_suggestions = previousSuggestions;
+              question = bodyObj.message || '';
+              if (previousSuggestions.length > 0) bodyObj.previous_suggestions = previousSuggestions;
+              if (chatHistory.length > 0) bodyObj.history = chatHistory;
               init = { ...init, body: JSON.stringify(bodyObj) };
             } catch (_) {}
           }
@@ -2144,10 +2225,13 @@
             cloned.json().then(data => {
               if (data?.suggestions) trackSuggestions(data.suggestions);
               if (data?.trace_id) noteTrace(data.trace_id);
+              rememberTurn(question, data?.answer);
             }).catch(() => {});
             return captureAdplistFromJson(response);
           }
-          if (chatKind === 'stream') return captureAdplistFromStream(response);
+          if (chatKind === 'stream') {
+            return captureAdplistFromStream(response, (event) => rememberTurn(question, event.answer));
+          }
           return response;
         };
       })();
