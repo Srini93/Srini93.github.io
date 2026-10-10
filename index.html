@@ -242,7 +242,7 @@
           width 0.45s cubic-bezier(0.16, 1, 0.3, 1);
       }
 
-      body.nav-persistent .header-nav-row > .header-chat-slot {
+      body.nav-persistent.hero-chat-docked .header-nav-row > .header-chat-slot {
         width: 64px;
         min-width: 64px;
         overflow: visible;
@@ -250,7 +250,16 @@
         visibility: visible;
         pointer-events: auto;
         transform: translate3d(0, 0, 0) scale(1);
-        transition-delay: 0.08s;
+        transition: none;
+      }
+
+      body.nav-persistent:not(.hero-chat-docked) .header-nav-row > .header-chat-slot {
+        width: 0;
+        min-width: 0;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: none;
       }
     }
 
@@ -775,8 +784,7 @@
       }
 
       body.nav-persistent.nav-chrome-enter .logo-srini,
-      body.nav-persistent.nav-chrome-enter header nav,
-      body.nav-persistent.nav-chrome-enter .header-nav-row > .header-chat-slot {
+      body.nav-persistent.nav-chrome-enter header nav {
         animation: persistentChromeIn 0.4s ease backwards;
       }
     }
@@ -991,6 +999,154 @@
 
     .hero-cta:active {
       transform: scale(0.98);
+    }
+
+    .chat-goo {
+      position: fixed;
+      inset: 0;
+      z-index: 10081;
+      pointer-events: none;
+      opacity: 0.9;
+      filter: url(#chat-goo-filter);
+      will-change: filter;
+    }
+
+    .chat-goo-tail {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 10px;
+      height: 10px;
+      border-radius: 9999px;
+      background: #dce6fb;
+      transform-origin: 0 0;
+      will-change: transform;
+    }
+
+    .chat-morph {
+      --glass: 0;
+      --spec-x: 30%;
+      --spec-y: 25%;
+      position: fixed;
+      left: 0;
+      top: 0;
+      z-index: 10082;
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      border-radius: 9999px;
+      border: 1.5px solid rgba(59, 101, 239, 0.28);
+      background: #dce6fb;
+      -webkit-backdrop-filter: blur(22px) saturate(170%) brightness(1.04);
+      backdrop-filter: blur(22px) saturate(170%) brightness(1.04);
+      box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, calc(0.85 * var(--glass))),
+        inset 0 -1px 0 rgba(59, 101, 239, calc(0.14 * var(--glass))),
+        inset 0 0 0 1px rgba(255, 255, 255, calc(0.32 * var(--glass))),
+        inset 0 10px 22px -12px rgba(255, 255, 255, calc(0.9 * var(--glass))),
+        inset 0 -12px 20px -16px rgba(59, 101, 239, calc(0.28 * var(--glass)));
+      pointer-events: none;
+      transform-origin: 0 0;
+      will-change: transform, width, height;
+    }
+
+    /* Specular: a soft highlight that slides across the surface as the body moves. */
+    .chat-morph::before {
+      content: '';
+      position: absolute;
+      inset: -40%;
+      border-radius: inherit;
+      background: radial-gradient(
+        closest-side at var(--spec-x) var(--spec-y),
+        rgba(255, 255, 255, 0.75),
+        rgba(255, 255, 255, 0.28) 32%,
+        rgba(255, 255, 255, 0) 62%
+      );
+      opacity: var(--glass);
+      mix-blend-mode: screen;
+    }
+
+    /* Refracted rim: bright on the lit edge, tinted on the shaded edge, drawn as a 1.5px ring. */
+    .chat-morph::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.5px;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.95) 0%,
+        rgba(255, 255, 255, 0.35) 28%,
+        rgba(255, 255, 255, 0.08) 52%,
+        rgba(59, 101, 239, 0.22) 100%
+      );
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      mask-composite: exclude;
+      opacity: var(--glass);
+    }
+
+    .chat-morph-shadow {
+      position: fixed;
+      z-index: 10080;
+      left: 0;
+      top: 0;
+      border-radius: 9999px;
+      box-shadow: 0 8px 24px rgba(59, 101, 239, 0.16);
+      pointer-events: none;
+      transform-origin: 0 0;
+      will-change: transform;
+    }
+
+    .chat-morph-content {
+      position: fixed;
+      z-index: 10083;
+      left: 0;
+      top: 0;
+      width: 28px;
+      height: 28px;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .chat-morph-content svg {
+      display: block;
+      width: 28px;
+      height: 28px;
+      color: #3b65ef;
+      transform-origin: center center;
+    }
+
+    .chat-morph-label {
+      position: absolute;
+      left: 34px;
+      top: 50%;
+      display: inline-flex;
+      align-items: baseline;
+      gap: 0.3rem;
+      transform: translateY(-50%);
+      font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      white-space: nowrap;
+      color: #1f1f1f;
+    }
+
+    .chat-morph-name {
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      color: #2b2b2b;
+    }
+
+    body.chat-morphing .hero-cta--chat,
+    body.chat-morphing .header-nav-row > .header-chat-slot {
+      visibility: hidden !important;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1263,7 +1419,7 @@
       body.nav-persistent header nav {
         position: fixed;
         top: 20px;
-        right: 100px;
+        right: 24px;
         z-index: 10080;
         width: 64px;
         height: 64px;
@@ -1284,6 +1440,15 @@
         animation: persistentChromeIn 0.68s cubic-bezier(0.16, 1, 0.3, 1) 0.1s backwards;
       }
 
+      body.nav-persistent.hero-chat-docked header nav,
+      body.nav-persistent.chat-morphing header nav {
+        right: 100px;
+      }
+
+      body.chat-morphing header nav {
+        transition: none;
+      }
+
       body.folder-stage-open.nav-persistent header nav,
       body:has(.fstage.is-open).nav-persistent header nav,
       body.folder-stage-open .header-chat-slot,
@@ -1292,7 +1457,7 @@
         pointer-events: none;
       }
 
-      body.nav-persistent .header-nav-row > .header-chat-slot {
+      body.nav-persistent.hero-chat-docked .header-nav-row > .header-chat-slot {
         position: fixed;
         top: 20px;
         right: 24px;
@@ -1301,11 +1466,6 @@
         margin: 0;
         width: 64px;
         height: 64px;
-      }
-
-      body.nav-persistent.nav-chrome-enter .header-nav-row > .header-chat-slot {
-        animation: persistentChromeIn 0.68s cubic-bezier(0.16, 1, 0.3, 1) 0.2s backwards;
-        transition: none;
       }
 
       body.nav-persistent .header-nav-row > .header-chat-slot .srini-chat-nav-btn {
@@ -1350,13 +1510,18 @@
       }
 
       body.nav-persistent.nav-expanded header nav {
-        right: 100px;
+        right: 24px;
         width: fit-content;
         min-width: 64px;
         max-width: min(560px, calc(100vw - 128px));
         padding: 0;
         overflow: hidden;
         cursor: default;
+      }
+
+      body.nav-persistent.nav-expanded.hero-chat-docked:not(.chat-open) header nav,
+      body.nav-persistent.nav-expanded.chat-morphing:not(.chat-open) header nav {
+        right: 100px;
       }
 
       body.nav-persistent header nav::before,
@@ -3441,15 +3606,442 @@ Designed a <mark class="work-mark">white label friendly design system</mark> sca
         if (!shouldPersist) {
           setPersistentNavExpanded(false);
         }
-        if (shouldPersist && !headerChatBorderIntroPlayed) {
-          headerChatBorderIntroPlayed = true;
-          window.dispatchEvent(new CustomEvent('srini:header-chat-visible'));
-        }
         syncChatSlotPlacement();
+        updateHeroChatMorph();
         if (floatingNav) {
           floatingNav.classList.remove('visible');
         }
       }
+
+      let heroChatDocked = false;
+      let heroChatShown = 0;
+      let heroChatTarget = 0;
+      let heroChatRaf = 0;
+      let heroChatBooted = false;
+      let heroChatCorner = null;
+      const heroChatSpan = 210;
+      const heroChatSpark = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3L13.4302 8.31181C13.6047 8.96 13.692 9.28409 13.8642 9.54905C14.0166 9.78349 14.2165 9.98336 14.451 10.1358C14.7159 10.308 15.04 10.3953 15.6882 10.5698L21 12L15.6882 13.4302C15.04 13.6047 14.7159 13.692 14.451 13.8642C14.2165 14.0166 14.0166 14.2165 13.8642 14.451C13.692 14.7159 13.6047 15.04 13.4302 15.6882L12 21L10.5698 15.6882C10.3953 15.04 10.308 14.7159 10.1358 14.451C9.98336 14.2165 9.78349 14.0166 9.54905 13.8642C9.28409 13.692 8.96 13.6047 8.31181 13.4302L3 12L8.31181 10.5698C8.96 10.3953 9.28409 10.308 9.54905 10.1358C9.78349 9.98336 9.98336 9.78349 10.1358 9.54905C10.308 9.28409 10.3953 8.96 10.5698 8.31181L12 3Z"/></svg>';
+
+      function heroChatButton() {
+        return document.querySelector('.hero-cta--chat');
+      }
+
+      function navChatButton() {
+        return document.querySelector('.header-nav-row > .header-chat-slot .srini-chat-nav-btn');
+      }
+
+      function boxOf(el) {
+        const r = el.getBoundingClientRect();
+        return { left: r.left, top: r.top, width: r.width, height: r.height };
+      }
+
+      function releaseHeroChatNav() {
+        if (!headerNav) return;
+        headerNav.style.right = '';
+        headerNav.style.transition = '';
+      }
+
+      function followHeroChatNav(t) {
+        if (!headerNav) return;
+        const body = document.body;
+        if (!body.classList.contains('nav-persistent') || body.classList.contains('chat-open') || body.classList.contains('nav-expanded')) {
+          releaseHeroChatNav();
+          return;
+        }
+        headerNav.style.transition = 'none';
+        headerNav.style.right = (24 + 76 * t) + 'px';
+      }
+
+      function heroChatCornerBox() {
+        if (heroChatCorner && heroChatCorner.width >= 8) return heroChatCorner;
+        const body = document.body;
+        if (!body.classList.contains('nav-persistent')) {
+          /* Slot is only laid out at the corner once the compact chrome exists; mirror its CSS until then. */
+          return { left: document.documentElement.clientWidth - 24 - 64, top: 20, width: 64, height: 64 };
+        }
+        const hadDock = body.classList.contains('hero-chat-docked');
+        const hadMorph = body.classList.contains('chat-morphing');
+        body.classList.add('hero-chat-docked');
+        body.classList.remove('chat-morphing');
+        const btn = navChatButton();
+        const box = btn ? boxOf(btn) : null;
+        body.classList.toggle('hero-chat-docked', hadDock);
+        body.classList.toggle('chat-morphing', hadMorph);
+        if (box && box.width >= 8 && box.height >= 8) heroChatCorner = box;
+        return heroChatCorner || { left: window.innerWidth - 88, top: 20, width: 64, height: 64 };
+      }
+
+      function heroChatLargePose(rect) {
+        const bottom = rect.top + rect.height;
+        if (bottom >= 0) return rect;
+        return { left: rect.left, top: -rect.height, width: rect.width, height: rect.height };
+      }
+
+      function heroChatIconOffset(hero, rect) {
+        const svg = hero.querySelector('svg');
+        if (!svg) return { x: 48, y: rect.height / 2 };
+        const s = svg.getBoundingClientRect();
+        if (s.width < 2) return { x: 48, y: rect.height / 2 };
+        return {
+          x: (s.left + s.width / 2) - rect.left,
+          y: (s.top + s.height / 2) - rect.top
+        };
+      }
+
+      function revealHeaderChat() {
+        if (headerChatBorderIntroPlayed) return;
+        headerChatBorderIntroPlayed = true;
+        window.dispatchEvent(new CustomEvent('srini:header-chat-visible'));
+      }
+
+      function setHeroChatDocked(on) {
+        heroChatDocked = on;
+        document.body.classList.toggle('hero-chat-docked', on);
+        document.body.classList.remove('chat-morphing');
+        heroChatTrail.length = 0;
+        document.querySelectorAll('.chat-goo, .chat-morph, .chat-morph-shadow, .chat-morph-content').forEach(function (node) {
+          node.remove();
+        });
+        releaseHeroChatNav();
+        if (on) revealHeaderChat();
+      }
+
+      const heroChatTrail = [];
+      /* Dense sampling so consecutive blobs overlap and the goo reads as one tapering tail, not beads. */
+      const heroChatTailLags = [10, 20, 32, 46, 62, 80, 100, 122];
+      const heroChatTailSizes = [0.88, 0.8, 0.72, 0.63, 0.53, 0.43, 0.33, 0.22];
+
+      function ensureChatGooFilter() {
+        if (document.getElementById('chat-goo-filter')) return;
+        const ns = 'http://www.w3.org/2000/svg';
+        const svg = document.createElementNS(ns, 'svg');
+        svg.setAttribute('width', '0');
+        svg.setAttribute('height', '0');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.style.position = 'absolute';
+        svg.style.left = '-9999px';
+        const defs = document.createElementNS(ns, 'defs');
+        const filter = document.createElementNS(ns, 'filter');
+        filter.setAttribute('id', 'chat-goo-filter');
+        filter.setAttribute('x', '-20%');
+        filter.setAttribute('y', '-20%');
+        filter.setAttribute('width', '140%');
+        filter.setAttribute('height', '140%');
+        filter.setAttribute('color-interpolation-filters', 'sRGB');
+        const blur = document.createElementNS(ns, 'feGaussianBlur');
+        blur.setAttribute('in', 'SourceGraphic');
+        blur.setAttribute('stdDeviation', '0');
+        blur.setAttribute('result', 'blur');
+        blur.setAttribute('id', 'chat-goo-blur');
+        const matrix = document.createElementNS(ns, 'feColorMatrix');
+        matrix.setAttribute('in', 'blur');
+        matrix.setAttribute('mode', 'matrix');
+        matrix.setAttribute('values', '1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8');
+        matrix.setAttribute('result', 'goo');
+        filter.appendChild(blur);
+        filter.appendChild(matrix);
+        defs.appendChild(filter);
+        svg.appendChild(defs);
+        document.body.appendChild(svg);
+      }
+
+      function ensureChatMorph() {
+        ensureChatGooFilter();
+        let goo = document.querySelector('.chat-goo');
+        let shadow = document.querySelector('.chat-morph-shadow');
+        let content = document.querySelector('.chat-morph-content');
+        if (!goo) {
+          goo = document.createElement('div');
+          goo.className = 'chat-goo';
+          goo.setAttribute('aria-hidden', 'true');
+          heroChatTailLags.forEach(function () {
+            const tail = document.createElement('div');
+            tail.className = 'chat-goo-tail';
+            goo.appendChild(tail);
+          });
+          document.body.appendChild(goo);
+        }
+        let head = document.querySelector('.chat-morph');
+        if (!head) {
+          head = document.createElement('div');
+          head.className = 'chat-morph';
+          head.setAttribute('aria-hidden', 'true');
+          document.body.appendChild(head);
+        }
+        if (!shadow) {
+          shadow = document.createElement('div');
+          shadow.className = 'chat-morph-shadow';
+          shadow.setAttribute('aria-hidden', 'true');
+          document.body.appendChild(shadow);
+        }
+        if (!content) {
+          content = document.createElement('div');
+          content.className = 'chat-morph-content';
+          content.setAttribute('aria-hidden', 'true');
+          content.innerHTML = heroChatSpark + '<span class="chat-morph-label"><span>Ask about</span><span class="chat-morph-name">me</span></span>';
+          document.body.appendChild(content);
+        }
+        return {
+          goo: goo,
+          el: head,
+          tails: Array.prototype.slice.call(goo.querySelectorAll('.chat-goo-tail')),
+          shadow: shadow,
+          content: content,
+          blur: document.getElementById('chat-goo-blur')
+        };
+      }
+
+      function heroChatPath(from, to, t) {
+        const ax = from.left + from.width / 2;
+        const ay = from.top + from.height / 2;
+        const bx = to.left + to.width / 2;
+        const by = to.top + to.height / 2;
+        /* Cubic: flow right underneath the hamburger, then climb into the corner, so the drop never crosses the menu button. */
+        const sagY = Math.max(ay, by) + 100;
+        const p1x = bx - 70;
+        const p1y = sagY;
+        const p2x = bx + 6;
+        const p2y = sagY + 10;
+        const u = 1 - t;
+        const uu = u * u;
+        const tt = t * t;
+        return {
+          x: uu * u * ax + 3 * uu * t * p1x + 3 * u * tt * p2x + tt * t * bx,
+          y: uu * u * ay + 3 * uu * t * p1y + 3 * u * tt * p2y + tt * t * by,
+          dx: 3 * uu * (p1x - ax) + 6 * u * t * (p2x - p1x) + 3 * tt * (bx - p2x),
+          dy: 3 * uu * (p1y - ay) + 6 * u * t * (p2y - p1y) + 3 * tt * (by - p2y)
+        };
+      }
+
+      function heroChatTrailAt(now, lag) {
+        const want = now - lag;
+        if (!heroChatTrail.length) return null;
+        if (want <= heroChatTrail[0].ts) return heroChatTrail[0];
+        for (let i = heroChatTrail.length - 1; i > 0; i--) {
+          const a = heroChatTrail[i - 1];
+          const b = heroChatTrail[i];
+          if (want >= a.ts && want <= b.ts) {
+            const k = (b.ts - a.ts) > 0 ? (want - a.ts) / (b.ts - a.ts) : 1;
+            return {
+              x: a.x + (b.x - a.x) * k,
+              y: a.y + (b.y - a.y) * k,
+              w: a.w + (b.w - a.w) * k,
+              h: a.h + (b.h - a.h) * k
+            };
+          }
+        }
+        return heroChatTrail[heroChatTrail.length - 1];
+      }
+
+      function renderHeroChatMorph(t, v, now) {
+        const hero = heroChatButton();
+        if (!hero) return;
+        now = now || performance.now();
+        const live = boxOf(hero);
+        const from = heroChatLargePose(live);
+        const to = heroChatCornerBox();
+        const offset = heroChatIconOffset(hero, live);
+        document.body.classList.add('chat-morphing');
+        document.body.classList.remove('hero-chat-docked');
+        const clamp01 = function (u) { return Math.max(0, Math.min(1, u)); };
+        const smooth = function (u) { u = clamp01(u); return u * u * u * (u * (u * 6 - 15) + 10); };
+        const sizeT = smooth(t);
+        followHeroChatNav(smooth(t / 0.7));
+        const parts = ensureChatMorph();
+        const el = parts.el;
+        const content = parts.content;
+
+        const path = heroChatPath(from, to, t);
+        let width = from.width + (to.width - from.width) * sizeT;
+        let height = from.height + (to.height - from.height) * sizeT;
+
+        /* Liquid stretch: deform along the direction of travel in proportion to speed, conserve area. */
+        const pxVx = path.dx * (v || 0);
+        const pxVy = path.dy * (v || 0);
+        const speed = Math.hypot(pxVx, pxVy);
+        const pull = Math.min(0.3, speed / 3000);
+        const ux = speed > 1 ? pxVx / speed : 0;
+        const uy = speed > 1 ? pxVy / speed : 0;
+        if (pull > 0.002) {
+          const stretchX = 1 + pull * Math.abs(ux);
+          const stretchY = 1 + pull * Math.abs(uy);
+          const area = Math.sqrt(stretchX * stretchY);
+          width *= stretchX / area;
+          height *= stretchY / area;
+        }
+
+        const cx = path.x;
+        const cy = path.y;
+        const left = cx - width / 2;
+        const top = cy - height / 2;
+
+        /* Surface tension: blur strength scales with motion and fades to zero at both ends so the hand-off is exact. */
+        const endEnvelope = clamp01(Math.min(t / 0.08, (1 - t) / 0.08));
+        /* Keep the blur small relative to the capsule while it is still the wide button, so its straight sides and round
+           caps survive the threshold; let it thicken as the shape condenses into a drop. */
+        const condense = 0.28 + 0.72 * sizeT;
+        const shapeCap = Math.min(width, height) * 0.11;
+        const gooAmount = Math.min(11, 2.5 + speed / 160, shapeCap) * endEnvelope * condense;
+        if (parts.blur) parts.blur.setAttribute('stdDeviation', gooAmount.toFixed(2));
+
+        /* Real size, translate only: a capsule under non-uniform scale becomes an ellipse, so the caps are kept circular. */
+        const cover = 1;
+        const headTransform = 'translate3d(' + left + 'px, ' + top + 'px, 0)';
+        el.style.width = width + 'px';
+        el.style.height = height + 'px';
+        el.style.transform = headTransform;
+        const bgR = Math.round(220 + 14 * sizeT);
+        const bgG = Math.round(230 + 8 * sizeT);
+        const bgColor = 'rgb(' + bgR + ', ' + bgG + ', 251)';
+
+        /* Glass: solid at both resting states (matches the real buttons), translucent lens in between. */
+        const glass = smooth(Math.min(t / 0.18, (1 - t) / 0.18));
+        const fillAlpha = 1 - 0.5 * glass;
+        el.style.setProperty('--glass', glass.toFixed(3));
+        el.style.background = 'linear-gradient(160deg, rgba(' + Math.min(255, bgR + 18) + ', ' + Math.min(255, bgG + 14) + ', 253, ' + (fillAlpha + 0.08 * glass).toFixed(3) + ') 0%, rgba(' + bgR + ', ' + bgG + ', 251, ' + fillAlpha.toFixed(3) + ') 55%, rgba(' + Math.max(0, bgR - 14) + ', ' + Math.max(0, bgG - 8) + ', 250, ' + (fillAlpha + 0.04 * glass).toFixed(3) + ') 100%)';
+        /* Specular drifts against the direction of travel, like a fixed light source over a moving surface. */
+        const specX = 30 - ux * 16 * Math.min(1, speed / 900);
+        const specY = 24 - uy * 16 * Math.min(1, speed / 900) - 6 * glass;
+        el.style.setProperty('--spec-x', specX.toFixed(1) + '%');
+        el.style.setProperty('--spec-y', specY.toFixed(1) + '%');
+        const br = Math.round(59 + (255 - 59) * sizeT);
+        const bgc = Math.round(101 + (255 - 101) * sizeT);
+        const bb = Math.round(239 + (255 - 239) * sizeT);
+        const ba = ((0.28 + 0.22 * sizeT) * (1 - glass)).toFixed(3);
+        el.style.borderColor = 'rgba(' + br + ', ' + bgc + ', ' + bb + ', ' + ba + ')';
+        el.style.borderWidth = ((1.5 - 0.5 * sizeT) / cover) + 'px';
+
+        parts.shadow.style.width = width + 'px';
+        parts.shadow.style.height = height + 'px';
+        parts.shadow.style.transform = headTransform;
+        parts.shadow.style.boxShadow =
+          '0 ' + (8 + 8 * glass + 6 * pull) + 'px ' + (24 + 14 * glass + 14 * pull) + 'px rgba(59, 101, 239, ' + (0.16 * (1 - sizeT) + 0.1 * glass + 0.04 * pull).toFixed(3) + '), ' +
+          '0 2px 6px rgba(59, 101, 239, ' + (0.08 * glass).toFixed(3) + ')';
+
+        /* Trailing tail: blobs sampled from where the trailing edge was a moment ago; the goo filter fuses them into a taper. */
+        heroChatTrail.push({ ts: now, x: cx, y: cy, w: width, h: height });
+        while (heroChatTrail.length > 40 && heroChatTrail[0].ts < now - 400) heroChatTrail.shift();
+        const halfAlong = (Math.abs(ux) * width + Math.abs(uy) * height) / 2;
+        const minDim = Math.min(width, height);
+        /* Tails only reach out as far as the goo can bridge; with a thin surface they stay tucked inside the body. */
+        const fluidity = clamp01(gooAmount / 6);
+        parts.tails.forEach(function (tail, i) {
+          const sample = heroChatTrailAt(now, heroChatTailLags[i]);
+          const r = (minDim / 2) * heroChatTailSizes[i] * (0.55 + 0.45 * Math.min(1, speed / 700));
+          let tx = cx;
+          let ty = cy;
+          if (sample && speed > 40) {
+            const back = Math.max(0, halfAlong - r);
+            tx = cx + ((sample.x - ux * back) - cx) * fluidity;
+            ty = cy + ((sample.y - uy * back) - cy) * fluidity;
+          }
+          tail.style.background = bgColor;
+          tail.style.transform = 'translate3d(' + (tx - r) + 'px, ' + (ty - r) + 'px, 0) scale(' + (r / 5) + ')';
+        });
+
+        const ax = (offset.x / from.width) + (0.5 - offset.x / from.width) * sizeT;
+        const ay = (offset.y / from.height) + (0.5 - offset.y / from.height) * sizeT;
+        const ix = left + width * ax;
+        const iy = top + height * ay;
+        content.style.transform = 'translate3d(' + (ix - 14) + 'px, ' + (iy - 14) + 'px, 0)';
+        const icon = content.querySelector('svg');
+        const label = content.querySelector('.chat-morph-label');
+        if (icon) icon.style.transform = 'scale(' + (20 / 28 + (8 / 28) * sizeT) + ')';
+        if (label) {
+          /* Dissolve with the shape, and never outlive the room inside the pill. */
+          const byShape = sizeT <= 0.1 ? 1 : sizeT >= 0.42 ? 0 : 1 - (sizeT - 0.1) / 0.32;
+          const byRoom = clamp01((width - 178) / 36);
+          const fade = Math.min(byShape, byRoom);
+          label.style.opacity = String(fade);
+          label.style.transform = 'translateY(-50%) translateX(' + (-(1 - fade) * 6) + 'px)';
+        }
+      }
+
+      let heroChatVel = 0;
+      let heroChatLastTs = 0;
+
+      function settleHeroChat() {
+        heroChatVel = 0;
+        heroChatLastTs = 0;
+        heroChatShown = heroChatTarget;
+        setHeroChatDocked(heroChatTarget >= 1);
+      }
+
+      function stepHeroChatMorph(ts) {
+        heroChatRaf = 0;
+        let reduce = false;
+        try {
+          reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        } catch (err) {}
+        if (reduce) {
+          settleHeroChat();
+          return;
+        }
+        const now = ts || performance.now();
+        let dt = heroChatLastTs ? (now - heroChatLastTs) / 1000 : 1 / 60;
+        heroChatLastTs = now;
+        dt = Math.min(dt, 1 / 30);
+
+        /* Under-damped spring: stiff enough to track the scroll, soft enough to relax into place. */
+        const stiffness = 118;
+        const damping = 2 * Math.sqrt(stiffness) * 0.8;
+        const steps = 4;
+        const h = dt / steps;
+        for (let i = 0; i < steps; i++) {
+          const accel = stiffness * (heroChatTarget - heroChatShown) - damping * heroChatVel;
+          heroChatVel += accel * h;
+          heroChatShown += heroChatVel * h;
+        }
+
+        const atEnd = (heroChatTarget >= 1 || heroChatTarget <= 0);
+        const resting = Math.abs(heroChatTarget - heroChatShown) < 0.0025 && Math.abs(heroChatVel) < 0.04;
+        if (atEnd && resting) {
+          settleHeroChat();
+          return;
+        }
+        if (!atEnd && resting) {
+          heroChatVel = 0;
+          heroChatShown = heroChatTarget;
+          renderHeroChatMorph(heroChatShown, 0);
+          heroChatLastTs = 0;
+          return;
+        }
+        renderHeroChatMorph(heroChatShown, heroChatVel, now);
+        heroChatRaf = requestAnimationFrame(stepHeroChatMorph);
+      }
+
+      function updateHeroChatMorph() {
+        const hero = heroChatButton();
+        if (!hero || !persistentNavMinWidth.matches) {
+          heroChatTarget = 0;
+          heroChatShown = 0;
+          heroChatVel = 0;
+          heroChatLastTs = 0;
+          if (heroChatRaf) {
+            cancelAnimationFrame(heroChatRaf);
+            heroChatRaf = 0;
+          }
+          if (heroChatDocked || document.body.classList.contains('chat-morphing')) setHeroChatDocked(false);
+          return;
+        }
+        const rect = boxOf(hero);
+        const bottom = rect.top + rect.height;
+        heroChatTarget = bottom <= 0 ? 1 : bottom >= heroChatSpan ? 0 : 1 - bottom / heroChatSpan;
+        /* The pill only begins to flow once the compact chrome is on screen, so it always has a corner to pour into. */
+        if (!document.body.classList.contains('nav-persistent')) heroChatTarget = 0;
+        if (!heroChatBooted) {
+          heroChatBooted = true;
+          heroChatShown = heroChatTarget;
+          if (heroChatTarget >= 1 || heroChatTarget <= 0) setHeroChatDocked(heroChatTarget >= 1);
+          else renderHeroChatMorph(heroChatShown, 0);
+          return;
+        }
+        if (!heroChatRaf) heroChatRaf = requestAnimationFrame(stepHeroChatMorph);
+      }
+
+      window.addEventListener('resize', function () {
+        heroChatCorner = null;
+      });
 
       if (headerNav) {
         headerNav.setAttribute('aria-expanded', 'false');
