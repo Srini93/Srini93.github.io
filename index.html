@@ -3416,11 +3416,9 @@ Designed a <mark class="work-mark">white label friendly design system</mark> sca
       function scrollToPageSection(targetEl, opts) {
         if (!targetEl) return;
         var behavior = (opts && opts.behavior) || (window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth');
-        var headerEl = document.querySelector('header');
-        var headerHeight = headerEl ? headerEl.offsetHeight : 0;
-        var navClearance = window.matchMedia('(min-width: 769px)').matches ? 88 : 16;
+        var navClearance = window.matchMedia('(min-width: 769px)').matches ? 128 : 16;
         var targetTop = targetEl.getBoundingClientRect().top + window.pageYOffset;
-        var scrollTop = Math.max(headerHeight + 1, targetTop - navClearance);
+        var scrollTop = Math.max(0, targetTop - navClearance);
         window.scrollTo({ top: scrollTop, behavior: behavior });
       }
 
