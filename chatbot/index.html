@@ -608,9 +608,9 @@
         transform: none !important;
       }
 
-      /* Alpha badge next to header title */
+      /* Release stage badge next to header title */
       .header-title::after {
-        content: "Alpha";
+        content: "Beta";
         display: inline-flex;
         align-items: center;
         margin-left: 6px;
@@ -2074,6 +2074,71 @@
         // Last two turns, sent with each request so follow-ups like "tell me more" resolve
         let chatHistory = [];
 
+        // Live text of the portfolio page hosting this iframe. Only works when the
+        // chatbot is served from the same origin as the page (srinivasan.design/chatbot/).
+        const HOST_PAGE_HOSTS = /^(www\.)?srinivasan\.design$|^localhost$|^127\.0\.0\.1$/;
+        const PAGE_TEXT_LIMIT = 6000;
+        const SECTION_TEXT_LIMIT = 1500;
+        const PAGE_BLOCKS = 'h1,h2,h3,h4,p,li,blockquote,figcaption,dt,dd,td';
+        // Hidden tab panels (like AI Labs) still count as page content; only what is
+        // on screen counts as the section in view.
+        const PAGE_SKIP =
+          'script,style,noscript,svg,nav,footer,iframe,form,dialog,template,' +
+          '#chatbot-sidebar,.chatbot-sidebar,[aria-hidden="true"]';
+
+        function hostDocument() {
+          try {
+            if (window.parent === window) return null;
+            const doc = window.parent.document;
+            if (!HOST_PAGE_HOSTS.test(window.parent.location.hostname)) return null;
+            return doc;
+          } catch (_) {
+            return null;
+          }
+        }
+
+        // Short items that are just a link (menus, social icons) aren't page content.
+        function isLinkOnly(el, text) {
+          if (text.length > 40) return false;
+          const link = el.querySelector('a');
+          return !!link && (link.innerText || '').replace(/\s+/g, ' ').trim() === text;
+        }
+
+        function readHostPage() {
+          const doc = hostDocument();
+          if (!doc || !doc.body) return null;
+          const root = doc.querySelector('main, [role="main"]') || doc.body;
+          const viewportHeight = doc.defaultView?.innerHeight || 800;
+          const lines = [];
+          const visible = [];
+          const seen = new Set();
+          let length = 0;
+
+          for (const el of root.querySelectorAll(PAGE_BLOCKS)) {
+            if (length >= PAGE_TEXT_LIMIT) break;
+            if (el.closest(PAGE_SKIP)) continue;
+            if (el.parentElement?.closest('p,li,blockquote,figcaption,dd,td')) continue;
+            const text = (el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim();
+            if (!text || seen.has(text) || isLinkOnly(el, text)) continue;
+            seen.add(text);
+            const line = /^H[1-4]$/.test(el.tagName)
+              ? `\n## ${text}`
+              : el.tagName === 'LI'
+                ? `- ${text}`
+                : text;
+            lines.push(line);
+            length += line.length + 1;
+            const rect = el.getBoundingClientRect();
+            if (rect.bottom > 0 && rect.top < viewportHeight) visible.push(line);
+          }
+
+          if (!lines.length) return null;
+          return {
+            content: lines.join('\n').trim().slice(0, PAGE_TEXT_LIMIT),
+            section: visible.join('\n').trim().slice(0, SECTION_TEXT_LIMIT),
+          };
+        }
+
         function rememberTurn(question, answer) {
           if (!question || !answer) return;
           chatHistory = [
@@ -2213,6 +2278,11 @@
               question = bodyObj.message || '';
               if (previousSuggestions.length > 0) bodyObj.previous_suggestions = previousSuggestions;
               if (chatHistory.length > 0) bodyObj.history = chatHistory;
+              const page = readHostPage();
+              if (page) {
+                bodyObj.page_content = page.content;
+                if (page.section) bodyObj.page_section = page.section;
+              }
               init = { ...init, body: JSON.stringify(bodyObj) };
             } catch (_) {}
           }
