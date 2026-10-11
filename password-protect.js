@@ -481,7 +481,7 @@
       'function runChatBounceIntro(){try{if(window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;}catch(x){return;}triggers.forEach(function(t){t.classList.add("srini-chat-bounce-enter");function onEnd(ev){if(ev.animationName!=="srini-chat-bounce-load")return;t.classList.remove("srini-chat-bounce-enter");t.removeEventListener("animationend",onEnd);}t.addEventListener("animationend",onEnd);});}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",runChatBounceIntro);}else{runChatBounceIntro();}' +
       '})();' +
       '<\/script>' +
-      '<script src="srini-chat-fab-position.js?v=1"><\/script>';
+      '<script src="srini-chat-fab-position.js?v=2"><\/script>';
 
     var pageContextScript = ppChatPageContextScript();
     var injectTail = pageContextScript + (plainHadChatSidebar ? '' : chatbotHTML + chatbotCSS + chatbotJS);

@@ -4,7 +4,8 @@
  */
 (function () {
   var STORAGE_KEY = 'srini-chat-fab-corner';
-  var CORNERS = ['br', 'bl', 'tr', 'tl'];
+  // Bottom corners only — avoids covering the top nav/logo on mobile.
+  var CORNERS = ['br', 'bl'];
   var DEFAULT_CORNER = 'br';
   var INSET = 24;
   var DRAG_THRESHOLD = 10;
@@ -27,8 +28,6 @@
       '@media (max-width:768px){' +
       '.srini-chat-fab[data-corner="br"]{top:auto!important;bottom:' + INSET + 'px!important;left:auto!important;right:' + INSET + 'px!important}' +
       '.srini-chat-fab[data-corner="bl"]{top:auto!important;bottom:' + INSET + 'px!important;left:' + INSET + 'px!important;right:auto!important}' +
-      '.srini-chat-fab[data-corner="tr"]{top:' + INSET + 'px!important;bottom:auto!important;left:auto!important;right:' + INSET + 'px!important}' +
-      '.srini-chat-fab[data-corner="tl"]{top:' + INSET + 'px!important;bottom:auto!important;left:' + INSET + 'px!important;right:auto!important}' +
       '}';
     var style = document.createElement('style');
     style.id = STYLE_ID;
@@ -40,6 +39,9 @@
     try {
       var value = localStorage.getItem(STORAGE_KEY);
       if (CORNERS.indexOf(value) !== -1) return value;
+      // Migrate older top-corner saves to matching bottom side.
+      if (value === 'tl') return 'bl';
+      if (value === 'tr') return 'br';
     } catch (e) {}
     return DEFAULT_CORNER;
   }
@@ -102,9 +104,7 @@
     var vh = window.innerHeight;
     return {
       br: { left: vw - INSET - size, top: vh - INSET - size },
-      bl: { left: INSET, top: vh - INSET - size },
-      tr: { left: vw - INSET - size, top: INSET },
-      tl: { left: INSET, top: INSET }
+      bl: { left: INSET, top: vh - INSET - size }
     };
   }
 
