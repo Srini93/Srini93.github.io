@@ -46,9 +46,11 @@ iframe {
   }
 }
 
-/* Short inner display: don't lock the hero to a full screen of empty wash */
+/* Short inner display: don't lock the homepage hero to a full screen of empty wash.
+   Scope to HeaderContent only — collapsing every header to 0 height lets the
+   absolutely positioned srini mark overlap page titles (e.g. About "Hello again!"). */
 @media (max-height: 700px) {
-  header {
+  header:has(.HeaderContent) {
     min-height: 0;
   }
 
