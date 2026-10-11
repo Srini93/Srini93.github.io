@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Generative UI for Data Viz — Experiment | Srinivasan</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fcfcfb">
+<link href="images/favi.png" rel="icon" sizes="192x192" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --surface-1:      #fcfcfb;
+    --page:           #f9f9f7;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --text-muted:     #898781;
+    --grid:           #e1e0d9;
+    --baseline:       #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a;
+    --series-4: #eda100; --series-5: #e87ba4; --series-6: #008300;
+    --series-7: #4a3aa7; --series-8: #e34948;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:where(:not([data-theme="light"])) {
+      color-scheme: dark;
+      --surface-1:      #1a1a19;
+      --page:           #0d0d0d;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --text-muted:     #898781;
+      --grid:           #2c2c2a;
+      --baseline:       #383835;
+      --border:         rgba(255,255,255,0.10);
+      --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;
+      --series-4: #c98500; --series-5: #d55181; --series-6: #008300;
+      --series-7: #9085e9; --series-8: #e66767;
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --surface-1:      #1a1a19;
+    --page:           #0d0d0d;
+    --text-primary:   #ffffff;
+    --text-secondary: #c3c2b7;
+    --text-muted:     #898781;
+    --grid:           #2c2c2a;
+    --baseline:       #383835;
+    --border:         rgba(255,255,255,0.10);
+    --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70;
+    --series-4: #c98500; --series-5: #d55181; --series-6: #008300;
+    --series-7: #9085e9; --series-8: #e66767;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--page);
+    color: var(--text-primary);
+    font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .mono { font-family: 'Space Mono', 'Courier New', monospace; }
+
+  header.exp-head {
+    padding: 4rem 6vw 2.5rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: 2rem;
+  }
+  .back-link:hover { color: var(--text-primary); }
+
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--series-1);
+    margin: 0 0 0.75rem;
+  }
+  h1 {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 500;
+    line-height: 1.15;
+    margin: 0 0 1rem;
+    letter-spacing: -0.01em;
+  }
+  .lede {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 760px;
+    margin: 0;
+  }
+
+  main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 6vw 6rem;
+  }
+
+  .console {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+
+  .prompt-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  #prompt {
+    flex: 1;
+    font-family: 'Work Sans', sans-serif;
+    font-size: 15px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--page);
+    color: var(--text-primary);
+    outline: none;
+  }
+  #prompt:focus { border-color: var(--series-1); }
+  #generate {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    background: var(--text-primary);
+    color: var(--surface-1);
+    border: none;
+    border-radius: 10px;
+    padding: 14px 22px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: opacity 0.15s ease;
+  }
+  #generate:hover { opacity: 0.85; }
+  #generate:active { opacity: 0.7; }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .chip {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .chip:hover { border-color: var(--series-1); color: var(--text-primary); }
+
+  .trace {
+    margin-top: 16px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--text-muted);
+    min-height: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .trace .dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--series-3);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--series-3) 20%, transparent);
+  }
+  .trace.thinking .dot { background: var(--series-4); animation: pulse 0.9s ease-in-out infinite; }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+  .stage {
+    margin-top: 24px;
+    min-height: 420px;
+  }
+
+  .card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.75rem;
+    opacity: 0;
+    transform: translateY(10px);
+    animation: cardIn 0.5s cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  @keyframes cardIn { to { opacity: 1; transform: translateY(0); } }
+
+  .card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+  .card-title { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
+  .card-sub { font-size: 13px; color: var(--text-secondary); margin: 0; }
+  .form-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 10px;
+    white-space: nowrap;
+  }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 0 0 1rem; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--text-secondary); }
+  .legend-swatch { width: 10px; height: 10px; border-radius: 2px; }
+
+  svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
+  .axis-label { font-size: 11px; fill: var(--text-muted); font-family: 'Work Sans', sans-serif; }
+  .grid-line { stroke: var(--grid); stroke-width: 1; }
+  .baseline { stroke: var(--baseline); stroke-width: 1; }
+  .data-label { font-size: 11px; fill: var(--text-secondary); font-family: 'Work Sans', sans-serif; }
+
+  .tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--text-primary);
+    color: var(--surface-1);
+    font-family: 'Space Mono', monospace;
+    font-size: 11.5px;
+    padding: 7px 10px;
+    border-radius: 8px;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(-50%, -100%);
+    transition: opacity 0.1s ease;
+    z-index: 20;
+  }
+  .tooltip.visible { opacity: 1; }
+
+  .stat-row { display: flex; gap: 2rem; flex-wrap: wrap; margin-top: 1.5rem; }
+  .stat { min-width: 140px; }
+  .stat-value { font-size: 26px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .stat-label { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+  .table-wrap { overflow-x: auto; }
+  table.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.data-table th, table.data-table td {
+    text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--grid);
+    font-variant-numeric: tabular-nums;
+  }
+  table.data-table th { color: var(--text-muted); font-weight: 500; font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.4px; }
+
+  .view-toggle { display: flex; gap: 6px; }
+  .view-btn {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    padding: 6px 10px;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    background: transparent;
+    color: var(--text-secondary);
+    cursor: pointer;
+  }
+  .view-btn.active { background: var(--text-primary); color: var(--surface-1); border-color: var(--text-primary); }
+
+  .empty-state {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 4rem 1rem; color: var(--text-muted);
+  }
+  .empty-state svg { opacity: 0.5; margin-bottom: 1rem; }
+  .empty-state p { font-size: 14px; max-width: 340px; margin: 0; }
+
+  .how {
+    margin-top: 3rem;
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--grid);
+  }
+  .how h2 { font-size: 20px; font-weight: 600; margin: 0 0 1rem; }
+  .how-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+  }
+  .how-step { font-size: 13.5px; line-height: 1.6; color: var(--text-secondary); }
+  .how-step .num {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--series-1);
+    display: block;
+    margin-bottom: 4px;
+  }
+  .how-step strong { color: var(--text-primary); font-weight: 600; }
+
+  footer.exp-foot {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 6vw 4rem;
+    font-size: 12.5px;
+    color: var(--text-muted);
+  }
+  footer.exp-foot a { color: var(--text-secondary); }
+</style>
+</head>
+<body>
+
+<header class="exp-head">
+  <a class="back-link" href="index.html">← back to work</a>
+  <p class="eyebrow">Experiment · Generative UI</p>
+  <h1>Generative UI for Data Visualization</h1>
+  <p class="lede">
+    Describe a question in plain language. A small intent-parsing engine reads it,
+    picks the chart form that best answers it — trend, comparison, share, distribution,
+    or correlation — and renders it live, the way a generative interface would
+    assemble UI on demand instead of shipping one fixed dashboard.
+  </p>
+</header>
+
+<main>
+  <div class="console">
+    <div class="prompt-row">
+      <input id="prompt" class="mono" type="text" placeholder="e.g. how has weekly active users trended this quarter?" autocomplete="off" />
+      <button id="generate">Generate UI</button>
+    </div>
+    <div class="chips">
+      <button class="chip" data-q="How has weekly active users trended over the last 8 weeks?">WAU trend</button>
+      <button class="chip" data-q="Compare revenue across our five product lines">Compare revenue</button>
+      <button class="chip" data-q="What's the share of traffic by acquisition channel?">Traffic share</button>
+      <button class="chip" data-q="Show the distribution of session durations">Session distribution</button>
+      <button class="chip" data-q="Is there a correlation between marketing spend and signups?">Spend vs. signups</button>
+      <button class="chip" data-q="Break down support tickets by status">Ticket status</button>
+    </div>
+    <div id="trace" class="trace"></div>
+  </div>
+
+  <div id="stage" class="stage">
+    <div class="empty-state">
+      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19h16M7 19V9M12 19V5M17 19v-7"/></svg>
+      <p>Type a question above, or pick a starter prompt — the UI is generated, not pre-built.</p>
+    </div>
+  </div>
+
+  <div class="how">
+    <h2>How the generation works</h2>
+    <div class="how-grid">
+      <div class="how-step"><span class="num">01 · PARSE</span>Keywords in the prompt are matched to an <strong>intent</strong> — trend, comparison, share, distribution, or correlation.</div>
+      <div class="how-step"><span class="num">02 · SELECT</span>Each intent maps to the chart form that answers it fastest: line for trend, bars for comparison, donut for share, histogram for distribution, scatter for correlation.</div>
+      <div class="how-step"><span class="num">03 · BIND</span>A matching sample dataset is attached and scaled to the chart's axes and legend automatically.</div>
+      <div class="how-step"><span class="num">04 · RENDER</span>The chart, legend, tooltips, and a data table are assembled into one card — a fresh UI per question, not a fixed dashboard.</div>
+    </div>
+  </div>
+</main>
+
+<footer class="exp-foot">
+  A concept exploring how AI-driven interfaces could compose visualization UI on the fly from intent, rather than requiring a pre-built chart for every question. Part of <a href="Experiment.html">Experimental Projects</a>. Built by <a href="index.html">Srinivasan</a>.
+</footer>
+
+<div id="tooltip" class="tooltip"></div>
+
+<script>
+(function() {
+  const SERIES = ['--series-1','--series-2','--series-3','--series-4','--series-5','--series-6','--series-7','--series-8'];
+  function seriesColor(i) {
+    return getComputedStyle(document.documentElement).getPropertyValue(SERIES[i % SERIES.length]).trim();
+  }
+
+  const DATASETS = {
+    trend: {
+      wau: { title: 'Weekly Active Users', unit: 'users', points: [
+        ['Wk 1',18400],['Wk 2',19100],['Wk 3',18700],['Wk 4',20300],
+        ['Wk 5',21600],['Wk 6',21200],['Wk 7',23400],['Wk 8',24800]
+      ]},
+      default: { title: 'Metric over time', unit: 'value', points: [
+        ['Jan',420],['Feb',460],['Mar',441],['Apr',505],['May',560],['Jun',612],['Jul',598],['Aug',655]
+      ]}
+    },
+    comparison: {
+      revenue: { title: 'Revenue by Product Line', unit: '$K', bars: [
+        ['Core Platform',842],['Mobile',611],['API & Integrations',388],['Analytics Suite',276],['Marketplace',159]
+      ]},
+      default: { title: 'Value by Category', unit: 'value', bars: [
+        ['A',320],['B',275],['C',410],['D',190],['E',260]
+      ]}
+    },
+    share: {
+      traffic: { title: 'Traffic by Acquisition Channel', unit: '%', slices: [
+        ['Organic Search',34],['Direct',22],['Referral',18],['Paid Social',14],['Email',8],['Other',4]
+      ]},
+      tickets: { title: 'Support Tickets by Status', unit: '%', slices: [
+        ['Resolved',52],['In Progress',24],['Backlog',15],['Escalated',9]
+      ]},
+      default: { title: 'Share of Total', unit: '%', slices: [
+        ['Segment A',40],['Segment B',27],['Segment C',18],['Segment D',15]
+      ]}
+    },
+    distribution: {
+      sessions: { title: 'Session Duration Distribution', unit: 'sessions', bins: [
+        ['0–1m',420],['1–3m',890],['3–5m',760],['5–10m',540],['10–20m',310],['20m+',140]
+      ]},
+      default: { title: 'Distribution', unit: 'count', bins: [
+        ['0–10',60],['10–20',140],['20–30',260],['30–40',190],['40–50',95],['50+',40]
+      ]}
+    },
+    correlation: {
+      spend: { title: 'Marketing Spend vs. Signups', unit: 'signups', xLabel: 'Spend ($K)', yLabel: 'Signups', points: [
+        [12,180],[18,240],[9,140],[24,310],[30,395],[15,205],[27,360],[21,275],[33,420],[6,95],[19,255],[26,335]
+      ]},
+      default: { title: 'X vs. Y', unit: 'value', xLabel: 'X', yLabel: 'Y', points: [
+        [5,20],[8,32],[12,40],[15,55],[18,60],[22,78],[26,90],[10,38],[20,70],[30,100]
+      ]}
+    }
+  };
+
+  const INTENTS = [
+    { key: 'correlation', label: 'Correlation', form: 'Scatter plot',
+      words: ['correlat','relationship','vs','versus','against','impact of','affect'] },
+    { key: 'distribution', label: 'Distribution', form: 'Histogram',
+      words: ['distribut','spread','breakdown of duration','histogram','how long'] },
+    { key: 'share', label: 'Composition', form: 'Donut chart',
+      words: ['share','percent','%','proportion','breakdown','split','by status','by channel','composition'] },
+    { key: 'trend', label: 'Trend', form: 'Line chart',
+      words: ['trend','over time','over the','weekly','monthly','growth','change since','last 8','last quarter','this quarter'] },
+    { key: 'comparison', label: 'Comparison', form: 'Bar chart',
+      words: ['compare','comparison','across','which','highest','lowest','rank','versus each'] },
+  ];
+
+  function detectIntent(q) {
+    const s = q.toLowerCase();
+    for (const intent of INTENTS) {
+      if (intent.words.some(w => s.includes(w))) return intent;
+    }
+    return INTENTS[INTENTS.length - 1]; // default to comparison
+  }
+
+  function detectDataset(intent, q) {
+    const s = q.toLowerCase();
+    const bank = DATASETS[intent.key];
+    if (intent.key === 'trend' && s.includes('active user')) return bank.wau;
+    if (intent.key === 'comparison' && s.includes('revenue')) return bank.revenue;
+    if (intent.key === 'share' && s.includes('traffic')) return bank.traffic;
+    if (intent.key === 'share' && s.includes('ticket')) return bank.tickets;
+    if (intent.key === 'distribution' && s.includes('session')) return bank.sessions;
+    if (intent.key === 'correlation' && (s.includes('spend') || s.includes('signup'))) return bank.spend;
+    return bank.default;
+  }
+
+  const NS = 'http://www.w3.org/2000/svg';
+  function el(tag, attrs) {
+    const n = document.createElementNS(NS, tag);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+
+  const tooltip = document.getElementById('tooltip');
+  function showTooltip(evt, text) {
+    tooltip.textContent = text;
+    tooltip.classList.add('visible');
+    moveTooltip(evt);
+  }
+  function moveTooltip(evt) {
+    tooltip.style.left = evt.pageX + 'px';
+    tooltip.style.top = (evt.pageY - 14) + 'px';
+  }
+  function hideTooltip() { tooltip.classList.remove('visible'); }
+
+  function buildLine(data) {
+    const W = 720, H = 300, padL = 44, padR = 16, padT = 16, padB = 32;
+    const svg = el('svg', { class: 'chart', viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': data.title });
+    const pts = data.points;
+    const max = Math.max(...pts.map(p => p[1])) * 1.12;
+    const min = 0;
+    const x = i => padL + (i / (pts.length - 1)) * (W - padL - padR);
+    const y = v => H - padB - ((v - min) / (max - min)) * (H - padT - padB);
+
+    for (let i = 0; i <= 4; i++) {
+      const v = min + (max - min) * (i / 4);
+      const gy = y(v);
+      svg.appendChild(el('line', { class: 'grid-line', x1: padL, x2: W - padR, y1: gy, y2: gy }));
+      const t = el('text', { class: 'axis-label', x: padL - 8, y: gy + 4, 'text-anchor': 'end' });
+      t.textContent = Math.round(v).toLocaleString();
+      svg.appendChild(t);
+    }
+    svg.appendChild(el('line', { class: 'baseline', x1: padL, x2: W - padR, y1: H - padB, y2: H - padB }));
+
+    let d = '';
+    pts.forEach((p, i) => { d += (i === 0 ? 'M' : 'L') + x(i) + ' ' + y(p[1]) + ' '; });
+    const areaD = d + `L${x(pts.length-1)} ${H-padB} L${x(0)} ${H-padB} Z`;
+    const color = seriesColor(0);
+    const areaId = 'grad-' + Math.random().toString(36).slice(2, 8);
+    const defs = el('defs', {});
+    const grad = el('linearGradient', { id: areaId, x1: '0', y1: '0', x2: '0', y2: '1' });
+    grad.appendChild(el('stop', { offset: '0%', 'stop-color': color, 'stop-opacity': '0.16' }));
+    grad.appendChild(el('stop', { offset: '100%', 'stop-color': color, 'stop-opacity': '0' }));
+    defs.appendChild(grad);
+    svg.appendChild(defs);
+    svg.appendChild(el('path', { d: areaD, fill: `url(#${areaId})`, stroke: 'none' }));
+    svg.appendChild(el('path', { d: d.trim(), fill: 'none', stroke: color, 'stroke-width': '2', 'stroke-linejoin': 'round', 'stroke-linecap': 'round' }));
+
+    pts.forEach((p, i) => {
+      const cx = x(i), cy = y(p[1]);
+      const dot = el('circle', { cx, cy, r: 4, fill: color, stroke: 'var(--surface-1)', 'stroke-width': 2 });
+      dot.style.cursor = 'pointer';
+      dot.addEventListener('mousemove', e => showTooltip(e, `${p[0]}  ·  ${p[1].toLocaleString()} ${data.unit}`));
+      dot.addEventListener('mouseleave', hideTooltip);
+      svg.appendChild(dot);
+      const lbl = el('text', { class: 'axis-label', x: cx, y: H - padB + 18, 'text-anchor': 'middle' });
+      lbl.textContent = p[0];
+      svg.appendChild(lbl);
+    });
+
+    const last = pts[pts.length - 1];
+    const first = pts[0];
+    const delta = (((last[1] - first[1]) / first[1]) * 100).toFixed(1);
+    return { svg, stats: [
+      { value: last[1].toLocaleString(), label: `Latest (${last[0]})` },
+      { value: (delta >= 0 ? '+' : '') + delta + '%', label: `Change since ${first[0]}` },
+      { value: Math.max(...pts.map(p=>p[1])).toLocaleString(), label: 'Peak' }
+    ], rows: pts.map(p => [p[0], p[1].toLocaleString() + ' ' + data.unit]), cols: ['Period', 'Value'] };
+  }
+
+  function buildBar(data) {
+    const items = data.bars;
+    const W = 720, rowH = 40, gap = 14, padL = 160, padR = 70, padT = 8;
+    const H = padT + items.length * (rowH + gap);
+    const svg = el('svg', { class: 'chart', viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': data.title });
+    const max = Math.max(...items.map(d => d[1])) * 1.08;
+    const trackW = W - padL - padR;
+
+    items.forEach((d, i) => {
+      const yTop = padT + i * (rowH + gap);
+      const barW = Math.max(4, (d[1] / max) * trackW);
+      const color = seriesColor(0);
+      svg.appendChild(el('line', { class: 'baseline', x1: padL, x2: padL, y1: yTop, y2: yTop + rowH }));
+      const rect = el('rect', { x: padL, y: yTop + rowH/2 - 10, width: barW, height: 20, rx: 4, fill: color });
+      rect.style.cursor = 'pointer';
+      rect.addEventListener('mousemove', e => showTooltip(e, `${d[0]}  ·  ${d[1].toLocaleString()} ${data.unit}`));
+      rect.addEventListener('mouseleave', hideTooltip);
+      svg.appendChild(rect);
+      const label = el('text', { class: 'axis-label', x: padL - 10, y: yTop + rowH/2 + 4, 'text-anchor': 'end' });
+      label.textContent = d[0];
+      svg.appendChild(label);
+      const val = el('text', { class: 'data-label', x: padL + barW + 10, y: yTop + rowH/2 + 4, 'text-anchor': 'start' });
+      val.textContent = d[1].toLocaleString();
+      svg.appendChild(val);
+    });
+
+    const total = items.reduce((a,b) => a + b[1], 0);
+    const top = items[0];
+    return { svg, stats: [
+      { value: top[0], label: 'Leading' },
+      { value: top[1].toLocaleString(), label: `${top[0]} value` },
+      { value: total.toLocaleString(), label: 'Total across all' }
+    ], rows: items.map(d => [d[0], d[1].toLocaleString() + ' ' + data.unit]), cols: ['Category', 'Value'] };
+  }
+
+  function buildDonut(data) {
+    const items = data.slices;
+    const total = items.reduce((a,b) => a + b[1], 0);
+    const size = 260, cx = size/2, cy = size/2, rOuter = 108, rInner = 66;
+    const svg = el('svg', { class: 'chart', viewBox: `0 0 ${size} ${size}`, role: 'img', 'aria-label': data.title, style: 'max-width:260px;margin:0 auto;display:block' });
+
+    let angle = -Math.PI / 2;
+    items.forEach((d, i) => {
+      const frac = d[1] / total;
+      const a0 = angle;
+      const a1 = angle + frac * Math.PI * 2;
+      angle = a1;
+      const largeArc = (a1 - a0) > Math.PI ? 1 : 0;
+      const x0o = cx + rOuter * Math.cos(a0), y0o = cy + rOuter * Math.sin(a0);
+      const x1o = cx + rOuter * Math.cos(a1), y1o = cy + rOuter * Math.sin(a1);
+      const x1i = cx + rInner * Math.cos(a1), y1i = cy + rInner * Math.sin(a1);
+      const x0i = cx + rInner * Math.cos(a0), y0i = cy + rInner * Math.sin(a0);
+      const d_str = `M${x0o} ${y0o} A${rOuter} ${rOuter} 0 ${largeArc} 1 ${x1o} ${y1o} L${x1i} ${y1i} A${rInner} ${rInner} 0 ${largeArc} 0 ${x0i} ${y0i} Z`;
+      const path = el('path', { d: d_str, fill: seriesColor(i), stroke: 'var(--surface-1)', 'stroke-width': 2 });
+      path.style.cursor = 'pointer';
+      const pct = ((d[1]/total)*100).toFixed(1);
+      path.addEventListener('mousemove', e => showTooltip(e, `${d[0]}  ·  ${pct}%`));
+      path.addEventListener('mouseleave', hideTooltip);
+      svg.appendChild(path);
+    });
+
+    const centerVal = el('text', { x: cx, y: cy - 4, 'text-anchor': 'middle', class: 'data-label', style: 'font-size:20px;font-weight:600;fill:var(--text-primary)' });
+    centerVal.textContent = items[0][0];
+    const centerSub = el('text', { x: cx, y: cy + 16, 'text-anchor': 'middle', class: 'axis-label' });
+    centerSub.textContent = ((items[0][1]/total)*100).toFixed(0) + '% of total';
+    svg.appendChild(centerVal);
+    svg.appendChild(centerSub);
+
+    return { svg, legendItems: items, stats: [
+      { value: items[0][0], label: 'Largest share' },
+      { value: items.length, label: 'Segments' },
+      { value: total.toLocaleString() + (data.unit === '%' ? '' : ' ' + data.unit), label: 'Total' }
+    ], rows: items.map(d => [d[0], ((d[1]/total)*100).toFixed(1) + '%']), cols: ['Segment', 'Share'] };
+  }
+
+  function buildHistogram(data) {
+    const items = data.bins;
+    const W = 720, H = 300, padL = 44, padR = 16, padT = 16, padB = 40;
+    const svg = el('svg', { class: 'chart', viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': data.title });
+    const max = Math.max(...items.map(d => d[1])) * 1.12;
+    const bw = (W - padL - padR) / items.length;
+    const color = seriesColor(2);
+
+    for (let i = 0; i <= 4; i++) {
+      const v = (max / 4) * i;
+      const gy = H - padB - (v / max) * (H - padT - padB);
+      svg.appendChild(el('line', { class: 'grid-line', x1: padL, x2: W - padR, y1: gy, y2: gy }));
+      const t = el('text', { class: 'axis-label', x: padL - 8, y: gy + 4, 'text-anchor': 'end' });
+      t.textContent = Math.round(v).toLocaleString();
+      svg.appendChild(t);
+    }
+    svg.appendChild(el('line', { class: 'baseline', x1: padL, x2: W - padR, y1: H - padB, y2: H - padB }));
+
+    items.forEach((d, i) => {
+      const h = (d[1] / max) * (H - padT - padB);
+      const bx = padL + i * bw + 3;
+      const by = H - padB - h;
+      const rect = el('rect', { x: bx, y: by, width: bw - 6, height: h, rx: 4, fill: color });
+      rect.style.cursor = 'pointer';
+      rect.addEventListener('mousemove', e => showTooltip(e, `${d[0]}  ·  ${d[1].toLocaleString()} ${data.unit}`));
+      rect.addEventListener('mouseleave', hideTooltip);
+      svg.appendChild(rect);
+      const lbl = el('text', { class: 'axis-label', x: bx + (bw-6)/2, y: H - padB + 18, 'text-anchor': 'middle' });
+      lbl.textContent = d[0];
+      svg.appendChild(lbl);
+    });
+
+    const total = items.reduce((a,b) => a + b[1], 0);
+    const mode = items.reduce((a,b) => b[1] > a[1] ? b : a);
+    return { svg, stats: [
+      { value: mode[0], label: 'Most common bucket' },
+      { value: total.toLocaleString(), label: 'Total observations' },
+      { value: items.length, label: 'Buckets' }
+    ], rows: items.map(d => [d[0], d[1].toLocaleString()]), cols: ['Bucket', 'Count'] };
+  }
+
+  function buildScatter(data) {
+    const pts = data.points;
+    const W = 720, H = 320, padL = 50, padR = 20, padT = 16, padB = 40;
+    const svg = el('svg', { class: 'chart', viewBox: `0 0 ${W} ${H}`, role: 'img', 'aria-label': data.title });
+    const xMax = Math.max(...pts.map(p => p[0])) * 1.12;
+    const yMax = Math.max(...pts.map(p => p[1])) * 1.12;
+    const x = v => padL + (v / xMax) * (W - padL - padR);
+    const y = v => H - padB - (v / yMax) * (H - padT - padB);
+    const color = seriesColor(0);
+
+    for (let i = 0; i <= 4; i++) {
+      const v = (yMax / 4) * i;
+      const gy = y(v);
+      svg.appendChild(el('line', { class: 'grid-line', x1: padL, x2: W - padR, y1: gy, y2: gy }));
+      const t = el('text', { class: 'axis-label', x: padL - 8, y: gy + 4, 'text-anchor': 'end' });
+      t.textContent = Math.round(v);
+      svg.appendChild(t);
+    }
+    svg.appendChild(el('line', { class: 'baseline', x1: padL, x2: W - padR, y1: H - padB, y2: H - padB }));
+    svg.appendChild(el('line', { class: 'baseline', x1: padL, x2: padL, y1: padT, y2: H - padB }));
+
+    const xt = el('text', { class: 'axis-label', x: (padL + W - padR)/2, y: H - 6, 'text-anchor': 'middle' });
+    xt.textContent = data.xLabel;
+    svg.appendChild(xt);
+
+    // simple linear regression
+    const n = pts.length;
+    const sx = pts.reduce((a,p)=>a+p[0],0), sy = pts.reduce((a,p)=>a+p[1],0);
+    const sxy = pts.reduce((a,p)=>a+p[0]*p[1],0), sxx = pts.reduce((a,p)=>a+p[0]*p[0],0);
+    const slope = (n*sxy - sx*sy) / (n*sxx - sx*sx);
+    const intercept = (sy - slope*sx) / n;
+    const x0 = 0, x1 = xMax;
+    svg.appendChild(el('line', {
+      x1: x(x0), y1: y(intercept + slope*x0), x2: x(x1), y2: y(intercept + slope*x1),
+      stroke: 'var(--text-muted)', 'stroke-width': 1.5, 'stroke-dasharray': '4 4'
+    }));
+
+    pts.forEach(p => {
+      const c = el('circle', { cx: x(p[0]), cy: y(p[1]), r: 5, fill: color, opacity: 0.85, stroke: 'var(--surface-1)', 'stroke-width': 1.5 });
+      c.style.cursor = 'pointer';
+      c.addEventListener('mousemove', e => showTooltip(e, `${data.xLabel}: ${p[0]}  ·  ${data.yLabel}: ${p[1]}`));
+      c.addEventListener('mouseleave', hideTooltip);
+      svg.appendChild(c);
+    });
+
+    const r = (() => {
+      const mx = sx/n, my = sy/n;
+      let num=0, dx2=0, dy2=0;
+      pts.forEach(p => { const dx=p[0]-mx, dy=p[1]-my; num+=dx*dy; dx2+=dx*dx; dy2+=dy*dy; });
+      return num / Math.sqrt(dx2*dy2);
+    })();
+
+    return { svg, stats: [
+      { value: r.toFixed(2), label: 'Correlation (r)' },
+      { value: (slope>=0?'+':'') + slope.toFixed(1), label: `${data.yLabel} per unit ${data.xLabel}` },
+      { value: n, label: 'Data points' }
+    ], rows: pts.map(p => [p[0], p[1]]), cols: [data.xLabel, data.yLabel] };
+  }
+
+  const BUILDERS = { trend: buildLine, comparison: buildBar, share: buildDonut, distribution: buildHistogram, correlation: buildScatter };
+
+  const stage = document.getElementById('stage');
+  const trace = document.getElementById('trace');
+  const promptInput = document.getElementById('prompt');
+
+  function setTrace(steps, done) {
+    trace.classList.toggle('thinking', !done);
+    trace.innerHTML = `<span class="dot"></span><span>${steps}</span>`;
+  }
+
+  function render(q) {
+    const intent = detectIntent(q);
+    const data = detectDataset(intent, q);
+    setTrace(`parsing intent…`, false);
+
+    setTimeout(() => {
+      setTrace(`intent → ${intent.label.toLowerCase()}  ·  form → ${intent.form.toLowerCase()}  ·  binding dataset…`, false);
+      setTimeout(() => {
+        const built = BUILDERS[intent.key](data);
+        setTrace(`rendered "${intent.form}" for "${data.title}"`, true);
+        renderCard(intent, data, built);
+      }, 380);
+    }, 320);
+  }
+
+  function renderCard(intent, data, built) {
+    stage.innerHTML = '';
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const head = document.createElement('div');
+    head.className = 'card-head';
+    head.innerHTML = `
+      <div>
+        <p class="card-title">${data.title}</p>
+        <p class="card-sub">Generated as a <strong>${built.legendItems ? 'donut chart' : intent.form.toLowerCase()}</strong> from intent: ${intent.label.toLowerCase()}</p>
+      </div>
+      <span class="form-tag">${intent.form}</span>
+    `;
+    card.appendChild(head);
+
+    if (built.legendItems) {
+      const legend = document.createElement('div');
+      legend.className = 'legend';
+      built.legendItems.forEach((d, i) => {
+        const item = document.createElement('div');
+        item.className = 'legend-item';
+        item.innerHTML = `<span class="legend-swatch" style="background:${seriesColor(i)}"></span>${d[0]}`;
+        legend.appendChild(item);
+      });
+      card.appendChild(legend);
+    }
+
+    const chartWrap = document.createElement('div');
+    chartWrap.appendChild(built.svg);
+    card.appendChild(chartWrap);
+
+    const statRow = document.createElement('div');
+    statRow.className = 'stat-row';
+    built.stats.forEach(s => {
+      const st = document.createElement('div');
+      st.className = 'stat';
+      st.innerHTML = `<div class="stat-value mono">${s.value}</div><div class="stat-label">${s.label}</div>`;
+      statRow.appendChild(st);
+    });
+    card.appendChild(statRow);
+
+    const toggleRow = document.createElement('div');
+    toggleRow.style.cssText = 'display:flex;justify-content:flex-end;margin-top:1.25rem;';
+    toggleRow.innerHTML = `
+      <div class="view-toggle">
+        <button class="view-btn active" data-view="chart">Chart</button>
+        <button class="view-btn" data-view="table">Table</button>
+      </div>
+    `;
+    card.appendChild(toggleRow);
+
+    const tableWrap = document.createElement('div');
+    tableWrap.className = 'table-wrap';
+    tableWrap.style.display = 'none';
+    tableWrap.style.marginTop = '1rem';
+    let tableHTML = '<table class="data-table"><thead><tr>';
+    built.cols.forEach(c => tableHTML += `<th>${c}</th>`);
+    tableHTML += '</tr></thead><tbody>';
+    built.rows.forEach(r => {
+      tableHTML += '<tr>' + r.map(v => `<td>${v}</td>`).join('') + '</tr>';
+    });
+    tableHTML += '</tbody></table>';
+    tableWrap.innerHTML = tableHTML;
+    card.appendChild(tableWrap);
+
+    toggleRow.querySelectorAll('.view-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        toggleRow.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const isTable = btn.dataset.view === 'table';
+        tableWrap.style.display = isTable ? 'block' : 'none';
+        chartWrap.style.display = isTable ? 'none' : 'block';
+        if (statRow) statRow.style.display = isTable ? 'none' : 'flex';
+      });
+    });
+
+    stage.appendChild(card);
+
+    document.addEventListener('mousemove', moveTooltip, { passive: true });
+  }
+
+  document.getElementById('generate').addEventListener('click', () => {
+    const q = promptInput.value.trim();
+    if (q) render(q);
+  });
+  promptInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      const q = promptInput.value.trim();
+      if (q) render(q);
+    }
+  });
+  document.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      promptInput.value = chip.dataset.q;
+      render(chip.dataset.q);
+    });
+  });
+
+  // seed with first example
+  promptInput.value = 'How has weekly active users trended over the last 8 weeks?';
+  render(promptInput.value);
+})();
+</script>
+</body>
+</html>
