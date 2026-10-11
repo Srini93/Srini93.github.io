@@ -324,7 +324,8 @@
       'if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",runChatBounceIntro);}else{runChatBounceIntro();}' +
       'if(document.readyState==="complete"){scheduleChatWarmup();}else{window.addEventListener("load",scheduleChatWarmup);}' +
       '})();' +
-      '<\/script>'
+      '<\/script>' +
+      '<script src="srini-chat-fab-position.js?v=2"><\/script>'
     );
   }
 
