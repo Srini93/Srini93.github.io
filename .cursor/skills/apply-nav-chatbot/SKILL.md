@@ -624,7 +624,7 @@ Remove any old navigation elements that were replaced:
    - Hamburger menu works on mobile (cream panel, centered links, black GET IN TOUCH pill, X close icon)
    - Chatbot opens/closes via sparkle icon and pushes content left on desktop
    - Chatbot opens as an iOS-style modal sheet on mobile
-   - On mobile, the Proxy FAB can be dragged and snaps to a corner
+   - On mobile, the Proxy FAB can be dragged and snaps to a bottom corner (left or right)
 
 ## Reference files
 
