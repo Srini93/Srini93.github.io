@@ -585,7 +585,10 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
   });
 })();
 </script>
+<script src="srini-chat-fab-position.js?v=1"></script>
 ```
+
+The shared `srini-chat-fab-position.js` script makes the mobile Proxy FAB draggable. On release it snaps to the nearest corner (`tl` / `tr` / `bl` / `br`) and remembers the choice in `localStorage` (`srini-chat-fab-corner`). Include it on every page that has `.srini-chat-fab`.
 
 ## Step 6 — Fix AOS CDN in existing scripts
 
@@ -621,6 +624,7 @@ Remove any old navigation elements that were replaced:
    - Hamburger menu works on mobile (cream panel, centered links, black GET IN TOUCH pill, X close icon)
    - Chatbot opens/closes via sparkle icon and pushes content left on desktop
    - Chatbot opens as an iOS-style modal sheet on mobile
+   - On mobile, the Proxy FAB can be dragged and snaps to a corner
 
 ## Reference files
 
