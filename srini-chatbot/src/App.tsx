@@ -13,7 +13,7 @@ import {
 } from './pageSuggestions'
 import './chat-ui.css'
 
-const DEFAULT_API = 'https://srinilm.onrender.com'
+const DEFAULT_API = 'https://sriniai.netlify.app'
 
 type Msg = { role: 'user' | 'bot'; text: string; suggestions?: string[] }
 
