@@ -585,10 +585,10 @@ Close the content wrapper, then add the chatbot FAB, sidebar, styles, and script
   });
 })();
 </script>
-<script src="srini-chat-fab-position.js?v=1"></script>
+<script src="srini-chat-fab-position.js?v=2"></script>
 ```
 
-The shared `srini-chat-fab-position.js` script makes the mobile Proxy FAB draggable. On release it snaps to the nearest corner (`tl` / `tr` / `bl` / `br`) and remembers the choice in `localStorage` (`srini-chat-fab-corner`). Include it on every page that has `.srini-chat-fab`.
+The shared `srini-chat-fab-position.js` script makes the mobile Proxy FAB draggable. On release it snaps to the nearest bottom corner (`bl` / `br`) and remembers the choice in `localStorage` (`srini-chat-fab-corner`). Include it on every page that has `.srini-chat-fab`.
 
 ## Step 6 — Fix AOS CDN in existing scripts
 
