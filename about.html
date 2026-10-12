@@ -389,9 +389,6 @@
       padding-bottom: 0 !important;
       min-height: calc(2rem + env(safe-area-inset-top, 0px) + 50px + 16px) !important;
     }
-    #about > #about > .txt3 {
-      padding-top: 1.25rem;
-    }
     .header-chat-slot { display: none !important; }
   }
   @media screen and (max-width: 601px) {
@@ -407,7 +404,15 @@
   }
 
   /* ── About page content styles ── */
-  .txt3 { font-family: 'Fraunces', serif; }
+  /* Body uses a fixed 25px line-height; Fraunces at ~200% needs a relative
+     line-height or ascenders (H, l, !, emoji) get clipped. */
+  .txt3 {
+    font-family: 'Fraunces', serif;
+    line-height: 1.2;
+  }
+  #about > #about > .txt3 {
+    padding-top: clamp(1.5rem, 6vw, 2.5rem);
+  }
   .txt4, .txt8, .txt9 {
     font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   }
@@ -435,10 +440,13 @@
       transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
     will-change: opacity, filter, transform;
   }
+  /* Use filter/transform: none (not blur(0)/translate3d(0,0,0)) once settled —
+     a zero blur still creates a filter containing block that clips Fraunces
+     ascenders and the 👋 emoji on "Hello again!". */
   [data-scroll-reveal].case-study-scroll-reveal.is-revealed {
     opacity: 1;
-    filter: blur(0);
-    transform: translate3d(0, 0, 0);
+    filter: none;
+    transform: none;
     will-change: auto;
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1317,7 +1325,7 @@
        
    <div id="about" style="/* height:30%; */backgroun;">
        
-    <p class="txt3" data-scroll-reveal>Hello again! 👋</p>
+    <p class="txt3">Hello again! 👋</p>
     <div class="txt4 about-intro" data-scroll-reveal>
       <div class="about-intro-copy">
         <p class="about-intro-lead">I'm Srini, a Product Designer passionate about creating digital experiences that blend design, technology, and real human insight.</p>
