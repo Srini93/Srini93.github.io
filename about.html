@@ -41,7 +41,7 @@
 
 <link rel="stylesheet" href="style-3.css?v=26">
 <link rel="stylesheet" href="vendor/persistent-nav.css?v=20">
-<link rel="stylesheet" href="iphone-duo.css?v=1">
+<link rel="stylesheet" href="iphone-duo.css?v=2">
 <style>
   /* Force Light Mode */
   html {
@@ -384,7 +384,14 @@
     .hamburgler-menu { display: block !important; opacity: 0; }
     ul.hamburgler-menu-list { display: flex !important; flex-direction: column !important; overflow: visible !important; }
     .hamburgler-menu-list li { display: block !important; float: none !important; }
-    header { padding-bottom: 0 !important; }
+    /* Reserve space for the absolute 50px mark (top: 2rem) so it can't sit on "Hello again!" */
+    header {
+      padding-bottom: 0 !important;
+      min-height: calc(2rem + env(safe-area-inset-top, 0px) + 50px + 16px) !important;
+    }
+    #about > #about > .txt3 {
+      padding-top: 1.25rem;
+    }
     .header-chat-slot { display: none !important; }
   }
   @media screen and (max-width: 601px) {
@@ -393,7 +400,10 @@
     .hamburgler-menu { display: block !important; opacity: 0; }
     ul.hamburgler-menu-list { display: flex !important; flex-direction: column !important; overflow: visible !important; }
     .hamburgler-menu-list li { display: block !important; float: none !important; }
-    header { padding-bottom: 0 !important; }
+    header {
+      padding-bottom: 0 !important;
+      min-height: calc(2rem + env(safe-area-inset-top, 0px) + 50px + 16px) !important;
+    }
   }
 
   /* ── About page content styles ── */
@@ -1707,7 +1717,7 @@
 })();
 </script>
 <script src="case-study-scroll-reveal.js"></script>
-<link rel="stylesheet" href="iphone-duo.css?v=1">
+<link rel="stylesheet" href="iphone-duo.css?v=2">
 <script src="iphone-duo.js?v=1"></script>
 <script src="proxy-resize.js?v=1"></script>
 <script src="ui-sounds.js?v=27"></script>
