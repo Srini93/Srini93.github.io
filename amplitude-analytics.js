@@ -7,6 +7,8 @@
  *
  * Usage: <script src="amplitude-analytics.js" defer></script> in <head> or before </body>.
  * Localhost / file://: SDK is not initialized (keeps production data clean).
+ * Personal opt-out: visit any page with ?notrack=1 to persist opt-out in localStorage
+ * (no events / no Session Replay). ?notrack=0 clears it and re-enables tracking.
  * Call window.sriniAnalytics.track(name, props) from other scripts after load.
  */
 (function () {
@@ -15,6 +17,7 @@
   var API_KEY = '8c6afd25524af38e56ef1220653a8d4f';
   /** Starter plan includes Session Replay; portfolio traffic is low so capture most sessions. */
   var SESSION_REPLAY_SAMPLE_RATE = 0.5;
+  var NOTRACK_STORAGE_KEY = 'srini-amplitude-notrack';
 
   var CASE_STUDY_NAMES = {
     'intuit.html': 'Intuit Assist',
@@ -45,6 +48,62 @@
     } catch (e) {
       return false;
     }
+  }
+
+  function readNoTrackFlag() {
+    try {
+      return window.localStorage.getItem(NOTRACK_STORAGE_KEY) === '1';
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function writeNoTrackFlag(on) {
+    try {
+      if (on) window.localStorage.setItem(NOTRACK_STORAGE_KEY, '1');
+      else window.localStorage.removeItem(NOTRACK_STORAGE_KEY);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  /**
+   * Apply ?notrack=1 / ?notrack=0 before any SDK load so autocapture / replay never start.
+   * Also honors a persisted flag, and parent-frame opt-out for unlocked case-study iframes.
+   */
+  function resolveOptOut() {
+    var paramAction = null;
+    try {
+      var qs = new URLSearchParams(window.location.search || '');
+      var raw = qs.get('notrack');
+      if (raw === '1' || raw === 'true') paramAction = 'opt_out';
+      else if (raw === '0' || raw === 'false') paramAction = 'opt_in';
+    } catch (e) {}
+
+    if (paramAction === 'opt_out') writeNoTrackFlag(true);
+    else if (paramAction === 'opt_in') writeNoTrackFlag(false);
+
+    if (readNoTrackFlag()) {
+      return { optedOut: true, reason: paramAction === 'opt_out' ? 'query' : 'stored' };
+    }
+
+    // Same-origin unlock iframes share localStorage; this is a belt-and-suspenders check.
+    try {
+      if (
+        window.parent &&
+        window.parent !== window &&
+        window.parent.sriniAnalytics &&
+        window.parent.sriniAnalytics.optedOut
+      ) {
+        return { optedOut: true, reason: 'parent' };
+      }
+    } catch (e2) {}
+
+    return {
+      optedOut: false,
+      reason: paramAction === 'opt_in' ? 'query_cleared' : 'default'
+    };
   }
 
   function pageFileName() {
@@ -97,21 +156,47 @@
     } catch (e) {}
   }
 
+  // Resolve personal opt-out BEFORE creating the public API / loading the CDN.
+  var opt = resolveOptOut();
+
   window.sriniAnalytics = {
     apiKey: API_KEY,
     disabled: false,
+    optedOut: !!opt.optedOut,
     ready: false,
     track: track,
     caseStudyName: caseStudyName,
     pageFileName: pageFileName
   };
 
+  if (opt.optedOut) {
+    window.sriniAnalytics.disabled = true;
+    window.sriniAnalytics.ready = true;
+    queue = [];
+    try {
+      console.info(
+        '[srini analytics] opted out — no Amplitude events or Session Replay on this browser. Visit any page with ?notrack=0 to re-enable.'
+      );
+    } catch (e) {}
+    return;
+  }
+
   if (isLocalHost()) {
     window.sriniAnalytics.disabled = true;
     window.sriniAnalytics.ready = true;
-    // Still bind local no-op handlers so other scripts can call track safely.
+    try {
+      console.info('[srini analytics] disabled on localhost / file:// (production data stays clean).');
+    } catch (e) {}
     return;
   }
+
+  try {
+    if (opt.reason === 'query_cleared') {
+      console.info('[srini analytics] tracking re-enabled (?notrack=0). Amplitude will load on this page.');
+    } else {
+      console.info('[srini analytics] tracking enabled.');
+    }
+  } catch (e) {}
 
   function bindCustomEvents() {
     // Case Study Viewed — once per page load for known case-study URLs.
