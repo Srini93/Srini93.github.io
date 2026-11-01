@@ -484,7 +484,9 @@
       '<script src="srini-chat-fab-position.js?v=2"><\/script>';
 
     var pageContextScript = ppChatPageContextScript();
-    var injectTail = pageContextScript + (plainHadChatSidebar ? '' : chatbotHTML + chatbotCSS + chatbotJS);
+    var analyticsScript = '<script src="amplitude-analytics.js"><\/script>';
+    var injectTail =
+      analyticsScript + pageContextScript + (plainHadChatSidebar ? '' : chatbotHTML + chatbotCSS + chatbotJS);
 
     if (html.includes('</body>')) {
       html = html.replace('</body>', injectTail + '</body>');
@@ -493,6 +495,41 @@
     }
 
     return html;
+  }
+
+  function ppCaseStudyName() {
+    try {
+      if (window.sriniAnalytics && typeof window.sriniAnalytics.caseStudyName === 'function') {
+        var fromHelper = window.sriniAnalytics.caseStudyName();
+        if (fromHelper) return fromHelper;
+      }
+    } catch (e) {}
+    try {
+      var file = decodeURIComponent((window.location.pathname || '').split('/').pop() || '').toLowerCase();
+      if (file.indexOf('intuit') === 0) return 'Intuit Assist';
+      if (file.indexOf('api') === 0) return 'API Platform';
+      if (file.indexOf('norton') === 0) return 'Norton';
+    } catch (e2) {}
+    return 'Unknown';
+  }
+
+  function ppTrackUnlock(success) {
+    try {
+      if (window.sriniAnalytics && typeof window.sriniAnalytics.track === 'function') {
+        window.sriniAnalytics.track('Password Unlock Attempted', {
+          success: !!success,
+          case_study_name: ppCaseStudyName(),
+          page_path: window.location.pathname || ''
+        });
+        if (success) {
+          window.sriniAnalytics.track('Case Study Viewed', {
+            case_study_name: ppCaseStudyName(),
+            page_path: window.location.pathname || '',
+            unlock_required: true
+          });
+        }
+      }
+    } catch (e) {}
   }
 
   // ─── Submit handler ─────────────────────────────────────────────────
@@ -516,6 +553,7 @@
       submitBtn.disabled = false;
       passEl.disabled = false;
       submitBtn.classList.remove('enabled');
+      ppTrackUnlock(false);
       console.error(e);
       return;
     }
@@ -568,6 +606,7 @@
       frame.srcdoc = decrypted;
 
       successEl.style.display = 'inline';
+      ppTrackUnlock(true);
       setTimeout(function () {
         dialogWrap.style.display = 'none';
         hideParentNav();
@@ -578,6 +617,7 @@
       submitBtn.disabled = false;
       passEl.disabled = false;
       submitBtn.classList.remove('enabled');
+      ppTrackUnlock(false);
       console.error(e);
     }
   }
