@@ -14,7 +14,7 @@
 (function () {
   'use strict';
 
-  var API_KEY = '8c6afd25524af38e56ef1220653a8d4f';
+  var API_KEY = '4cdba9bcfab0ed83708e9b2b558d9bac';
   /** Starter plan includes Session Replay; portfolio traffic is low so capture most sessions. */
   var SESSION_REPLAY_SAMPLE_RATE = 0.5;
   var NOTRACK_STORAGE_KEY = 'srini-amplitude-notrack';
