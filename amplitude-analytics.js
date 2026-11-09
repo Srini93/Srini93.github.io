@@ -265,9 +265,47 @@
           return;
         }
 
+        // Selected Works Clicked — hero CTA, nav Works links, section tab.
+        // Check before chat so a Works click never double-counts as Chatbot Opened.
+        var heroWorks = el.closest(
+          'a.hero-cta--primary[href*="#Selectedworks"], a.see-more[href*="#Selectedworks"]'
+        );
+        if (heroWorks) {
+          track('Selected Works Clicked', {
+            source: 'hero_cta',
+            page_path: window.location.pathname || ''
+          });
+          return;
+        }
+
+        var worksTab = el.closest('.work-switch-btn[data-work-panel="recent"]');
+        if (worksTab) {
+          track('Selected Works Clicked', {
+            source: 'tab',
+            page_path: window.location.pathname || ''
+          });
+          return;
+        }
+
+        var worksNav = el.closest('a[href*="#Selectedworks"]');
+        if (worksNav) {
+          track('Selected Works Clicked', {
+            source: 'nav',
+            page_path: window.location.pathname || ''
+          });
+          return;
+        }
+
         var chatTrigger = el.closest('.srini-chat-trigger');
         if (chatTrigger && !document.body.classList.contains('chat-open')) {
-          var triggerType = chatTrigger.classList.contains('srini-chat-fab') ? 'fab' : 'nav';
+          var triggerType = 'nav';
+          if (chatTrigger.classList.contains('srini-chat-fab')) {
+            triggerType = 'fab';
+          } else if (chatTrigger.classList.contains('hero-cta--chat')) {
+            triggerType = 'hero';
+          } else if (chatTrigger.classList.contains('srini-chat-nav-btn')) {
+            triggerType = 'nav';
+          }
           track('Chatbot Opened', {
             trigger: triggerType,
             page_path: window.location.pathname || ''
